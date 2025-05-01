@@ -8,6 +8,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Direction from "./pages/gouvernance/Direction";
 import Contact from "./pages/Contact";
+import AskingPage from "./pages/filiales/AskingPage";
+import GrowthEnergyPage from "./pages/filiales/GrowthEnergyPage";
+import GemPage from "./pages/filiales/GemPage";
+import MfgPage from "./pages/filiales/MfgPage";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +44,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/gouvernance/direction" element={<Direction />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Filiales routes */}
+          <Route path="/filiales/asking" element={<AskingPage />} />
+          <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
+          <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
+          <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
           
           {/* Placeholder routes to avoid 404s for menu items */}
           <Route path="/presentation" element={<PlaceholderPage title="Présentation du Groupe" />} />
