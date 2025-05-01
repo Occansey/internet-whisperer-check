@@ -61,7 +61,7 @@ const directeurs: DirecteurProps[] = [
 
 const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
   return (
-    <div className="rounded-lg overflow-hidden shadow-md bg-white">
+    <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
       <div className="h-64 overflow-hidden">
         <img 
           src={photo} 
@@ -70,13 +70,13 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
         />
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{nom}</h3>
+        <h3 className="text-xl font-semibold mb-2 text-solio-blue">{nom}</h3>
         <p className="text-gray-700 mb-4">{titre}</p>
         <a 
           href={linkedin} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-blue-600 hover:text-blue-800 flex items-center"
+          className="text-solio-blue hover:text-solio-yellow flex items-center transition-colors"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
             <path 
@@ -96,7 +96,10 @@ const Direction = () => {
     <Layout>
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-12 text-center">Direction du Groupe</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Direction du Groupe</h1>
+          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            Notre équipe de direction combine expertise sectorielle, vision stratégique et sens de l'innovation pour assurer une croissance durable.
+          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {directeurs.map((directeur) => (

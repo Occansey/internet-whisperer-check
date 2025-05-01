@@ -14,7 +14,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-solio-blue/10 hover:text-solio-blue focus:bg-solio-blue/10 focus:text-solio-blue",
             className
           )}
           {...props}
@@ -32,9 +32,12 @@ ListItem.displayName = "ListItem";
 
 const Header = () => {
   return (
-    <header className="border-b">
+    <header className="border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center">
-        <Link to="/" className="font-bold text-xl mr-6">Solio Group</Link>
+        <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
+          <img src="/logo-solio-group.png" alt="Solio Group" className="h-8 mr-2" />
+          Solio Group
+        </Link>
         <NavigationMenu>
           <NavigationMenuList>
             {/* Accueil */}
@@ -76,26 +79,34 @@ const Header = () => {
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <ListItem
-                    href="/filiales/growth-energy"
+                    href="https://growth-energy.fr/"
                     title="⚡️ Growth Energy"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Solutions énergétiques industrielles
                   </ListItem>
                   <ListItem
-                    href="/filiales/gem-e-mobility"
+                    href="https://growth-energy.fr/"
                     title="🚗 GEM E-Mobility"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Mobilité électrique pour professionnels
                   </ListItem>
                   <ListItem
-                    href="/filiales/asking"
+                    href="https://asking-group.com/fr/"
                     title="💻 Asking"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Transformation numérique & IA
                   </ListItem>
                   <ListItem
-                    href="/filiales/mfg-technologies"
+                    href="https://www.mfgtech.ca/fr/"
                     title="🏭 MFG Technologies"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Intégration ERP & technologies industrielles
                   </ListItem>

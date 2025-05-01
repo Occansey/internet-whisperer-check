@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -96,6 +97,23 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-oval font-bold;
+  }
+
+  /* Add font face for Oval Bold if we have the files locally */
+  @font-face {
+    font-family: 'Oval';
+    src: url('/fonts/oval-bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  .page-transition {
+    @apply animate-slide-up;
   }
 }

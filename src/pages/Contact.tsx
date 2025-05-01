@@ -10,7 +10,7 @@ const Contact = () => {
     <Layout>
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">Contact</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center text-solio-blue">Contact</h1>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
             Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? 
             N'hésitez pas à nous contacter, nous vous répondrons rapidement.
@@ -52,7 +52,7 @@ const Contact = () => {
                     <Textarea id="message" placeholder="Votre message" rows={6} required />
                   </div>
 
-                  <Button type="submit" className="w-full md:w-auto">Envoyer le message</Button>
+                  <Button type="submit" className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90">Envoyer le message</Button>
                 </form>
               </CardContent>
             </Card>
@@ -62,36 +62,41 @@ const Contact = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold mb-2">Coordonnées</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Coordonnées</h3>
                       <address className="not-italic space-y-2 text-gray-700">
-                        <p>Solio Group</p>
-                        <p>Adresse du siège social</p>
+                        <p className="font-medium">Solio Group</p>
+                        <div className="mt-3">
+                          <p className="font-medium">France</p>
+                          <p>4 Rue De Longchamp, 75016, Paris</p>
+                          <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Canada</p>
+                          <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
+                        </div>
                         <p className="mt-4">
-                          <strong>Téléphone:</strong> +XXX XXX XXX
-                        </p>
-                        <p>
-                          <strong>Email:</strong> contact@soliogroup.com
+                          <strong>Email:</strong> contact@solio-group.com
                         </p>
                       </address>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold mb-2">Suivez-nous</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Suivez-nous</h3>
                       <div className="flex space-x-4">
-                        <a href="#" className="text-gray-700 hover:text-blue-600">
+                        <a href="#" className="text-gray-700 hover:text-solio-blue">
                           LinkedIn
                         </a>
-                        <a href="#" className="text-gray-700 hover:text-blue-400">
+                        <a href="#" className="text-gray-700 hover:text-solio-blue">
                           Twitter/X
                         </a>
-                        <a href="#" className="text-gray-700 hover:text-red-600">
+                        <a href="#" className="text-gray-700 hover:text-solio-blue">
                           YouTube
                         </a>
                       </div>
                     </div>
 
                     <div className="pt-4">
-                      <h3 className="text-lg font-semibold mb-2">Horaires d'ouverture</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Horaires d'ouverture</h3>
                       <p className="text-gray-700">
                         Du lundi au vendredi<br />
                         9h00 - 18h00

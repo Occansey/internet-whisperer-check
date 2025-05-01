@@ -11,7 +11,7 @@ const Index = () => {
       <Hero />
       <div className="py-12 bg-white">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-6">Présentation du Groupe</h2>
+          <h2 className="text-3xl font-bold mb-6 text-solio-blue">Présentation du Groupe</h2>
           <p className="text-lg text-gray-700 max-w-4xl">
             Solio Group est un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale. Nous concevons et mettons en œuvre des solutions durables, adaptées aux besoins opérationnels de nos clients, en alliant expertise technologique, engagement sociétal et performance économique.
           </p>
