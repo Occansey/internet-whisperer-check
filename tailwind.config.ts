@@ -64,7 +64,7 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				solio: {
-					blue: '#001c55',
+					blue: '#030F2B',
 					yellow: '#ffde59',
 				}
 			},
@@ -95,14 +95,14 @@ export default {
 					}
 				},
 				'slide-up': {
-					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'0%': { transform: 'translateY(40px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'slide-up': 'slide-up 0.5s ease-out',
+				'slide-up': 'slide-up 0.8s ease-out',
 			}
 		}
 	},

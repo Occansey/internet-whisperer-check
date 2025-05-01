@@ -16,6 +16,20 @@ const PlaceholderPage = ({ title }: { title: string }) => (
   <Index />
 );
 
+// Create actual pages for actualites
+const ActualitesPage = () => (
+  <Index />
+);
+const CommuniquesPage = () => (
+  <Index />
+);
+const ProjetsPage = () => (
+  <Index />
+);
+const EvenementsPage = () => (
+  <Index />
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -33,10 +47,13 @@ const App = () => (
           <Route path="/culture" element={<PlaceholderPage title="Notre culture d'entreprise" />} />
           <Route path="/activites" element={<PlaceholderPage title="Nos domaines d'activité" />} />
           <Route path="/gouvernance/comite-executif" element={<PlaceholderPage title="Comité exécutif (COMEX)" />} />
-          <Route path="/actualites" element={<PlaceholderPage title="Actualités" />} />
-          <Route path="/actualites/communiques" element={<PlaceholderPage title="Communiqués" />} />
-          <Route path="/actualites/projets" element={<PlaceholderPage title="Projets en cours" />} />
-          <Route path="/actualites/evenements" element={<PlaceholderPage title="Événements à venir" />} />
+          
+          {/* Actualités routes */}
+          <Route path="/actualites" element={<ActualitesPage />} />
+          <Route path="/actualites/communiques" element={<CommuniquesPage />} />
+          <Route path="/actualites/projets" element={<ProjetsPage />} />
+          <Route path="/actualites/evenements" element={<EvenementsPage />} />
+          
           <Route path="/carrieres/rejoignez-nous" element={<PlaceholderPage title="Rejoignez-nous" />} />
           <Route path="/carrieres/engagements" element={<PlaceholderPage title="Nos engagements RH" />} />
           

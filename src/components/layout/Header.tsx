@@ -35,8 +35,7 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/logo-solio-group.png" alt="Solio Group" className="h-8 mr-2" />
-          Solio Group
+          <img src="/lovable-uploads/92dda6b4-a07d-496a-b93b-0702d705cbcb.png" alt="Solio Group" className="h-12 mr-2" />
         </Link>
         <NavigationMenu>
           <NavigationMenuList>
