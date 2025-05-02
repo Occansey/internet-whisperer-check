@@ -11,7 +11,9 @@ const AskingPage = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-6 text-solio-blue">Asking</h1>
+              <div className="flex items-center mb-6">
+                <img src="/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png" alt="Asking" className="h-16 mr-4" />
+              </div>
               <p className="text-lg mb-6 text-gray-700">
                 From Data to Impact: Experts in digital marketing, BI, Salesforce, SAP, and data science, 
                 we unlock the power of data to boost your performance.
@@ -23,7 +25,7 @@ const AskingPage = () => {
               </Button>
             </div>
             <div className="flex-1">
-              <div className="aspect-video bg-gray-200 rounded-lg shadow-md">
+              <div className="aspect-video bg-gray-200 rounded-lg shadow-md overflow-hidden">
                 {/* Image or placeholder */}
               </div>
             </div>
