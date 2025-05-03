@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="flex-1 page-transition">
         {children}
       </main>
-      <Footer />
+      <Footer className="page-transition" />
     </div>
   );
 };

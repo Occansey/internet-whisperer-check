@@ -1,9 +1,14 @@
 
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
-const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+
+const Footer = ({ className }: FooterProps) => {
   return (
-    <footer className="bg-solio-blue text-white py-10">
+    <footer className={cn("bg-solio-blue text-white py-10", className)}>
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

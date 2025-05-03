@@ -24,8 +24,12 @@ const GemPage = () => {
               </Button>
             </div>
             <div className="flex-1">
-              <div className="aspect-video bg-gray-200 rounded-lg shadow-md">
-                {/* Image or placeholder */}
+              <div className="aspect-video rounded-lg shadow-md overflow-hidden">
+                <img 
+                  src="/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png" 
+                  alt="GEM Team" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

@@ -11,7 +11,9 @@ const GrowthEnergyPage = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-6 text-solio-blue">Growth Energy</h1>
+              <div className="flex items-center mb-6">
+                <img src="/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png" alt="Growth Energy" className="h-16 mr-4" />
+              </div>
               <p className="text-lg mb-6 text-gray-700">
                 Growth Energy accelerates the transition to solar power in East West and South Africa, 
                 serving both businesses and communities. We support commercial, industrial, and real estate projects, 
@@ -25,8 +27,12 @@ const GrowthEnergyPage = () => {
               </Button>
             </div>
             <div className="flex-1">
-              <div className="aspect-video bg-gray-200 rounded-lg shadow-md">
-                {/* Image or placeholder */}
+              <div className="aspect-video rounded-lg shadow-md overflow-hidden">
+                <img 
+                  src="/lovable-uploads/631ac8fc-0af4-4b0c-832f-4968e67b872c.png" 
+                  alt="Growth Energy Team" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

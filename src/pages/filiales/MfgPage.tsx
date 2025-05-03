@@ -11,7 +11,9 @@ const MfgPage = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-6 text-solio-blue">MFG Technologies</h1>
+              <div className="flex items-center mb-6">
+                <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-16 mr-4" />
+              </div>
               <p className="text-lg mb-6 text-gray-700">
                 Digital Innovation for Industry: Specialists in software development, cloud, and IT infrastructures, 
                 we help industrial and manufacturing players drive their technological transformation.
@@ -23,8 +25,12 @@ const MfgPage = () => {
               </Button>
             </div>
             <div className="flex-1">
-              <div className="aspect-video bg-gray-200 rounded-lg shadow-md">
-                {/* Image or placeholder */}
+              <div className="aspect-video rounded-lg shadow-md overflow-hidden">
+                <img 
+                  src="/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png" 
+                  alt="MFG Technologies Team" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

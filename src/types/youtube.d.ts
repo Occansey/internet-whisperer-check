@@ -36,7 +36,9 @@ interface YT {
 
 declare global {
   interface Window {
-    YT: YT;
+    YT?: YT;
     onYouTubeIframeAPIReady?: () => void;
   }
 }
+
+export {};

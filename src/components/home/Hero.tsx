@@ -5,42 +5,57 @@ import { useEffect, useRef } from "react";
 
 const Hero = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerRef = useRef<any>(null);
 
   useEffect(() => {
-    const loadVideo = () => {
-      // YouTube API will call this function when the iframe API is ready
-      if (window.YT && iframeRef.current) {
-        new window.YT.Player(iframeRef.current, {
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            rel: 0,
-            showinfo: 0,
-            mute: 1,
-            loop: 1,
-            playlist: "etY08YozPHQ",
-          },
-          events: {
-            onReady: (event) => {
-              event.target.playVideo();
-            },
-          },
-        });
+    // Function to load the YouTube API
+    const loadYouTubeAPI = () => {
+      if (!window.YT) {
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+      } else {
+        initializePlayer();
       }
     };
 
-    // Add YouTube API script if not already loaded
-    if (!window.YT) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
+    // Function to initialize the player once API is ready
+    const initializePlayer = () => {
+      if (!iframeRef.current || !window.YT) return;
       
-      tag.onload = loadVideo;
-      
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    } else {
-      loadVideo();
-    }
+      playerRef.current = new window.YT.Player(iframeRef.current, {
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          rel: 0,
+          showinfo: 0,
+          mute: 1,
+          loop: 1,
+          playlist: "etY08YozPHQ",
+        },
+        events: {
+          onReady: (event) => {
+            event.target.playVideo();
+          },
+        },
+      });
+    };
+
+    // Set up the onYouTubeIframeAPIReady callback
+    window.onYouTubeIframeAPIReady = () => {
+      initializePlayer();
+    };
+    
+    loadYouTubeAPI();
+
+    return () => {
+      // Clean up
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+      }
+      window.onYouTubeIframeAPIReady = undefined;
+    };
   }, []);
 
   return (
@@ -52,7 +67,7 @@ const Hero = () => {
           <iframe
             ref={iframeRef}
             id="youtube-video"
-            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?controls=0&rel=0&playsinline=1&cc_load_policy=0&enablejsapi=1&mute=1&loop=1&playlist=etY08YozPHQ"
+            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?enablejsapi=1&controls=0&rel=0&playsinline=1&cc_load_policy=0&mute=1&loop=1&playlist=etY08YozPHQ"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -61,8 +76,8 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Contenu */}
-      <div className="container relative z-20 flex items-center justify-start h-full py-20">
+      {/* Content */}
+      <div className="container relative z-20 flex items-center justify-start h-full py-20 animate-slideUp">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Transformons ensemble les défis énergétiques et numériques

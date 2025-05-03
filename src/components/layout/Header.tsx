@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
@@ -52,7 +53,7 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/92dda6b4-a07d-496a-b93b-0702d705cbcb.png" alt="Solio Group" className="h-12 mr-2" />
+          <img src="/lovable-uploads/9f799991-40a6-4dfd-b256-b6338ecc7290.png" alt="Solio Group" className="h-12 mr-2" />
         </Link>
         
         {/* Desktop Navigation */}
@@ -61,7 +62,9 @@ const Header = () => {
             <NavigationMenuList>
               {/* Accueil */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100">Accueil</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
+                  Accueil
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem
@@ -94,38 +97,32 @@ const Header = () => {
 
               {/* Nos Filiales */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100">Nos Filiales</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
+                  Nos Filiales
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem
-                      href="https://growth-energy.fr/"
+                      href="/filiales/growth-energy"
                       title="⚡️ Growth Energy"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Solutions énergétiques industrielles
                     </ListItem>
                     <ListItem
-                      href="https://growth-energy.fr/"
+                      href="/filiales/gem-e-mobility"
                       title="🚗 GEM E-Mobility"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Mobilité électrique pour professionnels
                     </ListItem>
                     <ListItem
-                      href="https://asking-group.com/fr/"
+                      href="/filiales/asking"
                       title="💻 Asking"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Transformation numérique & IA
                     </ListItem>
                     <ListItem
-                      href="https://www.mfgtech.ca/fr/"
+                      href="/filiales/mfg-technologies"
                       title="🏭 MFG Technologies"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Intégration ERP & technologies industrielles
                     </ListItem>
@@ -135,7 +132,9 @@ const Header = () => {
 
               {/* Gouvernance */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100">Gouvernance</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
+                  Gouvernance
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
@@ -156,7 +155,9 @@ const Header = () => {
 
               {/* Actualités */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100">Actualités</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
+                  Actualités
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
@@ -183,7 +184,9 @@ const Header = () => {
 
               {/* Carrières */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100">Carrières</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
+                  Carrières
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
@@ -204,7 +207,7 @@ const Header = () => {
 
               {/* Contact - Lien direct */}
               <NavigationMenuItem>
-                <Link to="/contact" className={navigationMenuTriggerStyle() + " hover:bg-gray-100"}>
+                <Link to="/contact" className={cn(navigationMenuTriggerStyle(), "hover:bg-gray-100 hover:text-solio-blue")}>
                   Contact
                 </Link>
               </NavigationMenuItem>
@@ -221,46 +224,70 @@ const Header = () => {
                 <span className="sr-only">Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] sm:w-[350px]">
+            <SheetContent side="right" className="w-[85vw] sm:w-[350px] overflow-y-auto">
               <div className="flex flex-col gap-4 py-4">
                 <h2 className="text-lg font-bold mb-4">Menu</h2>
                 
-                <div className="border-b pb-2 mb-2">
-                  <p className="px-4 text-sm font-semibold text-gray-500 mb-1">Accueil</p>
-                  <MobileMenuItem to="/presentation">Présentation du Groupe</MobileMenuItem>
-                  <MobileMenuItem to="/mission-vision">Notre mission & vision</MobileMenuItem>
-                  <MobileMenuItem to="/culture">Notre culture d'entreprise</MobileMenuItem>
-                  <MobileMenuItem to="/activites">Nos domaines d'activité</MobileMenuItem>
-                </div>
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="accueil">
+                    <AccordionTrigger className="hover:no-underline">Accueil</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/presentation">Présentation du Groupe</MobileMenuItem>
+                        <MobileMenuItem to="/mission-vision">Notre mission & vision</MobileMenuItem>
+                        <MobileMenuItem to="/culture">Notre culture d'entreprise</MobileMenuItem>
+                        <MobileMenuItem to="/activites">Nos domaines d'activité</MobileMenuItem>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 
-                <div className="border-b pb-2 mb-2">
-                  <p className="px-4 text-sm font-semibold text-gray-500 mb-1">Nos Filiales</p>
-                  <MobileMenuItem to="https://growth-energy.fr/">Growth Energy</MobileMenuItem>
-                  <MobileMenuItem to="https://growth-energy.fr/">GEM E-Mobility</MobileMenuItem>
-                  <MobileMenuItem to="https://asking-group.com/fr/">Asking</MobileMenuItem>
-                  <MobileMenuItem to="https://www.mfgtech.ca/fr/">MFG Technologies</MobileMenuItem>
-                </div>
+                  <AccordionItem value="filiales">
+                    <AccordionTrigger className="hover:no-underline">Nos Filiales</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/filiales/growth-energy">Growth Energy</MobileMenuItem>
+                        <MobileMenuItem to="/filiales/gem-e-mobility">GEM E-Mobility</MobileMenuItem>
+                        <MobileMenuItem to="/filiales/asking">Asking</MobileMenuItem>
+                        <MobileMenuItem to="/filiales/mfg-technologies">MFG Technologies</MobileMenuItem>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 
-                <div className="border-b pb-2 mb-2">
-                  <p className="px-4 text-sm font-semibold text-gray-500 mb-1">Gouvernance</p>
-                  <MobileMenuItem to="/gouvernance/comite-executif">Comité exécutif (COMEX)</MobileMenuItem>
-                  <MobileMenuItem to="/gouvernance/direction">Équipe de direction</MobileMenuItem>
-                </div>
+                  <AccordionItem value="gouvernance">
+                    <AccordionTrigger className="hover:no-underline">Gouvernance</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/gouvernance/comite-executif">Comité exécutif (COMEX)</MobileMenuItem>
+                        <MobileMenuItem to="/gouvernance/direction">Équipe de direction</MobileMenuItem>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 
-                <div className="border-b pb-2 mb-2">
-                  <p className="px-4 text-sm font-semibold text-gray-500 mb-1">Actualités</p>
-                  <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
-                  <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
-                  <MobileMenuItem to="/actualites/evenements">Événements à venir</MobileMenuItem>
-                </div>
+                  <AccordionItem value="actualites">
+                    <AccordionTrigger className="hover:no-underline">Actualités</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
+                        <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
+                        <MobileMenuItem to="/actualites/evenements">Événements à venir</MobileMenuItem>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 
-                <div className="border-b pb-2 mb-2">
-                  <p className="px-4 text-sm font-semibold text-gray-500 mb-1">Carrières</p>
-                  <MobileMenuItem to="/carrieres/rejoignez-nous">Rejoignez-nous</MobileMenuItem>
-                  <MobileMenuItem to="/carrieres/engagements">Nos engagements RH</MobileMenuItem>
-                </div>
+                  <AccordionItem value="carrieres">
+                    <AccordionTrigger className="hover:no-underline">Carrières</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/carrieres/rejoignez-nous">Rejoignez-nous</MobileMenuItem>
+                        <MobileMenuItem to="/carrieres/engagements">Nos engagements RH</MobileMenuItem>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
                 
-                <MobileMenuItem to="/contact">Contact</MobileMenuItem>
+                <div className="px-1 pt-4">
+                  <MobileMenuItem to="/contact">Contact</MobileMenuItem>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
