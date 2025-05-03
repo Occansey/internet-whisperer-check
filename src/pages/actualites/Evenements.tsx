@@ -7,6 +7,7 @@ import { Calendar as CalendarIcon, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import FormModal from "@/components/ui/form-modal";
+import { Button } from "@/components/ui/button";
 
 interface EventProps {
   id: number;

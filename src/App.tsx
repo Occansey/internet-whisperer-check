@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Direction from "./pages/gouvernance/Direction";
@@ -138,6 +138,13 @@ To facilitate the integration of a new tool while ensuring the well-being of eve
   }
 ];
 
+// ArticleWrapper component to handle params
+const ArticleWrapper = () => {
+  const { id } = useParams();
+  const article = articles.find((article) => article.id === id);
+  return article ? <ArticleDetail article={article} /> : <NotFound />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -166,10 +173,7 @@ const App = () => (
           {/* Actualités routes */}
           <Route path="/actualites" element={<Communiques />} />
           <Route path="/actualites/communiques" element={<Communiques />} />
-          <Route path="/actualites/communiques/:id" element={({params}) => {
-            const article = articles.find((article) => article.id === params.id);
-            return article ? <ArticleDetail article={article} /> : <NotFound />;
-          }} />
+          <Route path="/actualites/communiques/:id" element={<ArticleWrapper />} />
           <Route path="/actualites/projets" element={<Projets />} />
           <Route path="/actualites/evenements" element={<Evenements />} />
           
