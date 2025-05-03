@@ -53,7 +53,7 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" alt="Solio Group" className="h-14 mr-2" />
+          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-14 mr-2" />
         </Link>
         
         {/* Desktop Navigation */}
@@ -220,7 +220,7 @@ const Header = () => {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-8 w-8" />
                 <span className="sr-only">Menu</span>
               </Button>
             </SheetTrigger>

@@ -74,25 +74,4 @@
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Custom animation for page transitions */
-  @keyframes slideOverlay {
-    from {
-      transform: translateY(-100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-  
-  .animate-slideUp {
-    animation: slideOverlay 3s ease-out forwards;
-  }
-  
-  .page-transition {
-    position: relative;
-    z-index: 10;
-    animation: slideOverlay 3s ease-out forwards;
-    background-color: var(--background);
-  }
 }
