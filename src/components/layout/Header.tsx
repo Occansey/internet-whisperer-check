@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import React from "react";
@@ -36,10 +36,13 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem";
 
 const MobileMenuItem = ({ to, children }: { to: string; children: React.ReactNode }) => {
+  const [open, setOpen] = useState(false);
+  
   return (
     <Link 
       to={to} 
       className="block py-3 px-4 text-lg text-solio-blue hover:bg-gray-100 rounded-lg"
+      onClick={() => setOpen(false)}
     >
       {children}
     </Link>
@@ -48,12 +51,13 @@ const MobileMenuItem = ({ to, children }: { to: string; children: React.ReactNod
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="border-b bg-white shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-14 mr-2" />
+          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-16 mr-2" />
         </Link>
         
         {/* Desktop Navigation */}

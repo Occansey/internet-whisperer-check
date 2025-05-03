@@ -214,7 +214,7 @@ const EngagementsRH = () => {
                 <p className="text-gray-600 mt-2">De femmes dans nos équipes</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-4xl font-bold text-solio-blue">12</div>
+                <div className="text-4xl font-bold text-solio-blue">14</div>
                 <p className="text-gray-600 mt-2">Nationalités représentées</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">

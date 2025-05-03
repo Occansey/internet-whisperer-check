@@ -35,8 +35,13 @@ const Footer = ({ className }: FooterProps) => {
               <p className="font-semibold mb-2">France</p>
               <p>4 Rue De Longchamp, 75016, Paris</p>
               <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
+              
               <p className="font-semibold mt-4 mb-2">Canada</p>
               <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
+              
+              <p className="font-semibold mt-4 mb-2">Africa HQ</p>
+              <p>GEFI Solutions SEZ Limited<br />9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
+              
               <p className="mt-2">Email : contact@solio-group.com</p>
             </address>
             <div className="mt-4 flex space-x-4">

@@ -1,10 +1,9 @@
-
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Calendar, Briefcase, Clock } from "lucide-react";
+import FormModal from "@/components/ui/form-modal";
 
 interface JobOfferProps {
   id: number;
@@ -207,7 +206,13 @@ const JobCard = ({ job }: { job: JobOfferProps }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Postuler</Button>
+        <FormModal 
+          type="postuler" 
+          jobTitle={job.title}
+          className="w-full"
+        >
+          Postuler
+        </FormModal>
       </CardFooter>
     </Card>
   );
@@ -284,7 +289,9 @@ const RejoignezNous = () => {
             
             <div className="text-center mt-12">
               <p className="text-gray-600 mb-4">Vous ne trouvez pas le poste qui vous correspond?</p>
-              <Button>Candidature spontanée</Button>
+              <FormModal type="candidature">
+                Candidature spontanée
+              </FormModal>
             </div>
           </div>
         </div>

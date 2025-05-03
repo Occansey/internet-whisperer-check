@@ -1,13 +1,12 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Calendar as CalendarIcon, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Badge } from "@/components/ui/badge";
+import FormModal from "@/components/ui/form-modal";
 
 interface EventProps {
   id: number;
@@ -135,7 +134,14 @@ const EventCard = ({ event }: { event: EventProps }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">S'inscrire</Button>
+        <FormModal 
+          type="inscription" 
+          eventTitle={event.title}
+          variant="outline" 
+          className="w-full"
+        >
+          S'inscrire
+        </FormModal>
       </CardFooter>
     </Card>
   );

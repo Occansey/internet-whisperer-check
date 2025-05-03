@@ -21,7 +21,7 @@ const Presentation = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-                <Link to="/filiales">Découvrir nos filiales</Link>
+                <Link to="/filiales/growth-energy">Découvrir nos filiales</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
                 <Link to="/contact">Nous contacter</Link>
@@ -132,37 +132,22 @@ const Presentation = () => {
               
               <div className="mt-8 p-6 bg-gray-100 rounded-lg border-l-4 border-solio-blue italic">
                 <p className="text-gray-700">
-                  "Solio Group incarne une vision audacieuse : un avenir durable et connecté, où l'innovation est moteur de changement. Ce nouveau nom reflète l'expansion de notre offre, alliant énergie solaire et solutions numériques pour répondre aux défis énergétiques de l'Afrique tout en ouvrant notre marché à l'Amérique du Nord. Nous passons à l'action, déterminés à jouer un rôle décisif dans la transition solaire africaine et à avoir un impact réel et immédiat sur le terrain."
+                  "Solio Group incarne une vision audacieuse : un avenir durable et connecté, où l'innovation est moteur de changement. Ce nouveau nom reflète l'expansion de notre offre, alliant énergie solaire et solutions numériques pour répondre aux défis énergétiques de l'Afrique tout en ouvrant notre marché à l'Amérique du Nord."
                 </p>
-                <p className="mt-2 font-semibold">— Evrard Havyarimana, Président de Solio Group</p>
+                <footer className="mt-4 text-right text-sm text-gray-600">
+                  — Evrard Havyarimana, Président de Solio Group
+                </footer>
               </div>
             </div>
-            
-            <div className="order-1 md:order-2 rounded-lg overflow-hidden shadow-lg">
-              <img 
-                src="/lovable-uploads/6b7f03ad-dec7-4283-911d-9bc3888a0af3.png" 
-                alt="Vision Solio Group" 
-                className="w-full h-auto"
-              />
+            <div className="order-1 md:order-2">
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png" 
+                  alt="Solio Group Vision" 
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-solio-blue to-blue-900 text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-6">L'avenir est solaire. L'avenir est numérique.</h2>
-          <p className="text-lg mb-8 max-w-3xl mx-auto text-gray-100">
-            Rejoignez Solio Group pour un avenir durable et connecté. Ensemble, transformons les défis énergétiques et numériques en opportunités.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-              <Link to="/filiales">Découvrir nos filiales</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              <Link to="/contact">Nous contacter</Link>
-            </Button>
           </div>
         </div>
       </section>

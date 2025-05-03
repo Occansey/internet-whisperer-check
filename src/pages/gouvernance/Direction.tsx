@@ -10,49 +10,49 @@ interface DirecteurProps {
 
 const directeurs: DirecteurProps[] = [
   {
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/38e1e033-0379-4601-873f-710962a35680.png",
     nom: "Evrard Havyarimana",
     titre: "Chief Executive Officer – Group",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/d322134e-2cfd-4bd7-b6e1-e8ef5660a7dd.png",
     nom: "Isabelle Mauboussin",
     titre: "Directrice Administrative et Financière – Groupe",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
     nom: "John Okoro",
     titre: "Chief Executive Officer – Growth Energy",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/e2652189-1139-496f-8649-6600cb193628.png",
     nom: "François Botreau",
     titre: "Chief Technology Officer – Growth Energy",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
     nom: "Laure Duhorane",
     titre: "Chief Executive Officer – Asking",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1600878459138-e1123b37cb30?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png",
     nom: "Alain Normand",
     titre: "Chief Executive Officer – MFG Technologies",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1543132220-3ec99c6094dc?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
     nom: "Patrick Charlet",
     titre: "Directeur des Opérations – MFG Technologies",
     linkedin: "https://www.linkedin.com/"
   },
   {
-    photo: "https://images.unsplash.com/photo-1598550880863-4e8aa3d0edb4?q=80&w=1287&auto=format&fit=crop",
+    photo: "/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png",
     nom: "Nancy Normand",
     titre: "Directrice des Talents – MFG Technologies",
     linkedin: "https://www.linkedin.com/"

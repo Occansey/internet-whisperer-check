@@ -110,6 +110,39 @@ const projects: ProjectProps[] = [
     location: "Marseille, France",
     startDate: "Juin 2025",
     endDate: "Janvier 2026"
+  },
+  {
+    id: 9,
+    title: "Développement ATS pour Solio Group",
+    description: "Création d'un système de suivi des candidatures (ATS) personnalisé pour les besoins de recrutement du groupe.",
+    image: "/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png",
+    progress: 5,
+    subsidiary: "asking",
+    location: "Paris, France",
+    startDate: "Mai 2025",
+    endDate: "Juin 2025"
+  },
+  {
+    id: 10,
+    title: "KIRA - Première station de recharge solaire en Afrique de l'Est",
+    description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
+    image: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
+    progress: 30,
+    subsidiary: "gem",
+    location: "Burundi",
+    startDate: "Avril 2025",
+    endDate: "Octobre 2025"
+  },
+  {
+    id: 11,
+    title: "Fumba Town: Pionnier de l'indépendance énergétique à Zanzibar",
+    description: "À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.",
+    image: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    progress: 45,
+    subsidiary: "growth-energy",
+    location: "Zanzibar, Tanzania",
+    startDate: "Septembre 2024",
+    endDate: "Juin 2027"
   }
 ];
 

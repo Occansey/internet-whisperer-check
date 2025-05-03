@@ -54,7 +54,7 @@ Questions? Contact us and join Solio Group for a sustainable and connected futur
     title: "MFG Technologies joins Asking, strengthening Solio Group's presence in Canada",
     date: "5 Mars 2025",
     description: "Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies.",
-    image: "/lovable-uploads/6b7f03ad-dec7-4283-911d-9bc3888a0af3.png",
+    image: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
     content: `Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies, a company specializing in Divalto ERP integration for the manufacturing industry in Quebec. This strategic acquisition aligns with Asking's mission to provide value and growth opportunities to businesses by leveraging cutting-edge technologies and innovative solutions.
 
 "The acquisition of MFG Technologies reflects our commitment to expanding our presence in the Canadian market. After collaborating with major energy players in France, Canada was the next challenge for expanding our digital transformation activities. We chose MFG Technologies not only for their expertise but also because of their corporate culture, which perfectly aligns with ours. MFG Technologies is a human-sized company with a strong international outlook. We are thrilled to welcome MFG Technologie's talented team to the Asking family and look forward to succeeding together." Evrard Havyarimana, CEO, Solio Group.
@@ -82,7 +82,7 @@ Founded in 2003, MFG Technologies is a leader in ERP integration, serving the ma
     title: "Change management in the implementation of digital tools",
     date: "14 Février 2025",
     description: "Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.",
-    image: "/lovable-uploads/0d9f69ea-71eb-4bc3-be79-adcca4923d6c.png",
+    image: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
     content: `Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.
 
 Without effective change management, these initiatives can be met with significant resistance from employees, leading to delays, budget overruns and, in the worst case, total project failure.
@@ -149,32 +149,6 @@ const ArticleCard = ({ article }: { article: ArticleProps }) => {
         </Link>
       </CardFooter>
     </Card>
-  );
-};
-
-const ArticleDetail = ({ article }: { article: ArticleProps }) => {
-  return (
-    <div className="mb-16">
-      <div className="relative h-96">
-        <img 
-          src={article.image} 
-          alt={article.title} 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="max-w-4xl mx-auto px-4 -mt-16">
-        <div className="bg-white p-8 shadow-md rounded-lg">
-          <div className="flex items-center text-sm text-gray-500 mb-4">
-            <Calendar className="mr-2 h-4 w-4" />
-            <span>{article.date}</span>
-          </div>
-          <h1 className="text-3xl font-bold mb-6">{article.title}</h1>
-          <div className="prose max-w-none">
-            <p className="whitespace-pre-line">{article.content}</p>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
