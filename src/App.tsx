@@ -7,32 +7,23 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Direction from "./pages/gouvernance/Direction";
+import ComiteExecutif from "./pages/gouvernance/ComiteExecutif";
 import Contact from "./pages/Contact";
 import AskingPage from "./pages/filiales/AskingPage";
 import GrowthEnergyPage from "./pages/filiales/GrowthEnergyPage";
 import GemPage from "./pages/filiales/GemPage";
 import MfgPage from "./pages/filiales/MfgPage";
+import Presentation from "./pages/Presentation";
+import MissionVision from "./pages/MissionVision";
+import Culture from "./pages/Culture";
+import Activites from "./pages/Activites";
+import Communiques from "./pages/actualites/Communiques";
+import Projets from "./pages/actualites/Projets";
+import Evenements from "./pages/actualites/Evenements";
+import RejoignezNous from "./pages/carrieres/RejoignezNous";
+import EngagementsRH from "./pages/carrieres/EngagementsRH";
 
 const queryClient = new QueryClient();
-
-// Create placeholder pages for menu items to avoid 404s
-const PlaceholderPage = ({ title }: { title: string }) => (
-  <Index />
-);
-
-// Create actual pages for actualites
-const ActualitesPage = () => (
-  <Index />
-);
-const CommuniquesPage = () => (
-  <Index />
-);
-const ProjetsPage = () => (
-  <Index />
-);
-const EvenementsPage = () => (
-  <Index />
-);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -42,8 +33,16 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          
+          {/* Accueil routes */}
+          <Route path="/presentation" element={<Presentation />} />
+          <Route path="/mission-vision" element={<MissionVision />} />
+          <Route path="/culture" element={<Culture />} />
+          <Route path="/activites" element={<Activites />} />
+          
+          {/* Gouvernance routes */}
           <Route path="/gouvernance/direction" element={<Direction />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
           
           {/* Filiales routes */}
           <Route path="/filiales/asking" element={<AskingPage />} />
@@ -51,21 +50,17 @@ const App = () => (
           <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
           <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
           
-          {/* Placeholder routes to avoid 404s for menu items */}
-          <Route path="/presentation" element={<PlaceholderPage title="Présentation du Groupe" />} />
-          <Route path="/mission-vision" element={<PlaceholderPage title="Notre mission & vision" />} />
-          <Route path="/culture" element={<PlaceholderPage title="Notre culture d'entreprise" />} />
-          <Route path="/activites" element={<PlaceholderPage title="Nos domaines d'activité" />} />
-          <Route path="/gouvernance/comite-executif" element={<PlaceholderPage title="Comité exécutif (COMEX)" />} />
-          
           {/* Actualités routes */}
-          <Route path="/actualites" element={<ActualitesPage />} />
-          <Route path="/actualites/communiques" element={<CommuniquesPage />} />
-          <Route path="/actualites/projets" element={<ProjetsPage />} />
-          <Route path="/actualites/evenements" element={<EvenementsPage />} />
+          <Route path="/actualites" element={<Communiques />} />
+          <Route path="/actualites/communiques" element={<Communiques />} />
+          <Route path="/actualites/projets" element={<Projets />} />
+          <Route path="/actualites/evenements" element={<Evenements />} />
           
-          <Route path="/carrieres/rejoignez-nous" element={<PlaceholderPage title="Rejoignez-nous" />} />
-          <Route path="/carrieres/engagements" element={<PlaceholderPage title="Nos engagements RH" />} />
+          {/* Carrières routes */}
+          <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
+          <Route path="/carrieres/engagements" element={<EngagementsRH />} />
+          
+          <Route path="/contact" element={<Contact />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
