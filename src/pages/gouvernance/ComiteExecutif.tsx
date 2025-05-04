@@ -13,6 +13,13 @@ interface ExecutiveMemberProps {
 
 const executives: ExecutiveMemberProps[] = [
   {
+    photo: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    name: "Evrard Havyarimana",
+    title: "Président du Groupe et du COMEX",
+    linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24",
+    bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n\nDiplômé en 2010 d'un Master en Finance des Entreprises de l'IAE de Bordeaux IV – Université de Bordeaux, il a débuté sa carrière dans le secteur bancaire et le conseil, avant de se consacrer pleinement à l'entrepreneuriat.\n\nEn 2019, il fonde Growth Supply, un groupe qui deviendra Solio Group en 2025, pour refléter une vision plus large et intégrée de ses activités sur le continent africain, européens et Américain. En 2022, il lance Growth Energy, une filiale spécialisé dans le développement, le financement et déploiement des centrales solaire pour l'industriel. En 2023, il fonde Asking en France et au Canada, une entreprise numérique qui accompagne les dirigeants dans l'exploitation stratégique des données pour mieux piloter leur croissance. En 2024 cette entreprise acquerra MFG Technologies , une entreprise Numérique intégrateur des solutions ERP pour les entreprises au Canada.\n\nEn parallèle, il initie en 2021, le Burundian Business Club France, un club d'affaires avec  une communauté engagée de leaders, entrepreneurs, investisseurs et experts, unie par des valeurs de collaboration, d'excellence et d'innovation, pour stimuler le développement économique, et favoriser les partenariats stratégiques"
+  },
+  {
     photo: "/lovable-uploads/0439a218-ba49-49d0-84c6-21386f99eb6e.png",
     name: "John Okoro",
     title: "Directeur de Growth Energy",
@@ -32,13 +39,6 @@ const executives: ExecutiveMemberProps[] = [
     title: "Directrice administratif et financier",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card",
     bio: "Isabelle Mauboussin est la responsable administrative et financière de Solio Group.\nElle a travaillé plus de 30 ans en cabinet d'expertise comptable.\nCes expériences lui ont appris à analyser les états financiers de différentes structures, à les accompagner dans leurs projets de développement et à travailler en confiance dans le respect des normes comptables et fiscales.\nElle aime relever de nouveaux défis et trouver des solutions innovantes pour stimuler la croissance et la performance des entreprises.\nSon objectif est de contribuer activement à la réussite de chaque projet, d'optimiser les processus administratifs et comptables pour en faire un outil de gestion au service du pilotage de la stratégie de Solio Group."
-  },
-  {
-    photo: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
-    name: "Evrard Havyarimana",
-    title: "Président du Groupe et du COMEX",
-    linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24",
-    bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n\nDiplômé en 2010 d'un Master en Finance des Entreprises de l'IAE de Bordeaux IV – Université de Bordeaux, il a débuté sa carrière dans le secteur bancaire et le conseil, avant de se consacrer pleinement à l'entrepreneuriat.\n\nEn 2019, il fonde Growth Supply, un groupe qui deviendra Solio Group en 2025, pour refléter une vision plus large et intégrée de ses activités sur le continent africain, européens et Américain. En 2022, il lance Growth Energy, une filiale spécialisé dans le développement, le financement et déploiement des centrales solaire pour l'industriel. En 2023, il fonde Asking en France et au Canada, une entreprise numérique qui accompagne les dirigeants dans l'exploitation stratégique des données pour mieux piloter leur croissance. En 2024 cette entreprise acquerra MFG Technologies , une entreprise Numérique intégrateur des solutions ERP pour les entreprises au Canada.\n\nEn parallèle, il initie en 2021, le Burundian Business Club France, un club d'affaires avec  une communauté engagée de leaders, entrepreneurs, investisseurs et experts, unie par des valeurs de collaboration, d'excellence et d'innovation, pour stimuler le développement économique, et favoriser les partenariats stratégiques"
   },
   {
     photo: "/lovable-uploads/77184715-9ac1-4778-9f64-2c3be77366eb.png",

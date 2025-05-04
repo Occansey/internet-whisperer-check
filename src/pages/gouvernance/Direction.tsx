@@ -76,7 +76,7 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
           href={linkedin} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-solio-blue hover:text-solio-yellow flex items-center transition-colors"
+          className="text-solio-blue hover:text-white hover:bg-solio-blue px-3 py-1 rounded transition-colors inline-flex items-center"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
             <path 

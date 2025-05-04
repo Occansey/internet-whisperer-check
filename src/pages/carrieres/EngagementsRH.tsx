@@ -189,11 +189,19 @@ const EngagementsRH = () => {
           </p>
           
           <Tabs defaultValue="developpement" className="w-full">
-            <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1" : "grid-cols-4"} mb-8`}>
-              <TabsTrigger value="developpement" className="text-xs md:text-sm">Développement</TabsTrigger>
-              <TabsTrigger value="bienetre" className="text-xs md:text-sm">Bien-être</TabsTrigger>
-              <TabsTrigger value="diversite" className="text-xs md:text-sm">Diversité</TabsTrigger>
-              <TabsTrigger value="engagement" className="text-xs md:text-sm">Engagement</TabsTrigger>
+            <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1 mb-4" : "grid-cols-4 mb-8"}`}>
+              <TabsTrigger value="developpement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
+                Développement
+              </TabsTrigger>
+              <TabsTrigger value="bienetre" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
+                Bien-être
+              </TabsTrigger>
+              <TabsTrigger value="diversite" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
+                Diversité
+              </TabsTrigger>
+              <TabsTrigger value="engagement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
+                Engagement
+              </TabsTrigger>
             </TabsList>
             
             {Object.keys(engagements).map((key) => (
