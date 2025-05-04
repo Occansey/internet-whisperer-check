@@ -142,7 +142,7 @@ const Presentation = () => {
             <div className="order-1 md:order-2">
               <div className="rounded-lg overflow-hidden shadow-lg">
                 <img 
-                  src="/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png" 
+                  src="/lovable-uploads/6fad0fc5-45d5-41ca-af9c-318bbe47400d.png" 
                   alt="Solio Group Vision" 
                   className="w-full h-auto"
                 />

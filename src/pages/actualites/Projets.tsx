@@ -24,28 +24,6 @@ interface ProjectProps {
 
 const projects: ProjectProps[] = [
   {
-    id: 1,
-    title: "Installation de centrale solaire - Site industriel Nairobi",
-    description: "Conception et installation d'une centrale solaire de 500 kWc pour alimenter un site industriel à Nairobi, réduisant les coûts énergétiques de 40%.",
-    image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1000",
-    progress: 75,
-    subsidiary: "growth-energy",
-    location: "Nairobi, Kenya",
-    startDate: "Mars 2025",
-    endDate: "Septembre 2025"
-  },
-  {
-    id: 2,
-    title: "Optimisation de la chaîne d'approvisionnement avec IA",
-    description: "Développement d'une solution d'analyse prédictive basée sur l'IA pour optimiser la chaîne d'approvisionnement d'un grand distributeur alimentaire.",
-    image: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?q=80&w=1000",
-    progress: 90,
-    subsidiary: "asking",
-    location: "Paris, France",
-    startDate: "Janvier 2025",
-    endDate: "Mai 2025"
-  },
-  {
     id: 3,
     title: "Intégration ERP Divalto - Manufacture textile",
     description: "Déploiement complet d'une solution ERP Divalto pour une manufacture textile, incluant formation et support technique.",
@@ -55,39 +33,6 @@ const projects: ProjectProps[] = [
     location: "Montréal, Canada",
     startDate: "Avril 2025",
     endDate: "Décembre 2025"
-  },
-  {
-    id: 4,
-    title: "Réseau de bornes de recharge pour flotte d'entreprise",
-    description: "Installation d'un réseau de 25 bornes de recharge rapide pour la flotte de véhicules électriques d'une entreprise logistique.",
-    image: "https://images.unsplash.com/photo-1593941707882-a5bba13ida5175245?q=80&w=1000",
-    progress: 60,
-    subsidiary: "gem",
-    location: "Lyon, France",
-    startDate: "Février 2025",
-    endDate: "Juillet 2025"
-  },
-  {
-    id: 5,
-    title: "Centrale solaire hybride avec stockage - Usine agroalimentaire",
-    description: "Installation d'une centrale solaire hybride avec système de stockage permettant une autonomie énergétique de 80% pour une usine agroalimentaire.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1000",
-    progress: 30,
-    subsidiary: "growth-energy",
-    location: "Dakar, Sénégal",
-    startDate: "Mai 2025",
-    endDate: "Février 2026"
-  },
-  {
-    id: 6,
-    title: "Plateforme de data visualisation pour direction commerciale",
-    description: "Développement d'un dashboard interactif pour la direction commerciale, intégrant diverses sources de données et offrant des insights en temps réel.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000",
-    progress: 85,
-    subsidiary: "asking",
-    location: "Bordeaux, France",
-    startDate: "Décembre 2024",
-    endDate: "Avril 2025"
   },
   {
     id: 7,
@@ -101,21 +46,10 @@ const projects: ProjectProps[] = [
     endDate: "Octobre 2025"
   },
   {
-    id: 8,
-    title: "Infrastructure de recharge pour campus universitaire",
-    description: "Conception et installation d'une infrastructure de recharge intelligente pour les véhicules électriques sur un campus universitaire de 15 hectares.",
-    image: "https://images.unsplash.com/photo-1576181456830-453e3a77ed1e?q=80&w=1000",
-    progress: 20,
-    subsidiary: "gem",
-    location: "Marseille, France",
-    startDate: "Juin 2025",
-    endDate: "Janvier 2026"
-  },
-  {
     id: 9,
     title: "Développement ATS pour Solio Group",
     description: "Création d'un système de suivi des candidatures (ATS) personnalisé pour les besoins de recrutement du groupe.",
-    image: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000",
     progress: 5,
     subsidiary: "asking",
     location: "Paris, France",
@@ -126,7 +60,7 @@ const projects: ProjectProps[] = [
     id: 10,
     title: "KIRA - Première station de recharge solaire en Afrique de l'Est",
     description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
-    image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
+    image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
     progress: 30,
     subsidiary: "gem",
     location: "Burundi",
@@ -137,7 +71,7 @@ const projects: ProjectProps[] = [
     id: 11,
     title: "Fumba Town: Pionnier de l'indépendance énergétique à Zanzibar",
     description: "À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.",
-    image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
+    image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
     progress: 45,
     subsidiary: "growth-energy",
     location: "Zanzibar, Tanzania",
@@ -260,12 +194,12 @@ const Projets = () => {
           
           <Tabs defaultValue="all" className="w-full">
             <div className="overflow-x-auto pb-2">
-              <TabsList className="grid grid-cols-5 mb-8 min-w-[600px]">
-                <TabsTrigger value="all">Tous</TabsTrigger>
-                <TabsTrigger value="growth-energy">Growth Energy</TabsTrigger>
-                <TabsTrigger value="asking">Asking</TabsTrigger>
-                <TabsTrigger value="mfg-technologies">MFG Technologies</TabsTrigger>
-                <TabsTrigger value="gem">GEM E-Mobility</TabsTrigger>
+              <TabsList className="flex flex-wrap mb-8 w-full md:grid md:grid-cols-5">
+                <TabsTrigger value="all" className="flex-1 md:flex-none">Tous</TabsTrigger>
+                <TabsTrigger value="growth-energy" className="flex-1 md:flex-none">Growth Energy</TabsTrigger>
+                <TabsTrigger value="asking" className="flex-1 md:flex-none">Asking</TabsTrigger>
+                <TabsTrigger value="mfg-technologies" className="flex-1 md:flex-none">MFG Technologies</TabsTrigger>
+                <TabsTrigger value="gem" className="flex-1 md:flex-none">GEM E-Mobility</TabsTrigger>
               </TabsList>
             </div>
             

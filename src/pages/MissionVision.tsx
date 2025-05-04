@@ -224,7 +224,7 @@ const MissionVision = () => {
             <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
               <Link to="/filiales">Découvrir nos solutions</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+            <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:text-white hover:bg-white/10">
               <Link to="/contact">Devenir partenaire</Link>
             </Button>
           </div>

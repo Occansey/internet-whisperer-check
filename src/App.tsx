@@ -13,6 +13,7 @@ import AskingPage from "./pages/filiales/AskingPage";
 import GrowthEnergyPage from "./pages/filiales/GrowthEnergyPage";
 import GemPage from "./pages/filiales/GemPage";
 import MfgPage from "./pages/filiales/MfgPage";
+import Filiales from "./pages/filiales/Filiales";
 import Presentation from "./pages/Presentation";
 import MissionVision from "./pages/MissionVision";
 import Culture from "./pages/Culture";
@@ -67,7 +68,7 @@ Questions? Contact us and join Solio Group for a sustainable and connected futur
     title: "MFG Technologies joins Asking, strengthening Solio Group's presence in Canada",
     date: "5 Mars 2025",
     description: "Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies.",
-    image: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    image: "/lovable-uploads/d5a062de-bcad-4d5f-9ad1-6a37bd3e6795.png",
     content: `Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies, a company specializing in Divalto ERP integration for the manufacturing industry in Quebec. This strategic acquisition aligns with Asking's mission to provide value and growth opportunities to businesses by leveraging cutting-edge technologies and innovative solutions.
 
 "The acquisition of MFG Technologies reflects our commitment to expanding our presence in the Canadian market. After collaborating with major energy players in France, Canada was the next challenge for expanding our digital transformation activities. We chose MFG Technologies not only for their expertise but also because of their corporate culture, which perfectly aligns with ours. MFG Technologies is a human-sized company with a strong international outlook. We are thrilled to welcome MFG Technologie's talented team to the Asking family and look forward to succeeding together." Evrard Havyarimana, CEO, Solio Group.
@@ -95,7 +96,7 @@ Founded in 2003, MFG Technologies is a leader in ERP integration, serving the ma
     title: "Change management in the implementation of digital tools",
     date: "14 Février 2025",
     description: "Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.",
-    image: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
+    image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
     content: `Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.
 
 Without effective change management, these initiatives can be met with significant resistance from employees, leading to delays, budget overruns and, in the worst case, total project failure.
@@ -165,6 +166,7 @@ const App = () => (
           <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
           
           {/* Filiales routes */}
+          <Route path="/filiales" element={<Filiales />} />
           <Route path="/filiales/asking" element={<AskingPage />} />
           <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
           <Route path="/filiales/gem-e-mobility" element={<GemPage />} />

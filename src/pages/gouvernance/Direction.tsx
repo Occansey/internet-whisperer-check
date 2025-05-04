@@ -12,7 +12,7 @@ const directeurs: DirecteurProps[] = [
   {
     photo: "/lovable-uploads/38e1e033-0379-4601-873f-710962a35680.png",
     nom: "Evrard Havyarimana",
-    titre: "Chief Executive Officer – Group",
+    titre: "Président du Groupe et du Comex",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24"
   },
   {
@@ -24,11 +24,11 @@ const directeurs: DirecteurProps[] = [
   {
     photo: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
     nom: "John Okoro",
-    titre: "Chief Executive Officer – Growth Energy",
+    titre: "Directeur Général - Growth Energy",
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png",
+    photo: "/lovable-uploads/fa8439f4-b009-4788-9afe-858ae27b64c1.png",
     nom: "François Botreau",
     titre: "Chief Technology Officer – Growth Energy",
     linkedin: "https://fr.linkedin.com/in/francoisbotreau/fr"
@@ -36,13 +36,13 @@ const directeurs: DirecteurProps[] = [
   {
     photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
     nom: "Laure Duhorane",
-    titre: "Chief Executive Officer – Asking",
+    titre: "Directeur Général - Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
   },
   {
     photo: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png",
     nom: "Alain Normand",
-    titre: "Chief Executive Officer – MFG Technologies",
+    titre: "Directeur Général - MFG Technologies",
     linkedin: "https://linkedin.com/"
   },
   {

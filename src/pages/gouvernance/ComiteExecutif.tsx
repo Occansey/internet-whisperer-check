@@ -1,6 +1,7 @@
 
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect } from "react";
 
 interface ExecutiveMemberProps {
   photo: string;
@@ -12,35 +13,35 @@ interface ExecutiveMemberProps {
 
 const executives: ExecutiveMemberProps[] = [
   {
-    photo: "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png",
+    photo: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
     name: "Evrard Havyarimana",
     title: "Président du Groupe et du COMEX",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24",
     bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n\nDiplômé en 2010 d'un Master en Finance des Entreprises de l'IAE de Bordeaux IV – Université de Bordeaux, il a débuté sa carrière dans le secteur bancaire et le conseil, avant de se consacrer pleinement à l'entrepreneuriat.\n\nEn 2019, il fonde Growth Supply, un groupe qui deviendra Solio Group en 2025, pour refléter une vision plus large et intégrée de ses activités sur le continent africain, européens et Américain. En 2022, il lance Growth Energy, une filiale spécialisé dans le développement, le financement et déploiement des centrales solaire pour l'industriel. En 2023, il fonde Asking en France et au Canada, une entreprise numérique qui accompagne les dirigeants dans l'exploitation stratégique des données pour mieux piloter leur croissance. En 2024 cette entreprise acquerra MFG Technologies , une entreprise Numérique intégrateur des solutions ERP pour les entreprises au Canada.\n\nEn parallèle, il initie en 2021, le Burundian Business Club France, un club d'affaires avec  une communauté engagée de leaders, entrepreneurs, investisseurs et experts, unie par des valeurs de collaboration, d'excellence et d'innovation, pour stimuler le développement économique, et favoriser les partenariats stratégiques"
   },
   {
-    photo: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
+    photo: "/lovable-uploads/d5a062de-bcad-4d5f-9ad1-6a37bd3e6795.png",
     name: "John Okoro",
     title: "Directeur de Growth Energy",
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe",
     bio: "Fort de plus de dix ans d'expérience dans plus de 20 pays d'Afrique subsaharienne et plus de 30 pays à travers le monde, j'ai dirigé des projets d'énergie propre avec des entreprises comme Vergnet SA et le Groupe CMR. Cofondateur de Growth Energy et de Friends of Nigeria, je me consacre à la promotion de solutions d'énergie propre et à la promotion de la collaboration internationale. Passionné par la connexion entre les personnes et les idées, je m'engage à promouvoir la transition énergétique durable en Afrique"
   },
   {
-    photo: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    photo: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
     name: "Laure Duhorane",
     title: "Directrice de Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name",
     bio: "Directrice Générale d'Asking et experte en communication et transformation digitale, Laure accompagne les entreprises dans leur évolution stratégique et digitale. Son expertise en gestion et innovation lui permet d'aider les organisations à optimiser leur impact et à s'adapter aux défis du numérique. Depuis 2024, elle rejoint la direction de MFG Technologies dans le cadre d'une acquisition. Elle y dirige des initiatives de transformation numérique, de recrutement et de développement commercial, aidant les organisations à rationaliser leurs processus et à atteindre la croissance. Elle est également membre du comité exécutif de Solio Group, où elle fait avancer sa vision de stimuler la croissance socio-économique à travers les industries et les communautés africaines à travers la transition vers l'énergie renouvelable et durable. Passionnée par le développement durable, elle allie vision stratégique et expérience pratique pour créer des changements significatifs et favoriser la croissance à long terme des organisations."
   },
   {
-    photo: "/lovable-uploads/1ed3a8e7-9fb3-4c51-ae7b-1ee297f65665.png",
+    photo: "/lovable-uploads/2fe0d17c-a679-4f41-bc00-97efdcc0d1e9.png",
     name: "Isabelle Mauboussin",
     title: "Directrice administratif et financier",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card",
     bio: "Isabelle Mauboussin est la responsable administrative et financière de Solio Group.\nElle a travaillé plus de 30 ans en cabinet d'expertise comptable.\nCes expériences lui ont appris à analyser les états financiers de différentes structures, à les accompagner dans leurs projets de développement et à travailler en confiance dans le respect des normes comptables et fiscales.\nElle aime relever de nouveaux défis et trouver des solutions innovantes pour stimuler la croissance et la performance des entreprises.\nSon objectif est de contribuer activement à la réussite de chaque projet, d'optimiser les processus administratifs et comptables pour en faire un outil de gestion au service du pilotage de la stratégie de Solio Group."
   },
   {
-    photo: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
+    photo: "/lovable-uploads/77184715-9ac1-4778-9f64-2c3be77366eb.png",
     name: "Alain Normand",
     title: "Directeur de Mfg Technologies",
     linkedin: "https://linkedin.com/",
@@ -91,6 +92,23 @@ const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) =>
 };
 
 const ComiteExecutif = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkIsMobile();
+
+    // Add event listener
+    window.addEventListener("resize", checkIsMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
@@ -99,6 +117,25 @@ const ComiteExecutif = () => {
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
             Le COMEX assure la direction stratégique et l'alignement des activités entre les filiales. Il est composé des directeurs de chaque filiale ainsi que de la direction financière du groupe.
           </p>
+          
+          {isMobile && (
+            <Card className="mb-8">
+              <CardContent className="p-4">
+                <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
+                <nav className="flex flex-col space-y-2">
+                  {executives.map((exec) => (
+                    <a 
+                      href={`#exec-${exec.name.toLowerCase().split(' ')[1]}`}
+                      key={exec.name}
+                      className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue"
+                    >
+                      {exec.title}
+                    </a>
+                  ))}
+                </nav>
+              </CardContent>
+            </Card>
+          )}
           
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-3/4">
@@ -111,26 +148,28 @@ const ComiteExecutif = () => {
               </div>
             </div>
             
-            <div className="w-full md:w-1/4 mt-8 md:mt-0">
-              <div className="sticky top-24">
-                <Card>
-                  <CardContent className="p-4">
-                    <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
-                    <nav className="flex flex-col space-y-2">
-                      {executives.map((exec) => (
-                        <a 
-                          href={`#exec-${exec.name.toLowerCase().split(' ')[1]}`}
-                          key={exec.name}
-                          className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue"
-                        >
-                          {exec.title}
-                        </a>
-                      ))}
-                    </nav>
-                  </CardContent>
-                </Card>
+            {!isMobile && (
+              <div className="w-full md:w-1/4 mt-8 md:mt-0">
+                <div className="sticky top-24">
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
+                      <nav className="flex flex-col space-y-2">
+                        {executives.map((exec) => (
+                          <a 
+                            href={`#exec-${exec.name.toLowerCase().split(' ')[1]}`}
+                            key={exec.name}
+                            className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue"
+                          >
+                            {exec.title}
+                          </a>
+                        ))}
+                      </nav>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           
           <div className="mt-12">
