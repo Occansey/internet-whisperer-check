@@ -1,9 +1,10 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, MapPin, Users } from "lucide-react";
+import { Calendar, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import FormModal from "@/components/ui/form-modal";
@@ -170,16 +171,16 @@ const Evenements = () => {
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-4 order-2 lg:order-1">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center text-lg">
-                    <CalendarIcon className="h-5 w-5 mr-2" />
+                    <Calendar className="h-5 w-5 mr-2" />
                     Calendrier des événements
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Calendar
+                  <CalendarComponent
                     mode="single"
                     selected={date}
                     onSelect={setDate}
@@ -230,7 +231,7 @@ const Evenements = () => {
                 </CardFooter>
               </Card>
             </div>
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 order-1 lg:order-2">
               <h2 className="text-2xl font-semibold mb-4">
                 {date ? (
                   `Événements du ${format(date, 'dd MMMM yyyy', { locale: fr })}`

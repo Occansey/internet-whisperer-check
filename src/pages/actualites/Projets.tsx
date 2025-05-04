@@ -115,7 +115,7 @@ const projects: ProjectProps[] = [
     id: 9,
     title: "Développement ATS pour Solio Group",
     description: "Création d'un système de suivi des candidatures (ATS) personnalisé pour les besoins de recrutement du groupe.",
-    image: "/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png",
+    image: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
     progress: 5,
     subsidiary: "asking",
     location: "Paris, France",
@@ -126,7 +126,7 @@ const projects: ProjectProps[] = [
     id: 10,
     title: "KIRA - Première station de recharge solaire en Afrique de l'Est",
     description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
-    image: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
+    image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
     progress: 30,
     subsidiary: "gem",
     location: "Burundi",
@@ -137,7 +137,7 @@ const projects: ProjectProps[] = [
     id: 11,
     title: "Fumba Town: Pionnier de l'indépendance énergétique à Zanzibar",
     description: "À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.",
-    image: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
     progress: 45,
     subsidiary: "growth-energy",
     location: "Zanzibar, Tanzania",
@@ -259,13 +259,15 @@ const Projets = () => {
           </div>
           
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid grid-cols-5 mb-8">
-              <TabsTrigger value="all">Tous</TabsTrigger>
-              <TabsTrigger value="growth-energy">Growth Energy</TabsTrigger>
-              <TabsTrigger value="asking">Asking</TabsTrigger>
-              <TabsTrigger value="mfg-technologies">MFG Technologies</TabsTrigger>
-              <TabsTrigger value="gem">GEM E-Mobility</TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto pb-2">
+              <TabsList className="grid grid-cols-5 mb-8 min-w-[600px]">
+                <TabsTrigger value="all">Tous</TabsTrigger>
+                <TabsTrigger value="growth-energy">Growth Energy</TabsTrigger>
+                <TabsTrigger value="asking">Asking</TabsTrigger>
+                <TabsTrigger value="mfg-technologies">MFG Technologies</TabsTrigger>
+                <TabsTrigger value="gem">GEM E-Mobility</TabsTrigger>
+              </TabsList>
+            </div>
             
             {["all", "growth-energy", "asking", "mfg-technologies", "gem"].map((tab) => (
               <TabsContent key={tab} value={tab} className="mt-0">

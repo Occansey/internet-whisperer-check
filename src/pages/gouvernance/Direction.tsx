@@ -13,49 +13,49 @@ const directeurs: DirecteurProps[] = [
     photo: "/lovable-uploads/38e1e033-0379-4601-873f-710962a35680.png",
     nom: "Evrard Havyarimana",
     titre: "Chief Executive Officer – Group",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24"
   },
   {
     photo: "/lovable-uploads/d322134e-2cfd-4bd7-b6e1-e8ef5660a7dd.png",
     nom: "Isabelle Mauboussin",
     titre: "Directrice Administrative et Financière – Groupe",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card"
   },
   {
     photo: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
     nom: "John Okoro",
     titre: "Chief Executive Officer – Growth Energy",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/e2652189-1139-496f-8649-6600cb193628.png",
+    photo: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png",
     nom: "François Botreau",
     titre: "Chief Technology Officer – Growth Energy",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://fr.linkedin.com/in/francoisbotreau/fr"
   },
   {
     photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
     nom: "Laure Duhorane",
     titre: "Chief Executive Officer – Asking",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
   },
   {
     photo: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png",
     nom: "Alain Normand",
     titre: "Chief Executive Officer – MFG Technologies",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://linkedin.com/"
   },
   {
     photo: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
     nom: "Patrick Charlet",
     titre: "Directeur des Opérations – MFG Technologies",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://linkedin.com/"
   },
   {
-    photo: "/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png",
+    photo: "/lovable-uploads/e93a1839-f754-46da-84f2-581e76c13bb9.png",
     nom: "Nancy Normand",
     titre: "Directrice des Talents – MFG Technologies",
-    linkedin: "https://www.linkedin.com/"
+    linkedin: "https://ca.linkedin.com/in/nancycnormand/fr?trk=people-guest_people_search-card"
   },
 ];
 

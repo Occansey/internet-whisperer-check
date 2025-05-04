@@ -1,7 +1,8 @@
 
-import React from "react";
 import Layout from "@/components/layout/Layout";
 import { Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface ArticleProps {
   id: string;
@@ -12,29 +13,53 @@ interface ArticleProps {
   content: string;
 }
 
-const ArticleDetail: React.FC<{ article: ArticleProps }> = ({ article }) => {
+const ArticleDetail = ({ article }: { article: ArticleProps }) => {
+  const getArticleImage = (id: string) => {
+    if (id === "mfg-technologies-joins-asking") {
+      return "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png";
+    } else if (id === "change-management") {
+      return "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png";
+    }
+    return article.image;
+  };
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
-        <div className="mb-16">
-          <div className="relative h-96">
+        <div className="container max-w-4xl">
+          <div className="mb-6">
+            <Link to="/actualites/communiques">
+              <Button variant="ghost" className="mb-4">
+                ← Retour aux communiqués
+              </Button>
+            </Link>
+            
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-solio-blue">{article.title}</h1>
+            <div className="flex items-center text-sm text-gray-500 mb-8">
+              <Calendar className="mr-2 h-4 w-4" />
+              <span>{article.date}</span>
+            </div>
+          </div>
+          
+          <div className="rounded-lg overflow-hidden shadow-lg mb-8">
             <img 
-              src={article.image} 
+              src={getArticleImage(article.id)} 
               alt={article.title} 
-              className="w-full h-full object-cover"
+              className="w-full h-auto"
             />
           </div>
-          <div className="max-w-4xl mx-auto px-4 -mt-16">
-            <div className="bg-white p-8 shadow-md rounded-lg">
-              <div className="flex items-center text-sm text-gray-500 mb-4">
-                <Calendar className="mr-2 h-4 w-4" />
-                <span>{article.date}</span>
-              </div>
-              <h1 className="text-3xl font-bold mb-6">{article.title}</h1>
-              <div className="prose max-w-none">
-                <p className="whitespace-pre-line">{article.content}</p>
-              </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="prose max-w-none">
+              <p className="text-lg font-medium mb-6">{article.description}</p>
+              <div className="whitespace-pre-line">{article.content}</div>
             </div>
+          </div>
+          
+          <div className="mt-8 text-center">
+            <Button asChild>
+              <Link to="/contact">Nous contacter</Link>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const MissionVisionSection = () => {
   return (
@@ -26,6 +28,11 @@ const MissionVisionSection = () => {
                 <p>
                   Bien que nous soyons un groupe engagé dans la technologie et l'automatisation des processus, nous croyons fermement que la technologie doit être au service de l'humain. Nos solutions sont pensées pour simplifier le quotidien, libérer du temps, améliorer le confort de travail et soutenir une croissance harmonieuse.
                 </p>
+                <div className="flex justify-center mt-6">
+                  <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+                    <Link to="/mission-vision">En savoir plus</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -42,6 +49,11 @@ const MissionVisionSection = () => {
                 <p>
                   Nous envisageons un avenir dans lequel la technologie et l'énergie propre contribuent au progrès humain, en respectant les équilibres sociaux et environnementaux.
                 </p>
+                <div className="flex justify-center mt-6">
+                  <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+                    <Link to="/mission-vision">En savoir plus</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

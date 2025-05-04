@@ -1,5 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const ActivitesSection = () => {
   return (
@@ -39,6 +41,12 @@ const ActivitesSection = () => {
               </p>
             </CardContent>
           </Card>
+        </div>
+        
+        <div className="flex justify-center mt-8">
+          <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+            <Link to="/activites">En savoir plus</Link>
+          </Button>
         </div>
       </div>
     </section>

@@ -23,7 +23,7 @@ const Presentation = () => {
               <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
                 <Link to="/filiales/growth-energy">Découvrir nos filiales</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:text-white hover:bg-solio-blue/20">
                 <Link to="/contact">Nous contacter</Link>
               </Button>
             </div>
@@ -142,7 +142,7 @@ const Presentation = () => {
             <div className="order-1 md:order-2">
               <div className="rounded-lg overflow-hidden shadow-lg">
                 <img 
-                  src="/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png" 
+                  src="/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png" 
                   alt="Solio Group Vision" 
                   className="w-full h-auto"
                 />

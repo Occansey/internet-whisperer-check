@@ -1,9 +1,10 @@
 
+import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Calendar } from "lucide-react";
+import { Calendar, ArrowUpDown, SortDesc, SortAsc } from "lucide-react";
 
 interface ArticleProps {
   id: string;
@@ -54,7 +55,7 @@ Questions? Contact us and join Solio Group for a sustainable and connected futur
     title: "MFG Technologies joins Asking, strengthening Solio Group's presence in Canada",
     date: "5 Mars 2025",
     description: "Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies.",
-    image: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    image: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png",
     content: `Asking Canada, a subsidiary of Solio Group and a specialist in digital tool integration, announces the acquisition of MFG Technologies, a company specializing in Divalto ERP integration for the manufacturing industry in Quebec. This strategic acquisition aligns with Asking's mission to provide value and growth opportunities to businesses by leveraging cutting-edge technologies and innovative solutions.
 
 "The acquisition of MFG Technologies reflects our commitment to expanding our presence in the Canadian market. After collaborating with major energy players in France, Canada was the next challenge for expanding our digital transformation activities. We chose MFG Technologies not only for their expertise but also because of their corporate culture, which perfectly aligns with ours. MFG Technologies is a human-sized company with a strong international outlook. We are thrilled to welcome MFG Technologie's talented team to the Asking family and look forward to succeeding together." Evrard Havyarimana, CEO, Solio Group.
@@ -82,7 +83,7 @@ Founded in 2003, MFG Technologies is a leader in ERP integration, serving the ma
     title: "Change management in the implementation of digital tools",
     date: "14 Février 2025",
     description: "Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.",
-    image: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
+    image: "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png",
     content: `Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.
 
 Without effective change management, these initiatives can be met with significant resistance from employees, leading to delays, budget overruns and, in the worst case, total project failure.
@@ -126,11 +127,20 @@ To facilitate the integration of a new tool while ensuring the well-being of eve
 ];
 
 const ArticleCard = ({ article }: { article: ArticleProps }) => {
+  const getArticleImage = (id: string) => {
+    if (id === "mfg-technologies-joins-asking") {
+      return "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png";
+    } else if (id === "change-management") {
+      return "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png";
+    }
+    return article.image;
+  };
+
   return (
     <Card className="mb-8 overflow-hidden">
       <div className="relative h-64">
         <img 
-          src={article.image} 
+          src={getArticleImage(article.id)} 
           alt={article.title} 
           className="w-full h-full object-cover"
         />
@@ -153,17 +163,52 @@ const ArticleCard = ({ article }: { article: ArticleProps }) => {
 };
 
 const Communiques = () => {
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  
+  const sortedArticles = [...articles].sort((a, b) => {
+    const dateA = new Date(a.date.split(' ').reverse().join('-'));
+    const dateB = new Date(b.date.split(' ').reverse().join('-'));
+    
+    return sortOrder === 'asc' 
+      ? dateA.getTime() - dateB.getTime() 
+      : dateB.getTime() - dateA.getTime();
+  });
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Communiqués</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+          <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
             Découvrez les dernières annonces, partenariats et actualités du groupe Solio.
           </p>
           
+          <div className="flex justify-end mb-6">
+            <Button 
+              variant="outline" 
+              onClick={toggleSortOrder}
+              className="flex items-center gap-2"
+            >
+              {sortOrder === 'asc' ? (
+                <>
+                  <SortAsc className="h-4 w-4" />
+                  Plus anciens en premier
+                </>
+              ) : (
+                <>
+                  <SortDesc className="h-4 w-4" />
+                  Plus récents en premier
+                </>
+              )}
+            </Button>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((article) => (
+            {sortedArticles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>
