@@ -5,8 +5,27 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { ChevronDown } from "lucide-react";
+import { useEffect } from "react";
 
 const Presentation = () => {
+  useEffect(() => {
+    // Add smooth scrolling effect to the page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Cleanup on component unmount
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+  
+  const scrollToNextSection = () => {
+    const heroHeight = document.querySelector('section')?.offsetHeight || 0;
+    window.scrollTo({
+      top: heroHeight,
+      behavior: 'smooth'
+    });
+  };
+  
   return (
     <Layout>
       {/* Hero Section */}
@@ -29,13 +48,16 @@ const Presentation = () => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+        <div 
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer"
+          onClick={scrollToNextSection}
+        >
           <ChevronDown size={32} />
         </div>
       </section>
 
       {/* Notre histoire */}
-      <section className="py-20 bg-white">
+      <section id="histoire" className="py-20 bg-white">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
@@ -67,7 +89,7 @@ const Presentation = () => {
       </section>
 
       {/* Notre impact en chiffres */}
-      <section className="py-20 bg-gray-50">
+      <section id="impact" className="py-20 bg-gray-50">
         <div className="container">
           <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">Notre impact en chiffres</h2>
           
@@ -97,7 +119,7 @@ const Presentation = () => {
       </section>
 
       {/* Pourquoi Solio? */}
-      <section className="py-20 bg-white">
+      <section id="pourquoi" className="py-20 bg-white">
         <div className="container">
           <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Pourquoi Solio?</h2>
           <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">

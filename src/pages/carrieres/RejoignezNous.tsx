@@ -1,9 +1,11 @@
+
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Calendar, Briefcase, Clock } from "lucide-react";
 import FormModal from "@/components/ui/form-modal";
+import { useEffect, useState } from "react";
 
 interface JobOfferProps {
   id: number;
@@ -238,6 +240,19 @@ const valuePropositions = [
 ];
 
 const RejoignezNous = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
@@ -267,13 +282,13 @@ const RejoignezNous = () => {
             <h2 className="text-2xl font-bold mb-6">Nos offres d'emploi</h2>
             
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid grid-cols-6 mb-8">
-                <TabsTrigger value="all">Toutes</TabsTrigger>
-                <TabsTrigger value="solio-group">Solio Group</TabsTrigger>
-                <TabsTrigger value="growth-energy">Growth Energy</TabsTrigger>
-                <TabsTrigger value="asking">Asking</TabsTrigger>
-                <TabsTrigger value="mfg-technologies">MFG Technologies</TabsTrigger>
-                <TabsTrigger value="gem">GEM</TabsTrigger>
+              <TabsList className={`grid ${isMobile ? "grid-cols-3 gap-1 overflow-x-auto flex-wrap" : "grid-cols-6"} mb-8`}>
+                <TabsTrigger value="all" className="text-xs md:text-sm whitespace-nowrap">Toutes</TabsTrigger>
+                <TabsTrigger value="solio-group" className="text-xs md:text-sm whitespace-nowrap">Solio Group</TabsTrigger>
+                <TabsTrigger value="growth-energy" className="text-xs md:text-sm whitespace-nowrap">Growth Energy</TabsTrigger>
+                <TabsTrigger value="asking" className="text-xs md:text-sm whitespace-nowrap">Asking</TabsTrigger>
+                <TabsTrigger value="mfg-technologies" className="text-xs md:text-sm whitespace-nowrap">MFG Tech</TabsTrigger>
+                <TabsTrigger value="gem" className="text-xs md:text-sm whitespace-nowrap">GEM</TabsTrigger>
               </TabsList>
               
               {["all", "solio-group", "growth-energy", "asking", "mfg-technologies", "gem"].map((tab) => (

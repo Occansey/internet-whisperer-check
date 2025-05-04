@@ -2,6 +2,7 @@
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, useEffect } from "react";
 
 interface EngagementProps {
   title: string;
@@ -165,6 +166,19 @@ const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
 };
 
 const EngagementsRH = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
@@ -175,11 +189,11 @@ const EngagementsRH = () => {
           </p>
           
           <Tabs defaultValue="developpement" className="w-full">
-            <TabsList className="grid grid-cols-4 mb-8">
-              <TabsTrigger value="developpement">Développement professionnel</TabsTrigger>
-              <TabsTrigger value="bienetre">Bien-être au travail</TabsTrigger>
-              <TabsTrigger value="diversite">Diversité & Inclusion</TabsTrigger>
-              <TabsTrigger value="engagement">Sens & Engagement</TabsTrigger>
+            <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1" : "grid-cols-4"} mb-8`}>
+              <TabsTrigger value="developpement" className="text-xs md:text-sm">Développement</TabsTrigger>
+              <TabsTrigger value="bienetre" className="text-xs md:text-sm">Bien-être</TabsTrigger>
+              <TabsTrigger value="diversite" className="text-xs md:text-sm">Diversité</TabsTrigger>
+              <TabsTrigger value="engagement" className="text-xs md:text-sm">Engagement</TabsTrigger>
             </TabsList>
             
             {Object.keys(engagements).map((key) => (
