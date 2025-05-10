@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import MissionVision from './pages/MissionVision';
@@ -12,15 +13,15 @@ import Filiales from './pages/filiales/Filiales';
 import NosFiliales from './pages/filiales/NosFiliales';
 import Direction from './pages/gouvernance/Direction';
 import Contact from './pages/Contact';
-import GrowthEnergy from './pages/filiales/GrowthEnergy';
-import Asking from './pages/filiales/Asking';
-import MFGTechnologies from './pages/filiales/MFGTechnologies';
-import GEMMobility from './pages/filiales/GEMMobility';
-import CultureEntreprise from './pages/CultureEntreprise';
-import DomainesActivite from './pages/DomainesActivite';
-import CommuniqueDetail from './pages/actualites/CommuniqueDetail';
-import EventDetail from './pages/actualites/EventDetail';
-import ProjectDetail from './pages/actualites/ProjectDetail';
+import GrowthEnergyPage from './pages/filiales/GrowthEnergyPage';
+import AskingPage from './pages/filiales/AskingPage';
+import MfgPage from './pages/filiales/MfgPage';
+import GemPage from './pages/filiales/GemPage';
+import Culture from './pages/Culture';
+import Activites from './pages/Activites';
+import CommuniqueDetail from './components/articles/ArticleDetail';
+import EventDetail from './components/events/EventDetail';
+import ProjectDetail from './components/projects/ProjectDetail';
 
 function App() {
   return (
@@ -42,12 +43,12 @@ function App() {
         <Route path="/nos-filiales" element={<NosFiliales />} />
         <Route path="/gouvernance/direction" element={<Direction />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/filiales/growth-energy" element={<GrowthEnergy />} />
-        <Route path="/filiales/asking" element={<Asking />} />
-        <Route path="/filiales/mfg-technologies" element={<MFGTechnologies />} />
-        <Route path="/filiales/gem-e-mobility" element={<GEMMobility />} />
-        <Route path="/culture-entreprise" element={<CultureEntreprise />} />
-        <Route path="/domaines-activite" element={<DomainesActivite />} />
+        <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
+        <Route path="/filiales/asking" element={<AskingPage />} />
+        <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
+        <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
+        <Route path="/culture" element={<Culture />} />
+        <Route path="/activites" element={<Activites />} />
       </Routes>
     </Router>
   );
