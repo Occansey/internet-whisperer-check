@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type EventType = "upcoming" | "past" | "spotlight";
 
@@ -22,7 +23,7 @@ interface EventProps {
   tags?: string[];
 }
 
-const events: EventProps[] = [
+export const events: EventProps[] = [
   {
     id: 1,
     title: "Salon de la Mobilité Électrique",

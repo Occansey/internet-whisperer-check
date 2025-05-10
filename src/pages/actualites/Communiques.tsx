@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +16,7 @@ interface ArticleProps {
   tags: string[];
 }
 
-const articles: ArticleProps[] = [
+export const articles: ArticleProps[] = [
   {
     id: "growth-supply-becomes-solio",
     title: "Growth Supply becomes Solio Group: for a solar and connected future",
@@ -80,7 +79,7 @@ The company also specializes in the extraction and valorization of digital data 
 
 About MFG Technologies
 
-Founded in 2003, MFG Technologies is a leader in ERP integration, serving the manufacturing industry in Quebec. With over 20 years of experience and more than 75 successful ERP software implementations, MFG Technologies has built a reputation for excellence and reliability.`
+Founded in 2003, MFG Technologies is a leader in ERP integration, serving the manufacturing industry in Quebec. With over 20 years of experience and more than 75 successful ERP software implementations, MFG Technologies has built a reputation for excellence and reliability.
   },
   {
     id: "change-management",

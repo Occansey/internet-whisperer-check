@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -20,7 +21,7 @@ interface ProjectProps {
   location: string;
 }
 
-const projects: ProjectProps[] = [
+export const projects: ProjectProps[] = [
   {
     id: 1,
     title: "CNI Télécom - Econet Leo",
