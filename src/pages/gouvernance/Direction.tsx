@@ -66,7 +66,7 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
         <img 
           src={photo} 
           alt={nom} 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
       </div>
       <div className="p-6">
@@ -76,7 +76,7 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
           href={linkedin} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-solio-blue hover:text-white hover:bg-solio-blue px-3 py-1 rounded transition-colors inline-flex items-center"
+          className="solio-button"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
             <path 

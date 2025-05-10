@@ -24,6 +24,7 @@ import Evenements from "./pages/actualites/Evenements";
 import RejoignezNous from "./pages/carrieres/RejoignezNous";
 import EngagementsRH from "./pages/carrieres/EngagementsRH";
 import ArticleDetail from "./components/articles/ArticleDetail";
+import Certifications from "./pages/Certifications";
 
 const queryClient = new QueryClient();
 
@@ -160,6 +161,7 @@ const App = () => (
           <Route path="/mission-vision" element={<MissionVision />} />
           <Route path="/culture" element={<Culture />} />
           <Route path="/activites" element={<Activites />} />
+          <Route path="/certifications" element={<Certifications />} />
           
           {/* Gouvernance routes */}
           <Route path="/gouvernance/direction" element={<Direction />} />

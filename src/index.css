@@ -74,6 +74,9 @@
   body {
     @apply bg-background text-foreground scroll-smooth;
   }
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer components {

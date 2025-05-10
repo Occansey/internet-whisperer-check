@@ -33,7 +33,7 @@ const Footer = ({ className }: FooterProps) => {
             <h3 className="text-lg font-oval font-semibold mb-4">Contact</h3>
             <address className="not-italic text-sm text-gray-300">
               <p className="font-semibold mb-2">France</p>
-              <p>4 Rue De Longchamp, 75016, Paris</p>
+              <p>Paris, 4 Rue De Longchamp, 75016</p>
               <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
               
               <p className="font-semibold mt-4 mb-2">Canada</p>

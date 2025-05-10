@@ -95,6 +95,12 @@ const Header = () => {
                     >
                       Transition énergétique et transformation digitale
                     </ListItem>
+                    <ListItem
+                      href="/certifications"
+                      title="Nos certifications"
+                    >
+                      Les reconnaissances de notre expertise
+                    </ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -178,9 +184,9 @@ const Header = () => {
                     </ListItem>
                     <ListItem
                       href="/actualites/evenements"
-                      title="Événements à venir"
+                      title="Événements"
                     >
-                      Forums, conférences et webinaires
+                      Événements passés et à venir
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
@@ -223,7 +229,7 @@ const Header = () => {
         <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="Menu">
                 <Menu className="h-8 w-8" />
                 <span className="sr-only">Menu</span>
               </Button>
@@ -241,6 +247,7 @@ const Header = () => {
                         <MobileMenuItem to="/mission-vision">Notre mission & vision</MobileMenuItem>
                         <MobileMenuItem to="/culture">Notre culture d'entreprise</MobileMenuItem>
                         <MobileMenuItem to="/activites">Nos domaines d'activité</MobileMenuItem>
+                        <MobileMenuItem to="/certifications">Nos certifications</MobileMenuItem>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -273,7 +280,7 @@ const Header = () => {
                       <div className="flex flex-col space-y-2">
                         <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
                         <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
-                        <MobileMenuItem to="/actualites/evenements">Événements à venir</MobileMenuItem>
+                        <MobileMenuItem to="/actualites/evenements">Événements</MobileMenuItem>
                       </div>
                     </AccordionContent>
                   </AccordionItem>

@@ -1,259 +1,254 @@
 
-import { useState } from "react";
+import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users } from "lucide-react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import FormModal from "@/components/ui/form-modal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock, MapPin } from "lucide-react";
+
+type EventType = "upcoming" | "past" | "spotlight";
 
 interface EventProps {
   id: number;
   title: string;
   description: string;
-  date: Date;
+  type: EventType;
+  date: string;
+  time?: string;
   location: string;
-  image: string;
-  type: "conference" | "webinar" | "meetup" | "workshop";
-  attendees: number;
+  image?: string;
+  link?: string;
+  tags?: string[];
 }
 
 const events: EventProps[] = [
   {
     id: 1,
-    title: "Conférence sur la Transition Énergétique",
-    description: "Joignez-vous à nous pour discuter des dernières innovations en matière d'énergie solaire pour les entreprises.",
-    date: new Date(2025, 4, 15), // 15 mai 2025
-    location: "Paris, France",
-    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1000",
-    type: "conference",
-    attendees: 150
+    title: "Salon de la Mobilité Électrique",
+    description: "Découvrez les dernières innovations en matière de mobilité électrique et rencontrez notre équipe pour discuter des opportunités de collaboration.",
+    type: "upcoming",
+    date: "10 juin 2025",
+    time: "9:00 - 18:00",
+    location: "Nairobi, Kenya",
+    image: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    link: "#",
+    tags: ["Mobilité", "Innovation", "Afrique"]
   },
   {
     id: 2,
-    title: "Webinaire: L'IA au service de la gestion de données",
-    description: "Découvrez comment l'intelligence artificielle peut optimiser la gestion et l'analyse de vos données d'entreprise.",
-    date: new Date(2025, 4, 22), // 22 mai 2025
+    title: "Webinaire : Transformer votre entreprise avec Divalto",
+    description: "MFG Technologies présente les avantages et fonctionnalités de l'ERP Divalto pour les entreprises manufacturières.",
+    type: "past",
+    date: "15 avril 2025",
+    time: "14:00 - 15:30",
     location: "En ligne",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000",
-    type: "webinar",
-    attendees: 300
+    image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
+    link: "#",
+    tags: ["ERP", "Digital", "Industrie"]
   },
   {
     id: 3,
-    title: "Forum des Technologies ERP",
-    description: "Un événement dédié aux solutions ERP pour le secteur manufacturier avec démonstrations et études de cas.",
-    date: new Date(2025, 5, 10), // 10 juin 2025
-    location: "Montréal, Canada",
-    image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1000",
-    type: "meetup",
-    attendees: 120
+    title: "Energy Talks: L'avenir de l'énergie solaire en Afrique",
+    description: "John Okoro, directeur de Growth Energy, partagera sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique.",
+    type: "spotlight",
+    date: "22 mars 2025",
+    time: "10:00 - 12:00",
+    location: "Nairobi, Kenya",
+    image: "/lovable-uploads/631ac8fc-0af4-4b0c-832f-4968e67b872c.png",
+    link: "#",
+    tags: ["Énergie", "Développement durable", "Afrique"]
   },
   {
     id: 4,
-    title: "Atelier: Optimisation de vos infrastructures de recharge",
-    description: "Session pratique pour optimiser les infrastructures de recharge pour véhicules électriques en entreprise.",
-    date: new Date(2025, 5, 18), // 18 juin 2025
-    location: "Lyon, France",
-    image: "https://images.unsplash.com/photo-1593941707882-a5bba13ida5175245?q=80&w=1000",
-    type: "workshop",
-    attendees: 40
+    title: "Evrard Havyarimana sur BFM TV",
+    description: "Interview d'Evrard Havyarimana, Président de Solio Group, sur les opportunités d'investissement dans l'énergie renouvelable en Afrique.",
+    type: "spotlight",
+    date: "18 février 2025",
+    time: "19:30",
+    location: "BFM Business",
+    image: "/lovable-uploads/e2652189-1139-496f-8649-6600cb193628.png",
+    link: "#",
+    tags: ["Médias", "Investissement", "Leadership"]
   },
   {
     id: 5,
-    title: "Salon International des Énergies Renouvelables",
-    description: "Growth Energy présente ses solutions solaires pour l'industrie lors de ce salon international.",
-    date: new Date(2025, 6, 5), // 5 juillet 2025
-    location: "Berlin, Allemagne",
-    image: "https://images.unsplash.com/photo-1497215842964-222b430dc094?q=80&w=1000",
-    type: "conference",
-    attendees: 500
+    title: "Powerlec: Salon international de l'électricité",
+    description: "Growth Energy présentera ses solutions innovantes pour l'électrification rurale et les installations solaires industrielles.",
+    type: "upcoming",
+    date: "5-7 septembre 2025",
+    location: "Paris, France",
+    image: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
+    tags: ["Énergie", "International", "Innovation"]
   },
   {
     id: 6,
-    title: "Journée Tech: Digitalisation des processus industriels",
-    description: "Une journée d'échanges sur la transformation numérique des processus industriels avec MFG Technologies.",
-    date: new Date(2025, 7, 12), // 12 août 2025
-    location: "Marseille, France",
-    image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=1000",
-    type: "meetup",
-    attendees: 75
+    title: "Algora Allianz avec Laura",
+    description: "Laura Duhorane participe à une table ronde sur l'intelligence des données et son impact sur la transformation des entreprises.",
+    type: "past",
+    date: "27 janvier 2025",
+    time: "15:00 - 17:00",
+    location: "Paris, France",
+    image: "/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png",
+    tags: ["IA", "Données", "Transformation"]
+  },
+  {
+    id: 7,
+    title: "Programme de Mentorat Québec",
+    description: "MFG Technologies lance son programme de mentorat pour accompagner les jeunes professionnels du secteur de l'industrie manufacturière.",
+    type: "past",
+    date: "1 février 2025",
+    location: "Montréal, Canada",
+    image: "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png",
+    tags: ["Formation", "Industrie", "Mentorat"]
+  },
+  {
+    id: 8,
+    title: "E-mobility Forum avec Purity",
+    description: "Purity représentera GEM E-Mobility lors de ce forum dédié à l'avenir de la mobilité électrique en Afrique de l'Est.",
+    type: "upcoming",
+    date: "14 juillet 2025",
+    time: "9:00 - 18:00",
+    location: "Nairobi, Kenya",
+    image: "/lovable-uploads/2fe0d17c-a679-4f41-bc00-97efdcc0d1e9.png",
+    tags: ["Mobilité", "Innovation", "Afrique"]
   }
 ];
 
-const getEventDates = (events: EventProps[]): Date[] => {
-  return events.map(event => event.date);
-};
-
-const getTypeColor = (type: string): string => {
-  switch (type) {
-    case 'conference':
-      return 'bg-blue-100 text-blue-800';
-    case 'webinar':
-      return 'bg-green-100 text-green-800';
-    case 'meetup':
-      return 'bg-purple-100 text-purple-800';
-    case 'workshop':
-      return 'bg-orange-100 text-orange-800';
-    default:
-      return 'bg-gray-100 text-gray-800';
-  }
-};
-
 const EventCard = ({ event }: { event: EventProps }) => {
   return (
-    <Card className="overflow-hidden">
-      <div className="h-48 overflow-hidden">
-        <img 
-          src={event.image} 
-          alt={event.title} 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <CardHeader className="pb-2">
+    <Card className="h-full flex flex-col overflow-hidden">
+      {event.image && (
+        <div className="h-48 overflow-hidden">
+          <img 
+            src={event.image} 
+            alt={event.title} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      <CardHeader>
         <div className="flex justify-between items-start">
-          <Badge variant="outline" className={getTypeColor(event.type)}>
-            {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+          <Badge variant="outline" className={
+            event.type === "upcoming" ? "bg-green-100 text-green-800" :
+            event.type === "spotlight" ? "bg-yellow-100 text-yellow-800" :
+            "bg-blue-100 text-blue-800"
+          }>
+            {event.type === "upcoming" ? "À venir" :
+             event.type === "spotlight" ? "Spotlight" :
+             "Passé"}
           </Badge>
-          <div className="text-sm text-gray-500">
-            {format(event.date, 'dd MMMM yyyy', { locale: fr })}
+          <div className="flex items-center text-sm text-gray-500">
+            <Calendar className="mr-1 h-4 w-4" />
+            {event.date}
           </div>
         </div>
-        <CardTitle className="text-lg mt-2">{event.title}</CardTitle>
+        <CardTitle className="mt-2">{event.title}</CardTitle>
+        <CardDescription className="flex flex-col gap-1">
+          {event.time && (
+            <span className="flex items-center">
+              <Clock className="mr-1 h-4 w-4" />
+              {event.time}
+            </span>
+          )}
+          <span className="flex items-center">
+            <MapPin className="mr-1 h-4 w-4" />
+            {event.location}
+          </span>
+        </CardDescription>
       </CardHeader>
-      <CardContent className="pt-0">
-        <CardDescription className="text-sm">{event.description}</CardDescription>
-        <div className="flex items-center mt-4 text-sm text-gray-500">
-          <MapPin className="h-4 w-4 mr-1" />
-          <span>{event.location}</span>
-        </div>
-        <div className="flex items-center mt-2 text-sm text-gray-500">
-          <Users className="h-4 w-4 mr-1" />
-          <span>{event.attendees} participants attendus</span>
-        </div>
+      <CardContent className="flex-grow">
+        <p className="text-gray-700">{event.description}</p>
+        {event.tags && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {event.tags.map((tag, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
       </CardContent>
       <CardFooter>
-        <FormModal 
-          type="inscription" 
-          eventTitle={event.title}
-          variant="outline" 
-          className="w-full"
-        >
-          S'inscrire
-        </FormModal>
+        {event.link && (
+          <Button variant="solio" className="w-full">
+            En savoir plus
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
 };
 
 const Evenements = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const eventDates = getEventDates(events);
-  
-  const filteredEvents = date 
-    ? events.filter(event => 
-        event.date.getDate() === date.getDate() && 
-        event.date.getMonth() === date.getMonth() && 
-        event.date.getFullYear() === date.getFullYear()
-      )
-    : events;
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterEvents = (type: string) => {
+    let filtered = [...events];
+    
+    if (type !== "all") {
+      filtered = filtered.filter(event => event.type === type);
+    }
+    
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        event => 
+          event.title.toLowerCase().includes(term) ||
+          event.description.toLowerCase().includes(term) ||
+          event.location.toLowerCase().includes(term) ||
+          (event.tags && event.tags.some(tag => tag.toLowerCase().includes(term)))
+      );
+    }
+    
+    return filtered;
+  };
 
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Événements à venir</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Événements</h1>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Participez à nos prochains événements : forums, conférences et webinaires pour rester à la pointe de l'innovation.
+            Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias.
           </p>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-4 order-2 lg:order-1">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    <Calendar className="h-5 w-5 mr-2" />
-                    Calendrier des événements
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CalendarComponent
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="border rounded-md p-2"
-                    modifiers={{
-                      hasEvent: eventDates
-                    }}
-                    modifiersStyles={{
-                      hasEvent: { 
-                        fontWeight: 'bold',
-                        backgroundColor: 'rgb(var(--solio-blue) / 0.1)',
-                        color: 'hsl(var(--solio-blue))',
-                        boxShadow: '0 0 0 2px hsl(var(--solio-blue))'
-                      }
-                    }}
-                  />
-                  
-                  <div className="mt-4">
-                    <h3 className="font-medium mb-2">Légende</h3>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div className="flex items-center">
-                        <span className="h-3 w-3 rounded-full bg-blue-500 mr-2"></span>
-                        <span className="text-sm">Conférence</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="h-3 w-3 rounded-full bg-green-500 mr-2"></span>
-                        <span className="text-sm">Webinaire</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="h-3 w-3 rounded-full bg-purple-500 mr-2"></span>
-                        <span className="text-sm">Meetup</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="h-3 w-3 rounded-full bg-orange-500 mr-2"></span>
-                        <span className="text-sm">Atelier</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setDate(new Date())}
-                    className="w-full"
-                  >
-                    Réinitialiser
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-            <div className="lg:col-span-8 order-1 lg:order-2">
-              <h2 className="text-2xl font-semibold mb-4">
-                {date ? (
-                  `Événements du ${format(date, 'dd MMMM yyyy', { locale: fr })}`
-                ) : (
-                  "Tous les événements à venir"
-                )}
-              </h2>
-              
-              {filteredEvents.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredEvents.map((event) => (
-                    <EventCard key={event.id} event={event} />
-                  ))}
-                </div>
-              ) : (
-                <Card className="p-8 text-center">
-                  <p className="text-gray-500 mb-4">Aucun événement prévu pour cette date.</p>
-                  <Button onClick={() => setDate(undefined)}>Voir tous les événements</Button>
-                </Card>
-              )}
-            </div>
+
+          <div className="mb-8">
+            <input
+              type="text"
+              placeholder="Rechercher un événement..."
+              className="w-full p-3 border rounded-lg"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
+          
+          <Tabs defaultValue="all" className="w-full">
+            <div className="overflow-x-auto pb-2">
+              <TabsList className="flex flex-nowrap mb-8 w-full md:flex md:justify-center max-w-full overflow-x-auto">
+                <TabsTrigger value="all" className="whitespace-nowrap px-4">Tous</TabsTrigger>
+                <TabsTrigger value="upcoming" className="whitespace-nowrap px-4">À venir</TabsTrigger>
+                <TabsTrigger value="past" className="whitespace-nowrap px-4">Événements passés</TabsTrigger>
+                <TabsTrigger value="spotlight" className="whitespace-nowrap px-4">Spotlight</TabsTrigger>
+              </TabsList>
+            </div>
+            
+            {["all", "upcoming", "past", "spotlight"].map((tab) => (
+              <TabsContent key={tab} value={tab} className="mt-0">
+                {filterEvents(tab).length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filterEvents(tab).map((event) => (
+                      <EventCard key={event.id} event={event} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-lg text-gray-500">Aucun événement trouvé pour votre recherche.</p>
+                  </div>
+                )}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </div>
     </Layout>

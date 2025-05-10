@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { Calendar, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -18,11 +18,27 @@ interface ProjectProps {
   progress: number; // 0-100
   subsidiary: ProjectSubsidiary;
   location: string;
-  startDate: string;
-  endDate: string;
 }
 
 const projects: ProjectProps[] = [
+  {
+    id: 1,
+    title: "CNI Télécom - Econet Leo",
+    description: "Déploiement d'une solution solaire pour alimenter les infrastructures de télécommunication d'Econet Leo, réduisant ainsi la dépendance aux générateurs diesel.",
+    image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
+    progress: 75,
+    subsidiary: "growth-energy",
+    location: "Burundi"
+  },
+  {
+    id: 2,
+    title: "CNI Industriel",
+    description: "Installation d'un système solaire photovoltaïque pour une grande unité industrielle, permettant de réduire considérablement les coûts énergétiques et les émissions de CO2.",
+    image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
+    progress: 60,
+    subsidiary: "growth-energy",
+    location: "Burundi"
+  },
   {
     id: 3,
     title: "Intégration ERP Divalto - Manufacture textile",
@@ -30,9 +46,34 @@ const projects: ProjectProps[] = [
     image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=1000",
     progress: 40,
     subsidiary: "mfg-technologies",
-    location: "Montréal, Canada",
-    startDate: "Avril 2025",
-    endDate: "Décembre 2025"
+    location: "Montréal, Canada"
+  },
+  {
+    id: 4,
+    title: "ESME Solar Plant",
+    description: "Conception et installation d'une centrale solaire de 2MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
+    image: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
+    progress: 30,
+    subsidiary: "growth-energy",
+    location: "Nigeria"
+  },
+  {
+    id: 5,
+    title: "ATS Solio Group",
+    description: "Développement d'un système de suivi des candidatures (ATS) personnalisé pour améliorer le processus de recrutement du groupe, avec l'implication active de Purity sur le projet Nor.",
+    image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
+    progress: 25,
+    subsidiary: "asking",
+    location: "France/Kenya"
+  },
+  {
+    id: 6,
+    title: "Projet solaire industriel Tanzanie",
+    description: "Installation d'une solution solaire pour une usine de traitement alimentaire, optimisant les coûts énergétiques et améliorant la durabilité des opérations.",
+    image: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
+    progress: 20,
+    subsidiary: "growth-energy",
+    location: "Tanzanie"
   },
   {
     id: 7,
@@ -41,42 +82,25 @@ const projects: ProjectProps[] = [
     image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1000",
     progress: 50,
     subsidiary: "mfg-technologies",
-    location: "Québec, Canada",
-    startDate: "Mars 2025",
-    endDate: "Octobre 2025"
+    location: "Québec, Canada"
+  },
+  {
+    id: 8,
+    title: "Fumba Town: Pionnier de l'indépendance énergétique",
+    description: "À Fumba Town, Zanzibar, nous développons une communauté 100% indépendante énergétiquement en collaboration avec CPS Africa, un leader du développement urbain durable.",
+    image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
+    progress: 45,
+    subsidiary: "growth-energy",
+    location: "Zanzibar, Tanzania"
   },
   {
     id: 9,
-    title: "Développement ATS pour Solio Group",
-    description: "Création d'un système de suivi des candidatures (ATS) personnalisé pour les besoins de recrutement du groupe.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000",
-    progress: 5,
-    subsidiary: "asking",
-    location: "Paris, France",
-    startDate: "Mai 2025",
-    endDate: "Juin 2025"
-  },
-  {
-    id: 10,
-    title: "KIRA - Première station de recharge solaire en Afrique de l'Est",
+    title: "KIRA - Station de recharge solaire",
     description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
     image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
     progress: 30,
     subsidiary: "gem",
-    location: "Burundi",
-    startDate: "Avril 2025",
-    endDate: "Octobre 2025"
-  },
-  {
-    id: 11,
-    title: "Fumba Town: Pionnier de l'indépendance énergétique à Zanzibar",
-    description: "À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.",
-    image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
-    progress: 45,
-    subsidiary: "growth-energy",
-    location: "Zanzibar, Tanzania",
-    startDate: "Septembre 2024",
-    endDate: "Juin 2027"
+    location: "Burundi"
   }
 ];
 
@@ -135,16 +159,9 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-sm text-gray-700">{project.description}</p>
-        <div className="flex justify-between mt-4 text-sm text-gray-500">
-          <div className="flex items-center">
-            <Calendar className="h-4 w-4 mr-1" />
-            <span>Début: {project.startDate}</span>
-          </div>
-          <div>Fin: {project.endDate}</div>
-        </div>
       </CardContent>
       <CardFooter className="flex-initial">
-        <Button variant="outline" className="w-full">Détails du projet</Button>
+        <Button variant="solio" className="w-full">Détails du projet</Button>
       </CardFooter>
     </Card>
   );
@@ -194,12 +211,12 @@ const Projets = () => {
           
           <Tabs defaultValue="all" className="w-full">
             <div className="overflow-x-auto pb-2">
-              <TabsList className="flex flex-wrap mb-8 w-full md:grid md:grid-cols-5">
-                <TabsTrigger value="all" className="flex-1 md:flex-none">Tous</TabsTrigger>
-                <TabsTrigger value="growth-energy" className="flex-1 md:flex-none">Growth Energy</TabsTrigger>
-                <TabsTrigger value="asking" className="flex-1 md:flex-none">Asking</TabsTrigger>
-                <TabsTrigger value="mfg-technologies" className="flex-1 md:flex-none">MFG Technologies</TabsTrigger>
-                <TabsTrigger value="gem" className="flex-1 md:flex-none">GEM E-Mobility</TabsTrigger>
+              <TabsList className="flex flex-nowrap mb-8 w-full md:flex md:justify-between max-w-full overflow-x-auto">
+                <TabsTrigger value="all" className="flex-1 whitespace-nowrap px-4">Tous</TabsTrigger>
+                <TabsTrigger value="growth-energy" className="flex-1 whitespace-nowrap px-4">Growth Energy</TabsTrigger>
+                <TabsTrigger value="asking" className="flex-1 whitespace-nowrap px-4">Asking</TabsTrigger>
+                <TabsTrigger value="mfg-technologies" className="flex-1 whitespace-nowrap px-4">MFG Technologies</TabsTrigger>
+                <TabsTrigger value="gem" className="flex-1 whitespace-nowrap px-4">GEM E-Mobility</TabsTrigger>
               </TabsList>
             </div>
             
