@@ -156,6 +156,15 @@ const CommuniqueDetail = () => {
                     else if (tag === "growth-energy") bgClass = "bg-yellow-100 text-yellow-800";
                     else if (tag === "asking") bgClass = "bg-blue-100 text-blue-800";
                     else if (tag === "mfg-technologies") bgClass = "bg-purple-100 text-purple-800";
+                    else if (tag === "gem") bgClass = "bg-green-100 text-green-800";
+                    else if (tag === "africa") bgClass = "bg-orange-100 text-orange-800";
+                    else if (tag === "digital") bgClass = "bg-indigo-100 text-indigo-800";
+                    else if (tag === "partnership") bgClass = "bg-pink-100 text-pink-800";
+                    else if (tag === "award") bgClass = "bg-amber-100 text-amber-800";
+                    else if (tag === "expansion") bgClass = "bg-cyan-100 text-cyan-800";
+                    else if (tag === "innovation") bgClass = "bg-emerald-100 text-emerald-800";
+                    else if (tag === "solar") bgClass = "bg-red-100 text-red-800";
+                    else if (tag === "e-mobility") bgClass = "bg-lime-100 text-lime-800";
                     
                     return (
                       <Badge key={index} className={bgClass}>
