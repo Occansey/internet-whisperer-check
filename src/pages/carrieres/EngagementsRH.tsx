@@ -228,16 +228,16 @@ const EngagementsRH = () => {
             <h2 className="text-2xl font-bold mb-4">Notre approche RH en chiffres</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-4xl font-bold text-solio-blue">35</div>
-                <p className="text-gray-600 mt-2">Heures de formation par collaborateur/an</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">45%</div>
                 <p className="text-gray-600 mt-2">De femmes dans nos équipes</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">14</div>
                 <p className="text-gray-600 mt-2">Nationalités représentées</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="text-4xl font-bold text-solio-blue">6</div>
+                <p className="text-gray-600 mt-2">Villes dans 5 pays</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">87%</div>

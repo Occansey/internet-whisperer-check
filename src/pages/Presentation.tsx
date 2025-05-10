@@ -63,17 +63,17 @@ const Presentation = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-solio-blue">Notre histoire</h2>
               <p className="text-gray-700 mb-4">
-                Solio Group est né en 2025, prenant la suite de Growth Supply, fondée six ans plus tôt avec une mission ambitieuse : accélérer la transition énergétique en Afrique et faciliter la transformation numérique des organisations. Cette nouvelle identité reflète notre vision élargie et notre engagement à offrir des solutions durables et technologiques pour un avenir meilleur.
+                Solio Group est l'évolution naturelle de Growth Supply, une entreprise fondée en 2019 avec une mission ambitieuse : accélérer la transition énergétique en Afrique et accompagner la transformation numérique des organisations. En 2025, ce changement d'identité marque une nouvelle étape dans notre développement, reflétant notre vision élargie et notre engagement renforcé à proposer des solutions durables et technologiques pour un avenir meilleur.
               </p>
               <p className="text-gray-700 mb-4">
-                Notre expertise s'est développée autour de deux axes stratégiques complémentaires :
+                Notre expertise s'articule autour de deux axes stratégiques complémentaires :
               </p>
               <ul className="list-disc pl-5 text-gray-700 mb-6">
                 <li className="mb-2">
-                  <span className="font-semibold">La transition énergétique</span> : Nous avons sécurisé plus de 15 millions USD d'investissements et lancé une trentaine de projets solaires à travers cinq pays africains, fournissant une énergie propre et fiable à des milliers de foyers et d'entreprises.
+                  <span className="font-semibold">Transition énergétique</span> : Nous avons mobilisé plus de 15 millions USD d'investissements et lancé une trentaine de projets solaires dans cinq pays africains, fournissant une énergie propre et fiable à des milliers de foyers et d'entreprises.
                 </li>
                 <li>
-                  <span className="font-semibold">La transformation digitale</span> : L'acquisition de MFG Technologies au Canada et la création de notre filiale Asking, spécialisée dans la visualisation et l'analyse de données, nous ont ouvert de nouvelles opportunités en Amérique du Nord et en Europe.
+                  <span className="font-semibold">Transformation digitale</span> : L'acquisition de MFG Technologies au Canada et la création de notre filiale Asking, spécialisée dans la visualisation et l'analyse de données, ont élargi notre présence en Amérique du Nord et en Europe, ouvrant de nouvelles perspectives de croissance.
                 </li>
               </ul>
             </div>

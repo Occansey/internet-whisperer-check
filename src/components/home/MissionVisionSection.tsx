@@ -11,9 +11,10 @@ const MissionVisionSection = () => {
         <h2 className="text-3xl font-bold text-center mb-12">Notre mission & vision</h2>
         
         <Tabs defaultValue="mission" className="max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="mission">Notre mission</TabsTrigger>
             <TabsTrigger value="vision">Notre vision</TabsTrigger>
+            <TabsTrigger value="objectifs">Nos objectifs</TabsTrigger>
           </TabsList>
           <TabsContent value="mission">
             <Card>
@@ -29,7 +30,7 @@ const MissionVisionSection = () => {
                   Bien que nous soyons un groupe engagé dans la technologie et l'automatisation des processus, nous croyons fermement que la technologie doit être au service de l'humain. Nos solutions sont pensées pour simplifier le quotidien, libérer du temps, améliorer le confort de travail et soutenir une croissance harmonieuse.
                 </p>
                 <div className="flex justify-center mt-6">
-                  <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+                  <Button asChild variant="solio" className="text-solio-blue hover:text-white hover:bg-solio-blue">
                     <Link to="/mission-vision">En savoir plus</Link>
                   </Button>
                 </div>
@@ -50,7 +51,28 @@ const MissionVisionSection = () => {
                   Nous envisageons un avenir dans lequel la technologie et l'énergie propre contribuent au progrès humain, en respectant les équilibres sociaux et environnementaux.
                 </p>
                 <div className="flex justify-center mt-6">
-                  <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+                  <Button asChild variant="solio" className="text-solio-blue hover:text-white hover:bg-solio-blue">
+                    <Link to="/mission-vision">En savoir plus</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="objectifs">
+            <Card>
+              <CardHeader>
+                <CardTitle>Nos objectifs</CardTitle>
+                <CardDescription>Transformer les défis en opportunités</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 text-gray-700">
+                <p>
+                  Notre objectif principal est d'accélérer la double transition énergétique et numérique en proposant des solutions adaptées aux besoins spécifiques de nos clients. Nous visons à réduire l'empreinte carbone des entreprises tout en améliorant leur efficacité opérationnelle grâce à la digitalisation.
+                </p>
+                <p>
+                  Nous nous engageons à développer des partenariats stratégiques pour étendre notre impact positif, particulièrement dans les régions où l'accès à l'énergie propre et aux technologies numériques reste un défi majeur. En combinant expertise technique et vision sociale, nous construisons un écosystème durable qui génère de la valeur à long terme pour toutes les parties prenantes.
+                </p>
+                <div className="flex justify-center mt-6">
+                  <Button asChild variant="solio" className="text-solio-blue hover:text-white hover:bg-solio-blue">
                     <Link to="/mission-vision">En savoir plus</Link>
                   </Button>
                 </div>

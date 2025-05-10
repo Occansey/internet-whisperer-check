@@ -48,7 +48,7 @@ const MissionVision = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-md">
               <img 
-                src="/lovable-uploads/6b7f03ad-dec7-4283-911d-9bc3888a0af3.png" 
+                src="/lovable-uploads/0d9f69ea-71eb-4bc3-be79-adcca4923d6c.png" 
                 alt="Notre mission" 
                 className="w-full h-auto"
               />
@@ -58,7 +58,7 @@ const MissionVision = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div className="order-2 md:order-1 rounded-lg overflow-hidden shadow-md">
               <img 
-                src="/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png" 
+                src="/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png" 
                 alt="Notre vision" 
                 className="w-full h-auto"
               />

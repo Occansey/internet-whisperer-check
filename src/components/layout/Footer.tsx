@@ -1,58 +1,74 @@
 
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
 
-interface FooterProps {
-  className?: string;
-}
-
-const Footer = ({ className }: FooterProps) => {
+const Footer = () => {
   return (
-    <footer className={cn("bg-solio-blue text-white py-10", className)}>
+    <footer className="bg-gray-900 text-white pt-12 pb-8">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-lg font-oval font-semibold mb-4">Solio Group</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale.
+            <h3 className="text-lg font-semibold mb-4">À propos de Solio</h3>
+            <p className="text-gray-400 mb-4">
+              Solio Group accompagne les entreprises dans leur transition énergétique et leur transformation digitale, en proposant des solutions durables et adaptées à leurs besoins spécifiques.
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-oval font-semibold mb-4">Liens rapides</h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/" className="text-gray-300 hover:text-solio-yellow">Accueil</Link></li>
-              <li><Link to="/presentation" className="text-gray-300 hover:text-solio-yellow">Présentation du Groupe</Link></li>
-              <li><Link to="/gouvernance/direction" className="text-gray-300 hover:text-solio-yellow">Direction</Link></li>
-              <li><Link to="/actualites" className="text-gray-300 hover:text-solio-yellow">Actualités</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-solio-yellow">Contact</Link></li>
+            <h3 className="text-lg font-semibold mb-4">Nos bureaux</h3>
+            <ul className="space-y-3 text-gray-400">
+              <li className="flex flex-col">
+                <span className="font-medium text-white">France</span>
+                <span>Paris, 75116, 4 rue de Longchamp</span>
+                <span>Marseille, 13015, 211 Chem. de la Madrague-Ville</span>
+              </li>
+              <li className="flex flex-col">
+                <span className="font-medium text-white">Canada</span>
+                <span>Montréal, QC H2Y 1T9, 368 R. Notre Dame O</span>
+              </li>
+              <li className="flex flex-col">
+                <span className="font-medium text-white">Kenya</span>
+                <span>Nairobi, 9th Floor, North Tower, Two Rivers Finance and Innovation Center</span>
+              </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-oval font-semibold mb-4">Contact</h3>
-            <address className="not-italic text-sm text-gray-300">
-              <p className="font-semibold mb-2">France</p>
-              <p>Paris, 4 Rue De Longchamp, 75016</p>
-              <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
-              
-              <p className="font-semibold mt-4 mb-2">Canada</p>
-              <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
-              
-              <p className="font-semibold mt-4 mb-2">Africa HQ</p>
-              <p>GEFI Solutions SEZ Limited<br />9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
-              
-              <p className="mt-2">Email : contact@solio-group.com</p>
-            </address>
-            <div className="mt-4 flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-solio-yellow">LinkedIn</a>
-              <a href="#" className="text-gray-300 hover:text-solio-yellow">Twitter/X</a>
-              <a href="#" className="text-gray-300 hover:text-solio-yellow">YouTube</a>
+            <h3 className="text-lg font-semibold mb-4">Liens rapides</h3>
+            <ul className="space-y-2">
+              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Accueil</Link></li>
+              <li><Link to="/presentation" className="text-gray-400 hover:text-white transition-colors">À propos</Link></li>
+              <li><Link to="/filiales/growth-energy" className="text-gray-400 hover:text-white transition-colors">Nos filiales</Link></li>
+              <li><Link to="/actualites/projets" className="text-gray-400 hover:text-white transition-colors">Projets</Link></li>
+              <li><Link to="/actualites/evenements" className="text-gray-400 hover:text-white transition-colors">Événements</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Nous suivre</h3>
+            <div className="flex space-x-3">
+              <a href="#" className="bg-blue-900 p-2 rounded-full hover:bg-blue-800 transition-colors">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="#" className="bg-blue-400 p-2 rounded-full hover:bg-blue-500 transition-colors">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+              <a href="#" className="bg-blue-700 p-2 rounded-full hover:bg-blue-600 transition-colors">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
             </div>
           </div>
         </div>
         
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+        <hr className="border-gray-800 mb-8" />
+        
+        <div className="text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} Solio Group. Tous droits réservés.</p>
         </div>
       </div>

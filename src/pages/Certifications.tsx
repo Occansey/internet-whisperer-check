@@ -19,7 +19,7 @@ const certifications: CertificationProps[] = [
     organization: "Bureau Veritas",
     description: "Certification du système de management de la qualité, assurant que nos processus répondent aux exigences des clients et aux exigences légales et réglementaires applicables.",
     date: "Décembre 2024",
-    logo: "/placeholder.svg",
+    logo: "/lovable-uploads/f2d0a7f3-0bb9-4cd8-a548-4b5d089c7d05.png",
     category: "quality"
   },
   {
@@ -27,7 +27,7 @@ const certifications: CertificationProps[] = [
     organization: "Association for Renewable Energy",
     description: "Certification attestant de l'expertise dans la conception, l'installation et la maintenance de systèmes solaires photovoltaïques.",
     date: "Octobre 2023",
-    logo: "/placeholder.svg",
+    logo: "/lovable-uploads/ea10c0d2-5551-4b0e-be8d-87283246c95c.png",
     category: "energy"
   },
   {
@@ -35,7 +35,7 @@ const certifications: CertificationProps[] = [
     organization: "Salesforce",
     description: "Reconnaissance de notre expertise dans l'implémentation et le déploiement de solutions Salesforce pour nos clients.",
     date: "Juillet 2024",
-    logo: "/placeholder.svg", 
+    logo: "/lovable-uploads/c8502781-fd91-424e-813b-ef69e1d4f912.png", 
     category: "digital"
   },
   {
@@ -43,7 +43,7 @@ const certifications: CertificationProps[] = [
     organization: "Divalto",
     description: "Distinction attestant de notre niveau d'expertise élevé dans l'intégration et le déploiement des solutions ERP Divalto.",
     date: "Mars 2024",
-    logo: "/placeholder.svg",
+    logo: "/lovable-uploads/011592e3-c8c8-4eaa-abad-c90f8216bbae.png",
     category: "industry"
   },
   {
@@ -51,7 +51,7 @@ const certifications: CertificationProps[] = [
     organization: "Microsoft",
     description: "Partenariat certifiant notre expertise dans les solutions Microsoft et notre capacité à déployer des solutions cloud Azure.",
     date: "Janvier 2025",
-    logo: "/placeholder.svg",
+    logo: "/lovable-uploads/1787135e-32e4-494a-b4cc-d5b2a405ef4c.png",
     category: "digital"
   }
 ];
@@ -87,8 +87,8 @@ const CertificationCard = ({ certification }: { certification: CertificationProp
             {certification.date}
           </div>
         </div>
-        <div className="flex items-center gap-2 mt-3">
-          <div className="h-12 w-12 overflow-hidden rounded-md bg-gray-100 p-1">
+        <div className="flex items-center gap-4 mt-3">
+          <div className="h-16 w-16 overflow-hidden rounded-md bg-gray-100 p-1 flex items-center justify-center">
             <img src={certification.logo} alt={certification.organization} className="h-full w-full object-contain" />
           </div>
           <div>
@@ -121,6 +121,32 @@ const Certifications = () => {
             {certifications.map((certification, index) => (
               <CertificationCard key={index} certification={certification} />
             ))}
+          </div>
+          
+          <div className="mt-16 bg-white p-8 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-6 text-solio-blue">Notre engagement pour l'excellence</h2>
+            <p className="text-gray-700 mb-6">
+              Chez Solio Group, nous nous engageons à maintenir les plus hauts standards de qualité et d'expertise dans tous nos domaines d'activité. Nos certifications témoignent de notre volonté constante d'amélioration et de notre engagement envers nos clients.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-solio-blue">Transition énergétique</h3>
+                <ul className="list-disc pl-5 text-gray-700 space-y-2">
+                  <li>+14 MW et +20 MWh de projets en cours de développement</li>
+                  <li>+18 millions USD déjà sécurisés pour le financement des projets C&I en Afrique</li>
+                  <li>+30 projets déployés sur le continent</li>
+                  <li>37 000 vies transformées par l'accès à l'énergie</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-solio-blue">Transition digitale</h3>
+                <ul className="list-disc pl-5 text-gray-700 space-y-2">
+                  <li>20 ans d'expérience en consultation en transition écologique</li>
+                  <li>+80 implémentations réussies de logiciels ERP</li>
+                  <li>+50 clients satisfaits dans divers secteurs</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
