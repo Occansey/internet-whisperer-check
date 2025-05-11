@@ -12,6 +12,7 @@ import RejoignezNous from './pages/carrieres/RejoignezNous';
 import Filiales from './pages/filiales/Filiales';
 import NosFiliales from './pages/filiales/NosFiliales';
 import Direction from './pages/gouvernance/Direction';
+import ComiteExecutif from './pages/gouvernance/ComiteExecutif';
 import Contact from './pages/Contact';
 import GrowthEnergyPage from './pages/filiales/GrowthEnergyPage';
 import AskingPage from './pages/filiales/AskingPage';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/filiales" element={<Filiales />} />
         <Route path="/nos-filiales" element={<NosFiliales />} />
         <Route path="/gouvernance/direction" element={<Direction />} />
+        <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
         <Route path="/filiales/asking" element={<AskingPage />} />
