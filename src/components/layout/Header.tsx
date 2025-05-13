@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { ChevronDown, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -57,20 +57,20 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-16 w-auto mr-2" />
+          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-20 w-auto mr-2" />
         </Link>
         
         {/* Desktop Navigation */}
         <div className="hidden md:block flex-1">
           <NavigationMenu className="mx-auto">
-            <NavigationMenuList>
+            <NavigationMenuList className="relative">
               {/* Accueil */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Accueil
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] absolute top-full">
                     <ListItem
                       href="/presentation"
                       title="Présentation du Groupe"
@@ -111,7 +111,7 @@ const Header = () => {
                   Nos Filiales
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] absolute top-full">
                     <ListItem
                       href="/filiales/growth-energy"
                       title="⚡️ Growth Energy"
@@ -146,7 +146,7 @@ const Header = () => {
                   Gouvernance
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
+                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
                     <ListItem
                       href="/gouvernance/comite-executif"
                       title="Comité exécutif (COMEX)"
@@ -169,7 +169,7 @@ const Header = () => {
                   Actualités
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
+                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
                     <ListItem
                       href="/actualites/communiques"
                       title="Communiqués"
@@ -198,7 +198,7 @@ const Header = () => {
                   Carrières
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
+                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
                     <ListItem
                       href="/carrieres/rejoignez-nous"
                       title="Rejoignez-nous"
@@ -206,7 +206,7 @@ const Header = () => {
                       Opportunités d'emploi et candidatures
                     </ListItem>
                     <ListItem
-                      href="/carrieres/engagements"
+                      href="/carrieres/engagements-rh"
                       title="Nos engagements RH"
                     >
                       Valeurs et culture d'entreprise
@@ -290,7 +290,7 @@ const Header = () => {
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
                         <MobileMenuItem to="/carrieres/rejoignez-nous">Rejoignez-nous</MobileMenuItem>
-                        <MobileMenuItem to="/carrieres/engagements">Nos engagements RH</MobileMenuItem>
+                        <MobileMenuItem to="/carrieres/engagements-rh">Nos engagements RH</MobileMenuItem>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
