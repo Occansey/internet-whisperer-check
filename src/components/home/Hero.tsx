@@ -32,7 +32,7 @@ const Hero = () => {
           showinfo: 0,
           mute: 1,
           loop: 1,
-          playlist: "7IWjie1xbDU", // Updated video ID for energy transition
+          playlist: "etY08YozPHQ", // Updated video ID
         },
         events: {
           onReady: (event) => {
@@ -67,7 +67,7 @@ const Hero = () => {
           <iframe
             ref={iframeRef}
             id="youtube-video"
-            src="https://www.youtube-nocookie.com/embed/7IWjie1xbDU?enablejsapi=1&controls=0&rel=0&playsinline=1&cc_load_policy=0&mute=1&loop=1&playlist=7IWjie1xbDU"
+            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?enablejsapi=1&controls=0&rel=0&playsinline=1&cc_load_policy=0&mute=1&loop=1&playlist=etY08YozPHQ"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
