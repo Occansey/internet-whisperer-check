@@ -15,10 +15,8 @@ const GrowthEnergyPage = () => {
                 <img src="/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png" alt="Growth Energy" className="h-16 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
-                Growth Energy accelerates the transition to solar power in East West and South Africa, 
-                serving both businesses and communities. We support commercial, industrial, and real estate projects, 
-                turning energy ambitions into reality—designing, financing, and delivering reliable, 
-                sustainable solutions that drive impact.
+                Growth Energy accélère la transition vers l'énergie solaire en Afrique de l'Est et de l'Ouest, au service des entreprises et des collectivités.
+                Nous soutenons des projets commerciaux, industriels et immobiliers, concrétisant ainsi les ambitions énergétiques : nous concevons, finançons et fournissons des solutions fiables et durables à fort impact.
               </p>
               <Button asChild className="bg-solio-blue hover:bg-solio-blue/90">
                 <Link to="https://growth-energy.fr/" target="_blank" rel="noopener noreferrer">
