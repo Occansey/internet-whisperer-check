@@ -15,8 +15,7 @@ const MfgPage = () => {
                 <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-16 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
-                Digital Innovation for Industry: Specialists in software development, cloud, and IT infrastructures, 
-                we help industrial and manufacturing players drive their technological transformation.
+                Innovation Digitale pour l'Industrie : Spécialistes du développement logiciel, du cloud et des infrastructures IT, nous accompagnons les acteurs industriels et manufacturiers dans leur transformation technologique.
               </p>
               <Button asChild className="bg-solio-blue hover:bg-solio-blue/90">
                 <Link to="https://www.mfgtech.ca/fr/" target="_blank" rel="noopener noreferrer">
