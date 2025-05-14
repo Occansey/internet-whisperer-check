@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import EventCalendar from "@/components/events/EventCalendar";
 
 type EventType = "upcoming" | "past" | "spotlight";
 
@@ -183,6 +184,12 @@ const EventCard = ({ event }: { event: EventProps }) => {
 
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<"cards" | "calendar">("cards");
+  
+  const handleEventClick = (eventId: number) => {
+    console.log(`Event clicked: ${eventId}`);
+    // Navigate to event detail page or open modal
+  };
 
   const filterEvents = (type: string) => {
     let filtered = [...events];
@@ -210,9 +217,26 @@ const Evenements = () => {
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Événements</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+          <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
             Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias.
           </p>
+
+          <div className="flex justify-end mb-4">
+            <div className="flex border rounded-lg overflow-hidden">
+              <button 
+                className={`px-4 py-2 ${viewMode === 'cards' ? 'bg-solio-blue text-white' : 'bg-white text-gray-700'}`}
+                onClick={() => setViewMode('cards')}
+              >
+                Liste
+              </button>
+              <button 
+                className={`px-4 py-2 ${viewMode === 'calendar' ? 'bg-solio-blue text-white' : 'bg-white text-gray-700'}`}
+                onClick={() => setViewMode('calendar')}
+              >
+                Calendrier
+              </button>
+            </div>
+          </div>
 
           <div className="mb-8">
             <input
@@ -224,32 +248,36 @@ const Evenements = () => {
             />
           </div>
           
-          <Tabs defaultValue="all" className="w-full">
-            <div className="overflow-x-auto pb-2">
-              <TabsList className="flex flex-nowrap mb-8 w-full md:flex md:justify-center max-w-full overflow-x-auto">
-                <TabsTrigger value="all" className="whitespace-nowrap px-4">Tous</TabsTrigger>
-                <TabsTrigger value="upcoming" className="whitespace-nowrap px-4">À venir</TabsTrigger>
-                <TabsTrigger value="past" className="whitespace-nowrap px-4">Événements passés</TabsTrigger>
-                <TabsTrigger value="spotlight" className="whitespace-nowrap px-4">Spotlight</TabsTrigger>
-              </TabsList>
-            </div>
-            
-            {["all", "upcoming", "past", "spotlight"].map((tab) => (
-              <TabsContent key={tab} value={tab} className="mt-0">
-                {filterEvents(tab).length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filterEvents(tab).map((event) => (
-                      <EventCard key={event.id} event={event} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <p className="text-lg text-gray-500">Aucun événement trouvé pour votre recherche.</p>
-                  </div>
-                )}
-              </TabsContent>
-            ))}
-          </Tabs>
+          {viewMode === "calendar" ? (
+            <EventCalendar events={events} onEventClick={handleEventClick} />
+          ) : (
+            <Tabs defaultValue="all" className="w-full">
+              <div className="overflow-x-auto pb-2">
+                <TabsList className="flex flex-nowrap mb-8 w-full md:flex md:justify-center max-w-full overflow-x-auto">
+                  <TabsTrigger value="all" className="whitespace-nowrap px-4">Tous</TabsTrigger>
+                  <TabsTrigger value="upcoming" className="whitespace-nowrap px-4">À venir</TabsTrigger>
+                  <TabsTrigger value="past" className="whitespace-nowrap px-4">Événements passés</TabsTrigger>
+                  <TabsTrigger value="spotlight" className="whitespace-nowrap px-4">Spotlight</TabsTrigger>
+                </TabsList>
+              </div>
+              
+              {["all", "upcoming", "past", "spotlight"].map((tab) => (
+                <TabsContent key={tab} value={tab} className="mt-0">
+                  {filterEvents(tab).length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {filterEvents(tab).map((event) => (
+                        <EventCard key={event.id} event={event} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-lg text-gray-500">Aucun événement trouvé pour votre recherche.</p>
+                    </div>
+                  )}
+                </TabsContent>
+              ))}
+            </Tabs>
+          )}
         </div>
       </div>
     </Layout>

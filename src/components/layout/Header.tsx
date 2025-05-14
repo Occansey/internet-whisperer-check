@@ -69,8 +69,8 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Accueil
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] absolute top-full">
+                <NavigationMenuContent className="absolute left-0 top-0">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem
                       href="/presentation"
                       title="Présentation du Groupe"
@@ -110,8 +110,8 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Nos Filiales
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] absolute top-full">
+                <NavigationMenuContent className="absolute left-0 top-0">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem
                       href="/filiales/growth-energy"
                       title="⚡️ Growth Energy"
@@ -145,8 +145,8 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Gouvernance
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
+                <NavigationMenuContent className="absolute left-0 top-0">
+                  <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
                       href="/gouvernance/comite-executif"
                       title="Comité exécutif (COMEX)"
@@ -168,8 +168,8 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Actualités
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
+                <NavigationMenuContent className="absolute left-0 top-0">
+                  <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
                       href="/actualites/communiques"
                       title="Communiqués"
@@ -197,8 +197,8 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Carrières
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 absolute top-full">
+                <NavigationMenuContent className="absolute left-0 top-0">
+                  <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
                       href="/carrieres/rejoignez-nous"
                       title="Rejoignez-nous"
