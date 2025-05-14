@@ -101,7 +101,7 @@ const Presentation = () => {
             />
             <StatCard 
               value={15}
-              label="Millions USD d'investissements sécurisés"
+              label="Millions USD d'investissements liées à la transition énergétique sécurisés "
               prefix=""
             />
             <StatCard 
