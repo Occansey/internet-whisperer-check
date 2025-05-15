@@ -117,11 +117,11 @@ const temoignages = [
     photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
   },
   {
-    name: "Aminata K.",
-    role: "Data Scientist",
-    testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre plusieurs formations de pointe en IA et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
+    name: "Maxwell O.",
+    role: "Consultant Junior",
+    testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre plusieurs formations de pointe  et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
     filiale: "Asking",
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop"
+    photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
   }
 ];
 
