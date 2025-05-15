@@ -1,0 +1,34 @@
+name: Build and Deploy to OVH
+
+on:
+  push:
+    branches:
+      - main  # ou ta branche principale
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # ou la version que tu veux
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to OVH via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ftp.cluster100.hosting.ovh.net  # ton serveur FTP OVH
+        username: ${{ secrets.OVH_FTP_USERNAME }}
+        password: ${{ secrets.OVH_FTP_PASSWORD }}
+        local-dir: ./build  # dossier de build, adapte si besoin
+        server-dir: /www/solio-group.com  # chemin sur OVH, adapte si besoin
