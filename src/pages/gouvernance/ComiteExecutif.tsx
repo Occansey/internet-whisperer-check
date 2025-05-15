@@ -34,7 +34,7 @@ const executives: ExecutiveMemberProps[] = [
     bio: "Laure Duhorane occupe le poste de Directrice Générale d'Asking et est experte en communication et transformation digitale. Elle accompagne les entreprises dans leur évolution stratégique et digitale.\n\nDiplômée d'un Master en Management et Communication d'Entreprise de l'EFAP Paris, son expertise en gestion et innovation lui permet d'aider les organisations à optimiser leur impact et à s'adapter aux défis du numérique.\n\nDepuis 2024, elle a rejoint la direction de MFG Technologies dans le cadre d'une acquisition. Elle y dirige des initiatives de transformation numérique, de recrutement et de développement commercial, aidant les organisations à rationaliser leurs processus et à atteindre la croissance.\n\nElle est également membre du comité exécutif de Solio Group, où elle fait avancer sa vision de stimuler la croissance socio-économique à travers les industries et les communautés africaines par la transition vers l'énergie renouvelable et durable.\n\nPassionnée par le développement durable, elle allie vision stratégique et expérience pratique pour créer des changements significatifs et favoriser la croissance à long terme des organisations."
   },
   {
-    photo: "",
+    photo: "/lovable-uploads/d322134e-2cfd-4bd7-b6e1-e8ef5660a7dd.png",
     name: "Isabelle Mauboussin",
     title: "Directrice administratif et financier",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card",
