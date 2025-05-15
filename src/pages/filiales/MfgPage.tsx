@@ -12,7 +12,7 @@ const MfgPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
               <div className="flex items-center mb-6">
-                <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-16 mr-4" />
+                <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-24 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
                 Innovation Digitale pour l'Industrie : Spécialistes du développement logiciel, du cloud et des infrastructures IT, nous accompagnons les acteurs industriels et manufacturiers dans leur transformation technologique.

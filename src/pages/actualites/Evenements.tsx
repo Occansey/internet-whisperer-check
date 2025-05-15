@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import EventCalendar from "@/components/events/EventCalendar";
+import { SocialShare } from "@/components/ui/social-share";
 
 type EventType = "upcoming" | "past" | "spotlight";
 
@@ -171,12 +171,15 @@ const EventCard = ({ event }: { event: EventProps }) => {
           </div>
         )}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col gap-3">
         {event.link && (
-          <Button variant="solio" className="w-full">
-            En savoir plus
+          <Button variant="solio" className="w-full" asChild>
+            <Link to={`/actualites/evenements/${event.id}`}>
+              En savoir plus
+            </Link>
           </Button>
         )}
+        <SocialShare title={event.title} compact={true} />
       </CardFooter>
     </Card>
   );

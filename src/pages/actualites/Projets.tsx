@@ -162,7 +162,9 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
         <p className="text-sm text-gray-700">{project.description}</p>
       </CardContent>
       <CardFooter className="flex-initial">
-        <Button variant="solio" className="w-full">Détails du projet</Button>
+        <Button variant="solio" className="w-full" asChild>
+          <Link to={`/actualites/projets/${project.id}`}>Détails du projet</Link>
+        </Button>
       </CardFooter>
     </Card>
   );

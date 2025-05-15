@@ -12,7 +12,7 @@ const AskingPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
               <div className="flex items-center mb-6">
-                <img src="/lovable-uploads/76a2eee6-9d7b-4170-8b0a-21ddc4c780fb.png" alt="Asking" className="h-16 mr-4" />
+                <img src="/lovable-uploads/76a2eee6-9d7b-4170-8b0a-21ddc4c780fb.png" alt="Asking" className="h-24 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
                Des données à l'impact : experts en marketing numérique, BI, Salesforce, SAP et science des données, nous libérons la puissance des données pour booster vos performances.

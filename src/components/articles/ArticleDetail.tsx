@@ -1,72 +1,37 @@
 
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Layout from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, Share2, Copy, Facebook, Twitter } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "@/components/ui/use-toast";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
-
-// Import the articles data from the Communiques page
-import { articles } from '@/pages/actualites/Communiques';
+import Layout from '@/components/layout/Layout';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Calendar } from 'lucide-react';
+import { SocialShare } from '@/components/ui/social-share';
+// Add any other imports you need
 
 const CommuniqueDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [article, setArticle] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Find the article with the matching ID
-    const foundArticle = articles.find(a => a.id === id);
-    
-    if (foundArticle) {
-      setArticle(foundArticle);
-    } else {
-      // If article not found, navigate back to the communiques page
-      navigate('/actualites/communiques');
-      toast({
-        title: "Article non trouvé",
-        description: "L'article que vous recherchez n'existe pas.",
-        variant: "destructive",
-      });
-    }
-  }, [id, navigate]);
+    // Load article data
+    // This would typically be an API call
+    setLoading(false);
+    // Mock data for now
+    setArticle({
+      id: id,
+      title: "Article Title",
+      content: "Article content would go here. This is a placeholder.",
+      date: new Date().toISOString(),
+      image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png"
+    });
+  }, [id]);
 
   const handleBack = () => {
     navigate('/actualites/communiques');
   };
 
-  const shareOnWhatsApp = () => {
-    const url = window.location.href;
-    window.open(`https://wa.me/?text=${encodeURIComponent(`${article?.title} - ${url}`)}`);
-  };
-
-  const shareOnFacebook = () => {
-    const url = window.location.href;
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
-  };
-
-  const shareOnTwitter = () => {
-    const url = window.location.href;
-    const text = article?.title;
-    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
-  };
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast({
-      title: "Lien copié",
-      description: "Le lien a été copié dans votre presse-papiers.",
-    });
-  };
-
-  if (!article) {
+  if (loading) {
     return (
       <Layout>
         <div className="container py-12">
@@ -76,116 +41,64 @@ const CommuniqueDetail = () => {
     );
   }
 
-  // Function to parse content and render paragraphs
-  const renderContent = () => {
-    return article.content.split('\n\n').map((paragraph: string, index: number) => {
-      // Check if this is a quote (starts with ")
-      if (paragraph.startsWith('«') || paragraph.startsWith('"')) {
-        return (
-          <blockquote key={index} className="border-l-4 border-solio-blue pl-4 my-4 italic">
-            {paragraph}
-          </blockquote>
-        );
-      }
-      
-      return <p key={index} className="mb-4">{paragraph}</p>;
-    });
-  };
+  if (!article) {
+    return (
+      <Layout>
+        <div className="container py-12">
+          <p className="text-center text-red-500">Article non trouvé</p>
+          <div className="flex justify-center mt-4">
+            <Button onClick={handleBack}>Retour aux communiqués</Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-      <div className="bg-gray-50 py-12">
-        <div className="container max-w-4xl">
+      <article className="bg-white">
+        <div className="container py-12">
           <div className="flex justify-between items-center mb-8">
             <Button 
-              variant="ghost" 
+              variant="outline" 
               className="flex items-center" 
               onClick={handleBack}
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center">
-                  <Share2 className="mr-2 h-4 w-4" /> Partager
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={shareOnWhatsApp} className="cursor-pointer">
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 mr-2" fill="#25D366">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.652a11.881 11.881 0 005.647 1.447h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.476-8.414z"/>
-                  </svg>
-                  WhatsApp
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={shareOnFacebook} className="cursor-pointer">
-                  <Facebook className="h-4 w-4 mr-2 text-blue-600" />
-                  Facebook
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={shareOnTwitter} className="cursor-pointer">
-                  <Twitter className="h-4 w-4 mr-2 text-blue-400" />
-                  Twitter/X
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={copyLink} className="cursor-pointer">
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copier le lien
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SocialShare title={article.title} compact={true} />
           </div>
           
-          <article className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="h-64 md:h-80 overflow-hidden">
-              <img 
-                src={article.image} 
-                alt={article.title} 
-                className="w-full h-full object-cover"
-              />
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">{article.title}</h1>
+            
+            <div className="flex items-center text-sm text-gray-500 mb-6">
+              <Calendar className="h-4 w-4 mr-2" />
+              <span>{new Date(article.date).toLocaleDateString()}</span>
             </div>
             
-            <div className="p-6 md:p-8">
-              <div className="flex items-center text-sm text-gray-500 mb-4">
-                <Calendar className="mr-2 h-4 w-4" />
-                {article.date}
-                
-                <div className="ml-auto flex gap-2">
-                  {article.tags && article.tags.map((tag: string, index: number) => {
-                    let bgClass = "bg-gray-100 text-gray-800";
-                    
-                    if (tag === "solio") bgClass = "bg-solio-blue text-white";
-                    else if (tag === "growth-energy") bgClass = "bg-yellow-100 text-yellow-800";
-                    else if (tag === "asking") bgClass = "bg-blue-100 text-blue-800";
-                    else if (tag === "mfg-technologies") bgClass = "bg-purple-100 text-purple-800";
-                    else if (tag === "gem") bgClass = "bg-green-100 text-green-800";
-                    else if (tag === "africa") bgClass = "bg-orange-100 text-orange-800";
-                    else if (tag === "digital") bgClass = "bg-indigo-100 text-indigo-800";
-                    else if (tag === "partnership") bgClass = "bg-pink-100 text-pink-800";
-                    else if (tag === "award") bgClass = "bg-amber-100 text-amber-800";
-                    else if (tag === "expansion") bgClass = "bg-cyan-100 text-cyan-800";
-                    else if (tag === "innovation") bgClass = "bg-emerald-100 text-emerald-800";
-                    else if (tag === "solar") bgClass = "bg-red-100 text-red-800";
-                    else if (tag === "e-mobility") bgClass = "bg-lime-100 text-lime-800";
-                    
-                    return (
-                      <Badge key={index} className={bgClass}>
-                        {tag}
-                      </Badge>
-                    );
-                  })}
-                </div>
+            {article.image && (
+              <div className="aspect-video rounded-lg overflow-hidden mb-8">
+                <img 
+                  src={article.image} 
+                  alt={article.title} 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              
-              <h1 className="text-2xl md:text-3xl font-bold mb-6 text-solio-blue">
-                {article.title}
-              </h1>
-              
-              <div className="prose max-w-none text-gray-700">
-                {renderContent()}
-              </div>
+            )}
+            
+            <div className="prose prose-lg max-w-none">
+              <p>{article.content}</p>
             </div>
-          </article>
+            
+            {/* Social sharing section */}
+            <div className="mt-12 pt-6 border-t">
+              <SocialShare title={article.title} className="justify-center" />
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
     </Layout>
   );
 };

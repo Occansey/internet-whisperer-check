@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
@@ -57,7 +56,7 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-20 w-auto mr-2" />
+          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-24 w-auto mr-2" />
         </Link>
         
         {/* Desktop Navigation */}
@@ -168,7 +167,7 @@ const Header = () => {
                 <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
                   Actualités
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-0">
+                <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4">
                     <ListItem
                       href="/actualites/communiques"
@@ -187,6 +186,12 @@ const Header = () => {
                       title="Événements"
                     >
                       Événements passés et à venir
+                    </ListItem>
+                    <ListItem
+                      href="/media"
+                      title="Médiathèque"
+                    >
+                      Images et ressources médias
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
@@ -281,6 +286,7 @@ const Header = () => {
                         <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
                         <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
                         <MobileMenuItem to="/actualites/evenements">Événements</MobileMenuItem>
+                        <MobileMenuItem to="/media">Médiathèque</MobileMenuItem>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
