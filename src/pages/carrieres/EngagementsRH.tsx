@@ -237,11 +237,11 @@ const EngagementsRH = () => {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">6</div>
-                <p className="text-gray-600 mt-2">Villes dans 5 pays</p>
+                <p className="text-gray-600 mt-2">Villes</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-4xl font-bold text-solio-blue">87%</div>
-                <p className="text-gray-600 mt-2">Taux de satisfaction globale</p>
+                <div className="text-4xl font-bold text-solio-blue">5</div>
+                <p className="text-gray-600 mt-2">Pays</p>
               </div>
             </div>
           </div>
