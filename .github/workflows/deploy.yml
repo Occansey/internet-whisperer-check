@@ -29,25 +29,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
-      - name: Test FTP connection in passive mode
+      - name: Test FTP Connection
         env:
           FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
           FTP_HOST: ftp.cluster100.hosting.ovh.net
         run: |
-          lftp -d -e "set ftp:passive-mode true; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; ls" -p 21
+          echo "Testing FTP connection..."
+          ping -c 4 $FTP_HOST
+          lftp -d -e "set ftp:passive-mode true; ls; bye" -u "$FTP_USERNAME","$FTP_PASSWORD" $FTP_HOST
 
       - name: Deploy via FTP to OVH
-        if: success()
         env:
           FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
           FTP_HOST: ftp.cluster100.hosting.ovh.net
           FTP_REMOTE_PATH: /www/api
         run: |
-          lftp -d -e "
-            set ftp:passive-mode true;
-            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-            mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose;
-            bye
-          " -p 21
+          echo "Starting FTP deployment..."
+          lftp -d -e "set ftp:passive-mode true; mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose; bye" -u "$FTP_USERNAME","$FTP_PASSWORD" $FTP_HOST
+          echo "Deployment completed successfully."
