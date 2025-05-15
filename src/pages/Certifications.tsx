@@ -19,7 +19,7 @@ const certifications: CertificationProps[] = [
     organization: "Bureau Veritas",
     description: "Certification du système de management de la qualité, assurant que nos processus répondent aux exigences des clients et aux exigences légales et réglementaires applicables.",
     date: "Décembre 2024",
-    logo: "/lovable-uploads/f2d0a7f3-0bb9-4cd8-a548-4b5d089c7d05.png",
+    logo: "/lovable-uploads/089223ec-d3ce-4c82-b9fb-e340d391cc86.png",
     category: "quality"
   },
   {
@@ -27,7 +27,7 @@ const certifications: CertificationProps[] = [
     organization: "Association for Renewable Energy",
     description: "Certification attestant de l'expertise dans la conception, l'installation et la maintenance de systèmes solaires photovoltaïques.",
     date: "Octobre 2023",
-    logo: "/lovable-uploads/ea10c0d2-5551-4b0e-be8d-87283246c95c.png",
+    logo: "/lovable-uploads/2b3a01ef-3b5c-4527-aee8-71bcf438e32e.png",
     category: "energy"
   },
   {
@@ -35,7 +35,7 @@ const certifications: CertificationProps[] = [
     organization: "Salesforce",
     description: "Reconnaissance de notre expertise dans l'implémentation et le déploiement de solutions Salesforce pour nos clients.",
     date: "Juillet 2024",
-    logo: "/lovable-uploads/c8502781-fd91-424e-813b-ef69e1d4f912.png", 
+    logo: "/lovable-uploads/64afd13e-65bd-4e38-b081-3fce25504015.png", 
     category: "digital"
   },
   {
@@ -43,7 +43,7 @@ const certifications: CertificationProps[] = [
     organization: "Divalto",
     description: "Distinction attestant de notre niveau d'expertise élevé dans l'intégration et le déploiement des solutions ERP Divalto.",
     date: "Mars 2024",
-    logo: "/lovable-uploads/011592e3-c8c8-4eaa-abad-c90f8216bbae.png",
+    logo: "/lovable-uploads/72a3e16f-eef8-4571-9676-3625f9b8e68d.png",
     category: "industry"
   },
   {
@@ -51,7 +51,7 @@ const certifications: CertificationProps[] = [
     organization: "Microsoft",
     description: "Partenariat certifiant notre expertise dans les solutions Microsoft et notre capacité à déployer des solutions cloud Azure.",
     date: "Janvier 2025",
-    logo: "/lovable-uploads/1787135e-32e4-494a-b4cc-d5b2a405ef4c.png",
+    logo: "/lovable-uploads/f6702924-a969-41e2-b595-dcc193b6b123.png",
     category: "digital"
   }
 ];
