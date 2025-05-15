@@ -1,4 +1,4 @@
-name: Build and Deploy to OVH FTP
+""name: Build and Deploy to OVH FTP (Debug Mode)
 
 on:
   push:
@@ -24,17 +24,32 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
+      - name: Install LFTP
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
-      - name: Test FTP connection
+      - name: DNS Resolution Test
+        run: dig ftp.cluster100.hosting.ovh.net
+
+      - name: Ping Test
+        run: ping -c 4 ftp.cluster100.hosting.ovh.net
+
+      - name: FTP Connection Test (Passive Mode)
         env:
           FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
           FTP_HOST: ftp.cluster100.hosting.ovh.net
         run: |
-          echo "Testing FTP connection..."
-          lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST -e "ls; bye"
+          lftp -d -e "set ftp:passive-mode true; ls; bye" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
+
+      - name: FTP Connection Test (Active Mode)
+        env:
+          FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
+          FTP_HOST: ftp.cluster100.hosting.ovh.net
+        run: |
+          lftp -d -e "set ftp:passive-mode false; ls; bye" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
 
       - name: Deploy via FTP to OVH
         env:
@@ -43,8 +58,8 @@ jobs:
           FTP_HOST: ftp.cluster100.hosting.ovh.net
           FTP_REMOTE_PATH: /www/api
         run: |
-          echo "Starting FTP upload..."
-          lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST <<EOF
-          mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose
-          quit
-          EOF
+          lftp -c "
+            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
+            mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose
+          "
+""
