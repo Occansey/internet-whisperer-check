@@ -6,6 +6,41 @@ import { useEffect, useRef } from "react";
 const Hero = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   
+  useEffect(() => {
+    // Add YouTube API
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    
+    // Initialize YouTube player when API is loaded
+    window.onYouTubeIframeAPIReady = () => {
+      if (!iframeRef.current) return;
+      
+      new window.YT.Player(iframeRef.current, {
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          rel: 0,
+          showinfo: 0,
+          mute: 1,
+          loop: 1,
+          playlist: 'jfKfPfyJRdk' // Live lofi hip hop radio
+        },
+        events: {
+          onReady: (event) => {
+            event.target.playVideo();
+            event.target.mute();
+          }
+        }
+      });
+    };
+    
+    return () => {
+      window.onYouTubeIframeAPIReady = undefined;
+    };
+  }, []);
+  
   return (
     <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white h-screen">
       {/* Video background */}
@@ -14,7 +49,8 @@ const Hero = () => {
         <div className="w-full h-full z-0">
           <iframe
             ref={iframeRef}
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?utm_content=DAGngVhDss0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h320df6d16c&autoplay=1&loop=1&muted=1"
+            id="youtube-player"
+            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=jfKfPfyJRdk&mute=1&enablejsapi=1"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
