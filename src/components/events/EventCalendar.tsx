@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Link } from 'react-router-dom';
 
 interface Event {
   id: number;
@@ -140,15 +141,22 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                   {events.map(event => (
                     <div 
                       key={event.id}
-                      className="cursor-pointer text-xs p-1 rounded truncate hover:bg-gray-100"
-                      onClick={() => onEventClick(event.id)}
+                      className="flex flex-col gap-1"
                     >
-                      <div className="flex items-center">
-                        <span 
-                          className={`w-2 h-2 rounded-full mr-1 ${getEventTypeColor(event.type)}`}
-                        ></span>
-                        {event.title}
+                      <div 
+                        className="cursor-pointer text-xs p-1 rounded truncate hover:bg-gray-100"
+                        onClick={() => onEventClick(event.id)}
+                      >
+                        <div className="flex items-center">
+                          <span 
+                            className={`w-2 h-2 rounded-full mr-1 ${getEventTypeColor(event.type)}`}
+                          ></span>
+                          {event.title}
+                        </div>
                       </div>
+                      <Link to={`/actualites/evenements/${event.id}`} className="text-xs px-1 text-solio-blue hover:underline">
+                        En savoir plus
+                      </Link>
                     </div>
                   ))}
                 </div>
