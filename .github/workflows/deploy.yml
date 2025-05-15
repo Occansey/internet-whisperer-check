@@ -1,4 +1,4 @@
-""name: Build and Deploy to OVH FTP (Debug Mode)
+name: Build and Deploy to OVH FTP (Debug Mode)
 
 on:
   push:
@@ -51,6 +51,12 @@ jobs:
         run: |
           lftp -d -e "set ftp:passive-mode false; ls; bye" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
 
+      - name: Network Diagnostic
+        run: |
+          ip addr
+          ip route
+          traceroute ftp.cluster100.hosting.ovh.net
+
       - name: Deploy via FTP to OVH
         env:
           FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
@@ -58,8 +64,7 @@ jobs:
           FTP_HOST: ftp.cluster100.hosting.ovh.net
           FTP_REMOTE_PATH: /www/api
         run: |
-          lftp -c "
+          lftp -d -e "
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
             mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose
           "
-""
