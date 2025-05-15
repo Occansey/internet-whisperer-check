@@ -27,14 +27,14 @@ const executives: ExecutiveMemberProps[] = [
     bio: "John Okoro dirige Growth Energy avec une expertise confirmée dans le secteur de l'énergie propre en Afrique.\n\nFort de plus de dix ans d'expérience dans plus de 20 pays d'Afrique subsaharienne et plus de 30 pays à travers le monde, il a dirigé des projets d'énergie propre avec des entreprises comme Vergnet SA et le Groupe CMR.\n\nCofondateur de Growth Energy et de Friends of Nigeria, il se consacre à la promotion de solutions d'énergie propre et à la promotion de la collaboration internationale.\n\nTitulaire d'un Master en Génie Énergétique de l'Université de Bordeaux, John est passionné par la connexion entre les personnes et les idées, et s'engage à promouvoir la transition énergétique durable en Afrique."
   },
   {
-    photo: "/lovable-uploads/0d9f69ea-71eb-4bc3-be79-adcca4923d6c.png",
+    photo: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
     name: "Laure Duhorane",
     title: "Directrice de Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name",
     bio: "Laure Duhorane occupe le poste de Directrice Générale d'Asking et est experte en communication et transformation digitale. Elle accompagne les entreprises dans leur évolution stratégique et digitale.\n\nDiplômée d'un Master en Management et Communication d'Entreprise de l'EFAP Paris, son expertise en gestion et innovation lui permet d'aider les organisations à optimiser leur impact et à s'adapter aux défis du numérique.\n\nDepuis 2024, elle a rejoint la direction de MFG Technologies dans le cadre d'une acquisition. Elle y dirige des initiatives de transformation numérique, de recrutement et de développement commercial, aidant les organisations à rationaliser leurs processus et à atteindre la croissance.\n\nElle est également membre du comité exécutif de Solio Group, où elle fait avancer sa vision de stimuler la croissance socio-économique à travers les industries et les communautés africaines par la transition vers l'énergie renouvelable et durable.\n\nPassionnée par le développement durable, elle allie vision stratégique et expérience pratique pour créer des changements significatifs et favoriser la croissance à long terme des organisations."
   },
   {
-    photo: "/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png",
+    photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
     name: "Isabelle Mauboussin",
     title: "Directrice administratif et financier",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card",
