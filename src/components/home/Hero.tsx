@@ -5,59 +5,7 @@ import { useEffect, useRef } from "react";
 
 const Hero = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const playerRef = useRef<any>(null);
-
-  useEffect(() => {
-    // Function to load the YouTube API
-    const loadYouTubeAPI = () => {
-      if (!window.YT) {
-        const tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-      } else {
-        initializePlayer();
-      }
-    };
-
-    // Function to initialize the player once API is ready
-    const initializePlayer = () => {
-      if (!iframeRef.current || !window.YT) return;
-      
-      playerRef.current = new window.YT.Player(iframeRef.current, {
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          rel: 0,
-          showinfo: 0,
-          mute: 1,
-          loop: 1,
-          playlist: "etY08YozPHQ", // Updated video ID
-        },
-        events: {
-          onReady: (event) => {
-            event.target.playVideo();
-          },
-        },
-      });
-    };
-
-    // Set up the onYouTubeIframeAPIReady callback
-    window.onYouTubeIframeAPIReady = () => {
-      initializePlayer();
-    };
-    
-    loadYouTubeAPI();
-
-    return () => {
-      // Clean up
-      if (playerRef.current && playerRef.current.destroy) {
-        playerRef.current.destroy();
-      }
-      window.onYouTubeIframeAPIReady = undefined;
-    };
-  }, []);
-
+  
   return (
     <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white h-screen">
       {/* Video background */}
@@ -66,12 +14,12 @@ const Hero = () => {
         <div className="w-full h-full z-0">
           <iframe
             ref={iframeRef}
-            id="youtube-video"
-            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?enablejsapi=1&controls=0&rel=0&playsinline=1&cc_load_policy=0&mute=1&loop=1&playlist=etY08YozPHQ"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?utm_content=DAGngVhDss0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h320df6d16c&autoplay=1&loop=1&muted=1"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             className="w-full h-full object-cover"
+            allowFullScreen
           ></iframe>
         </div>
       </div>
