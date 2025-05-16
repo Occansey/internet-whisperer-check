@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import { Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parse } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
 
@@ -21,12 +21,45 @@ interface EventCalendarProps {
 }
 
 const parseDate = (dateStr: string) => {
-  const [day, month, year] = dateStr.split(' ');
-  const months: { [key: string]: number } = {
-    'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
-    'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
-  };
-  return new Date(parseInt(year), months[month], parseInt(day));
+  if (!dateStr) return new Date();
+  
+  // Handle date ranges like "5-7 septembre 2025"
+  if (dateStr.includes('-')) {
+    // Just use the start date for display
+    dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
+  }
+  
+  try {
+    // For formats like "10 juin 2025"
+    const parts = dateStr.split(' ');
+    
+    if (parts.length >= 3) {
+      const day = parseInt(parts[0]);
+      const monthName = parts[1];
+      const year = parseInt(parts[2]);
+      
+      const months: { [key: string]: number } = {
+        'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+        'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11,
+        // Capitalized versions
+        'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
+        'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
+      };
+      
+      if (isNaN(day) || !(monthName.toLowerCase() in months) || isNaN(year)) {
+        console.error(`Could not parse date: ${dateStr}`);
+        return new Date();
+      }
+      
+      return new Date(year, months[monthName], day);
+    }
+    
+    console.error(`Unknown date format: ${dateStr}`);
+    return new Date();
+  } catch (error) {
+    console.error(`Error parsing date: ${dateStr}`, error);
+    return new Date();
+  }
 };
 
 const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) => {
@@ -41,15 +74,23 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
   const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
   
   // Parse events to have Date objects
-  const parsedEvents = events.map(event => ({
-    ...event,
-    dateObj: parseDate(event.date)
-  }));
+  const parsedEvents = events.map(event => {
+    const dateObj = parseDate(event.date);
+    console.log(`Parsed date for event ${event.title}: ${dateObj.toISOString()}`);
+    return {
+      ...event,
+      dateObj
+    };
+  });
   
   // Get events for the current month
   const monthEvents = parsedEvents.filter(event => {
     const eventDate = event.dateObj;
-    return eventDate >= monthStart && eventDate <= monthEnd;
+    const inCurrentMonth = eventDate >= monthStart && eventDate <= monthEnd;
+    if (inCurrentMonth) {
+      console.log(`Event in current month: ${event.title}`);
+    }
+    return inCurrentMonth;
   });
   
   // Group events by day
