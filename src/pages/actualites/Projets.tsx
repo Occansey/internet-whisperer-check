@@ -24,10 +24,10 @@ interface ProjectProps {
 export const projects: ProjectProps[] = [
   {
     id: 1,
-    title: "CNI Télécom - Econet Leo",
+    title: "Projet Télécom - Econet Leo",
     description: "Déploiement d'une solution solaire pour alimenter les infrastructures de télécommunication d'Econet Leo, réduisant ainsi la dépendance aux générateurs diesel.",
     image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
-    progress: 75,
+    progress: 25,
     subsidiary: "growth energy",
     location: "Burundi"
   },
@@ -62,7 +62,7 @@ export const projects: ProjectProps[] = [
     id: 5,
     title: "ATS Solio Group",
     description: "Développement d'un système de suivi des candidatures (ATS) personnalisé pour améliorer le processus de recrutement du groupe et répondre au besoin d'expansion.",
-    image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
+    image: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
     progress: 25,
     subsidiary: "asking",
     location: "France"
@@ -71,7 +71,7 @@ export const projects: ProjectProps[] = [
     id: 6,
     title: "Projet solaire industriel Tanzanie",
     description: "Installation d'une solution solaire pour une usine de traitement alimentaire, optimisant les coûts énergétiques et améliorant la durabilité des opérations.",
-    image: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
+    image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
     progress: 20,
     subsidiary: "growth energy",
     location: "Tanzanie"
