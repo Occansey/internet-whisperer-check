@@ -57,7 +57,7 @@ export const events: EventProps[] = [
     date: "22 mars 2025",
     time: "10:00 - 12:00",
     location: "Nairobi, Kenya",
-    image: "lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
+    image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
     link: "#",
     tags: ["Énergie", "Développement durable", "Afrique"]
   },
