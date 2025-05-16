@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SocialShare } from '@/components/ui/social-share';
-import { events } from '@/pages/actualites/Evenements';
+import { events } from '@/data/events';
+import { EventProps } from '@/types/events';
 
 const EventDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [event, setEvent] = useState<any | null>(null);
+  const [event, setEvent] = useState<EventProps | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -117,7 +118,7 @@ const EventDetail = () => {
             <div className="mb-8">
               <h3 className="text-lg font-medium mb-3">Tags</h3>
               <div className="flex flex-wrap gap-2">
-                {event.tags.map((tag: string, index: number) => (
+                {event.tags.map((tag, index) => (
                   <Badge key={index} variant="secondary">
                     {tag}
                   </Badge>
