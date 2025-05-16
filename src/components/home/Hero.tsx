@@ -25,7 +25,7 @@ const Hero = () => {
           showinfo: 0,
           mute: 1,
           loop: 1,
-          playlist: 'jfKfPfyJRdk' // Live lofi hip hop radio
+          playlist: 'etY08YozPHQ' // Updated video ID
         },
         events: {
           onReady: (event) => {
@@ -50,7 +50,7 @@ const Hero = () => {
           <iframe
             ref={iframeRef}
             id="youtube-player"
-            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=jfKfPfyJRdk&mute=1&enablejsapi=1"
+            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?controls=0&rel=0&playsinline=1&cc_load_policy=0&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=etY08YozPHQ"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
