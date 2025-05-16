@@ -73,7 +73,7 @@ export const projects: ProjectProps[] = [
     description: "Installation d'une solution solaire pour une usine de traitement alimentaire, optimisant les coûts énergétiques et améliorant la durabilité des opérations.",
     image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
     progress: 20,
-    subsidiary: "growth energy",
+    subsidiary: "growth-energy",
     location: "Tanzanie"
   },
   {
