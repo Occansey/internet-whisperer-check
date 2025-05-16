@@ -44,7 +44,7 @@ export const projects: ProjectProps[] = [
     id: 3,
     title: "Brarudi Solar Power Plant",
     description: "Conception et installation d'une centrale solaire de 2.8MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
-    image: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
+    image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     progress: 30,
     subsidiary: "growth-energy",
     location: "Burundi"
