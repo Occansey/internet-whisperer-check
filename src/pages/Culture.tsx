@@ -117,26 +117,7 @@ const principesCroissance = [
   }
 ];
 
-const temoignages = [
-  {
-    name: "Thomas R.",
-    role: "Chef de projet, Growth Energy",
-    quote: "Ce que j'apprécie chez Solio, c'est la liberté qu'on nous laisse pour innover. Les idées sont jugées sur leur mérite, pas sur le titre de la personne qui les propose. C'est très motivant!",
-    photo: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=300&h=300&fit=crop"
-  },
-  {
-    name: "Nadia M.",
-    role: "Analyste Data, Asking",
-    quote: "La culture d'apprentissage chez Solio est extraordinaire. J'ai pu développer de nouvelles compétences en IA et participer à des projets variés qui m'ont fait grandir professionnellement.",
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop"
-  },
-  {
-    name: "Paul K.",
-    role: "Responsable RH Groupe",
-    quote: "Nous avons construit une culture où le bien-être n'est pas un simple avantage mais un fondement de notre modèle. Quand les gens se sentent bien, ils donnent le meilleur d'eux-mêmes.",
-    photo: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=300&h=300&fit=crop"
-  }
-];
+
 
 const Culture = () => {
   return (
@@ -249,39 +230,6 @@ const Culture = () => {
         </div>
       </section>
 
-      {/* Témoignages */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Témoignages</h2>
-          <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Découvrez ce que nos collaborateurs pensent de notre culture d'entreprise.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {temoignages.map((temoignage, index) => (
-              <Card key={index} className="bg-white shadow-md overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                      <img 
-                        src={temoignage.photo} 
-                        alt={temoignage.name} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-semibold">{temoignage.name}</p>
-                      <p className="text-sm text-gray-500">{temoignage.role}</p>
-                    </div>
-                  </div>
-                  <div className="text-2xl text-gray-400 mb-2">"</div>
-                  <p className="italic text-gray-700">{temoignage.quote}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Diversité & Inclusion */}
       <section className="py-20 bg-gray-50">
