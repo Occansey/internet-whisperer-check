@@ -16,56 +16,51 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      // Prepare data for Kit.com submission
-      const formData = new FormData();
-      formData.append("nom", nom);
-      formData.append("prenom", prenom);
-      formData.append("email", email);
-      formData.append("telephone", telephone);
-      formData.append("sujet", sujet);
-      formData.append("message", message);
-      formData.append("form_type", "contact");
-      
-      // Submit to Kit.com (replace this URL with your actual Kit.com form endpoint)
-      const kitFormUrl = "https://kit.co/forms/yourformid";
-      
-      const response = await fetch(kitFormUrl, {
-        method: "POST",
-        mode: "no-cors", // Kit.com may require no-cors mode
-        body: formData,
-      });
-      
-      // Since no-cors mode doesn't return detailed response info,
-      // we just assume success if no error is thrown
-      toast({
-        title: "Message envoyé",
-        description: "Nous avons bien reçu votre message et reviendrons vers vous dans les plus brefs délais.",
-      });
-      
-      // Reset form
-      setNom("");
-      setPrenom("");
-      setEmail("");
-      setTelephone("");
-      setSujet("");
-      setMessage("");
-      
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    // Prepare data for Kit.com submission
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("message", message);
+    formData.append("form_type", type);
+
+    if (jobTitle) formData.append("job_title", jobTitle);
+    if (eventTitle) formData.append("event_title", eventTitle);
+    if (cv instanceof File) formData.append("cv", cv);
+
+    // Kit.com form URL
+    const kitFormUrl = "https://kit.co/forms/yourformid";
+
+    // Make the request
+    const response = await fetch(kitFormUrl, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Submission failed with status ${response.status}`);
     }
-  };
+
+    // Optional: You can process the response if CORS is configured correctly
+    const result = await response.json();
+    console.log("Form submitted successfully:", result);
+
+  } catch (error) {
+    console.error("Error submitting the form:", error);
+    alert("There was an error submitting your form. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <Layout>
