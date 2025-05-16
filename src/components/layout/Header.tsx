@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
@@ -111,6 +112,12 @@ const Header = () => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="absolute left-0 top-0">
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ListItem
+                      href="/nos-filiales"
+                      title="Voir nos filiales"
+                    >
+                      Aperçu de toutes nos filiales
+                    </ListItem>
                     <ListItem
                       href="/filiales/growth-energy"
                       title="⚡️ Growth Energy"
@@ -261,6 +268,7 @@ const Header = () => {
                     <AccordionTrigger className="hover:no-underline">Nos Filiales</AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
+                        <MobileMenuItem to="/nos-filiales">Voir nos filiales</MobileMenuItem>
                         <MobileMenuItem to="/filiales/growth-energy">Growth Energy</MobileMenuItem>
                         <MobileMenuItem to="/filiales/gem-e-mobility">GEM E-Mobility</MobileMenuItem>
                         <MobileMenuItem to="/filiales/asking">Asking</MobileMenuItem>
