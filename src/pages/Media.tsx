@@ -1,7 +1,13 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Gallery, Download, Image } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface MediaItem {
   path: string;
@@ -10,6 +16,10 @@ interface MediaItem {
 }
 
 const mediaItems: MediaItem[] = [
+  // Solar Panels - New Uploads
+  { path: "/lovable-uploads/a68d5dc8-da0e-46cd-aaf2-17e5aa218fa9.png", name: "Solar Farm", category: "Solar Panels" },
+  { path: "/lovable-uploads/5b8bb5f1-8a4e-475a-9dd3-70df52acbc11.png", name: "Rooftop Solar Installation", category: "Solar Panels" },
+  
   // Personal photos
   { path: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png", name: "Portrait Photo", category: "Photos" },
   { path: "/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png", name: "Fumba Town Building", category: "Photos" },
@@ -85,42 +95,120 @@ const groupByCategory = (items: MediaItem[]) => {
 const MediaPage: React.FC = () => {
   const groupedMedia = groupByCategory(mediaItems);
   const categories = Object.keys(groupedMedia);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  
+  const filteredItems = mediaItems.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          (item.path?.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
+  
+  const filteredGroupedMedia = groupByCategory(filteredItems);
+  const displayCategories = Object.keys(filteredGroupedMedia);
+  
+  const handleDownload = (mediaPath: string, mediaName: string) => {
+    const link = document.createElement('a');
+    link.href = mediaPath;
+    link.download = mediaName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <Layout>
       <div className="container py-12">
         <h1 className="text-3xl font-bold mb-8 text-center text-solio-blue">Médiathèque</h1>
-        <p className="text-center mb-12 max-w-3xl mx-auto">
+        <p className="text-center mb-8 max-w-3xl mx-auto">
           Retrouvez ici toutes les images et médias utilisés sur notre site. Ces ressources sont disponibles pour nos partenaires 
           et la presse selon nos conditions d'utilisation.
         </p>
-
-        {categories.map(category => (
-          <div key={category} className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6 border-b pb-2">{category}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {groupedMedia[category].map((media, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <CardContent className="p-2">
-                    <AspectRatio ratio={4/3} className="bg-gray-100 overflow-hidden">
-                      <img 
-                        src={media.path} 
-                        alt={media.name} 
-                        className="w-full h-full object-contain"
-                      />
-                    </AspectRatio>
-                  </CardContent>
-                  <CardFooter className="px-4 py-3 border-t bg-gray-50">
-                    <div className="w-full">
-                      <p className="text-sm font-medium">{media.name}</p>
-                      <p className="text-xs text-gray-500 mt-1">{media.path}</p>
-                    </div>
-                  </CardFooter>
-                </Card>
-              ))}
+        
+        <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row md:justify-between md:items-center mb-8">
+          <div className="relative w-full md:w-64">
+            <Input 
+              type="text"
+              placeholder="Rechercher..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pr-10"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <Image className="h-4 w-4 text-gray-500" />
             </div>
           </div>
-        ))}
+          
+          <Tabs 
+            defaultValue="all" 
+            className="w-full md:w-auto overflow-x-auto" 
+            onValueChange={(value) => setActiveCategory(value)}
+          >
+            <TabsList className="h-10">
+              <TabsTrigger value="all" className="data-[state=active]:bg-solio-blue data-[state=active]:text-white">
+                Tous
+              </TabsTrigger>
+              {categories.map((category) => (
+                <TabsTrigger 
+                  key={category} 
+                  value={category}
+                  className="data-[state=active]:bg-solio-blue data-[state=active]:text-white"
+                >
+                  {category}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+
+        {displayCategories.length > 0 ? (
+          displayCategories.map(category => (
+            <div key={category} className="mb-12">
+              <h2 className="text-2xl font-semibold mb-6 border-b pb-2 flex items-center">
+                <Gallery className="mr-2 h-5 w-5" />
+                {category}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredGroupedMedia[category].map((media, index) => (
+                  <Card key={`${category}-${index}`} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <CardContent className="p-2">
+                      <AspectRatio ratio={4/3} className="bg-gray-100 overflow-hidden">
+                        <img 
+                          src={media.path} 
+                          alt={media.name} 
+                          className="w-full h-full object-contain hover:scale-105 transition-transform"
+                        />
+                      </AspectRatio>
+                    </CardContent>
+                    <CardFooter className="px-4 py-3 border-t bg-gray-50 flex justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-medium truncate">{media.name}</p>
+                        <p className="text-xs text-gray-500 mt-1 truncate">{media.path.split('/').pop()}</p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        onClick={() => handleDownload(media.path, media.name)}
+                        className={cn(
+                          "ml-auto",
+                          "hover:bg-gray-200 hover:text-gray-900"
+                        )}
+                        title="Télécharger"
+                      >
+                        <Download className="h-4 w-4" />
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-10">
+            <p className="text-xl text-gray-500">Aucun résultat trouvé pour votre recherche</p>
+          </div>
+        )}
       </div>
     </Layout>
   );
