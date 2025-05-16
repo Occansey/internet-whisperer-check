@@ -28,7 +28,7 @@ export const projects: ProjectProps[] = [
     description: "Déploiement d'une solution solaire pour alimenter les infrastructures de télécommunication d'Econet Leo, réduisant ainsi la dépendance aux générateurs diesel.",
     image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
     progress: 25,
-    subsidiary: "growth energy",
+    subsidiary: "growth-energy",
     location: "Burundi"
   },
   {
@@ -37,7 +37,7 @@ export const projects: ProjectProps[] = [
     description: "Installation d'un système solaire photovoltaïque pour une grande unité industrielle, permettant de réduire considérablement les coûts énergétiques et les émissions de CO2.",
     image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
     progress: 60,
-    subsidiary: "growth energy",
+    subsidiary: "growth-energy",
     location: "Burundi"
   },
   {
@@ -55,7 +55,7 @@ export const projects: ProjectProps[] = [
     description: "Conception et installation d'une centrale solaire de 2.8MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
     image: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
     progress: 30,
-    subsidiary: "growth energy",
+    subsidiary: "growth-energy",
     location: "Burundi"
   },
   {
@@ -91,7 +91,7 @@ export const projects: ProjectProps[] = [
     description: "À Fumba Town, Zanzibar, nous développons une communauté 100% indépendante énergétiquement en collaboration avec CPS Africa, un leader du développement urbain durable.",
     image: "/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png",
     progress: 45,
-    subsidiary: "growth energy",
+    subsidiary: "growth-energy",
     location: "Zanzibar, Tanzania"
   },
   {
