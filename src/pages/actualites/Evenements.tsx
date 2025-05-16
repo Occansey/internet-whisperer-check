@@ -69,7 +69,7 @@ export const events: EventProps[] = [
     date: "18 février 2025",
     time: "19:30",
     location: "BFM Business",
-    image: "/lovable-uploads/e2652189-1139-496f-8649-6600cb193628.png",
+    image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
     link: "#",
     tags: ["Médias", "Investissement", "Leadership"]
   },
