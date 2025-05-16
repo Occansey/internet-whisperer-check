@@ -1,11 +1,9 @@
-
-import Layout from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { toast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import Layout from "@/components/Layout";
 
 const Contact = () => {
   const [nom, setNom] = useState("");
@@ -15,61 +13,60 @@ const Contact = () => {
   const [sujet, setSujet] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+    setSuccess(false);
 
-  try {
-    // Prepare data for Kit.com submission
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("message", message);
-    formData.append("form_type", type);
+    try {
+      const formData = new FormData();
+      formData.append("name", `${prenom} ${nom}`);
+      formData.append("email", email);
+      formData.append("phone", telephone);
+      formData.append("message", message);
+      formData.append("form_type", sujet);
 
-    if (jobTitle) formData.append("job_title", jobTitle);
-    if (eventTitle) formData.append("event_title", eventTitle);
-    if (cv instanceof File) formData.append("cv", cv);
+      // Kit.com form URL
+      const kitFormUrl = "https://solio-group.kit.com/d7e85ef825";
 
-    // Kit.com form URL
-    const kitFormUrl = "https://kit.co/forms/yourformid";
+      // Send form data
+      const response = await fetch(kitFormUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
+      });
 
-    // Make the request
-    const response = await fetch(kitFormUrl, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-      },
-      body: formData,
-    });
+      if (!response.ok) {
+        throw new Error(`Submission failed with status ${response.status}`);
+      }
 
-    if (!response.ok) {
-      throw new Error(`Submission failed with status ${response.status}`);
+      setSuccess(true);
+      alert("Message envoyé avec succès !");
+    } catch (err: any) {
+      console.error("Erreur lors de l'envoi :", err);
+      setError("Une erreur s'est produite lors de l'envoi du formulaire.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    // Optional: You can process the response if CORS is configured correctly
-    const result = await response.json();
-    console.log("Form submitted successfully:", result);
-
-  } catch (error) {
-    console.error("Error submitting the form:", error);
-    alert("There was an error submitting your form. Please try again.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center text-solio-blue">Contact</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center text-solio-blue">
+            Contact
+          </h1>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? 
-            N'hésitez pas à nous contacter, nous vous répondrons rapidement.
+            Vous avez une question, un projet, une demande de partenariat ou une
+            candidature spontanée ? N'hésitez pas à nous contacter, nous vous
+            répondrons rapidement.
           </p>
 
           <div className="grid md:grid-cols-5 gap-8">
@@ -77,153 +74,75 @@ const Contact = () => {
               <CardContent className="pt-6">
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="nom" className="text-sm font-medium">Nom</label>
-                      <Input 
-                        id="nom" 
-                        placeholder="Votre nom" 
-                        required 
-                        value={nom}
-                        onChange={(e) => setNom(e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="prenom" className="text-sm font-medium">Prénom</label>
-                      <Input 
-                        id="prenom" 
-                        placeholder="Votre prénom" 
-                        required 
-                        value={prenom}
-                        onChange={(e) => setPrenom(e.target.value)}
-                      />
-                    </div>
+                    <Input
+                      id="nom"
+                      placeholder="Nom"
+                      required
+                      value={nom}
+                      onChange={(e) => setNom(e.target.value)}
+                    />
+                    <Input
+                      id="prenom"
+                      placeholder="Prénom"
+                      required
+                      value={prenom}
+                      onChange={(e) => setPrenom(e.target.value)}
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium">Email</label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        placeholder="votre.email@exemple.com" 
-                        required 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="telephone" className="text-sm font-medium">Téléphone</label>
-                      <Input 
-                        id="telephone" 
-                        placeholder="Votre numéro de téléphone" 
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="sujet" className="text-sm font-medium">Sujet</label>
-                    <Input 
-                      id="sujet" 
-                      placeholder="Sujet de votre message" 
-                      required 
-                      value={sujet}
-                      onChange={(e) => setSujet(e.target.value)}
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Votre email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input
+                      id="telephone"
+                      placeholder="Votre numéro de téléphone"
+                      value={telephone}
+                      onChange={(e) => setTelephone(e.target.value)}
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">Message</label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Votre message" 
-                      rows={6} 
-                      required 
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                    />
-                  </div>
+                  <Input
+                    id="sujet"
+                    placeholder="Sujet"
+                    required
+                    value={sujet}
+                    onChange={(e) => setSujet(e.target.value)}
+                  />
 
-                  <Button 
-                    type="submit" 
+                  <Textarea
+                    id="message"
+                    placeholder="Votre message"
+                    rows={6}
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+
+                  <Button
+                    type="submit"
                     className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
                   </Button>
+
+                  {error && (
+                    <p className="text-red-500 mt-4">{error}</p>
+                  )}
+                  {success && (
+                    <p className="text-green-500 mt-4">
+                      Message envoyé avec succès !
+                    </p>
+                  )}
                 </form>
               </CardContent>
             </Card>
-
-            <div className="md:col-span-2">
-              <Card className="border-none shadow-md h-full">
-                <CardContent className="pt-6">
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Coordonnées</h3>
-                      <address className="not-italic space-y-2 text-gray-700">
-                        <p className="font-medium">Solio Group</p>
-                        <div className="mt-3">
-                          <p className="font-medium">France</p>
-                          <p>4 Rue De Longchamp, 75016, Paris</p>
-                          <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
-                        </div>
-                        <div className="mt-3">
-                          <p className="font-medium">Canada</p>
-                          <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
-                        </div>
-                        <div className="mt-3">
-                          <p className="font-medium">Africa HQ</p>
-                          <p>GEFI Solutions SEZ Limited</p>
-                          <p>9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
-                        </div>
-                        <div className="mt-3">
-                          <p className="font-medium">Nigeria (Growth Energy Nigeria Limited)</p>
-                          <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
-                          <p><strong>Lagos:</strong> 16, Idowu Martins, Victoria Island, Lagos</p>
-                          <p><strong>Enugu:</strong> Manamuz; 68B Chime Avenue, New Haven, Enugu</p>
-                        </div>
-                        <div className="mt-3">
-                          <p className="font-medium">Burundi</p>
-                          <p>Bujumbura: Rue Pierre Ngendandumwe, Bujumbura, Burundi</p>
-                        </div>
-                        <div className="mt-3">
-                          <p className="font-medium">Tanzania (LifeExpress Office)</p>
-                          <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
-                        </div>
-                        <p className="mt-4">
-                          <strong>Email:</strong> contact@solio-group.com
-                        </p>
-                      </address>
-                    </div>
-
-                    <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Suivez-nous</h3>
-                      <div className="flex space-x-4">
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          LinkedIn
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          Twitter/X
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          YouTube
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="pt-4">
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Horaires d'ouverture</h3>
-                      <p className="text-gray-700">
-                        Du lundi au vendredi<br />
-                        9h00 - 18h00
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </div>
