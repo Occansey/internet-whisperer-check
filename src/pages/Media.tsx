@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Image, Grid } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui/sonner";
 
 interface MediaItem {
   path: string;
@@ -17,6 +18,8 @@ interface MediaItem {
 
 const mediaItems: MediaItem[] = [
   // Solar Panels - New Uploads
+  { path: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png", name: "Large Solar Farm", category: "Solar Panels" },
+  { path: "/lovable-uploads/e30ad55c-eb19-409d-b49a-f5d005911527.png", name: "Solar Panel Installation with Staff", category: "Solar Panels" },
   { path: "/lovable-uploads/a68d5dc8-da0e-46cd-aaf2-17e5aa218fa9.png", name: "Solar Farm", category: "Solar Panels" },
   { path: "/lovable-uploads/5b8bb5f1-8a4e-475a-9dd3-70df52acbc11.png", name: "Rooftop Solar Installation", category: "Solar Panels" },
   
@@ -115,6 +118,11 @@ const MediaPage: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
+    toast({
+      title: "Téléchargement démarré",
+      description: `${mediaName} est en cours de téléchargement`,
+    });
   };
 
   return (
