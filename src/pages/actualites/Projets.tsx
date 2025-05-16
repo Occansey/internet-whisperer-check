@@ -89,7 +89,7 @@ export const projects: ProjectProps[] = [
     id: 8,
     title: "Fumba Town: Pionnier de l'indépendance énergétique",
     description: "À Fumba Town, Zanzibar, nous développons une communauté 100% indépendante énergétiquement en collaboration avec CPS Africa, un leader du développement urbain durable.",
-    image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
+    image: "/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png",
     progress: 45,
     subsidiary: "growth energy",
     location: "Zanzibar, Tanzania"
