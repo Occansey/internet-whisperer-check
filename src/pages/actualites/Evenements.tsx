@@ -73,48 +73,7 @@ export const events: EventProps[] = [
     link: "#",
     tags: ["Médias", "Investissement", "Leadership"]
   },
-  {
-    id: 5,
-    title: "Powerlec: Salon international de l'électricité",
-    description: "Growth Energy présentera ses solutions innovantes pour l'électrification rurale et les installations solaires industrielles.",
-    type: "upcoming",
-    date: "5-7 septembre 2025",
-    location: "Paris, France",
-    image: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
-    tags: ["Énergie", "International", "Innovation"]
-  },
-  {
-    id: 6,
-    title: "Algora Allianz avec Laura",
-    description: "Laura Duhorane participe à une table ronde sur l'intelligence des données et son impact sur la transformation des entreprises.",
-    type: "past",
-    date: "27 janvier 2025",
-    time: "15:00 - 17:00",
-    location: "Paris, France",
-    image: "/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png",
-    tags: ["IA", "Données", "Transformation"]
-  },
-  {
-    id: 7,
-    title: "Programme de Mentorat Québec",
-    description: "MFG Technologies lance son programme de mentorat pour accompagner les jeunes professionnels du secteur de l'industrie manufacturière.",
-    type: "past",
-    date: "1 février 2025",
-    location: "Montréal, Canada",
-    image: "/lovable-uploads/7ee09634-30ae-45fa-9325-6a4fbecf9e35.png",
-    tags: ["Formation", "Industrie", "Mentorat"]
-  },
-  {
-    id: 8,
-    title: "E-mobility Forum avec Purity",
-    description: "Purity représentera GEM E-Mobility lors de ce forum dédié à l'avenir de la mobilité électrique en Afrique de l'Est.",
-    type: "upcoming",
-    date: "14 juillet 2025",
-    time: "9:00 - 18:00",
-    location: "Nairobi, Kenya",
-    image: "/lovable-uploads/2fe0d17c-a679-4f41-bc00-97efdcc0d1e9.png",
-    tags: ["Mobilité", "Innovation", "Afrique"]
-  }
+
 ];
 
 const EventCard = ({ event }: { event: EventProps }) => {
