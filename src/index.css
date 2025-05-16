@@ -96,24 +96,28 @@
 
   /* Page transition */
   .page-transition {
-    @apply transition-opacity duration-300 ease-in-out;
+    @apply transition-all duration-300 ease-in-out;
   }
   
   .page-transition-enter {
     opacity: 0;
+    transform: translateX(100px);
   }
   
   .page-transition-enter-active {
     opacity: 1;
-    transition: opacity 300ms ease-in-out;
+    transform: translateX(0);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   }
   
   .page-transition-exit {
     opacity: 1;
+    transform: translateX(0);
   }
   
   .page-transition-exit-active {
     opacity: 0;
-    transition: opacity 300ms ease-in-out;
+    transform: translateX(-100px);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   }
 }

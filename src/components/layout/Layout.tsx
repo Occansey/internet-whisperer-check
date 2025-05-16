@@ -26,13 +26,13 @@ const Layout = ({ children }: LayoutProps) => {
     const contentTimer = setTimeout(() => {
       setDisplayChildren(children);
       
-      // Small delay before fading in to ensure content has updated
-      const fadeInTimer = setTimeout(() => {
+      // Small delay before sliding in to ensure content has updated
+      const slideInTimer = setTimeout(() => {
         setIsTransitioning(false);
       }, 50);
       
-      return () => clearTimeout(fadeInTimer);
-    }, 300); // Duration of fade out
+      return () => clearTimeout(slideInTimer);
+    }, 300); // Duration of slide out
     
     return () => clearTimeout(contentTimer);
   }, [pathname, children]);
@@ -43,8 +43,8 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="flex-1">
         <div
           className={cn(
-            "transition-opacity duration-300 ease-in-out",
-            isTransitioning ? "opacity-0" : "opacity-100"
+            "transition-all duration-300 ease-in-out",
+            isTransitioning ? "opacity-0 transform translate-x-10" : "opacity-100 transform translate-x-0"
           )}
         >
           {displayChildren}
