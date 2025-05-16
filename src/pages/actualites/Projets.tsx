@@ -26,22 +26,13 @@ export const projects: ProjectProps[] = [
     id: 1,
     title: "Projet Télécom - Econet Leo",
     description: "Modernisation des antennes de télécommunication d’Econet Leo afin d’améliorer la couverture réseau et de préparer l’infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
-    image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
+    image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     progress: 25,
     subsidiary: "growth-energy",
     location: "Burundi"
   },
   {
     id: 2,
-    title: "CNI Industriel",
-    description: "Installation d'un système solaire photovoltaïque pour une grande unité industrielle, permettant de réduire considérablement les coûts énergétiques et les émissions de CO2.",
-    image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
-    progress: 60,
-    subsidiary: "growth-energy",
-    location: "Burundi"
-  },
-  {
-    id: 3,
     title: "Intégration ERP Divalto - Manufacture textile",
     description: "Déploiement complet d'une solution ERP Divalto pour une manufacture textile, incluant formation et support technique.",
     image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=1000",
@@ -50,7 +41,7 @@ export const projects: ProjectProps[] = [
     location: "Montréal, Canada"
   },
   {
-    id: 4,
+    id: 3,
     title: "Brarudi Solar Power Plant",
     description: "Conception et installation d'une centrale solaire de 2.8MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
     image: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
@@ -59,7 +50,7 @@ export const projects: ProjectProps[] = [
     location: "Burundi"
   },
   {
-    id: 5,
+    id: 4,
     title: "ATS Solio Group",
     description: "Développement d'un système de suivi des candidatures (ATS) personnalisé pour améliorer le processus de recrutement du groupe et répondre au besoin d'expansion.",
     image: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
@@ -68,7 +59,7 @@ export const projects: ProjectProps[] = [
     location: "France"
   },
   {
-    id: 6,
+    id: 5,
     title: "Projet solaire industriel Tanzanie",
     description: "Installation d'une solution solaire pour une usine de traitement alimentaire, optimisant les coûts énergétiques et améliorant la durabilité des opérations.",
     image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
@@ -77,7 +68,7 @@ export const projects: ProjectProps[] = [
     location: "Tanzanie"
   },
   {
-    id: 7,
+    id: 6,
     title: "Migration ERP et formation pour industrie métallurgique",
     description: "Migration d'un système ERP existant vers JobBOSS avec formation complète des équipes et adaptation aux processus spécifiques de l'industrie métallurgique.",
     image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1000",
@@ -86,7 +77,7 @@ export const projects: ProjectProps[] = [
     location: "Québec, Canada"
   },
   {
-    id: 8,
+    id: 7,
     title: "Fumba Town: Pionnier de l'indépendance énergétique",
     description: "À Fumba Town, Zanzibar, nous développons une communauté 100% indépendante énergétiquement en collaboration avec CPS Africa, un leader du développement urbain durable.",
     image: "/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png",
@@ -95,7 +86,7 @@ export const projects: ProjectProps[] = [
     location: "Zanzibar, Tanzania"
   },
   {
-    id: 9,
+    id: 8,
     title: "KIRA - Station de recharge solaire",
     description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
     image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
