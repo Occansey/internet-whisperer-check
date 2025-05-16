@@ -119,7 +119,7 @@ const temoignages = [
   {
     name: "Maxwell O.",
     role: "Consultant Junior",
-    testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre plusieurs formations de pointe  et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
+    testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre une formation de pointe et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
     filiale: "Asking",
     photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
   }
