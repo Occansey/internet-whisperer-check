@@ -5,7 +5,8 @@ import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
-// Add any other imports you need
+import { articles } from '@/pages/actualites/Communiques';
+import WordPressContent from '@/components/wordpress/WordPressContent';
 
 const CommuniqueDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,17 +15,16 @@ const CommuniqueDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load article data
-    // This would typically be an API call
-    setLoading(false);
-    // Mock data for now
-    setArticle({
-      id: id,
-      title: "Article Title",
-      content: "Article content would go here. This is a placeholder.",
-      date: new Date().toISOString(),
-      image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png"
-    });
+    if (id) {
+      // Find the article from the articles list
+      const found = articles.find(a => a.id === id);
+      
+      if (found) {
+        setArticle(found);
+      }
+      
+      setLoading(false);
+    }
   }, [id]);
 
   const handleBack = () => {
@@ -75,7 +75,7 @@ const CommuniqueDetail = () => {
             
             <div className="flex items-center text-sm text-gray-500 mb-6">
               <Calendar className="h-4 w-4 mr-2" />
-              <span>{new Date(article.date).toLocaleDateString()}</span>
+              <span>{article.date}</span>
             </div>
             
             {article.image && (
@@ -88,8 +88,8 @@ const CommuniqueDetail = () => {
               </div>
             )}
             
-            <div className="prose prose-lg max-w-none">
-              <p>{article.content}</p>
+            <div className="prose prose-lg max-w-none whitespace-pre-line">
+              {article.content}
             </div>
             
             {/* Social sharing section */}

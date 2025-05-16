@@ -172,13 +172,11 @@ const EventCard = ({ event }: { event: EventProps }) => {
         )}
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
-        {event.link && (
-          <Button variant="solio" className="w-full" asChild>
-            <Link to={`/actualites/evenements/${event.id}`}>
-              En savoir plus
-            </Link>
-          </Button>
-        )}
+        <Button variant="solio" className="w-full" asChild>
+          <Link to={`/actualites/evenements/${event.id}`}>
+            En savoir plus
+          </Link>
+        </Button>
         <SocialShare title={event.title} compact={true} />
       </CardFooter>
     </Card>
