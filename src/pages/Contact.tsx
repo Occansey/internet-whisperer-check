@@ -4,8 +4,69 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [sujet, setSujet] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Prepare data for Kit.com submission
+      const formData = new FormData();
+      formData.append("nom", nom);
+      formData.append("prenom", prenom);
+      formData.append("email", email);
+      formData.append("telephone", telephone);
+      formData.append("sujet", sujet);
+      formData.append("message", message);
+      formData.append("form_type", "contact");
+      
+      // Submit to Kit.com (replace this URL with your actual Kit.com form endpoint)
+      const kitFormUrl = "https://kit.co/forms/yourformid";
+      
+      const response = await fetch(kitFormUrl, {
+        method: "POST",
+        mode: "no-cors", // Kit.com may require no-cors mode
+        body: formData,
+      });
+      
+      // Since no-cors mode doesn't return detailed response info,
+      // we just assume success if no error is thrown
+      toast({
+        title: "Message envoyé",
+        description: "Nous avons bien reçu votre message et reviendrons vers vous dans les plus brefs délais.",
+      });
+      
+      // Reset form
+      setNom("");
+      setPrenom("");
+      setEmail("");
+      setTelephone("");
+      setSujet("");
+      setMessage("");
+      
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="py-12 bg-gray-50">
@@ -19,40 +80,83 @@ const Contact = () => {
           <div className="grid md:grid-cols-5 gap-8">
             <Card className="md:col-span-3 border-none shadow-md">
               <CardContent className="pt-6">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="nom" className="text-sm font-medium">Nom</label>
-                      <Input id="nom" placeholder="Votre nom" required />
+                      <Input 
+                        id="nom" 
+                        placeholder="Votre nom" 
+                        required 
+                        value={nom}
+                        onChange={(e) => setNom(e.target.value)}
+                      />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="prenom" className="text-sm font-medium">Prénom</label>
-                      <Input id="prenom" placeholder="Votre prénom" required />
+                      <Input 
+                        id="prenom" 
+                        placeholder="Votre prénom" 
+                        required 
+                        value={prenom}
+                        onChange={(e) => setPrenom(e.target.value)}
+                      />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="email" className="text-sm font-medium">Email</label>
-                      <Input id="email" type="email" placeholder="votre.email@exemple.com" required />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="votre.email@exemple.com" 
+                        required 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="telephone" className="text-sm font-medium">Téléphone</label>
-                      <Input id="telephone" placeholder="Votre numéro de téléphone" />
+                      <Input 
+                        id="telephone" 
+                        placeholder="Votre numéro de téléphone" 
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="sujet" className="text-sm font-medium">Sujet</label>
-                    <Input id="sujet" placeholder="Sujet de votre message" required />
+                    <Input 
+                      id="sujet" 
+                      placeholder="Sujet de votre message" 
+                      required 
+                      value={sujet}
+                      onChange={(e) => setSujet(e.target.value)}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="message" className="text-sm font-medium">Message</label>
-                    <Textarea id="message" placeholder="Votre message" rows={6} required />
+                    <Textarea 
+                      id="message" 
+                      placeholder="Votre message" 
+                      rows={6} 
+                      required 
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
                   </div>
 
-                  <Button type="submit" className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90">Envoyer le message</Button>
+                  <Button 
+                    type="submit" 
+                    className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                  </Button>
                 </form>
               </CardContent>
             </Card>

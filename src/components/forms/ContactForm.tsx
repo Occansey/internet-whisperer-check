@@ -38,13 +38,42 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Prepare data for Kit.com submission
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("message", message);
+      formData.append("form_type", type);
+      
+      if (jobTitle) {
+        formData.append("job_title", jobTitle);
+      }
+      
+      if (eventTitle) {
+        formData.append("event_title", eventTitle);
+      }
+      
+      if (cv) {
+        formData.append("cv", cv);
+      }
+      
+      // Submit to Kit.com (replace this URL with your actual Kit.com form endpoint)
+      const kitFormUrl = "https://kit.co/forms/yourformid";
+      
+      const response = await fetch(kitFormUrl, {
+        method: "POST",
+        mode: "no-cors", // Kit.com may require no-cors mode
+        body: formData,
+      });
+      
+      // Since no-cors mode doesn't return detailed response info,
+      // we just assume success if no error is thrown
       toast({
         title: "Formulaire envoyé",
         description: "Nous avons bien reçu votre message et reviendrons vers vous dans les plus brefs délais.",
@@ -58,7 +87,17 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
       setCv(null);
       
       if (onClose) onClose();
-    }, 1500);
+      
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
