@@ -28,7 +28,7 @@ export const projects: ProjectProps[] = [
     description: "Déploiement d'une solution solaire pour alimenter les infrastructures de télécommunication d'Econet Leo, réduisant ainsi la dépendance aux générateurs diesel.",
     image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
     progress: 75,
-    subsidiary: "growth-energy",
+    subsidiary: "growth energy",
     location: "Burundi"
   },
   {
@@ -37,7 +37,7 @@ export const projects: ProjectProps[] = [
     description: "Installation d'un système solaire photovoltaïque pour une grande unité industrielle, permettant de réduire considérablement les coûts énergétiques et les émissions de CO2.",
     image: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
     progress: 60,
-    subsidiary: "growth-energy",
+    subsidiary: "growth energy",
     location: "Burundi"
   },
   {
@@ -51,21 +51,21 @@ export const projects: ProjectProps[] = [
   },
   {
     id: 4,
-    title: "ESME Solar Plant",
-    description: "Conception et installation d'une centrale solaire de 2MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
+    title: "Brarudi Solar Power Plant",
+    description: "Conception et installation d'une centrale solaire de 2.8MW pour alimenter une zone industrielle, contribuant à la stabilité énergétique locale.",
     image: "/lovable-uploads/9944073d-a36f-4be9-8d3c-36f8ff0890bb.png",
     progress: 30,
-    subsidiary: "growth-energy",
-    location: "Nigeria"
+    subsidiary: "growth energy",
+    location: "Burundi"
   },
   {
     id: 5,
     title: "ATS Solio Group",
-    description: "Développement d'un système de suivi des candidatures (ATS) personnalisé pour améliorer le processus de recrutement du groupe, avec l'implication active de Purity sur le projet Nor.",
+    description: "Développement d'un système de suivi des candidatures (ATS) personnalisé pour améliorer le processus de recrutement du groupe et répondre au besoin d'expansion.",
     image: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png",
     progress: 25,
     subsidiary: "asking",
-    location: "France/Kenya"
+    location: "France"
   },
   {
     id: 6,
@@ -73,7 +73,7 @@ export const projects: ProjectProps[] = [
     description: "Installation d'une solution solaire pour une usine de traitement alimentaire, optimisant les coûts énergétiques et améliorant la durabilité des opérations.",
     image: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
     progress: 20,
-    subsidiary: "growth-energy",
+    subsidiary: "growth energy",
     location: "Tanzanie"
   },
   {
@@ -91,7 +91,7 @@ export const projects: ProjectProps[] = [
     description: "À Fumba Town, Zanzibar, nous développons une communauté 100% indépendante énergétiquement en collaboration avec CPS Africa, un leader du développement urbain durable.",
     image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
     progress: 45,
-    subsidiary: "growth-energy",
+    subsidiary: "growth energy",
     location: "Zanzibar, Tanzania"
   },
   {
