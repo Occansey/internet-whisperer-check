@@ -21,12 +21,17 @@ const Contact = () => {
   setIsSubmitting(true);
 
   try {
+    // Prepare data for Kit.com submission
     const formData = new FormData();
-    formData.append("name", `${prenom} ${nom}`); // Full name
+    formData.append("name", nom);
     formData.append("email", email);
     formData.append("phone", telephone);
     formData.append("message", message);
     formData.append("form_type", sujet);
+
+    if (jobTitle) formData.append("job_title", jobTitle);
+    if (eventTitle) formData.append("event_title", eventTitle);
+    if (cv instanceof File) formData.append("cv", cv);
 
     // Kit.com form URL
     const kitFormUrl = "https://solio-group.kit.com/d7e85ef825";
@@ -35,7 +40,7 @@ const Contact = () => {
     const response = await fetch(kitFormUrl, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
       },
       body: formData,
     });
@@ -44,15 +49,16 @@ const Contact = () => {
       throw new Error(`Submission failed with status ${response.status}`);
     }
 
-    alert("Message envoyé avec succès !");
+    // Optional: You can process the response if CORS is configured correctly
+    const result = await response.json();
+    console.log("Form submitted successfully:", result);
+
   } catch (error) {
     console.error("Error submitting the form:", error);
-    alert("Une erreur s'est produite lors de l'envoi du formulaire.");
+    alert("There was an error submitting your form. Please try again.");
   } finally {
     setIsSubmitting(false);
   }
-};
-
 };
 
 
