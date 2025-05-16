@@ -194,12 +194,6 @@ const Header = () => {
                     >
                       Événements passés et à venir
                     </ListItem>
-                    <ListItem
-                      href="/media"
-                      title="Médiathèque"
-                    >
-                      Images et ressources médias
-                    </ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -294,7 +288,6 @@ const Header = () => {
                         <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
                         <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
                         <MobileMenuItem to="/actualites/evenements">Événements</MobileMenuItem>
-                        <MobileMenuItem to="/media">Médiathèque</MobileMenuItem>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
