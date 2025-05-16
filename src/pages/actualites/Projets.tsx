@@ -25,7 +25,7 @@ export const projects: ProjectProps[] = [
   {
     id: 1,
     title: "Projet Télécom - Econet Leo",
-    description: "Déploiement d'une solution solaire pour alimenter les infrastructures de télécommunication d'Econet Leo, réduisant ainsi la dépendance aux générateurs diesel.",
+    description: "Modernisation des antennes de télécommunication d’Econet Leo afin d’améliorer la couverture réseau et de préparer l’infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
     image: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
     progress: 25,
     subsidiary: "growth-energy",
