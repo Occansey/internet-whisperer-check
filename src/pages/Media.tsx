@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Gallery, Download, Image } from "lucide-react";
+import { Download, Image, Grid } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -166,7 +166,7 @@ const MediaPage: React.FC = () => {
           displayCategories.map(category => (
             <div key={category} className="mb-12">
               <h2 className="text-2xl font-semibold mb-6 border-b pb-2 flex items-center">
-                <Gallery className="mr-2 h-5 w-5" />
+                <Grid className="mr-2 h-5 w-5" />
                 {category}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
