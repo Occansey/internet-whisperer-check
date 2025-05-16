@@ -20,7 +20,7 @@ const filiales: FilialeProps[] = [
     id: "growth-energy",
     name: "Growth Energy",
     description: "Growth Energy est une entreprise spécialisée dans la transition énergétique qui aide les entreprises et les particuliers à réduire leur empreinte carbone et leurs coûts énergétiques. Nous avons trois activités complémentaires : l'électrification des zones rurales, l'installation de centrales solaires pour les industriels et les entreprises, et la mobilité électrique.",
-    logo: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png",
+    logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     coverImage: "/lovable-uploads/631ac8fc-0af4-4b0c-832f-4968e67b872c.png",
     keyActivities: ["Électrification rurale", "Centrales solaires industrielles", "Mobilité électrique"],
     url: "/filiales/growth-energy"
@@ -47,8 +47,8 @@ const filiales: FilialeProps[] = [
     id: "gem",
     name: "GEM E-Mobility",
     description: "GEM E-Mobility est une entreprise spécialisée dans les solutions de mobilité électrique. Nous concevons et déployons des infrastructures de recharge pour véhicules électriques adaptées aux besoins spécifiques des entreprises et collectivités.",
-    logo: "/lovable-uploads/87471889-7d1b-4af3-a3f5-3d8b8bdf600c.png",
-    coverImage: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
+    logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
+    coverImage: "/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png",
     keyActivities: ["Bornes de recharge", "Stations solaires", "Gestion de flotte électrique"],
     url: "/filiales/gem"
   }
