@@ -50,7 +50,7 @@ const filiales: FilialeProps[] = [
     logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     coverImage: "/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png",
     keyActivities: ["Bornes de recharge", "Stations solaires", "Gestion de flotte électrique"],
-    url: "/filiales/gem"
+    url: "/filiales/gem-e-mobility"
   }
 ];
 
