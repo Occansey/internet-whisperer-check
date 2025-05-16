@@ -21,7 +21,7 @@ const filiales: FilialeProps[] = [
     name: "Growth Energy",
     description: "Growth Energy est une entreprise spécialisée dans la transition énergétique qui aide les entreprises et les particuliers à réduire leur empreinte carbone et leurs coûts énergétiques. Nous avons trois activités complémentaires : l'électrification des zones rurales, l'installation de centrales solaires pour les industriels et les entreprises, et la mobilité électrique.",
     logo: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png",
-    coverImage: "/lovable-uploads/0d9f69ea-71eb-4bc3-be79-adcca4923d6c.png",
+    coverImage: "/lovable-uploads/631ac8fc-0af4-4b0c-832f-4968e67b872c.png",
     keyActivities: ["Électrification rurale", "Centrales solaires industrielles", "Mobilité électrique"],
     url: "/filiales/growth-energy"
   },
@@ -29,8 +29,8 @@ const filiales: FilialeProps[] = [
     id: "asking",
     name: "Asking",
     description: "Asking est une entreprise spécialisée dans la visualisation et l'analyse de données. Nous accompagnons les entreprises dans l'exploitation stratégique de leurs données pour une prise de décision éclairée et un pilotage optimisé de leur activité.",
-    logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
-    coverImage: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    logo: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
+    coverImage: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
     keyActivities: ["Consulting en données", "Tableaux de bord interactifs", "Formation et accompagnement"],
     url: "/filiales/asking"
   },
@@ -38,8 +38,8 @@ const filiales: FilialeProps[] = [
     id: "mfg",
     name: "MFG Technologies",
     description: "MFG Technologies est un intégrateur de solutions ERP spécialisé dans les logiciels Divalto et JobBOSS. Nous accompagnons les entreprises manufacturières dans l'optimisation de leurs processus métiers grâce à des solutions de gestion adaptées.",
-    logo: "/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png",
-    coverImage: "/lovable-uploads/9fbf7b39-6bdb-4d17-9641-3eefd0bf8f17.png",
+    logo: "/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png",
+    coverImage: "/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png",
     keyActivities: ["Intégration Divalto", "Intégration JobBOSS", "Support technique et formation"],
     url: "/filiales/mfg"
   },
