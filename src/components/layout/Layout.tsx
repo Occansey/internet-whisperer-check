@@ -19,14 +19,22 @@ const Layout = ({ children }: LayoutProps) => {
   }, [pathname]);
 
   useEffect(() => {
-    if (pathname) {
-      setIsTransitioning(true);
-      const timer = setTimeout(() => {
-        setDisplayChildren(children);
+    // Start transition when pathname changes
+    setIsTransitioning(true);
+    
+    // Short timeout to ensure state updates before changing content
+    const contentTimer = setTimeout(() => {
+      setDisplayChildren(children);
+      
+      // Small delay before fading in to ensure content has updated
+      const fadeInTimer = setTimeout(() => {
         setIsTransitioning(false);
-      }, 300); // Match this duration with the CSS transition time
-      return () => clearTimeout(timer);
-    }
+      }, 50);
+      
+      return () => clearTimeout(fadeInTimer);
+    }, 300); // Duration of fade out
+    
+    return () => clearTimeout(contentTimer);
   }, [pathname, children]);
 
   return (

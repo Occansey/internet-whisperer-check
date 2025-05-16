@@ -95,13 +95,17 @@
   }
 
   /* Page transition */
+  .page-transition {
+    @apply transition-opacity duration-300 ease-in-out;
+  }
+  
   .page-transition-enter {
     opacity: 0;
   }
   
   .page-transition-enter-active {
     opacity: 1;
-    transition: opacity 300ms;
+    transition: opacity 300ms ease-in-out;
   }
   
   .page-transition-exit {
@@ -110,6 +114,6 @@
   
   .page-transition-exit-active {
     opacity: 0;
-    transition: opacity 300ms;
+    transition: opacity 300ms ease-in-out;
   }
 }
