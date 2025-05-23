@@ -1,11 +1,9 @@
-
 import axios from 'axios';
 
 /**
  * WordPress REST API service for integrating with WordPress as a headless CMS
- * Replace 'YOUR_WORDPRESS_SITE_URL' with your actual WordPress site URL
  */
-const WORDPRESS_API_URL = 'YOUR_WORDPRESS_SITE_URL/wp-json/wp/v2';
+const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
 
 // Types for WordPress API responses
 export interface WordPressPost {
@@ -191,6 +189,24 @@ const wordpressApi = {
       throw error;
     }
   },
+
+  // Check WordPress connection
+  checkConnection: async () => {
+    try {
+      const response = await axios.get(`${WORDPRESS_API_URL}`);
+      return {
+        isConnected: true,
+        version: response.data?.namespaces?.includes('wp/v2') ? 'v2' : 'unknown',
+        status: response.status
+      };
+    } catch (error) {
+      console.error('Error connecting to WordPress API:', error);
+      return {
+        isConnected: false,
+        error: error
+      };
+    }
+  }
 };
 
 export default wordpressApi;
