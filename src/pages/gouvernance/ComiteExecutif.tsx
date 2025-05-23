@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Users, Mail, Linkedin } from "lucide-react";
+import { Users, Target, TrendingUp, Shield } from "lucide-react";
 
 interface ExecutiveMemberProps {
   photo: string;
@@ -51,6 +49,48 @@ const executives: ExecutiveMemberProps[] = [
   }
 ];
 
+const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) => {
+  return (
+    <div className="flex flex-col md:flex-row gap-8 items-start">
+      <div className="w-full md:w-1/3">
+        <div className="rounded-lg overflow-hidden shadow-md">
+          <img 
+            src={executive.photo} 
+            alt={executive.name} 
+            className="w-full h-auto aspect-[3/4] object-cover object-top"
+          />
+        </div>
+        <div className="mt-4">
+          <h3 className="text-2xl font-bold text-solio-blue">{executive.name}</h3>
+          <p className="text-gray-700">{executive.title}</p>
+          <a 
+            href={executive.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-solio-blue hover:text-solio-yellow flex items-center transition-colors mt-2"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
+              <path 
+                fill="currentColor" 
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+              />
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <div className="w-full md:w-2/3">
+        <Card>
+          <CardContent className="prose max-w-none pt-6">
+            <h2 className="text-xl font-semibold mb-4">Biographie</h2>
+            <p className="whitespace-pre-line">{executive.bio}</p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
 const ComiteExecutif = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -58,10 +98,14 @@ const ComiteExecutif = () => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
+    // Initial check
     checkIsMobile();
+
+    // Add event listener
     window.addEventListener("resize", checkIsMobile);
-    
+
+    // Cleanup
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
@@ -69,11 +113,11 @@ const ComiteExecutif = () => {
     <Layout>
       <HeroBanner
         title="Comité Exécutif (COMEX)"
-        description="Rencontrez les membres du comité exécutif qui dirigent et orientent la stratégie du groupe Solio."
+        description="Direction stratégique et alignement des activités du Groupe pour une croissance durable et responsable."
         glowColor="indigo"
       />
 
-      <div className="py-16 bg-white">
+      <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Comité Exécutif (COMEX)</h1>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
@@ -104,43 +148,7 @@ const ComiteExecutif = () => {
               <div className="space-y-16">
                 {executives.map((exec, index) => (
                   <div key={exec.name} id={`exec-${exec.name.toLowerCase().split(' ')[1]}`} className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}>
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
-                      <div className="w-full md:w-1/3">
-                        <div className="rounded-lg overflow-hidden shadow-md">
-                          <img 
-                            src={exec.photo} 
-                            alt={exec.name} 
-                            className="w-full h-auto aspect-[3/4] object-cover object-top"
-                          />
-                        </div>
-                        <div className="mt-4">
-                          <h3 className="text-2xl font-bold text-solio-blue">{exec.name}</h3>
-                          <p className="text-gray-700">{exec.title}</p>
-                          <a 
-                            href={exec.linkedin} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-solio-blue hover:text-solio-yellow flex items-center transition-colors mt-2"
-                          >
-                            <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
-                              <path 
-                                fill="currentColor" 
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-                              />
-                            </svg>
-                            LinkedIn
-                          </a>
-                        </div>
-                      </div>
-                      <div className="w-full md:w-2/3">
-                        <Card>
-                          <CardContent className="prose max-w-none pt-6">
-                            <h2 className="text-xl font-semibold mb-4">Biographie</h2>
-                            <p className="whitespace-pre-line">{exec.bio}</p>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </div>
+                    <ExecutiveProfile executive={exec} />
                   </div>
                 ))}
               </div>
