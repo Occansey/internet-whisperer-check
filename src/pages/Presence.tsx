@@ -13,7 +13,7 @@ const Presence = () => {
       address: '4 Rue De Longchamp, 75016, Paris',
       description: 'Siège européen',
       color: 'bg-blue-500',
-      coordinates: { lat: 48.865033, lng: 2.287583 }
+      coordinates: { lat: 48.8665, lng: 2.2931 }
     },
     {
       id: 'marseille',
@@ -21,7 +21,7 @@ const Presence = () => {
       address: '211 Chem. de la Madrague-Ville, 13015 Marseille',
       description: 'Bureau régional',
       color: 'bg-blue-400',
-      coordinates: { lat: 43.3518, lng: 5.3656 }
+      coordinates: { lat: 43.3365, lng: 5.3453 }
     },
     {
       id: 'montreal',
@@ -29,7 +29,7 @@ const Presence = () => {
       address: '368 R. Notre Dame O, Montréal, QC H2Y 1T9',
       description: 'Bureau Amérique du Nord',
       color: 'bg-red-500',
-      coordinates: { lat: 45.5017, lng: -73.5673 }
+      coordinates: { lat: 45.5039, lng: -73.5581 }
     },
     {
       id: 'nairobi',
@@ -37,7 +37,7 @@ const Presence = () => {
       address: 'GEFI Solutions SEZ Limited, 9th Floor, North Tower, Two Rivers Finance and Innovation Center',
       description: 'Africa HQ',
       color: 'bg-green-500',
-      coordinates: { lat: -1.2921, lng: 36.8219 }
+      coordinates: { lat: -1.2106, lng: 36.7944 }
     },
     {
       id: 'zanzibar',
@@ -45,7 +45,7 @@ const Presence = () => {
       address: 'Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar',
       description: 'LifeExpress Office',
       color: 'bg-emerald-500',
-      coordinates: { lat: -6.165, lng: 39.2026 }
+      coordinates: { lat: -6.3164, lng: 39.2849 }
     },
     {
       id: 'abuja',
@@ -53,7 +53,7 @@ const Presence = () => {
       address: '9, A-Avenue, Citec Estate, Mbora District, Abuja',
       description: 'Growth Energy Nigeria Limited',
       color: 'bg-orange-500',
-      coordinates: { lat: 9.0579, lng: 7.4951 }
+      coordinates: { lat: 9.0723, lng: 7.4913 }
     },
     {
       id: 'lagos',
@@ -61,7 +61,7 @@ const Presence = () => {
       address: '16, Idowu Martins, Victoria Island, Lagos',
       description: 'Growth Energy Nigeria Limited',
       color: 'bg-orange-400',
-      coordinates: { lat: 6.5244, lng: 3.3792 }
+      coordinates: { lat: 6.4328, lng: 3.4200 }
     },
     {
       id: 'enugu',
@@ -69,7 +69,7 @@ const Presence = () => {
       address: 'Manamuz; 68B Chime Avenue, New Haven, Enugu',
       description: 'Growth Energy Nigeria Limited',
       color: 'bg-orange-600',
-      coordinates: { lat: 6.5244, lng: 7.5086 }
+      coordinates: { lat: 6.4602, lng: 7.5220 }
     },
     {
       id: 'bujumbura',
@@ -77,7 +77,7 @@ const Presence = () => {
       address: 'Rue Pierre Ngendandumwe, Bujumbura, Burundi',
       description: 'Bureau régional',
       color: 'bg-purple-500',
-      coordinates: { lat: -3.3614, lng: 29.3599 }
+      coordinates: { lat: -3.3907, lng: 29.3697 }
     }
   ];
 
