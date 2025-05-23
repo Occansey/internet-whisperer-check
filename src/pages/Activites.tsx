@@ -26,7 +26,7 @@ const domainesTransitionEnergetique = [
       "Gestion intelligente de flotte électrique",
       "Intégration aux réseaux électriques intelligents"
     ],
-    filiale: "gem"
+    filiale: "gem-e-mobility"
   },
   {
     title: "Efficacité énergétique",
