@@ -17,7 +17,7 @@ export const events: EventProps[] = [
   {
     id: 3,
     title: "Energy Talks: L'avenir de l'énergie solaire en Afrique",
-    description: "John Okoro, directeur de Growth Energy, partagera sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique.",
+    description: "John Okoro, directeur de Growth Energy, partage sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique. https://www.linkedin.com/events/energytalks-unenjeumondial-desd7265321522360205312/theater/",
     type: "spotlight",
     date: "22 mars 2025",
     time: "10:00 - 12:00",
@@ -29,7 +29,7 @@ export const events: EventProps[] = [
   {
     id: 4,
     title: "Evrard Havyarimana sur BFM TV",
-    description: "Interview d'Evrard Havyarimana, Président de Solio Group, sur les opportunités d'investissement dans l'énergie renouvelable en Afrique.",
+    description: "Interview d'Evrard Havyarimana, Président de Solio Group, sur les opportunités d'investissement dans l'énergie renouvelable en Afrique.\n\t\t\nhttps://www.bfmtv.com/economie/replay-emissions/objectif-croissance/evrard-havyarimana-growth-supply-growth-supply-accompagne-les-industriels-dans-le-parcours-de-leur-transition-energetique-26-07_VN-202307260366.html",
     type: "spotlight",
     date: "18 février 2025",
     time: "19:30",
