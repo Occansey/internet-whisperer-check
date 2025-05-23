@@ -26,7 +26,7 @@ const MfgPage = () => {
             <div className="flex-1">
               <div className="aspect-video rounded-lg shadow-md overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
+                  src="/lovable-uploads/27e49278-80d5-4a2f-ab40-e7bf18f9dc01.png"
                   alt="MFG Technologies Team" 
                   className="w-full h-full object-cover"
                 />

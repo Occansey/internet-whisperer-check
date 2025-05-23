@@ -26,7 +26,7 @@ const AskingPage = () => {
             <div className="flex-1">
               <div className="aspect-video rounded-lg shadow-md overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+                  src="/lovable-uploads/6e91967e-5b5b-4ace-89ba-3a3289c82fdf.png"
                   alt="Asking Team" 
                   className="w-full h-full object-cover"
                 />
