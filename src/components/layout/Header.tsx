@@ -57,7 +57,7 @@ const Header = () => {
     <header className="border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-24 w-auto mr-2" />
+          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-32 w-auto mr-2" />
         </Link>
         
         {/* Desktop Navigation */}

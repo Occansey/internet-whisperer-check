@@ -5,6 +5,7 @@ import MissionVisionSection from "@/components/home/MissionVisionSection";
 import ActivitesSection from "@/components/home/ActivitesSection";
 import FilialesSection from "@/components/home/FilialesSection";
 import { Helmet } from "react-helmet-async";
+import SEOStructuredData from "@/components/seo/SEOStructuredData";
 
 const Index = () => {
   return (
@@ -12,7 +13,7 @@ const Index = () => {
       <Helmet>
         <title>Solio Group | Transition énergétique et transformation digitale</title>
         <meta name="description" content="Solio Group accompagne les entreprises dans leur transition énergétique et transformation digitale avec des solutions durables en Afrique, Europe et Amérique du Nord." />
-        <meta name="keywords" content="transition énergétique, transformation digitale, énergie solaire, digitalisation, Afrique, développement durable" />
+        <meta name="keywords" content="transition énergétique, transformation digitale, énergie solaire, digitalisation, Afrique, développement durable, solutions durables, décarbonation, mobilité électrique" />
         <link rel="canonical" href="https://solio-group.com/" />
         
         {/* Enhanced Open Graph */}
@@ -20,34 +21,39 @@ const Index = () => {
         <meta property="og:url" content="https://solio-group.com/" />
         <meta property="og:title" content="Solio Group | Leader en transition énergétique et digitale" />
         <meta property="og:description" content="15M$ d'investissements, 30+ projets solaires, 37000 vies transformées. Découvrez comment Solio Group révolutionne l'énergie et le digital." />
+        <meta property="og:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Solio Group" />
         
-        {/* Structured data for homepage */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Accueil - Solio Group",
-            "description": "Page d'accueil de Solio Group, leader en transition énergétique et transformation digitale",
-            "url": "https://solio-group.com/",
-            "mainEntity": {
-              "@type": "Organization",
-              "name": "Solio Group",
-              "description": "Groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale"
-            },
-            "breadcrumb": {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Accueil",
-                  "item": "https://solio-group.com/"
-                }
-              ]
-            }
-          })}
-        </script>
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@solio_group" />
+        <meta name="twitter:title" content="Solio Group | Solutions énergétiques et digitales innovantes" />
+        <meta name="twitter:description" content="Découvrez nos solutions pour la transition énergétique et la transformation digitale des entreprises et industries." />
+        <meta name="twitter:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        
+        {/* Additional SEO tags */}
+        <meta name="geo.placename" content="Paris, France" />
+        <meta name="geo.position" content="48.8566;2.3522" />
+        <meta name="ICBM" content="48.8566, 2.3522" />
       </Helmet>
+      
+      {/* Structured data using the component */}
+      <SEOStructuredData 
+        type="webpage" 
+        data={{
+          "name": "Accueil - Solio Group",
+          "description": "Page d'accueil de Solio Group, leader en transition énergétique et transformation digitale",
+          "url": "https://solio-group.com/",
+          "datePublished": "2025-05-23",
+          "dateModified": "2025-05-23",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Solio Group",
+            "description": "Groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale"
+          }
+        }}
+      />
 
       <Hero />
       

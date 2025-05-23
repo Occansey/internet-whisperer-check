@@ -36,5 +36,13 @@ Disallow: /api/
 Allow: /sitemap.xml
 Allow: /robots.txt
 
+# Encourage search engines to index the main sections
+Allow: /presentation
+Allow: /mission-vision
+Allow: /activites
+Allow: /nos-filiales
+Allow: /contact
+Allow: /actualites/
+
 # General crawl delay for all bots
 Crawl-delay: 1

@@ -2,7 +2,7 @@
 import { Helmet } from "react-helmet-async";
 
 interface SEOStructuredDataProps {
-  type: 'webpage' | 'organization' | 'service' | 'article';
+  type: 'webpage' | 'organization' | 'service' | 'article' | 'breadcrumb' | 'faq' | 'product';
   data: any;
 }
 
@@ -33,6 +33,24 @@ const SEOStructuredData = ({ type, data }: SEOStructuredDataProps) => {
         return {
           "@context": baseContext,
           "@type": "Article",
+          ...data
+        };
+      case 'breadcrumb':
+        return {
+          "@context": baseContext,
+          "@type": "BreadcrumbList",
+          ...data
+        };
+      case 'faq':
+        return {
+          "@context": baseContext,
+          "@type": "FAQPage",
+          ...data
+        };
+      case 'product':
+        return {
+          "@context": baseContext,
+          "@type": "Product",
           ...data
         };
       default:

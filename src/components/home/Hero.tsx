@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -58,7 +57,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
         <iframe
-          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1&end=60"
+          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1"
           title="Background Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
