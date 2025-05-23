@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
-      {/* Floating elements for modern touch */}
+      {/* Floating elements for modern touch - yellow for homepage */}
       <div className="absolute top-20 right-10 w-32 h-32 bg-solio-yellow/20 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-20 left-10 w-24 h-24 bg-blue-400/30 rounded-full blur-lg animate-pulse"></div>
       
@@ -58,7 +58,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
         <iframe
-          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1"
+          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1&end=60"
           title="Background Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"

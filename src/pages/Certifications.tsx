@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, CheckCircle } from "lucide-react";
@@ -102,13 +103,14 @@ const CertificationCard = ({ certification }: { certification: CertificationProp
 const Certifications = () => {
   return (
     <Layout>
+      <HeroBanner
+        title="Nos Certifications"
+        description="Découvrez les certifications et reconnaissances obtenues par Solio Group et ses filiales, attestant de notre expertise et de notre engagement pour la qualité."
+        glowColor="purple"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Nos Certifications</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Découvrez les certifications et reconnaissances obtenues par Solio Group et ses filiales, attestant de notre expertise et de notre engagement pour la qualité.
-          </p>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((certification, index) => (
               <CertificationCard key={index} certification={certification} />

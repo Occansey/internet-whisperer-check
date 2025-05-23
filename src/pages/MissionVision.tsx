@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, BarChart, Globe } from "lucide-react";
 
@@ -27,15 +28,14 @@ const MissionVision = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Notre Mission & Vision"
+        description="Une vision claire guidée par des valeurs fortes pour répondre aux défis de la transition énergétique et digitale."
+        glowColor="green"
+      />
+
       <div className="py-16 bg-white">
         <div className="container">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-solio-blue">Notre Mission & Vision</h1>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Une vision claire guidée par des valeurs fortes pour répondre aux défis de la transition énergétique et digitale.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
               <h2 className="text-2xl font-semibold mb-4 text-solio-blue">Notre Mission</h2>

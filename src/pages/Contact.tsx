@@ -1,4 +1,6 @@
+
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -65,14 +67,14 @@ const Contact = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Contact"
+        description="Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? N'hésitez pas à nous contacter, nous vous répondrons rapidement."
+        glowColor="orange"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center text-solio-blue">Contact</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? 
-            N'hésitez pas à nous contacter, nous vous répondrons rapidement.
-          </p>
-
           <div className="grid md:grid-cols-5 gap-8">
             <Card className="md:col-span-3 border-none shadow-md">
               <CardContent className="pt-6">

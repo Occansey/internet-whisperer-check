@@ -1,23 +1,17 @@
+
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const Activites = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-solio-blue to-blue-900 text-white py-24">
-        <div className="container">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Nos Activités
-            </h1>
-            <p className="text-xl mb-8 text-gray-100">
-              Découvrez comment Solio Group accompagne ses clients dans leur transformation énergétique et digitale.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroBanner
+        title="Nos Activités"
+        description="Découvrez comment Solio Group accompagne ses clients dans leur transformation énergétique et digitale."
+        glowColor="blue"
+      />
 
       {/* Audit Section */}
       <section className="py-20 bg-white">
@@ -100,50 +94,6 @@ const Activites = () => {
           </div>
         </div>
       </section>
-
-      {/*
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Nos références</h2>
-          <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Nous accompagnons des entreprises de toutes tailles et de tous secteurs dans leur transformation énergétique et digitale.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-              <img
-                src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&h=100&fit=crop"
-                alt="Référence 1"
-                className="w-full h-20 object-contain"
-              />
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b2933e?w=200&h=100&fit=crop"
-                alt="Référence 2"
-                className="w-full h-20 object-contain"
-              />
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-              <img
-                src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=200&h=100&fit=crop"
-                alt="Référence 3"
-                className="w-full h-20 object-contain"
-              />
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg shadow-md">
-              <img
-                src="https://images.unsplash.com/photo-1521122425396-47c53f9c7d48?w=200&h=100&fit=crop"
-                alt="Référence 4"
-                className="w-full h-20 object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-solio-blue to-blue-900 text-white">
