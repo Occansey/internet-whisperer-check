@@ -1,6 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Heart, Lightbulb, Award, BookOpen, Globe2 } from "lucide-react";
 
 interface EngagementProps {
@@ -195,18 +197,14 @@ const EngagementsRH = () => {
           
           <Tabs defaultValue="developpement" className="w-full">
             <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1 mb-4" : "grid-cols-4 mb-8"}`}>
-              <TabsTrigger value="developpement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Développement
+              <TabsTrigger value="developpement" className="whitespace-nowrap">
+                {isMobile ? "Développement" : "Développement professionnel"}
               </TabsTrigger>
-              <TabsTrigger value="bienetre" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Bien-être
+              <TabsTrigger value="bienetre" className="whitespace-nowrap">Bien-être</TabsTrigger>
+              <TabsTrigger value="diversite" className="whitespace-nowrap">
+                {isMobile ? "Diversité" : "Diversité & Inclusion"}
               </TabsTrigger>
-              <TabsTrigger value="diversite" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Diversité
-              </TabsTrigger>
-              <TabsTrigger value="engagement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Engagement
-              </TabsTrigger>
+              <TabsTrigger value="engagement" className="whitespace-nowrap">Engagement</TabsTrigger>
             </TabsList>
             
             {Object.keys(engagements).map((key) => (
