@@ -101,7 +101,7 @@ const Activites = () => {
         </div>
       </section>
 
-      {/* Nos références */}
+      {/*
       <section className="py-20 bg-white">
         <div className="container">
           <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Nos références</h2>
@@ -110,7 +110,6 @@ const Activites = () => {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Référence 1 */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-md">
               <img
                 src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&h=100&fit=crop"
@@ -119,7 +118,6 @@ const Activites = () => {
               />
             </div>
 
-            {/* Référence 2 */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-md">
               <img
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b2933e?w=200&h=100&fit=crop"
@@ -128,7 +126,6 @@ const Activites = () => {
               />
             </div>
 
-            {/* Référence 3 */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-md">
               <img
                 src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=200&h=100&fit=crop"
@@ -137,7 +134,6 @@ const Activites = () => {
               />
             </div>
 
-            {/* Référence 4 */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-md">
               <img
                 src="https://images.unsplash.com/photo-1521122425396-47c53f9c7d48?w=200&h=100&fit=crop"
@@ -147,7 +143,7 @@ const Activites = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-solio-blue to-blue-900 text-white">
