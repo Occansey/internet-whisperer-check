@@ -76,7 +76,7 @@ export const articles: ArticleProps[] = [
     title: "MFG technologies rejoint ASKING",
     date: "24 Octobre 2024",
     description: "MFG Technologies rejoint ASKING, renforçant l'offre ERP au Canada avec Divalto/JobBOSS. Une fusion stratégique après 18 mois.",
-    image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
+    image: "/lovable-uploads/b77cf79f-d356-421a-9ea3-721e54aa6b2f.png",
     tags: ["asking", "digital"],
     content: "Nous y sommes ! 🎉\n \n C’est officiel : MFG Technologies a rejoint ASKING, renforçant ainsi notre présence au Canada (Business, Politics & Sports).\n \n L'intégration de leur expertise en #ERP, avec des solutions comme #Divalto et #JobBOSS, complète parfaitement notre gamme de services pour répondre aux besoins variés de nos clients.\n \n Alain Normand, je suis vraiment enthousiaste à l’idée de ce #JointVenture, ainsi que de travailler avec une équipe aussi passionnée et partageant nos #valeurs est un réel plaisir.\n \n Je tiens également à exprimer ma gratitude à Nancy C. Normand, Laure D., Isabelle MAUBOUSSIN\n et à toute l'équipe qui s’est donnée corps et âme pour que cette #fusion puisse voir le jour.\n \n Un grand #MERCI à Adexia inc. pour leur soutien précieux,\n et accompagnement tout au long de ces 18 derniers mois vers cette nouvelle étape passionnante.\n \n MFG Technologies\n #NOUS\n #ENSEMBLE\n #MAINTENANT\n Bienvenue à bord!!!!\n \n Curieux de découvrir comment l’offre d’MFG peut transformer votre entreprise ?\n \n Cliquez ici : https://www.mfgtech.ca/fr/"
   },
