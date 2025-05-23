@@ -39,7 +39,7 @@ const Evenements = () => {
 
   return (
     <Layout>
-      <div className="py-12 bg-gray-50">
+      <div className="py-12 bg-gray-50 animate-fade-in">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Événements</h1>
           <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
@@ -58,11 +58,13 @@ const Evenements = () => {
             />
           </div>
           
-          {viewMode === "calendar" ? (
-            <EventCalendar events={events} onEventClick={handleEventClick} />
-          ) : (
-            <EventSearch searchTerm={searchTerm} filterEvents={filterEvents} />
-          )}
+          <div className="animate-fade-in">
+            {viewMode === "calendar" ? (
+              <EventCalendar events={events} onEventClick={handleEventClick} />
+            ) : (
+              <EventSearch searchTerm={searchTerm} filterEvents={filterEvents} />
+            )}
+          </div>
         </div>
       </div>
     </Layout>

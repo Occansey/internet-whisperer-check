@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
 
-// Add global CSS styles for specific buttons
+// Add global CSS styles for specific buttons and animations
 const globalStyles = `
   /* Style for the "Nos engagements RH" button on Culture page */
   .culture-page .engagements-button {
@@ -20,6 +20,16 @@ const globalStyles = `
   }
   .activites-page .audit-button:hover {
     color: white !important;
+  }
+  
+  /* Page transitions */
+  main {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 `;
 
