@@ -35,7 +35,7 @@ export const events: EventProps[] = [
     date: "26 juillet 2023",
     time: "19:30",
     location: "BFM Business",
-    image: "https://unsplash.com/fr/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI",
+    image: "/lovable-uploads/211842b9-97a9-446d-84b2-d28c651fbaf2.png",
     imagePosition: "object-center",
     link: "https://www.bfmtv.com/economie/replay-emissions/objectif-croissance/evrard-havyarimana-growth-supply-growth-supply-accompagne-les-industriels-dans-le-parcours-de-leur-transition-energetique-26-07_VN-202307260366.html",
     tags: ["Médias", "Investissement", "Leadership"]
@@ -61,7 +61,7 @@ export const events: EventProps[] = [
     date: "25 avril 2025",
     time: "12:00 - 13:00",
     location: "En ligne",
-    image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    image: "/lovable-uploads/9b33c4e1-a0d5-498c-b36b-ece8d6747f6b.png",
     imagePosition: "object-left-bottom",
     link: "#",
     tags: ["Digital","ERP"]
