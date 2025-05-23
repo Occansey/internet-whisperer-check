@@ -1,4 +1,3 @@
-
 import { EventProps } from "@/types/events";
 
 export const events: EventProps[] = [
@@ -63,7 +62,7 @@ export const events: EventProps[] = [
     time: "12:00 - 13:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
-    imagePosition: "object-center-bottom",
+    imagePosition: "object-left-bottom",
     link: "#",
     tags: ["Digital","ERP"]
   },

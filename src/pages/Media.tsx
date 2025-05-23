@@ -17,7 +17,7 @@ const Media = () => {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [filteredMedia, setFilteredMedia] = useState<MediaItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "images" | "videos" | "documents">("all");
+  const [filter, setFilter] = useState<"all" | "image" | "video" | "document">("all");
 
   useEffect(() => {
     // This would typically be an API call to retrieve all media
@@ -105,20 +105,20 @@ const Media = () => {
               Tous
             </Button>
             <Button
-              variant={filter === "images" ? "default" : "outline"}
-              onClick={() => setFilter("images")}
+              variant={filter === "image" ? "default" : "outline"}
+              onClick={() => setFilter("image")}
             >
               Images
             </Button>
             <Button
-              variant={filter === "videos" ? "default" : "outline"}
-              onClick={() => setFilter("videos")}
+              variant={filter === "video" ? "default" : "outline"}
+              onClick={() => setFilter("video")}
             >
               Vidéos
             </Button>
             <Button
-              variant={filter === "documents" ? "default" : "outline"}
-              onClick={() => setFilter("documents")}
+              variant={filter === "document" ? "default" : "outline"}
+              onClick={() => setFilter("document")}
             >
               Documents
             </Button>
