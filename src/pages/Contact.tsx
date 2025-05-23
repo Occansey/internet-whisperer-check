@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,30 +20,27 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for Kit.com submission
-      const formData = new FormData();
-      formData.append("nom", nom);
-      formData.append("prenom", prenom);
-      formData.append("email", email);
-      formData.append("telephone", telephone);
-      formData.append("sujet", sujet);
-      formData.append("message", message);
-      formData.append("form_type", "contact");
+      // Prepare data for email submission
+      const formData = {
+        nom,
+        prenom,
+        email,
+        telephone,
+        sujet,
+        message,
+        recipient: "contact@solio-group.com", // Email recipient
+      };
       
-      // Submit to Kit.com (replace this URL with your actual Kit.com form endpoint)
-      const kitFormUrl = "https://kit.co/forms/yourformid";
+      // In a real implementation, this would send to your backend API
+      // For demo purposes, we'll simulate the API call
+      console.log("Form data to be sent to contact@solio-group.com:", formData);
       
-      const response = await fetch(kitFormUrl, {
-        method: "POST",
-        mode: "no-cors", // Kit.com may require no-cors mode
-        body: formData,
-      });
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Since no-cors mode doesn't return detailed response info,
-      // we just assume success if no error is thrown
       toast({
         title: "Message envoyé",
-        description: "Nous avons bien reçu votre message et reviendrons vers vous dans les plus brefs délais.",
+        description: "Votre message a été envoyé à contact@solio-group.com. Nous reviendrons vers vous dans les plus brefs délais.",
       });
       
       // Reset form

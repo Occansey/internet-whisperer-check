@@ -1,8 +1,9 @@
 
 import React from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/forms/ContactForm";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface FormModalProps {
   children: React.ReactNode;
@@ -29,6 +30,21 @@ const FormModal = ({
     if (onClick) onClick();
   };
 
+  const getTitle = () => {
+    switch (type) {
+      case "candidature":
+        return "Candidature spontanée";
+      case "postuler":
+        return `Postuler: ${jobTitle || ""}`;
+      case "inscription":
+        return `Inscription: ${eventTitle || ""}`;
+      case "contact":
+        return "Nous contacter";
+      default:
+        return "Formulaire de contact";
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -41,6 +57,9 @@ const FormModal = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <VisuallyHidden>
+          <DialogTitle>{getTitle()}</DialogTitle>
+        </VisuallyHidden>
         <ContactForm 
           type={type} 
           jobTitle={jobTitle} 

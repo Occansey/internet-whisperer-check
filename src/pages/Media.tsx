@@ -39,6 +39,11 @@ const Media = () => {
       { src: "/lovable-uploads/27e49278-80d5-4a2f-ab40-e7bf18f9dc01.png", name: "MFG Technologies Team", type: "image" },
       { src: "/lovable-uploads/6e91967e-5b5b-4ace-89ba-3a3289c82fdf.png", name: "Asking Team", type: "image" },
       { src: "/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png", name: "Solio Group Favicon", type: "image" },
+      // Newly uploaded images
+      { src: "/lovable-uploads/a0b8840c-e0d5-4cbc-bffb-8f8d26e3935b.png", name: "Solar Panel Field", type: "image" },
+      { src: "/lovable-uploads/211842b9-97a9-446d-84b2-d28c651fbaf2.png", name: "BFM TV Logo", type: "image" },
+      { src: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png", name: "Divalto Logo", type: "image" },
+      { src: "/lovable-uploads/05d22a06-afd6-4892-954e-e6bc8b3ddb79.png", name: "Sparklers", type: "image" },
     ];
 
     setMedia(mediaItems);
