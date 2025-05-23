@@ -20,7 +20,7 @@ const executives: ExecutiveMemberProps[] = [
     bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n\nDiplômé en 2010 d'un Master en Finance des Entreprises de l'IAE de Bordeaux IV – Université de Bordeaux, il a débuté sa carrière dans le secteur bancaire et le conseil, avant de se consacrer pleinement à l'entrepreneuriat.\n\nEn 2019, il a fondé Growth Supply, un groupe qui deviendra Solio Group en 2025, pour refléter une vision plus large et intégrée de ses activités sur les continents africain, européen et américain. En 2022, il a lancé Growth Energy, une filiale spécialisée dans le développement, le financement et le déploiement des centrales solaires pour l'industrie.\n\nEn 2023, il a fondé Asking en France et au Canada, une entreprise numérique qui accompagne les dirigeants dans l'exploitation stratégique des données pour mieux piloter leur croissance. En 2024, cette entreprise a acquis MFG Technologies, une entreprise numérique intégratrice de solutions ERP pour les entreprises au Canada.\n\nEn parallèle, il a initié en 2021 le Burundian Business Club France, un club d'affaires avec une communauté engagée de leaders, entrepreneurs, investisseurs et experts, unie par des valeurs de collaboration, d'excellence et d'innovation, pour stimuler le développement économique et favoriser les partenariats stratégiques."
   },
   {
-    photo:  "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    photo:  "/lovable-uploads/21b71e09-5fdb-4819-a954-2c32bfebb440.png",
     name: "John Okoro",
     title: "Directeur de Growth Energy",
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe",
