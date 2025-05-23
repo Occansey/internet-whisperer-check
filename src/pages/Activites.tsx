@@ -48,7 +48,7 @@ const Activites = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1560268935-c544aca9626a?q=80&w=1000"
+                src="https://images.unsplash.com/photo-1735825764485-93a381fd5779?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGRpZ2l0YWwlMjBhdWRpdHxlbnwwfHwwfHx8Mg%3D%3D"
                 alt="Audit énergétique et digital"
                 className="w-full h-auto"
               />
