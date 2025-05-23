@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -9,11 +10,12 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1&controls=0&start=0"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1&controls=0&start=0&auto_play=true&play=1"
             title="Background Video"
             frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
+            loading="eager"
             className="w-full h-full object-cover scale-150"
             style={{
               width: '100vw',
