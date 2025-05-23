@@ -1,5 +1,5 @@
-
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -80,25 +80,18 @@ const Presentation = () => {
         </script>
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-solio-blue to-blue-900 text-white py-24">
-        <div className="container">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Présentation du Groupe Solio
-            </h1>
-            <p className="text-xl mb-8 text-gray-100">
-              Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-                <Link to="/nos-filiales">Découvrir nos filiales</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:text-white hover:bg-solio-blue/20">
-                <Link to="/contact">Nous contacter</Link>
-              </Button>
-            </div>
-          </div>
+      <HeroBanner 
+        title="Présentation du Groupe Solio"
+        description="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale."
+        glowColor="blue"
+      >
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
+            <Link to="/nos-filiales">Découvrir nos filiales</Link>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="border-white text-white hover:text-solio-blue hover:bg-white">
+            <Link to="/contact">Nous contacter</Link>
+          </Button>
         </div>
         <div 
           className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer"
@@ -106,7 +99,7 @@ const Presentation = () => {
         >
           <ChevronDown size={32} />
         </div>
-      </section>
+      </HeroBanner>
 
       {/* Notre histoire */}
       <section id="histoire" className="py-20 bg-white">

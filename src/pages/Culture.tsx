@@ -1,9 +1,11 @@
-
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Helmet } from "react-helmet-async";
+import SEOStructuredData from "@/components/seo/SEOStructuredData";
 
 const culturePillars = [
   {
@@ -117,24 +119,58 @@ const principesCroissance = [
   }
 ];
 
-
-
 const Culture = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-solio-blue to-blue-900 text-white py-24">
-        <div className="container">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Notre culture d'entreprise
-            </h1>
-            <p className="text-xl mb-8 text-gray-100">
-              L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable.
-            </p>
-          </div>
-        </div>
-      </section>
+      <Helmet>
+        <title>Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable</title>
+        <meta name="description" content="Découvrez la culture d'entreprise de Solio Group : l'humain au centre, innovation collaborative, excellence opérationnelle et impact durable. Rejoignez notre équipe multiculturelle." />
+        <meta name="keywords" content="culture entreprise, Solio Group, valeurs, innovation, impact durable, diversité inclusion, ressources humaines, emploi" />
+        <link rel="canonical" href="https://solio-group.com/culture" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://solio-group.com/culture" />
+        <meta property="og:title" content="Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable" />
+        <meta property="og:description" content="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable chez Solio Group." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://solio-group.com/culture" />
+        <meta name="twitter:title" content="Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable" />
+        <meta name="twitter:description" content="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable chez Solio Group." />
+        <meta name="twitter:image" content="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" />
+      </Helmet>
+
+      <SEOStructuredData 
+        type="organization"
+        data={{
+          name: "Solio Group",
+          url: "https://solio-group.com",
+          description: "Culture d'entreprise basée sur l'humain, l'innovation collaborative, l'excellence opérationnelle et l'impact durable",
+          foundingDate: "2019",
+          organizationType: "Corporation",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "4 Rue De Longchamp",
+            addressLocality: "Paris",
+            postalCode: "75016",
+            addressCountry: "FR"
+          },
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "HR",
+            email: "contact@solio-group.com"
+          }
+        }}
+      />
+
+      <HeroBanner 
+        title="Notre culture d'entreprise"
+        description="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable."
+        glowColor="pink"
+      />
 
       {/* Piliers de notre culture */}
       <section className="py-20 bg-white">
@@ -229,7 +265,6 @@ const Culture = () => {
           </Tabs>
         </div>
       </section>
-
 
       {/* Diversité & Inclusion */}
       <section className="py-20 bg-gray-50">
