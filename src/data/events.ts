@@ -35,7 +35,7 @@ export const events: EventProps[] = [
     date: "18 février 2025",
     time: "19:30",
     location: "BFM Business",
-    image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    image: "/lovable-uploads/211842b9-97a9-446d-84b2-d28c651fbaf2.png",
     imagePosition: "object-center",
     link: "https://www.bfmtv.com/economie/replay-emissions/objectif-croissance/evrard-havyarimana-growth-supply-growth-supply-accompagne-les-industriels-dans-le-parcours-de-leur-transition-energetique-26-07_VN-202307260366.html",
     tags: ["Médias", "Investissement", "Leadership"]
@@ -48,7 +48,7 @@ export const events: EventProps[] = [
     date: "25 avril 2025",
     time: "12:00",
     location: "En ligne",
-    image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    image: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     imagePosition: "object-left",
     link: "#",
     tags: ["Digital","ERP"]
@@ -78,18 +78,5 @@ export const events: EventProps[] = [
     imagePosition: "object-left-bottom",
     link: "#",
     tags: ["Innovation", "Énergie", "Technologie"]
-  },
-  {
-    id: 8,
-    title: "Digital Africa Summit",
-    description: "Une conférence internationale réunissant les leaders de la transformation numérique en Afrique.",
-    type: "upcoming",
-    date: "3 septembre 2025",
-    time: "9:00 - 18:00",
-    location: "Kigali, Rwanda",
-    image: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
-    imagePosition: "object-center",
-    link: "https://example.com/digital-africa-summit",
-    tags: ["Numérique", "Afrique", "Innovation"]
   }
 ];
