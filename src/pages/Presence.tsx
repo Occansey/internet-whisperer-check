@@ -3,19 +3,15 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Building, Globe } from "lucide-react";
-import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const Presence = () => {
-  const [activeLocation, setActiveLocation] = useState<string | null>(null);
-
   const locations = [
     {
       id: 'paris',
       name: 'Paris, France',
       address: '4 Rue De Longchamp, 75016, Paris',
       description: 'Siège européen',
-      position: { top: '35%', left: '50%' },
       color: 'bg-blue-500'
     },
     {
@@ -23,7 +19,6 @@ const Presence = () => {
       name: 'Marseille, France',
       address: '211 Chem. de la Madrague-Ville, 13015 Marseille',
       description: 'Bureau régional',
-      position: { top: '38%', left: '50%' },
       color: 'bg-blue-400'
     },
     {
@@ -31,7 +26,6 @@ const Presence = () => {
       name: 'Montréal, Canada',
       address: '368 R. Notre Dame O, Montréal, QC H2Y 1T9',
       description: 'Bureau Amérique du Nord',
-      position: { top: '30%', left: '25%' },
       color: 'bg-red-500'
     },
     {
@@ -39,7 +33,6 @@ const Presence = () => {
       name: 'Nairobi, Kenya',
       address: 'GEFI Solutions SEZ Limited, 9th Floor, North Tower, Two Rivers Finance and Innovation Center',
       description: 'Africa HQ',
-      position: { top: '55%', left: '55%' },
       color: 'bg-green-500'
     },
     {
@@ -47,7 +40,6 @@ const Presence = () => {
       name: 'Zanzibar, Tanzania',
       address: 'Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar',
       description: 'LifeExpress Office',
-      position: { top: '58%', left: '56%' },
       color: 'bg-emerald-500'
     },
     {
@@ -55,7 +47,6 @@ const Presence = () => {
       name: 'Abuja, Nigeria',
       address: '9, A-Avenue, Citec Estate, Mbora District, Abuja',
       description: 'Growth Energy Nigeria Limited',
-      position: { top: '48%', left: '48%' },
       color: 'bg-orange-500'
     },
     {
@@ -63,7 +54,6 @@ const Presence = () => {
       name: 'Lagos, Nigeria',
       address: '16, Idowu Martins, Victoria Island, Lagos',
       description: 'Growth Energy Nigeria Limited',
-      position: { top: '50%', left: '47%' },
       color: 'bg-orange-400'
     },
     {
@@ -71,7 +61,6 @@ const Presence = () => {
       name: 'Enugu, Nigeria',
       address: 'Manamuz; 68B Chime Avenue, New Haven, Enugu',
       description: 'Growth Energy Nigeria Limited',
-      position: { top: '51%', left: '48%' },
       color: 'bg-orange-600'
     },
     {
@@ -79,7 +68,6 @@ const Presence = () => {
       name: 'Bujumbura, Burundi',
       address: 'Rue Pierre Ngendandumwe, Bujumbura, Burundi',
       description: 'Bureau régional',
-      position: { top: '58%', left: '52%' },
       color: 'bg-purple-500'
     }
   ];
@@ -99,7 +87,7 @@ const Presence = () => {
         glowColor="blue"
       />
 
-      {/* Modern World Map Section */}
+      {/* Google Maps Section */}
       <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -113,97 +101,40 @@ const Presence = () => {
             </p>
           </div>
           
-          {/* Interactive World Map */}
+          {/* Google Maps Embed */}
           <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
             <div className="relative w-full h-[500px] lg:h-[600px]">
-              {/* World Map SVG */}
-              <svg viewBox="0 0 1000 500" className="absolute inset-0 w-full h-full">
-                {/* Ocean gradient background */}
-                <defs>
-                  <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#E0F2FE" />
-                    <stop offset="100%" stopColor="#BFDBFE" />
-                  </linearGradient>
-                  <linearGradient id="landGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#F8FAFC" />
-                    <stop offset="100%" stopColor="#E2E8F0" />
-                  </linearGradient>
-                </defs>
-                
-                <rect width="1000" height="500" fill="url(#oceanGradient)" />
-                
-                {/* North America */}
-                <path d="M 50 50 Q 100 40 150 60 L 200 70 Q 250 80 290 100 L 320 120 Q 350 140 340 180 L 330 220 Q 310 260 270 270 L 220 260 Q 170 250 130 230 L 90 200 Q 50 160 55 120 L 60 80 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* South America */}
-                <path d="M 180 260 Q 200 280 220 320 L 240 360 Q 250 400 230 440 L 210 460 Q 180 470 160 450 L 140 420 Q 130 380 140 340 L 160 300 Q 170 280 180 260 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* Europe */}
-                <path d="M 450 120 Q 490 100 530 110 L 570 120 Q 610 130 600 160 L 590 190 Q 570 210 530 205 L 490 200 Q 450 190 445 160 L 450 140 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* Africa */}
-                <path d="M 480 220 Q 520 200 560 210 L 600 220 Q 640 240 630 280 L 620 320 Q 610 360 590 400 L 570 440 Q 540 470 510 460 L 480 450 Q 450 430 460 390 L 470 350 Q 475 310 480 270 L 485 240 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* Asia */}
-                <path d="M 620 120 Q 690 100 760 120 L 820 140 Q 880 160 890 200 L 900 240 Q 890 280 860 300 L 820 320 Q 780 330 740 320 L 700 310 Q 660 300 640 270 L 630 240 Q 620 200 625 160 L 630 140 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* Australia */}
-                <path d="M 780 370 Q 820 360 860 370 L 900 380 Q 920 400 910 420 L 890 440 Q 860 450 830 445 L 800 440 Q 770 430 775 405 L 780 385 Z" 
-                      fill="url(#landGradient)" stroke="#CBD5E1" strokeWidth="1"/>
-                
-                {/* Connection lines */}
-                <g opacity="0.4">
-                  <path d="M 200 150 Q 350 130 500 170" stroke="#3B82F6" strokeWidth="2" fill="none" strokeDasharray="6,3">
-                    <animate attributeName="stroke-dashoffset" values="0;-9" dur="2s" repeatCount="indefinite"/>
-                  </path>
-                  <path d="M 500 170 Q 550 200 580 250" stroke="#3B82F6" strokeWidth="2" fill="none" strokeDasharray="6,3">
-                    <animate attributeName="stroke-dashoffset" values="0;-9" dur="2s" repeatCount="indefinite"/>
-                  </path>
-                  <path d="M 580 250 Q 600 320 570 380" stroke="#3B82F6" strokeWidth="2" fill="none" strokeDasharray="6,3">
-                    <animate attributeName="stroke-dashoffset" values="0;-9" dur="2s" repeatCount="indefinite"/>
-                  </path>
-                </g>
-              </svg>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d50901347.94553871!2d-25.665625531250004!3d20.130625331249998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x47e66fec70fb1d8d%3A0x40b82c3688c9460!2s4%20Rue%20de%20Longchamp%2C%2075016%20Paris%2C%20France!3m2!1d48.865033099999995!2d2.287583!4m5!1s0x12c9b8b5c7b7c7b7%3A0x408ab2ae4bb21f0!2s211%20Chem.%20de%20la%20Madrague-Ville%2C%2013015%20Marseille%2C%20France!3m2!1d43.3518!2d5.3656!4m5!1s0x4cc91a541c64b70d%3A0x654e3138211fefef!2s368%20Rue%20Notre-Dame%20O%2C%20Montr%C3%A9al%2C%20QC%20H2Y%201T9%2C%20Canada!3m2!1d45.5017!2d-73.5673!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!3m2!1d-1.2920659!2d36.8219462!4m5!1s0x184ddd5e8d5b5555%3A0x7c7c7c7c7c7c7c7c!2sZanzibar%2C%20Tanzania!3m2!1d-6.165!2d39.2026!4m5!1s0x103b8b2ae68280c1%3A0xdc7566e4f33956cd!2sAbuja%2C%20Nigeria!3m2!1d9.0579!2d7.4951!4m5!1s0x103b8b2ae68280c1%3A0xdc7566e4f33956cd!2sLagos%2C%20Nigeria!3m2!1d6.5244!2d3.3792!5e0!3m2!1sen!2sus!4v1693234567890!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-3xl"
+              ></iframe>
+            </div>
+          </div>
 
-              {/* Location Pins */}
-              {locations.map((location) => (
-                <div
-                  key={location.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
-                  style={location.position}
-                  onMouseEnter={() => setActiveLocation(location.id)}
-                  onMouseLeave={() => setActiveLocation(null)}
-                >
-                  {/* Pin with enhanced animation */}
-                  <div className={`relative w-8 h-8 ${location.color} rounded-full shadow-xl group-hover:scale-110 transition-all duration-300 border-4 border-white`}>
-                    <div className="absolute inset-0 rounded-full animate-ping opacity-30"></div>
-                    <div className="relative w-full h-full rounded-full flex items-center justify-center">
-                      <MapPin className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-
-                  {/* Enhanced Tooltip */}
-                  <div className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-2xl p-6 min-w-80 max-w-96 transition-all duration-300 border border-gray-100 ${
-                    activeLocation === location.id ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-4'
-                  }`}>
-                    <div className="flex items-start gap-4">
-                      <div className={`w-4 h-4 ${location.color} rounded-full mt-1 flex-shrink-0`}></div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-solio-blue text-lg mb-2">{location.name}</h3>
-                        <p className="text-blue-600 text-sm mb-3 font-medium">{location.description}</p>
-                        <p className="text-gray-600 text-sm leading-relaxed">{location.address}</p>
-                      </div>
-                    </div>
-                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white"></div>
+          {/* Location Quick Links */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-12">
+            {locations.map((location) => (
+              <div
+                key={location.id}
+                className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 ${location.color} rounded-full`}></div>
+                  <div>
+                    <h3 className="font-semibold text-sm text-solio-blue group-hover:text-blue-600 transition-colors">
+                      {location.name.split(',')[0]}
+                    </h3>
+                    <p className="text-xs text-gray-500">{location.name.split(',')[1]}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
