@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Layout from "@/components/layout/Layout";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Badge } from "@/components/ui/badge";
+import { Calendar, ArrowRight, Search, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Calendar, ArrowUpDown, SortDesc, SortAsc } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface ArticleProps {
   id: string;
@@ -192,6 +193,12 @@ const Communiques = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Communiqués"
+        description="Découvrez nos dernières annonces, partenariats et actualités importantes du Groupe Solio."
+        glowColor="cyan"
+      />
+
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Communiqués</h1>

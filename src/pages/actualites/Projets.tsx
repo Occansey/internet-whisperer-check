@@ -1,13 +1,11 @@
-
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Layout from "@/components/layout/Layout";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
-import { MapPin } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Search, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -163,6 +161,7 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 
 const Projets = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [tab, setTab] = useState("all");
 
   const filterProjects = (tab: string) => {
     let filtered = [...projects];
@@ -186,6 +185,12 @@ const Projets = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Projets en Cours"
+        description="Découvrez nos projets actuels en transition énergétique et transformation digitale à travers le monde."
+        glowColor="orange"
+      />
+
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Projets en Cours</h1>

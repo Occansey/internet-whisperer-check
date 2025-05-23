@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -57,13 +58,14 @@ const filiales: FilialeProps[] = [
 const NosFiliales = () => {
   return (
     <Layout>
+      <HeroBanner
+        title="Nos Filiales"
+        description="Découvrez l'ensemble de nos filiales spécialisées dans la transition énergétique et la transformation digitale."
+        glowColor="purple"
+      />
+
       <div className="py-16 bg-gray-50">
         <div className="container">
-          <h1 className="text-4xl font-bold mb-6 text-center text-solio-blue">Nos Filiales</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Découvrez l'ensemble de nos filiales spécialisées dans la transition énergétique et la transformation digitale.
-          </p>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {filiales.map((filiale) => (
               <Card key={filiale.id} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">

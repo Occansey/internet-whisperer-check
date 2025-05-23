@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import EventCalendar from "@/components/events/EventCalendar";
 import EventSearch from "@/components/events/EventSearch";
 import ViewModeToggle from "@/components/events/ViewModeToggle";
@@ -39,13 +40,14 @@ const Evenements = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Événements"
+        description="Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias."
+        glowColor="rose"
+      />
+
       <div className="py-12 bg-gray-50 animate-fade-in">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Événements</h1>
-          <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
-            Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias.
-          </p>
-
           <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
 
           <div className="mb-8">

@@ -1,7 +1,7 @@
-
 import Layout from "@/components/layout/Layout";
-import { Card, CardContent } from "@/components/ui/card";
-import { useState, useEffect } from "react";
+import HeroBanner from "@/components/common/HeroBanner";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Users, Target, TrendingUp, Shield } from "lucide-react";
 
 interface ExecutiveMemberProps {
   photo: string;
@@ -111,6 +111,12 @@ const ComiteExecutif = () => {
 
   return (
     <Layout>
+      <HeroBanner
+        title="Comité Exécutif (COMEX)"
+        description="Direction stratégique et alignement des activités du Groupe pour une croissance durable et responsable."
+        glowColor="indigo"
+      />
+
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Comité Exécutif (COMEX)</h1>
