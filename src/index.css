@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mapbox GL CSS */
+@import 'https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css';
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
@@ -35,7 +34,7 @@ const WorldMap = ({ locations }: WorldMapProps) => {
       style: 'mapbox://styles/mapbox/light-v11',
       center: [0, 20],
       zoom: 1.5,
-      projection: 'globe'
+      projection: 'globe' as any
     });
 
     // Add navigation controls
@@ -52,7 +51,12 @@ const WorldMap = ({ locations }: WorldMapProps) => {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: ${location.color.replace('bg-', '').replace('-500', '')};
+        background: ${location.color.includes('blue') ? '#3b82f6' : 
+                    location.color.includes('red') ? '#ef4444' :
+                    location.color.includes('green') ? '#22c55e' :
+                    location.color.includes('orange') ? '#f97316' :
+                    location.color.includes('purple') ? '#a855f7' :
+                    location.color.includes('emerald') ? '#10b981' : '#3b82f6'};
         border: 3px solid white;
         box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         cursor: pointer;
