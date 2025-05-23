@@ -59,6 +59,17 @@ const Media = () => {
           { src: "/lovable-uploads/211842b9-97a9-446d-84b2-d28c651fbaf2.png", name: "BFM TV Logo", type: "image" },
           { src: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png", name: "Divalto Logo", type: "image" },
           { src: "/lovable-uploads/05d22a06-afd6-4892-954e-e6bc8b3ddb79.png", name: "Sparklers", type: "image" },
+          
+          // Recently uploaded portrait images
+          { src: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png", name: "Executive Portrait 1", type: "image" },
+          { src: "/lovable-uploads/ec9bfdff-09d6-4197-9fb2-36c08c4c0f7b.png", name: "Executive Portrait 2", type: "image" },
+          { src: "/lovable-uploads/a4fe0918-0491-4c26-a49e-5e000f333c7e.png", name: "Executive Portrait 3", type: "image" },
+          { src: "/lovable-uploads/7ae14399-4ddf-44fe-aec4-6a1c3a702edb.png", name: "Executive Portrait 4", type: "image" },
+          { src: "/lovable-uploads/21b71e09-5fdb-4819-a954-2c32bfebb440.png", name: "Executive Portrait 5", type: "image" },
+          { src: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png", name: "Executive Portrait 6", type: "image" },
+          { src: "/lovable-uploads/156df79e-4df5-4c2d-9be1-9e58e7d00917.png", name: "Executive Portrait 7", type: "image" },
+          { src: "/lovable-uploads/de408ee9-d343-4578-bd30-ae9d93b1c647.png", name: "Executive Portrait 8", type: "image" },
+          
           // Additional images that may not have been included
           { src: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png", name: "Image Upload 1", type: "image" },
           { src: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png", name: "Image Upload 2", type: "image" },
@@ -99,7 +110,6 @@ const Media = () => {
           { src: "/lovable-uploads/f6702924-a969-41e2-b595-dcc193b6b123.png", name: "Image Upload 36", type: "image" },
           { src: "/lovable-uploads/fa8439f4-b009-4788-9afe-858ae27b64c1.png", name: "Image Upload 37", type: "image" },
           { src: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49cb.png", name: "Image Upload 38", type: "image" },
-          // Adding newly uploaded image
           { src: "/lovable-uploads/8e08f694-ea04-4afc-a9ce-cf13d17b0b7d.png", name: "New Upload", type: "image" },
         ];
         
