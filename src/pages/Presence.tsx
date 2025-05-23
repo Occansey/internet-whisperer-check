@@ -1,5 +1,3 @@
-'use client';
-
 import { Helmet } from 'react-helmet';
 import { Card, CardContent } from '@/components/ui/card';
 import { Building } from 'lucide-react';
