@@ -101,8 +101,14 @@ const GrowthEnergyPage = () => {
                 <p className="text-gray-600 mb-4">
                   Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks à Nairobi.
                 </p>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <ExternalLink className="w-4 h-4" /> En savoir plus
+                <Button 
+                  variant="outline" 
+                  className="flex items-center gap-2"
+                  asChild
+                >
+                  <Link to="/actualites/evenements/3">
+                    <ExternalLink className="w-4 h-4" /> En savoir plus
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -138,7 +144,9 @@ const GrowthEnergyPage = () => {
                   À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.
                 </p>
                 <div className="mt-4">
-                  <Button variant="solio">Découvrir le projet</Button>
+                  <Button variant="solio" asChild>
+                    <Link to="/actualites/projets/7">Découvrir le projet</Link>
+                  </Button>
                 </div>
               </div>
             </div>

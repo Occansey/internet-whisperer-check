@@ -23,6 +23,7 @@ import Activites from './pages/Activites';
 import CommuniqueDetail from './components/articles/ArticleDetail';
 import EventDetail from './components/events/EventDetail';
 import ProjectDetail from './components/projects/ProjectDetail';
+import Media from './pages/Media';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
         <Route path="/culture" element={<Culture />} />
         <Route path="/activites" element={<Activites />} />
+        <Route path="/media" element={<Media />} />
       </Routes>
     </Router>
   );
