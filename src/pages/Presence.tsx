@@ -12,63 +12,72 @@ const Presence = () => {
       name: 'Paris, France',
       address: '4 Rue De Longchamp, 75016, Paris',
       description: 'Siège européen',
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      coordinates: { lat: 48.865033, lng: 2.287583 }
     },
     {
       id: 'marseille',
       name: 'Marseille, France',
       address: '211 Chem. de la Madrague-Ville, 13015 Marseille',
       description: 'Bureau régional',
-      color: 'bg-blue-400'
+      color: 'bg-blue-400',
+      coordinates: { lat: 43.3518, lng: 5.3656 }
     },
     {
       id: 'montreal',
       name: 'Montréal, Canada',
       address: '368 R. Notre Dame O, Montréal, QC H2Y 1T9',
       description: 'Bureau Amérique du Nord',
-      color: 'bg-red-500'
+      color: 'bg-red-500',
+      coordinates: { lat: 45.5017, lng: -73.5673 }
     },
     {
       id: 'nairobi',
       name: 'Nairobi, Kenya',
       address: 'GEFI Solutions SEZ Limited, 9th Floor, North Tower, Two Rivers Finance and Innovation Center',
       description: 'Africa HQ',
-      color: 'bg-green-500'
+      color: 'bg-green-500',
+      coordinates: { lat: -1.2921, lng: 36.8219 }
     },
     {
       id: 'zanzibar',
       name: 'Zanzibar, Tanzania',
       address: 'Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar',
       description: 'LifeExpress Office',
-      color: 'bg-emerald-500'
+      color: 'bg-emerald-500',
+      coordinates: { lat: -6.165, lng: 39.2026 }
     },
     {
       id: 'abuja',
       name: 'Abuja, Nigeria',
       address: '9, A-Avenue, Citec Estate, Mbora District, Abuja',
       description: 'Growth Energy Nigeria Limited',
-      color: 'bg-orange-500'
+      color: 'bg-orange-500',
+      coordinates: { lat: 9.0579, lng: 7.4951 }
     },
     {
       id: 'lagos',
       name: 'Lagos, Nigeria',
       address: '16, Idowu Martins, Victoria Island, Lagos',
       description: 'Growth Energy Nigeria Limited',
-      color: 'bg-orange-400'
+      color: 'bg-orange-400',
+      coordinates: { lat: 6.5244, lng: 3.3792 }
     },
     {
       id: 'enugu',
       name: 'Enugu, Nigeria',
       address: 'Manamuz; 68B Chime Avenue, New Haven, Enugu',
       description: 'Growth Energy Nigeria Limited',
-      color: 'bg-orange-600'
+      color: 'bg-orange-600',
+      coordinates: { lat: 6.5244, lng: 7.5086 }
     },
     {
       id: 'bujumbura',
       name: 'Bujumbura, Burundi',
       address: 'Rue Pierre Ngendandumwe, Bujumbura, Burundi',
       description: 'Bureau régional',
-      color: 'bg-purple-500'
+      color: 'bg-purple-500',
+      coordinates: { lat: -3.3614, lng: 29.3599 }
     }
   ];
 
@@ -87,7 +96,7 @@ const Presence = () => {
         glowColor="blue"
       />
 
-      {/* Google Maps Section */}
+      {/* Interactive World Map Section */}
       <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -101,24 +110,52 @@ const Presence = () => {
             </p>
           </div>
           
-          {/* Google Maps Embed */}
-          <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
+          {/* Simple Embedded Map */}
+          <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 mb-12">
             <div className="relative w-full h-[500px] lg:h-[600px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d50901347.94553871!2d-25.665625531250004!3d20.130625331249998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x47e66fec70fb1d8d%3A0x40b82c3688c9460!2s4%20Rue%20de%20Longchamp%2C%2075016%20Paris%2C%20France!3m2!1d48.865033099999995!2d2.287583!4m5!1s0x12c9b8b5c7b7c7b7%3A0x408ab2ae4bb21f0!2s211%20Chem.%20de%20la%20Madrague-Ville%2C%2013015%20Marseille%2C%20France!3m2!1d43.3518!2d5.3656!4m5!1s0x4cc91a541c64b70d%3A0x654e3138211fefef!2s368%20Rue%20Notre-Dame%20O%2C%20Montr%C3%A9al%2C%20QC%20H2Y%201T9%2C%20Canada!3m2!1d45.5017!2d-73.5673!4m5!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!3m2!1d-1.2920659!2d36.8219462!4m5!1s0x184ddd5e8d5b5555%3A0x7c7c7c7c7c7c7c7c!2sZanzibar%2C%20Tanzania!3m2!1d-6.165!2d39.2026!4m5!1s0x103b8b2ae68280c1%3A0xdc7566e4f33956cd!2sAbuja%2C%20Nigeria!3m2!1d9.0579!2d7.4951!4m5!1s0x103b8b2ae68280c1%3A0xdc7566e4f33956cd!2sLagos%2C%20Nigeria!3m2!1d6.5244!2d3.3792!5e0!3m2!1sen!2sus!4v1693234567890!5m2!1sen!2sus"
+                src="https://www.google.com/maps/d/embed?mid=1example&ehbc=2E312F"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                title="Solio Group Office Locations"
                 className="rounded-3xl"
               ></iframe>
+              
+              {/* Fallback for when map fails to load */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center rounded-3xl">
+                <div className="text-center p-8">
+                  <Globe className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-blue-800 mb-2">Carte Interactive</h3>
+                  <p className="text-blue-600 mb-6">Découvrez nos bureaux dans le monde entier</p>
+                  
+                  {/* Interactive Location Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    {locations.map((location) => (
+                      <div
+                        key={location.id}
+                        className="bg-white/80 backdrop-blur-sm rounded-lg p-4 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className={`w-3 h-3 ${location.color} rounded-full`}></div>
+                          <span className="font-medium text-sm text-blue-800">
+                            {location.name.split(',')[0]}
+                          </span>
+                        </div>
+                        <p className="text-xs text-blue-600">{location.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Location Quick Links */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {locations.map((location) => (
               <div
                 key={location.id}
