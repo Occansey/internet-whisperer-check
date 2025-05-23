@@ -85,7 +85,7 @@ export const articles: ArticleProps[] = [
     title: "CRM : Le Pillier Invisible de Votre Croissance Client",
     date: "20 Février 2025",
     description: "Un CRM efficace automatise, offre une vision claire et s’adapte à votre croissance – essentiel pour une stratégie client réussie.",
-    image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
+    image: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     tags: ["asking", "digital"],
     content: "💡 Un CRM performant transforme chaque interaction client en levier de croissance !\n\nDans un monde où la relation client est essentielle, il est crucial d’avoir le bon outil pour structurer sa stratégie. Laure D., Directrice générale d’ASKING & membre de Claude, partage 3 éléments clés à considérer avant d’investir dans un CRM :\n\n✅ Automatisation : Gagnez du temps sur les tâches répétitives comme l’envoi d’e-mails ou la qualification des leads.\n\n📊 Vision globale : Assurez-vous d’avoir une vue claire sur votre pipeline de vente et vos opportunités.\n\n🔗 Scalabilité : Choisissez un CRM qui s’intègre à vos autres outils et grandit avec votre entreprise.\n\nMais surtout : un CRM n’est efficace que si votre stratégie est claire en amont ! 🏆 Quels sont vos critères pour choisir un CRM ? Vos expériences nous intéressent !"
   }
