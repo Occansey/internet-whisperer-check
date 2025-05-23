@@ -107,27 +107,61 @@ const Presence = () => {
             
             {/* World Map Container */}
             <div className="relative w-full h-[600px] bg-gradient-to-br from-blue-50 to-slate-100 rounded-2xl shadow-2xl overflow-hidden mb-12 border">
-              {/* Simplified World Map Background */}
-              <svg viewBox="0 0 1000 500" className="absolute inset-0 w-full h-full opacity-20">
-                {/* Africa outline */}
-                <path d="M450 200 Q470 180 500 190 L520 200 Q540 220 530 250 L520 280 Q500 300 480 290 L460 280 Q440 250 450 200 Z" 
-                      fill="#1e40af" opacity="0.3"/>
+              {/* Detailed World Map Background */}
+              <svg viewBox="0 0 1000 500" className="absolute inset-0 w-full h-full">
+                {/* Ocean background */}
+                <rect width="1000" height="500" fill="#E0F2FE" />
                 
-                {/* Europe outline */}
-                <path d="M450 150 Q470 130 500 140 L520 150 Q540 160 530 180 L520 190 Q500 180 480 175 L460 170 Q440 160 450 150 Z" 
-                      fill="#1e40af" opacity="0.3"/>
+                {/* North America */}
+                <path d="M 80 80 Q 120 60 180 80 L 220 90 Q 280 100 320 120 L 350 140 Q 380 160 370 200 L 360 240 Q 340 280 300 290 L 250 280 Q 200 270 160 250 L 120 220 Q 80 180 85 140 L 90 100 Z" 
+                      fill="#22C55E" stroke="#16A34A" strokeWidth="1" opacity="0.8"/>
                 
-                {/* North America outline */}
-                <path d="M150 100 Q200 80 250 100 L300 120 Q350 140 340 180 L330 220 Q300 240 270 230 L220 220 Q170 200 150 160 Z" 
-                      fill="#1e40af" opacity="0.3"/>
+                {/* South America */}
+                <path d="M 200 280 Q 220 300 240 340 L 260 380 Q 270 420 250 460 L 230 480 Q 200 490 180 470 L 160 440 Q 150 400 160 360 L 180 320 Q 190 300 200 280 Z" 
+                      fill="#22C55E" stroke="#16A34A" strokeWidth="1" opacity="0.8"/>
                 
-                {/* Connection lines */}
-                <path d="M 220 150 Q 350 120 480 170" stroke="#3b82f6" strokeWidth="1" fill="none" opacity="0.4" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite"/>
+                {/* Europe */}
+                <path d="M 420 100 Q 460 80 500 90 L 540 100 Q 580 110 570 140 L 560 170 Q 540 190 500 185 L 460 180 Q 420 170 415 140 L 420 120 Z" 
+                      fill="#3B82F6" stroke="#1E40AF" strokeWidth="1" opacity="0.8"/>
+                
+                {/* Africa */}
+                <path d="M 440 200 Q 480 180 520 190 L 560 200 Q 600 220 590 260 L 580 300 Q 570 340 550 380 L 530 420 Q 500 450 470 440 L 440 430 Q 410 410 420 370 L 430 330 Q 435 290 440 250 L 445 220 Z" 
+                      fill="#F59E0B" stroke="#D97706" strokeWidth="1" opacity="0.8"/>
+                
+                {/* Asia */}
+                <path d="M 580 100 Q 650 80 720 100 L 780 120 Q 840 140 850 180 L 860 220 Q 850 260 820 280 L 780 300 Q 740 310 700 300 L 660 290 Q 620 280 600 250 L 590 220 Q 580 180 585 140 L 590 120 Z" 
+                      fill="#8B5CF6" stroke="#7C3AED" strokeWidth="1" opacity="0.8"/>
+                
+                {/* Australia */}
+                <path d="M 740 350 Q 780 340 820 350 L 860 360 Q 880 380 870 400 L 850 420 Q 820 430 790 425 L 760 420 Q 730 410 735 385 L 740 365 Z" 
+                      fill="#EC4899" stroke="#DB2777" strokeWidth="1" opacity="0.8"/>
+                
+                {/* Connection lines between offices */}
+                <path d="M 220 150 Q 350 120 480 170" stroke="#3b82f6" strokeWidth="2" fill="none" opacity="0.6" strokeDasharray="8,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-12" dur="3s" repeatCount="indefinite"/>
                 </path>
-                <path d="M 480 170 Q 520 200 530 250" stroke="#3b82f6" strokeWidth="1" fill="none" opacity="0.4" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite"/>
+                <path d="M 480 170 Q 520 200 530 250" stroke="#3b82f6" strokeWidth="2" fill="none" opacity="0.6" strokeDasharray="8,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-12" dur="3s" repeatCount="indefinite"/>
                 </path>
+                <path d="M 530 250 Q 540 300 520 350" stroke="#3b82f6" strokeWidth="2" fill="none" opacity="0.6" strokeDasharray="8,4">
+                  <animate attributeName="stroke-dashoffset" values="0;-12" dur="3s" repeatCount="indefinite"/>
+                </path>
+                
+                {/* Grid lines for reference */}
+                <defs>
+                  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#CBD5E1" strokeWidth="0.5" opacity="0.3"/>
+                  </pattern>
+                </defs>
+                <rect width="1000" height="500" fill="url(#grid)" />
+                
+                {/* Continent labels */}
+                <text x="200" y="180" fill="#1F2937" fontSize="14" fontWeight="bold" textAnchor="middle" opacity="0.7">Amérique du Nord</text>
+                <text x="220" y="400" fill="#1F2937" fontSize="12" fontWeight="bold" textAnchor="middle" opacity="0.7">Amérique du Sud</text>
+                <text x="500" y="150" fill="#1F2937" fontSize="14" fontWeight="bold" textAnchor="middle" opacity="0.7">Europe</text>
+                <text x="520" y="320" fill="#1F2937" fontSize="14" fontWeight="bold" textAnchor="middle" opacity="0.7">Afrique</text>
+                <text x="720" y="200" fill="#1F2937" fontSize="14" fontWeight="bold" textAnchor="middle" opacity="0.7">Asie</text>
+                <text x="800" y="390" fill="#1F2937" fontSize="12" fontWeight="bold" textAnchor="middle" opacity="0.7">Océanie</text>
               </svg>
 
               {/* Dynamic Location Pins */}
