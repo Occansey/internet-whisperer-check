@@ -11,7 +11,9 @@ const GemPage = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
-              <h1 className="text-4xl font-bold mb-6 text-solio-blue">GEM E-Mobility</h1>
+              <div className="mb-6">
+                <img src="/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png" alt="GEM E-Mobility" className="h-24" />
+              </div>
               <p className="text-lg mb-6 text-gray-700">
                 Pionniers dans le domaine de la mobilité électrique, nous pilotons notre transformation technologique grâce à des solutions logicielles de pointe, des infrastructures cloud innovantes et des systèmes IT robustes — offrant une mobilité plus intelligente et plus durable pour tous.
               </p>

@@ -114,7 +114,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
   return (
     <div className="mb-10 max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-solio-blue">Calendrier des événements</h2>
+        <h2 className="text-lg md:text-xl font-bold text-solio-blue">Calendrier des événements</h2>
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
@@ -125,7 +125,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">Mois précédent</span>
           </Button>
-          <h3 className="text-lg font-medium px-4">
+          <h3 className="text-sm md:text-lg font-medium px-2 md:px-4">
             {format(currentMonth, 'MMMM yyyy', { locale: fr })}
           </h3>
           <Button
@@ -143,7 +143,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
       <Card className="overflow-hidden shadow-sm">
         <CardContent className="p-0">
           {/* Calendar grid */}
-          <div className="grid grid-cols-7 text-center font-medium border-b text-sm">
+          <div className="grid grid-cols-7 text-center font-medium border-b text-xs md:text-sm">
             {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map(day => (
               <div key={day} className="py-1 border-r last:border-r-0">
                 {day}
@@ -154,20 +154,20 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
           <div className="grid grid-cols-7">
             {/* Empty cells for days before the month starts */}
             {Array.from({ length: monthStart.getDay() }).map((_, i) => (
-              <div key={`empty-start-${i}`} className="h-16 border-r border-b bg-gray-50"></div>
+              <div key={`empty-start-${i}`} className="h-12 md:h-16 border-r border-b bg-gray-50"></div>
             ))}
             
             {/* Days of the month */}
             {eventsByDay.map(({ date, events }) => (
               <div 
                 key={date.toString()} 
-                className={`h-16 border-r border-b last:border-r-0 relative ${
+                className={`h-12 md:h-16 border-r border-b last:border-r-0 relative ${
                   isSameDay(date, new Date()) ? 'bg-blue-50' : ''
                 } ${hasEvents(date) ? 'hover:bg-gray-100 transition-colors' : ''}`}
               >
                 <div className={`text-center p-1 ${hasEvents(date) ? 'cursor-pointer' : ''}`}>
                   <div className="flex flex-col items-center">
-                    <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-sm ${
+                    <span className={`inline-flex items-center justify-center w-5 h-5 md:w-6 md:h-6 rounded-full text-xs md:text-sm ${
                       isSameDay(date, new Date()) 
                         ? 'bg-solio-blue text-white' 
                         : hasEvents(date)
@@ -178,16 +178,16 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                     </span>
                     
                     {events.length > 0 && (
-                      <div className="mt-1 flex space-x-1 justify-center">
-                        {events.slice(0, 3).map((event) => (
+                      <div className="mt-0.5 md:mt-1 flex space-x-0.5 md:space-x-1 justify-center">
+                        {events.slice(0, 2).map((event) => (
                           <Link 
                             key={event.id}
                             to={`/actualites/evenements/${event.id}`}
-                            className={`w-2 h-2 rounded-full ${getEventColor(event.type)}`}
+                            className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${getEventColor(event.type)}`}
                           />
                         ))}
-                        {events.length > 3 && (
-                          <span className="text-xs text-gray-500">+{events.length - 3}</span>
+                        {events.length > 2 && (
+                          <span className="text-xs text-gray-500 hidden md:inline">+{events.length - 2}</span>
                         )}
                       </div>
                     )}
@@ -195,9 +195,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                 </div>
                 
                 {events.length > 0 && (
-                  <div className="absolute bottom-1 left-1 right-1 flex justify-center">
+                  <div className="absolute bottom-0.5 left-0.5 right-0.5 flex justify-center md:bottom-1 md:left-1 md:right-1">
                     <div 
-                      className="text-xs text-solio-blue hover:underline cursor-pointer"
+                      className="text-xs text-solio-blue hover:underline cursor-pointer hidden md:block"
                       onClick={(e) => {
                         e.stopPropagation();
                         if (events.length === 1) {
@@ -206,7 +206,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                       }}
                     >
                       {events.length === 1 ? (
-                        <Link to={`/actualites/evenements/${events[0].id}`} className="truncate block max-w-[80px]">
+                        <Link to={`/actualites/evenements/${events[0].id}`} className="truncate block max-w-[60px] md:max-w-[80px]">
                           {events[0].title}
                         </Link>
                       ) : (
@@ -220,7 +220,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
             
             {/* Empty cells for days after the month ends */}
             {Array.from({ length: 6 - monthEnd.getDay() }).map((_, i) => (
-              <div key={`empty-end-${i}`} className="h-16 border-r border-b bg-gray-50 last:border-r-0"></div>
+              <div key={`empty-end-${i}`} className="h-12 md:h-16 border-r border-b bg-gray-50 last:border-r-0"></div>
             ))}
           </div>
         </CardContent>

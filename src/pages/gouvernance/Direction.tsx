@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 
 interface DirecteurProps {
@@ -61,11 +62,11 @@ const directeurs: DirecteurProps[] = [
 const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
   return (
     <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
-      <div className="h-64 md:h-64 sm:h-80 overflow-hidden">
+      <div className="h-72 sm:h-80 md:h-64 lg:h-72 overflow-hidden">
         <img 
           src={photo} 
           alt={nom} 
-          className="w-full h-full object-cover object-center sm:object-top md:object-top lg:object-top scale-110 sm:scale-100"
+          className="w-full h-full object-cover object-top"
         />
       </div>
       <div className="p-6">

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -109,8 +108,11 @@ const Media = () => {
           { src: "/lovable-uploads/e93a1839-f754-46da-84f2-581e76c13bb9.png", name: "Image Upload 35", type: "image" },
           { src: "/lovable-uploads/f6702924-a969-41e2-b595-dcc193b6b123.png", name: "Image Upload 36", type: "image" },
           { src: "/lovable-uploads/fa8439f4-b009-4788-9afe-858ae27b64c1.png", name: "Image Upload 37", type: "image" },
-          { src: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49cb.png", name: "Image Upload 38", type: "image" },
+          { src: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png", name: "Image Upload 38", type: "image" },
           { src: "/lovable-uploads/8e08f694-ea04-4afc-a9ce-cf13d17b0b7d.png", name: "New Upload", type: "image" },
+          
+          // New GEM E-Mobility logo
+          { src: "/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png", name: "GEM E-Mobility Logo", type: "image" },
         ];
         
         setMedia(mediaItems);
