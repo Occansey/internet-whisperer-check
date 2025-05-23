@@ -17,13 +17,13 @@ export const events: EventProps[] = [
   {
     id: 3,
     title: "Energy Talks: L'avenir de l'énergie solaire en Afrique",
-    description: "John Okoro, directeur de Growth Energy, partage sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique. https://www.linkedin.com/events/energytalks-unenjeumondial-desd7265321522360205312/theater/",
+    description: "John Okoro, directeur de Growth Energy, partage sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique.",
     type: "spotlight",
     date: "22 mars 2025",
     time: "10:00 - 12:00",
     location: "Nairobi, Kenya",
     image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
-    link: "#",
+    link: "https://www.linkedin.com/events/energytalks-unenjeumondial-desd7265321522360205312/theater/",
     tags: ["Énergie", "Développement durable", "Afrique"]
   },
   {
