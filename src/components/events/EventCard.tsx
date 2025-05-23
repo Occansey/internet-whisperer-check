@@ -2,14 +2,15 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SocialShare } from "@/components/ui/social-share";
 import { EventProps } from "@/types/events";
 
 const EventCard = ({ event }: { event: EventProps }) => {
-  const cardContent = (
-    <>
+  return (
+    <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg">
       {event.image && (
         <div className="h-48 overflow-hidden">
           <img 
@@ -62,23 +63,34 @@ const EventCard = ({ event }: { event: EventProps }) => {
         )}
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
-        <SocialShare title={event.title} compact={true} />
+        <div className="flex justify-between items-center w-full">
+          {event.link && event.link.startsWith('http') ? (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              asChild
+              className="flex items-center gap-2"
+            >
+              <a href={event.link} target="_blank" rel="noopener noreferrer">
+                En savoir plus
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </Button>
+          ) : (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              asChild
+              className="flex items-center gap-2"
+            >
+              <Link to={`/actualites/evenements/${event.id}`}>
+                En savoir plus
+              </Link>
+            </Button>
+          )}
+          <SocialShare title={event.title} compact={true} />
+        </div>
       </CardFooter>
-    </>
-  );
-
-  // Create a wrapper for clickable card
-  return (
-    <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg relative group">
-      <Link 
-        to={event.link && event.link.startsWith('http') ? event.link : `/actualites/evenements/${event.id}`}
-        className="absolute inset-0 z-10"
-        target={event.link && event.link.startsWith('http') ? "_blank" : "_self"}
-        rel={event.link && event.link.startsWith('http') ? "noopener noreferrer" : ""}
-      >
-        <span className="sr-only">Voir {event.title}</span>
-      </Link>
-      {cardContent}
     </Card>
   );
 };
