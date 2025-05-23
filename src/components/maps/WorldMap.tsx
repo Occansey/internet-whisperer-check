@@ -1,8 +1,6 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 
 interface Location {
@@ -21,13 +19,12 @@ interface WorldMapProps {
 const WorldMap = ({ locations }: WorldMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState('');
-  const [showTokenInput, setShowTokenInput] = useState(true);
 
-  const initializeMap = () => {
-    if (!mapContainer.current || !mapboxToken) return;
+  useEffect(() => {
+    if (!mapContainer.current) return;
 
-    mapboxgl.accessToken = mapboxToken;
+    // Set the Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWF4d2VsbC1vIiwiYSI6ImNtOGg5YW80NzEwYnEyanNicDZxdHczenoifQ.iOJkukwaCaVAHsHJm4CQ4w';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -105,45 +102,11 @@ const WorldMap = ({ locations }: WorldMapProps) => {
       });
     });
 
-    setShowTokenInput(false);
-  };
-
-  if (showTokenInput) {
-    return (
-      <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-200">
-        <div className="text-center mb-6">
-          <MapPin className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-blue-800 mb-2">Configuration de la carte</h3>
-          <p className="text-blue-600 mb-6">
-            Pour afficher la carte du monde interactive, veuillez entrer votre token Mapbox public.
-          </p>
-          <p className="text-sm text-gray-500 mb-4">
-            Obtenez votre token gratuitement sur{' '}
-            <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-              mapbox.com
-            </a>
-          </p>
-        </div>
-        
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            placeholder="pk.eyJ1IjoieW91ci11c2VybmFtZSI..."
-            value={mapboxToken}
-            onChange={(e) => setMapboxToken(e.target.value)}
-            className="flex-1"
-          />
-          <Button 
-            onClick={initializeMap}
-            disabled={!mapboxToken.startsWith('pk.')}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            Charger la carte
-          </Button>
-        </div>
-      </div>
-    );
-  }
+    // Cleanup function
+    return () => {
+      map.current?.remove();
+    };
+  }, [locations]);
 
   return (
     <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
