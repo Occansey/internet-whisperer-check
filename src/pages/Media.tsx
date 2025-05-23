@@ -111,8 +111,12 @@ const Media = () => {
           { src: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49ca.png", name: "Image Upload 38", type: "image" },
           { src: "/lovable-uploads/8e08f694-ea04-4afc-a9ce-cf13d17b0b7d.png", name: "New Upload", type: "image" },
           
-          // New GEM E-Mobility logo
+          // GEM E-Mobility logo
           { src: "/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png", name: "GEM E-Mobility Logo", type: "image" },
+          
+          // New logos uploaded
+          { src: "/lovable-uploads/3dd749b3-0de1-4510-80e1-4d56e139d21f.png", name: "MFG Technologies Logo Alt", type: "image" },
+          { src: "/lovable-uploads/6ae660c2-d5e5-4f50-bad4-b52418a0d06b.png", name: "Growth Energy Logo Alt", type: "image" },
         ];
         
         setMedia(mediaItems);
