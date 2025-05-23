@@ -63,8 +63,34 @@ export const events: EventProps[] = [
     time: "12:00 - 13:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
-    imagePosition: "object-right",
+    imagePosition: "object-right-top",
     link: "#",
     tags: ["Digital","ERP"]
   },
+  {
+    id: 7,
+    title: "Forum sur l'Innovation Énergétique",
+    description: "Un forum dédié aux dernières innovations en matière d'énergie renouvelable avec des discussions sur les tendances émergentes.",
+    type: "upcoming",
+    date: "15 juillet 2025",
+    time: "10:00 - 16:00",
+    location: "Paris, France",
+    image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
+    imagePosition: "object-left-bottom",
+    link: "#",
+    tags: ["Innovation", "Énergie", "Technologie"]
+  },
+  {
+    id: 8,
+    title: "Digital Africa Summit",
+    description: "Une conférence internationale réunissant les leaders de la transformation numérique en Afrique.",
+    type: "upcoming",
+    date: "3 septembre 2025",
+    time: "9:00 - 18:00",
+    location: "Kigali, Rwanda",
+    image: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    imagePosition: "object-right-bottom",
+    link: "https://example.com/digital-africa-summit",
+    tags: ["Numérique", "Afrique", "Innovation"]
+  }
 ];

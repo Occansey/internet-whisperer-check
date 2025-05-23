@@ -109,7 +109,7 @@ const EventDetail = () => {
                 <img 
                   src={event.image} 
                   alt={event.title} 
-                  className="w-full h-auto"
+                  className={`w-full h-auto ${event.imagePosition || 'object-center'}`}
                 />
               </div>
             )}

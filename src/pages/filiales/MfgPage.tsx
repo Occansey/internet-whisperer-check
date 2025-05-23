@@ -11,8 +11,8 @@ const MfgPage = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
-              <div className="flex items-center mb-6">
-                <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-24 mr-4" />
+              <div className="mb-6">
+                <img src="/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png" alt="MFG Technologies" className="h-24" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
                 Innovation Digitale pour l'Industrie : Spécialistes du développement logiciel, du cloud et des infrastructures IT, nous accompagnons les acteurs industriels et manufacturiers dans leur transformation technologique.
@@ -26,7 +26,7 @@ const MfgPage = () => {
             <div className="flex-1">
               <div className="aspect-video rounded-lg shadow-md overflow-hidden">
                 <img 
-                  src="/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png" 
+                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
                   alt="MFG Technologies Team" 
                   className="w-full h-full object-cover"
                 />
