@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Presentation = () => {
   useEffect(() => {
@@ -28,6 +29,57 @@ const Presentation = () => {
   
   return (
     <Layout>
+      <Helmet>
+        <title>Présentation du Groupe Solio | Leader en transition énergétique et digitale</title>
+        <meta name="description" content="Découvrez Solio Group, un groupe multidisciplinaire dédié à l'accompagnement des entreprises dans la transition énergétique et digitale en Afrique, en Europe et en Amérique du Nord." />
+        <meta name="keywords" content="Solio Group, transition énergétique, transformation digitale, énergie solaire, projets solaires, Afrique, digital" />
+        <link rel="canonical" href="https://solio-group.com/presentation" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://solio-group.com/presentation" />
+        <meta property="og:title" content="Présentation du Groupe Solio | Leader en transition énergétique et digitale" />
+        <meta property="og:description" content="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale." />
+        <meta property="og:image" content="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://solio-group.com/presentation" />
+        <meta name="twitter:title" content="Présentation du Groupe Solio | Leader en transition énergétique et digitale" />
+        <meta name="twitter:description" content="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale." />
+        <meta name="twitter:image" content="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        
+        {/* Structured data for Organization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Solio Group",
+            "url": "https://solio-group.com",
+            "logo": "https://solio-group.com/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png",
+            "description": "Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale.",
+            "foundingDate": "2019",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "4 Rue De Longchamp",
+              "addressLocality": "Paris",
+              "postalCode": "75016",
+              "addressCountry": "FR"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "contact@solio-group.com",
+              "availableLanguage": ["French", "English"]
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/solio-group",
+              "https://twitter.com/soliogroup"
+            ]
+          })}
+        </script>
+      </Helmet>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-solio-blue to-blue-900 text-white py-24">
         <div className="container">
@@ -82,6 +134,7 @@ const Presentation = () => {
                 src="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" 
                 alt="Histoire de Solio Group" 
                 className="w-full h-auto"
+                loading="lazy"
               />
             </div>
           </div>
@@ -167,6 +220,7 @@ const Presentation = () => {
                   src="/lovable-uploads/6fad0fc5-45d5-41ca-af9c-318bbe47400d.png" 
                   alt="Solio Group Vision" 
                   className="w-full h-auto"
+                  loading="lazy"
                 />
               </div>
             </div>
