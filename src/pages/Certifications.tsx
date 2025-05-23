@@ -43,7 +43,7 @@ const certifications: CertificationProps[] = [
     organization: "Divalto",
     description: "Distinction attestant de notre niveau d'expertise élevé dans l'intégration et le déploiement des solutions ERP Divalto.",
     date: "Mars 2024",
-    logo: "/lovable-uploads/72a3e16f-eef8-4571-9676-3625f9b8e68d.png",
+    logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     category: "industry"
   }
 ];
