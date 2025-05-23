@@ -280,7 +280,7 @@ const Culture = () => {
             <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
               <Link to="/carrieres/rejoignez-nous">Voir nos opportunités</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+            <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:bg-white hover:text-white">
               <Link to="/carrieres/engagements">Nos engagements RH</Link>
             </Button>
           </div>

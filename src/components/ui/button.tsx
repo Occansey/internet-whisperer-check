@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         solio: "border border-solio-blue text-solio-blue hover:text-white hover:bg-solio-blue transition-colors",
+        activites: "border border-white text-solio-blue hover:text-white hover:bg-solio-blue transition-colors",
       },
       size: {
         default: "h-10 px-4 py-2",
