@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 
@@ -111,13 +112,14 @@ const ComiteExecutif = () => {
 
   return (
     <Layout>
+      <HeroBanner 
+        title="Comité Exécutif (COMEX)"
+        description="Le COMEX assure la direction stratégique et l'alignement des activités entre les filiales. Il est composé des directeurs de chaque filiale ainsi que de la direction financière du groupe."
+        glowColor="indigo"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Comité Exécutif (COMEX)</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Le COMEX assure la direction stratégique et l'alignement des activités entre les filiales. Il est composé des directeurs de chaque filiale ainsi que de la direction financière du groupe.
-          </p>
-          
           {isMobile && (
             <Card className="mb-8">
               <CardContent className="p-4">

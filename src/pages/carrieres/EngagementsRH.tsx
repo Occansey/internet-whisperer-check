@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
@@ -181,13 +182,14 @@ const EngagementsRH = () => {
 
   return (
     <Layout>
+      <HeroBanner 
+        title="Nos Engagements RH"
+        description="Chez Solio Group, nous croyons que notre réussite repose sur l'épanouissement de nos collaborateurs. Découvrez nos engagements pour créer un environnement de travail stimulant, inclusif et humain."
+        glowColor="red"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Nos Engagements RH</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Chez Solio Group, nous croyons que notre réussite repose sur l'épanouissement de nos collaborateurs. Découvrez nos engagements pour créer un environnement de travail stimulant, inclusif et humain.
-          </p>
-          
           <Tabs defaultValue="developpement" className="w-full">
             <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1 mb-4" : "grid-cols-4 mb-8"}`}>
               <TabsTrigger value="developpement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>

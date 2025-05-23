@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -186,13 +187,14 @@ const Projets = () => {
 
   return (
     <Layout>
+      <HeroBanner 
+        title="Projets en Cours"
+        description="Découvrez les projets actuellement déployés par les différentes filiales du groupe Solio."
+        glowColor="cyan"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Projets en Cours</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Découvrez les projets actuellement déployés par les différentes filiales du groupe Solio.
-          </p>
-          
           <div className="mb-8">
             <input
               type="text"

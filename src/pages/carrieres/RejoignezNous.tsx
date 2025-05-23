@@ -1,5 +1,6 @@
 
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -42,13 +43,14 @@ const RejoignezNous = () => {
 
   return (
     <Layout>
+      <HeroBanner 
+        title="Rejoignez-nous"
+        description="Découvrez nos opportunités d'emploi et venez construire avec nous le futur de l'énergie solaire et de la transformation digitale."
+        glowColor="rose"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Rejoignez-nous</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Découvrez nos opportunités d'emploi et venez construire avec nous le futur de l'énergie solaire et de la transformation digitale.
-          </p>
-          
           <div className="mb-16">
             <h2 className="text-2xl font-bold mb-6">Pourquoi nous rejoindre?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

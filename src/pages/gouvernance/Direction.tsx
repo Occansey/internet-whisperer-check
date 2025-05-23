@@ -1,5 +1,5 @@
-
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 
 interface DirecteurProps {
   photo: string;
@@ -94,13 +94,14 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
 const Direction = () => {
   return (
     <Layout>
+      <HeroBanner 
+        title="Direction du Groupe"
+        description="Notre équipe de direction combine expertise sectorielle, vision stratégique et sens de l'innovation pour assurer une croissance durable."
+        glowColor="purple"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Direction du Groupe</h1>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Notre équipe de direction combine expertise sectorielle, vision stratégique et sens de l'innovation pour assurer une croissance durable.
-          </p>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {directeurs.map((directeur) => (
               <DirectionCard

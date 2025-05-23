@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
+import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -91,139 +92,94 @@ export const articles: ArticleProps[] = [
   }
 ];
 
-const getTagColor = (tag: string) => {
-  switch (tag) {
-    case "solio":
-      return "bg-solio-blue text-white";
-    case "growth-energy":
-      return "bg-yellow-100 text-yellow-800";
-    case "asking":
-      return "bg-blue-100 text-blue-800";
-    case "mfg-technologies":
-      return "bg-purple-100 text-purple-800";
-    case "gem":
-      return "bg-green-100 text-green-800";
-    case "africa":
-      return "bg-orange-100 text-orange-800";
-    case "digital":
-      return "bg-indigo-100 text-indigo-800";
-    case "partnership":
-      return "bg-pink-100 text-pink-800";
-    case "award":
-      return "bg-amber-100 text-amber-800";
-    case "expansion":
-      return "bg-cyan-100 text-cyan-800";
-    case "innovation":
-      return "bg-emerald-100 text-emerald-800";
-    case "solar":
-      return "bg-red-100 text-red-800";
-    case "e-mobility":
-      return "bg-lime-100 text-lime-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-};
-
-const ArticleCard = ({ article }: { article: ArticleProps }) => {
-  return (
-    <Card className="mb-8 overflow-hidden h-full flex flex-col">
-      <div className="relative h-64">
-        <img 
-          src={article.image} 
-          alt={article.title} 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <CardHeader className="flex-1">
-        <div className="flex items-center text-sm text-gray-500 mb-2">
-          <Calendar className="mr-2 h-4 w-4" />
-          <span>{article.date}</span>
-        </div>
-        <CardTitle>{article.title}</CardTitle>
-        <CardDescription className="text-base">{article.description}</CardDescription>
-        <div className="flex flex-wrap gap-2 mt-3">
-          {article.tags.map((tag, index) => (
-            <Badge key={index} className={getTagColor(tag)}>
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardHeader>
-      <CardFooter>
-        <Link to={`/actualites/communiques/${article.id}`} className="w-full">
-          <Button variant="solio" className="w-full">Lire l'article</Button>
-        </Link>
-      </CardFooter>
-    </Card>
-  );
-};
-
-const compareDates = (a: string, b: string, order: 'asc' | 'desc'): number => {
-  // Convert dates like "12 Avril 2025" to Date objects
-  const parseDate = (dateStr: string) => {
-    const [day, month, year] = dateStr.split(' ');
-    const months: { [key: string]: number } = {
-      'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
-      'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
-    };
-    return new Date(parseInt(year), months[month], parseInt(day));
-  };
-
-  const dateA = parseDate(a);
-  const dateB = parseDate(b);
-  
-  if (order === 'asc') {
-    return dateA.getTime() - dateB.getTime();
-  } else {
-    return dateB.getTime() - dateA.getTime();
-  }
-};
-
 const Communiques = () => {
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  
-  const sortedArticles = [...articles].sort((a, b) => {
-    return compareDates(a.date, b.date, sortOrder);
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-  };
+  const filteredAndSortedArticles = articles
+    .filter(article => 
+      searchTerm === "" || 
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
+    });
 
   return (
     <Layout>
+      <HeroBanner 
+        title="Communiqués"
+        description="Découvrez les dernières actualités et communiqués de presse du groupe Solio."
+        glowColor="orange"
+      />
+      
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Communiqués</h1>
-          <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
-            Découvrez les dernières annonces, partenariats et actualités du groupe Solio.
-          </p>
-          
-          <div className="flex justify-end mb-6">
+          <div className="mb-8 flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Rechercher un article..."
+                className="w-full p-3 border rounded-lg"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
             <Button 
               variant="outline" 
-              onClick={toggleSortOrder}
+              onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
               className="flex items-center gap-2"
             >
-              {sortOrder === 'asc' ? (
-                <>
-                  <SortAsc className="h-4 w-4" />
-                  Plus anciens en premier
-                </>
-              ) : (
-                <>
-                  <SortDesc className="h-4 w-4" />
-                  Plus récents en premier
-                </>
-              )}
+              {sortOrder === "desc" ? <SortDesc className="h-4 w-4" /> : <SortAsc className="h-4 w-4" />}
+              Date {sortOrder === "desc" ? "↓" : "↑"}
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </div>
+          {filteredAndSortedArticles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAndSortedArticles.map((article) => (
+                <Card key={article.id} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">
+                  <div className="h-48 overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <CardHeader className="flex-initial">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Calendar className="h-4 w-4 text-gray-500" />
+                      <span className="text-sm text-gray-500">{article.date}</span>
+                    </div>
+                    <CardTitle className="text-lg line-clamp-2">{article.title}</CardTitle>
+                    <CardDescription className="line-clamp-3">{article.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <div className="flex flex-wrap gap-2">
+                      {article.tags.map((tag, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex-initial">
+                    <Button variant="solio" className="w-full" asChild>
+                      <Link to={`/actualites/communiques/${article.id}`}>Lire l'article</Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-500">Aucun article trouvé pour votre recherche.</p>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
