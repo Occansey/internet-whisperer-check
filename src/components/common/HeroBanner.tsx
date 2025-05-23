@@ -7,9 +7,10 @@ interface HeroBannerProps {
   description?: string;
   children?: ReactNode;
   glowColor?: string;
+  showBadge?: boolean;
 }
 
-const HeroBanner = ({ title, subtitle, description, children, glowColor = "solio-yellow" }: HeroBannerProps) => {
+const HeroBanner = ({ title, subtitle, description, children, glowColor = "solio-yellow", showBadge = false }: HeroBannerProps) => {
   const getGlowClass = (color: string) => {
     switch (color) {
       case "green":
@@ -45,11 +46,13 @@ const HeroBanner = ({ title, subtitle, description, children, glowColor = "solio
       
       <div className="container relative z-20">
         <div className="max-w-4xl">
-          {/* Modern badge */}
-          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
-            <span className="w-2 h-2 bg-solio-yellow rounded-full mr-2 animate-pulse"></span>
-            Innovation • Durabilité • Excellence
-          </div>
+          {/* Modern badge - only show if showBadge is true */}
+          {showBadge && (
+            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
+              <span className="w-2 h-2 bg-solio-yellow rounded-full mr-2 animate-pulse"></span>
+              Innovation • Durabilité • Excellence
+            </div>
+          )}
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-r from-white via-gray-100 to-solio-yellow bg-clip-text text-transparent">

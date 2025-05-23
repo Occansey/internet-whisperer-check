@@ -12,7 +12,7 @@ const Hero = () => {
       {/* Content above video */}
       <div className="container relative z-20 py-20">
         <div className="max-w-4xl">
-          {/* Modern badge */}
+          {/* Modern badge - kept only on homepage */}
           <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
             <span className="w-2 h-2 bg-solio-yellow rounded-full mr-2 animate-pulse"></span>
             Innovation • Durabilité • Excellence
