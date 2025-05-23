@@ -1,11 +1,16 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://solio-group.com/</loc>
     <lastmod>2025-05-23</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png</image:loc>
+      <image:title>Solio Group - Transition énergétique et digitale</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://solio-group.com/presentation</loc>

@@ -10,9 +10,11 @@ Sitemap: https://solio-group.com/sitemap.xml
 # Specific search engine directives
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -20,10 +22,19 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-# Block certain directories
+User-agent: LinkedInBot
+Allow: /
+
+# Block certain directories (if they exist)
 Disallow: /admin/
 Disallow: /private/
 Disallow: /tmp/
+Disallow: /*.json$
+Disallow: /api/
 
-# Crawl delay for all bots
+# Allow important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+
+# General crawl delay for all bots
 Crawl-delay: 1
