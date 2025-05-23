@@ -10,19 +10,19 @@ interface DirecteurProps {
 
 const directeurs: DirecteurProps[] = [
   {
-    photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
+    photo: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png",
     nom: "Laure Duhorane",
     titre: "Directeur Général - Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
   },
   {
-    photo: "/lovable-uploads/d322134e-2cfd-4bd7-b6e1-e8ef5660a7dd.png",
+    photo: "/lovable-uploads/7ae14399-4ddf-44fe-aec4-6a1c3a702edb.png",
     nom: "Isabelle Mauboussin",
     titre: "Directrice Administrative et Financière – Groupe",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card"
   },
   {
-    photo: "/lovable-uploads/e93a1839-f754-46da-84f2-581e76c13bb9.png",
+    photo: "/lovable-uploads/156df79e-4df5-4c2d-9be1-9e58e7d00917.png",
     nom: "Nancy Normand",
     titre: "Directrice des Talents – MFG Technologies",
     linkedin: "https://ca.linkedin.com/in/nancycnormand/fr?trk=people-guest_people_search-card"
@@ -34,7 +34,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://linkedin.com/"
   },
   {
-    photo: "/lovable-uploads/df144786-5619-4878-bd8d-4713c1a22578.png",
+    photo: "/lovable-uploads/de408ee9-d343-4578-bd30-ae9d93b1c647.png",
     nom: "Patrick Charlet",
     titre: "Directeur des Opérations – MFG Technologies",
     linkedin: "https://linkedin.com/"
@@ -46,13 +46,13 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24"
   },
   {
-    photo: "/lovable-uploads/970f02bd-513b-4f97-8bf1-5fe21b553b25.png",
+    photo: "/lovable-uploads/21b71e09-5fdb-4819-a954-2c32bfebb440.png",
     nom: "John Okoro",
     titre: "Directeur Général - Growth Energy",
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/fa8439f4-b009-4788-9afe-858ae27b64c1.png",
+    photo: "/lovable-uploads/a4fe0918-0491-4c26-a49e-5e000f333c7e.png",
     nom: "François Botreau",
     titre: "Chief Technology Officer – Growth Energy",
     linkedin: "https://fr.linkedin.com/in/francoisbotreau/fr"
