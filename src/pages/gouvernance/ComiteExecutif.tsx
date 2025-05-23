@@ -13,7 +13,7 @@ interface ExecutiveMemberProps {
 
 const executives: ExecutiveMemberProps[] = [
   {
-    photo: "/lovable-uploads/38e1e033-0379-4601-873f-710962a35680.png",
+    photo: "/lovable-uploads/ec9bfdff-09d6-4197-9fb2-36c08c4c0f7b.png",
     name: "Evrard Havyarimana",
     title: "Président du Groupe et du COMEX",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24",
