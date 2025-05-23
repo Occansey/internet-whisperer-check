@@ -16,11 +16,12 @@ const Hero = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
             loading="eager"
-            className="w-full h-full object-cover scale-150"
+            className="w-full h-full object-cover"
             style={{
-              width: '100vw',
-              height: '100vh',
-              objectFit: 'cover'
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transform: 'scale(1)'
             }}
           ></iframe>
         </div>
