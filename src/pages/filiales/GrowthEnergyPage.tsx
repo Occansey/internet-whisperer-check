@@ -33,7 +33,7 @@ const GrowthEnergyPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
               <div className="flex items-center mb-6">
-                <img src="/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png" alt="Growth Energy" className="h-24 mr-4" />
+                <img src="/lovable-uploads/6ae660c2-d5e5-4f50-bad4-b52418a0d06b.png" alt="Growth Energy" className="h-24 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
                 Growth Energy accélère la transition vers l'énergie solaire en Afrique de l'Est et de l'Ouest, au service des entreprises et des collectivités.
