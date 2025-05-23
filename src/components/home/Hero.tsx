@@ -10,7 +10,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1&controls=0&start=0&auto_play=true&play=1"
+            src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
@@ -96,7 +96,6 @@ const Hero = () => {
           <div className="mt-8 flex justify-center md:justify-start">
             <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-6 md:px-8 py-3 rounded-full transition-all duration-300">
               <Link to="/actualites/projets" className="flex items-center gap-2">
-                Découvrir
                 <span className="text-lg">→</span>
               </Link>
             </Button>
