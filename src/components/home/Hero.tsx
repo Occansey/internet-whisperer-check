@@ -1,8 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
+  const isMobile = useIsMobile();
+
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
       {/* Floating elements for modern touch */}
@@ -53,24 +56,39 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Video background */}
+      {/* Video/Image section */}
       <div className="w-full h-96 md:h-[500px] overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
-        <iframe
-          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-          title="Background Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-          allowFullScreen
-          loading="eager"
-          className="w-full h-full object-cover"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transform: 'scale(1)'
-          }}
-        ></iframe>
+        
+        {isMobile ? (
+          // Afficher une image statique sur mobile pour de meilleures performances
+          <div className="w-full h-full bg-gradient-to-r from-solio-blue to-blue-900 flex items-center justify-center">
+            <div className="text-center text-white">
+              <div className="w-20 h-20 mx-auto mb-4 bg-solio-yellow/20 rounded-full flex items-center justify-center">
+                <span className="text-2xl">▶</span>
+              </div>
+              <p className="text-lg font-medium">Découvrez notre vidéo</p>
+              <p className="text-sm opacity-75">Cliquez pour regarder</p>
+            </div>
+          </div>
+        ) : (
+          // Afficher la vidéo YouTube sur desktop
+          <iframe
+            src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
+            title="Background Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+            allowFullScreen
+            loading="eager"
+            className="w-full h-full object-cover"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transform: 'scale(1)'
+            }}
+          ></iframe>
+        )}
       </div>
       
       {/* Content below video */}
