@@ -114,7 +114,7 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-              <span className="text-gray-300">Innovation digitale</span>
+              <span className="text-gray-300">Transformation digitale</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
