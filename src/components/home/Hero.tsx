@@ -10,7 +10,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -72,7 +72,7 @@ const Hero = () => {
           </div>
           
           {/* Modern stats or features */}
-          <div className="flex flex-wrap gap-8 pt-8 border-t border-white/20">
+          <div className="flex flex-wrap gap-4 md:gap-8 pt-8 border-t border-white/20">
             <Link to="/filiales/growth-energy" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-solio-yellow rounded-full"></div>
               <span className="text-gray-300">Transition énergétique</span>
@@ -91,9 +91,9 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Discover button below features */}
-          <div className="mt-8">
-            <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-3 rounded-full transition-all duration-300">
+          {/* Discover button centered below features */}
+          <div className="mt-8 flex justify-center md:justify-start">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-6 md:px-8 py-3 rounded-full transition-all duration-300">
               <Link to="/actualites/projets" className="flex items-center gap-2">
                 Découvrir
                 <span className="text-lg">→</span>
