@@ -63,7 +63,7 @@ export const events: EventProps[] = [
     time: "12:00 - 13:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
-    imagePosition: "object-right-center",
+    imagePosition: "object-center-bottom",
     link: "#",
     tags: ["Digital","ERP"]
   },
