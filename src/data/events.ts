@@ -29,7 +29,7 @@ export const events: EventProps[] = [
   {
     id: 4,
     title: "Evrard Havyarimana sur BFM TV",
-    description: "Interview d'Evrard Havyarimana, Président de Solio Group, sur les opportunités d'investissement dans l'énergie renouvelable en Afrique.\n\t\t\nhttps://www.bfmtv.com/economie/replay-emissions/objectif-croissance/evrard-havyarimana-growth-supply-growth-supply-accompagne-les-industriels-dans-le-parcours-de-leur-transition-energetique-26-07_VN-202307260366.html",
+    description: "Interview d'Evrard Havyarimana, Président de Solio Group, sur les opportunités d'investissement dans l'énergie renouvelable en Afrique.",
     type: "spotlight",
     date: "18 février 2025",
     time: "19:30",
