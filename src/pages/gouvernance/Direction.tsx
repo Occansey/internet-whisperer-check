@@ -28,7 +28,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://ca.linkedin.com/in/nancycnormand/fr?trk=people-guest_people_search-card"
   },
   {
-    photo: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png",
+    photo: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png",
     nom: "Alain Normand",
     titre: "Directeur Général - MFG Technologies",
     linkedin: "https://linkedin.com/"
@@ -40,7 +40,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://linkedin.com/"
   },
   {
-    photo: "/lovable-uploads/38e1e033-0379-4601-873f-710962a35680.png",
+    photo: "/lovable-uploads/ec9bfdff-09d6-4197-9fb2-36c08c4c0f7b.png",
     nom: "Evrard Havyarimana",
     titre: "Président du Groupe et du Comex",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24"
