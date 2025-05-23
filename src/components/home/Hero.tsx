@@ -25,7 +25,7 @@ const Hero = () => {
           showinfo: 0,
           mute: 1,
           loop: 1,
-          playlist: 'etY08YozPHQ' // Updated video ID
+          playlist: 'etY08YozPHQ'
         },
         events: {
           onReady: (event) => {
@@ -42,10 +42,10 @@ const Hero = () => {
   }, []);
   
   return (
-    <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white h-screen">
+    <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white h-screen overflow-hidden">
       {/* Video background */}
       <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute inset-0 bg-black opacity-60 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
             ref={iframeRef}
@@ -60,23 +60,75 @@ const Hero = () => {
         </div>
       </div>
       
+      {/* Floating elements for modern touch */}
+      <div className="absolute top-20 right-10 w-32 h-32 bg-solio-yellow/20 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute bottom-20 left-10 w-24 h-24 bg-blue-400/30 rounded-full blur-lg animate-pulse"></div>
+      
       {/* Content */}
-      <div className="container relative z-20 flex items-center justify-start h-full py-20 animate-slideUp">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Transformons ensemble les défis énergétiques et numériques
+      <div className="container relative z-20 flex items-center justify-start h-full py-20">
+        <div className="max-w-4xl">
+          {/* Modern badge */}
+          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
+            <span className="w-2 h-2 bg-solio-yellow rounded-full mr-2 animate-pulse"></span>
+            Innovation • Durabilité • Excellence
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+            <span className="bg-gradient-to-r from-white via-gray-100 to-solio-yellow bg-clip-text text-transparent">
+              Transformons ensemble
+            </span>
+            <br />
+            <span className="text-white">
+              les défis énergétiques
+            </span>
+            <br />
+            <span className="text-solio-yellow">
+              et numériques
+            </span>
           </h1>
-          <p className="text-xl mb-8">
+          
+          <p className="text-xl md:text-2xl mb-12 text-gray-100 max-w-3xl leading-relaxed">
             Solutions durables pour un avenir plus sobre, plus digitalisé et plus résilient
           </p>
-          <div className="flex flex-wrap gap-4">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-              <Link to="/presentation">Découvrir le groupe</Link>
+          
+          <div className="flex flex-col sm:flex-row gap-6">
+            <Button asChild size="lg" className="bg-gradient-to-r from-solio-yellow to-yellow-400 text-solio-blue hover:from-yellow-400 hover:to-solio-yellow font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <Link to="/presentation" className="flex items-center gap-2">
+                Découvrir le groupe
+                <span className="text-lg">→</span>
+              </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-              <Link to="/contact">Nous contacter</Link>
+            <Button asChild size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:border-white/50">
+              <Link to="/contact" className="flex items-center gap-2">
+                Nous contacter
+                <span className="text-lg">✉</span>
+              </Link>
             </Button>
           </div>
+          
+          {/* Modern stats or features */}
+          <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/20">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-solio-yellow rounded-full"></div>
+              <span className="text-gray-300">Transition énergétique</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+              <span className="text-gray-300">Innovation digitale</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+              <span className="text-gray-300">Impact durable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Modern scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex flex-col items-center gap-2 text-white/70">
+          <span className="text-sm">Découvrir</span>
+          <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent"></div>
         </div>
       </div>
     </section>
