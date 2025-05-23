@@ -64,19 +64,7 @@ const EventCard = ({ event }: { event: EventProps }) => {
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
         <div className="flex justify-between items-center w-full">
-          {event.link && event.link.startsWith('http') ? (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              asChild
-              className="flex items-center gap-2"
-            >
-              <a href={event.link} target="_blank" rel="noopener noreferrer">
-                En savoir plus
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </Button>
-          ) : (
+          <div className="flex gap-2">
             <Button 
               variant="outline" 
               size="sm" 
@@ -84,10 +72,23 @@ const EventCard = ({ event }: { event: EventProps }) => {
               className="flex items-center gap-2"
             >
               <Link to={`/actualites/evenements/${event.id}`}>
-                En savoir plus
+                Consulter
               </Link>
             </Button>
-          )}
+            {event.link && event.link.startsWith('http') && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                asChild
+                className="flex items-center gap-2"
+              >
+                <a href={event.link} target="_blank" rel="noopener noreferrer">
+                  En savoir plus
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+            )}
+          </div>
           <SocialShare title={event.title} compact={true} />
         </div>
       </CardFooter>

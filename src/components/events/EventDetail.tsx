@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SocialShare } from '@/components/ui/social-share';
 import { events } from '@/data/events';
@@ -90,6 +90,18 @@ const EventDetail = () => {
                   <span>{event.location}</span>
                 </div>
               </div>
+
+              {event.link && event.link.startsWith('http') && (
+                <Button 
+                  asChild
+                  className="bg-solio-yellow text-solio-blue hover:bg-yellow-400 mb-6"
+                >
+                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    En savoir plus
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
+              )}
             </div>
             
             {event.image && (
