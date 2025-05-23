@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
@@ -89,7 +90,7 @@ const Presentation = () => {
           <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
             <Link to="/nos-filiales">Découvrir nos filiales</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="border-white text-white hover:text-solio-blue hover:bg-white">
+          <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue">
             <Link to="/contact">Nous contacter</Link>
           </Button>
         </div>

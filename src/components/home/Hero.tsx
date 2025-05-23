@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -77,7 +78,7 @@ const Hero = () => {
       <div className="container relative z-20 py-20">
         <div className="max-w-4xl">
           {/* Modern stats or features */}
-          <div className="flex flex-wrap gap-4 md:gap-8 pt-8 border-t border-white/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pt-8 border-t border-white/20">
             <Link to="/filiales/growth-energy" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-solio-yellow rounded-full"></div>
               <span className="text-gray-300">Transition énergétique</span>
