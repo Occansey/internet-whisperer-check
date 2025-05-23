@@ -53,7 +53,7 @@ export const events: EventProps[] = [
   {
     id: 5,
     title: "Divalto Tour",
-    description: "🔄 Changement de date ! Le webinaire initialement prévu le 4 avril est décalé au 25 avril. Une semaine de plus pour s’inscrire et nous rejoindre !\n🎯 \[WEBINAIRE] Tarifs en hausse, marché instable ? Et si votre ERP devenait votre meilleur allié pour décider vite et bien ?\nDans un contexte économique incertain, Divalto Amérique du Nord et MFG Technologies vous invitent à un webinaire exclusif pour découvrir comment piloter votre compagnie avec plus de clarté et d’agilité.\n📅 Jeudi 25 avril de 12h à 13h (EST)\n📍 En ligne\nAu programme :\n✅ Comment un ERP centralise vos données pour prendre de meilleures décisions\n✅ Démo live : simulez l’impact d’une hausse tarifaire sur vos prix et votre rentabilité\n✅ Échanges en direct avec nos experts\nUne occasion concrète et accessible pour voir l’ERP en action, appliqué à vos enjeux du moment.\n🎫 Réservez votre place dès maintenant ! 👉 [https://lnkd.in/e\_RBqPc9](https://lnkd.in/e_RBqPc9)",
+    description: "Rejoignez-nous le 25 avril pour découvrir comment piloter votre entreprise avec des outils modernes et efficaces !\n\tLaure Duhorane",
     type: "past",
     date: "25 avril 2025",
     time: "12:00",
