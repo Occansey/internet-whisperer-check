@@ -4,35 +4,13 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white h-screen overflow-hidden">
-      {/* Video background */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
-        <div className="w-full h-full z-0">
-          <iframe
-            src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-            title="Background Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-            allowFullScreen
-            loading="eager"
-            className="w-full h-full object-cover"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              transform: 'scale(1)'
-            }}
-          ></iframe>
-        </div>
-      </div>
-      
+    <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
       {/* Floating elements for modern touch */}
       <div className="absolute top-20 right-10 w-32 h-32 bg-solio-yellow/20 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-20 left-10 w-24 h-24 bg-blue-400/30 rounded-full blur-lg animate-pulse"></div>
       
-      {/* Content */}
-      <div className="container relative z-20 flex items-center justify-start h-full py-20">
+      {/* Content above video */}
+      <div className="container relative z-20 py-20">
         <div className="max-w-4xl">
           {/* Modern badge */}
           <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
@@ -72,7 +50,32 @@ const Hero = () => {
               </Link>
             </Button>
           </div>
-          
+        </div>
+      </div>
+
+      {/* Video background */}
+      <div className="w-full h-96 md:h-[500px] overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
+        <iframe
+          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
+          title="Background Video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+          allowFullScreen
+          loading="eager"
+          className="w-full h-full object-cover"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'scale(1)'
+          }}
+        ></iframe>
+      </div>
+      
+      {/* Content below video */}
+      <div className="container relative z-20 py-20">
+        <div className="max-w-4xl">
           {/* Modern stats or features */}
           <div className="flex flex-wrap gap-4 md:gap-8 pt-8 border-t border-white/20">
             <Link to="/filiales/growth-energy" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
