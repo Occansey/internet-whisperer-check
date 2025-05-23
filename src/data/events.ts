@@ -54,7 +54,7 @@ export const events: EventProps[] = [
     id: 5,
     title: "Divalto Tour",
     description: "🔄 Changement de date ! Le webinaire initialement prévu le 4 avril est décalé au 25 avril. Une semaine de plus pour s’inscrire et nous rejoindre !\n🎯 \[WEBINAIRE] Tarifs en hausse, marché instable ? Et si votre ERP devenait votre meilleur allié pour décider vite et bien ?\nDans un contexte économique incertain, Divalto Amérique du Nord et MFG Technologies vous invitent à un webinaire exclusif pour découvrir comment piloter votre compagnie avec plus de clarté et d’agilité.\n📅 Jeudi 25 avril de 12h à 13h (EST)\n📍 En ligne\nAu programme :\n✅ Comment un ERP centralise vos données pour prendre de meilleures décisions\n✅ Démo live : simulez l’impact d’une hausse tarifaire sur vos prix et votre rentabilité\n✅ Échanges en direct avec nos experts\nUne occasion concrète et accessible pour voir l’ERP en action, appliqué à vos enjeux du moment.\n🎫 Réservez votre place dès maintenant ! 👉 [https://lnkd.in/e\_RBqPc9](https://lnkd.in/e_RBqPc9)",
-    type: "spotlight",
+    type: "past",
     date: "25 avril 2025",
     time: "12:00",
     location: "En ligne",
@@ -63,10 +63,10 @@ export const events: EventProps[] = [
     tags: ["Digital","ERP"]
   },
   {
-    id: 5,
-    title: "Divalto Tour",
-    description: "🔄 Changement de date ! Le webinaire initialement prévu le 4 avril est décalé au 25 avril. Une semaine de plus pour s’inscrire et nous rejoindre !\n🎯 \[WEBINAIRE] Tarifs en hausse, marché instable ? Et si votre ERP devenait votre meilleur allié pour décider vite et bien ?\nDans un contexte économique incertain, Divalto Amérique du Nord et MFG Technologies vous invitent à un webinaire exclusif pour découvrir comment piloter votre compagnie avec plus de clarté et d’agilité.\n📅 Jeudi 25 avril de 12h à 13h (EST)\n📍 En ligne\nAu programme :\n✅ Comment un ERP centralise vos données pour prendre de meilleures décisions\n✅ Démo live : simulez l’impact d’une hausse tarifaire sur vos prix et votre rentabilité\n✅ Échanges en direct avec nos experts\nUne occasion concrète et accessible pour voir l’ERP en action, appliqué à vos enjeux du moment.\n🎫 Réservez votre place dès maintenant ! 👉 [https://lnkd.in/e\_RBqPc9](https://lnkd.in/e_RBqPc9)",
-    type: "spotlight",
+    id: 6,
+    title: "Web in Action Agora Alliance",
+    description: "'J’aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l’Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\nLaure Duhorane\n\n\n Êtes-vous intéressé.e par le développement des affaires entre le Canada et l'Afrique ?\n\nAlors ne manquez pas ce prochain hashtag#WebInAction : Canada - Afrique : Osez les opportunités d’affaires !\nStratégies et perspectives avec des expertes du terrain :\n- Laure D. de ASKING\n- Magatte Fall de Optimal Logistique Services\n- Hosanne Christelle Yatchou de Conseil d'Affaires des Femmes Afrique - Canada\nTrois profils, trois angles pour aborder le sujet !\nUn échange qui s’annonce riche en contenus !\n\n📅 le 29 avril 2025\n⏲️ dès 12h (heure de Montréal)\n\nWebinaire GRATUIT mais inscription OBLIGATOIRE car le nombre de place est limité. Une fois inscrit.e sur Eventbrite, un lien ZOOM vous sera envoyé avant le début du WebInAction.\n\nPour vous inscrire ➡️ https://lnkd.in/eU4MigVQ",
+    type: "past",
     date: "25 avril 2025",
     time: "12:00",
     location: "En ligne",

@@ -88,8 +88,16 @@ export const articles: ArticleProps[] = [
     image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
     tags: ["asking", "digital"],
     content: "Nous y sommes ! 🎉\n \n C’est officiel : MFG Technologies a rejoint ASKING, renforçant ainsi notre présence au Canada (Business, Politics & Sports).\n \n L'intégration de leur expertise en #ERP, avec des solutions comme #Divalto et #JobBOSS, complète parfaitement notre gamme de services pour répondre aux besoins variés de nos clients.\n \n Alain Normand, je suis vraiment enthousiaste à l’idée de ce #JointVenture, ainsi que de travailler avec une équipe aussi passionnée et partageant nos #valeurs est un réel plaisir.\n \n Je tiens également à exprimer ma gratitude à Nancy C. Normand, Laure D., Isabelle MAUBOUSSIN\n et à toute l'équipe qui s’est donnée corps et âme pour que cette #fusion puisse voir le jour.\n \n Un grand #MERCI à Adexia inc. pour leur soutien précieux,\n et accompagnement tout au long de ces 18 derniers mois vers cette nouvelle étape passionnante.\n \n MFG Technologies\n #NOUS\n #ENSEMBLE\n #MAINTENANT\n Bienvenue à bord!!!!\n \n Curieux de découvrir comment l’offre d’MFG peut transformer votre entreprise ?\n \n Cliquez ici : https://www.mfgtech.ca/fr/"
+  },
+  {
+    id: "crm-performance",
+    title: "CRM : Le Pillier Invisible de Votre Croissance Client",
+    date: "20 Février 2025",
+    description: "Un CRM efficace automatise, offre une vision claire et s’adapte à votre croissance – essentiel pour une stratégie client réussie.",
+    image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
+    tags: ["asking", "digital"],
+    content: "💡 Un CRM performant transforme chaque interaction client en levier de croissance !\n\nDans un monde où la relation client est essentielle, il est crucial d’avoir le bon outil pour structurer sa stratégie. Laure D., Directrice générale d’ASKING & membre de Claude, partage 3 éléments clés à considérer avant d’investir dans un CRM :\n\n✅ Automatisation : Gagnez du temps sur les tâches répétitives comme l’envoi d’e-mails ou la qualification des leads.\n\n📊 Vision globale : Assurez-vous d’avoir une vue claire sur votre pipeline de vente et vos opportunités.\n\n🔗 Scalabilité : Choisissez un CRM qui s’intègre à vos autres outils et grandit avec votre entreprise.\n\nMais surtout : un CRM n’est efficace que si votre stratégie est claire en amont ! 🏆 Quels sont vos critères pour choisir un CRM ? Vos expériences nous intéressent !"
   }
-  
 ];
 
 const getTagColor = (tag: string) => {
