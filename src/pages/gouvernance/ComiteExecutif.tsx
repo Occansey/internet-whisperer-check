@@ -27,21 +27,21 @@ const executives: ExecutiveMemberProps[] = [
     bio: "John Okoro dirige Growth Energy avec une expertise confirmée dans le secteur de l'énergie propre en Afrique.\n\nFort de plus de dix ans d'expérience dans plus de 20 pays d'Afrique subsaharienne et plus de 30 pays à travers le monde, il a dirigé des projets d'énergie propre avec des entreprises comme Vergnet SA et le Groupe CMR.\n\nCofondateur de Growth Energy et de Friends of Nigeria, il se consacre à la promotion de solutions d'énergie propre et à la promotion de la collaboration internationale.\n\nTitulaire d'un Master en Génie Énergétique de l'Université de Bordeaux, John est passionné par la connexion entre les personnes et les idées, et s'engage à promouvoir la transition énergétique durable en Afrique."
   },
   {
-    photo: "/lovable-uploads/569c9019-c86f-4124-bdb4-f518f161ac3e.png",
+    photo: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png",
     name: "Laure Duhorane",
     title: "Directrice de Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name",
     bio: "Laure Duhorane occupe le poste de Directrice Générale d'Asking et est experte en communication et transformation digitale. Elle accompagne les entreprises dans leur évolution stratégique et digitale.\n\nDiplômée d'un Master en Management et Communication d'Entreprise de l'EFAP Paris, son expertise en gestion et innovation lui permet d'aider les organisations à optimiser leur impact et à s'adapter aux défis du numérique.\n\nDepuis 2024, elle a rejoint la direction de MFG Technologies dans le cadre d'une acquisition. Elle y dirige des initiatives de transformation numérique, de recrutement et de développement commercial, aidant les organisations à rationaliser leurs processus et à atteindre la croissance.\n\nElle est également membre du comité exécutif de Solio Group, où elle fait avancer sa vision de stimuler la croissance socio-économique à travers les industries et les communautés africaines par la transition vers l'énergie renouvelable et durable.\n\nPassionnée par le développement durable, elle allie vision stratégique et expérience pratique pour créer des changements significatifs et favoriser la croissance à long terme des organisations."
   },
   {
-    photo: "/lovable-uploads/d322134e-2cfd-4bd7-b6e1-e8ef5660a7dd.png",
+    photo: "/lovable-uploads/7ae14399-4ddf-44fe-aec4-6a1c3a702edb.png",
     name: "Isabelle Mauboussin",
     title: "Directrice administratif et financier",
     linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card",
     bio: "Isabelle Mauboussin occupe le poste de responsable administrative et financière de Solio Group.\n\nDiplômée d'un DESS en Comptabilité et Finance de l'Université Paris-Dauphine, elle a travaillé plus de 30 ans en cabinet d'expertise comptable.\n\nCes expériences lui ont appris à analyser les états financiers de différentes structures, à les accompagner dans leurs projets de développement et à travailler en confiance dans le respect des normes comptables et fiscales.\n\nReconnue pour sa rigueur et son professionnalisme, elle aime relever de nouveaux défis et trouver des solutions innovantes pour stimuler la croissance et la performance des entreprises.\n\nSon objectif est de contribuer activement à la réussite de chaque projet, d'optimiser les processus administratifs et comptables pour en faire un outil de gestion au service du pilotage de la stratégie de Solio Group."
   },
   {
-    photo: "/lovable-uploads/77184715-9ac1-4778-9f64-2c3be77366eb.png",
+    photo: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png",
     name: "Alain Normand",
     title: "Directeur de Mfg Technologies",
     linkedin: "https://linkedin.com/",
