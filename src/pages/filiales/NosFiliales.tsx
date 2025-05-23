@@ -47,7 +47,7 @@ const filiales: FilialeProps[] = [
     id: "gem",
     name: "GEM E-Mobility",
     description: "GEM E-Mobility est une entreprise spécialisée dans les solutions de mobilité électrique. Nous concevons et déployons des infrastructures de recharge pour véhicules électriques adaptées aux besoins spécifiques des entreprises et collectivités.",
-    logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
+    logo: "/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png",
     coverImage: "/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png",
     keyActivities: ["Bornes de recharge", "Stations solaires", "Gestion de flotte électrique"],
     url: "/filiales/gem-e-mobility"
