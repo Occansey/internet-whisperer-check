@@ -12,6 +12,7 @@ const AskingPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
               <div className="mb-6">
+                <h1 className="text-4xl font-bold mb-6 text-solio-blue">Asking</h1>
                 <img src="/lovable-uploads/76a2eee6-9d7b-4170-8b0a-21ddc4c780fb.png" alt="Asking" className="h-24" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
