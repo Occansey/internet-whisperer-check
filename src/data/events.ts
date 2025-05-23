@@ -15,18 +15,6 @@ export const events: EventProps[] = [
     tags: ["Mobilité", "Innovation", "Afrique"]
   },
   {
-    id: 2,
-    title: "Webinaire : Transformer votre entreprise avec Divalto",
-    description: "MFG Technologies présente les avantages et fonctionnalités de l'ERP Divalto pour les entreprises manufacturières.",
-    type: "past",
-    date: "15 avril 2025",
-    time: "14:00 - 15:30",
-    location: "En ligne",
-    image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
-    link: "#",
-    tags: ["ERP", "Digital", "Industrie"]
-  },
-  {
     id: 3,
     title: "Energy Talks: L'avenir de l'énergie solaire en Afrique",
     description: "John Okoro, directeur de Growth Energy, partagera sa vision et son expertise sur les défis et opportunités du marché de l'énergie solaire en Afrique.",
