@@ -65,7 +65,7 @@ export const events: EventProps[] = [
   {
     id: 6,
     title: "Web in Action Agora Alliance",
-    description: "'J’aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l’Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\n\tLaure Duhorane",
+    description: "J’aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l’Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\n\tLaure Duhorane",
     type: "past",
     date: "25 avril 2025",
     time: "12:00 - 13:00",
