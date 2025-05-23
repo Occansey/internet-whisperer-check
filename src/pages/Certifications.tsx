@@ -39,7 +39,7 @@ const certifications: CertificationProps[] = [
     category: "digital"
   },
   {
-    title: "Divalto Gold Partner",
+    title: "Excellence Partner Divalto",
     organization: "Divalto",
     description: "Distinction attestant de notre niveau d'expertise élevé dans l'intégration et le déploiement des solutions ERP Divalto.",
     date: "Mars 2024",
