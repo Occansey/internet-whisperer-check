@@ -11,6 +11,7 @@ export const events: EventProps[] = [
     time: "9:00 - 18:00",
     location: "Nairobi, Kenya",
     image: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    imagePosition: "object-center",
     link: "#",
     tags: ["Mobilité", "Innovation", "Afrique"]
   },
@@ -23,6 +24,7 @@ export const events: EventProps[] = [
     time: "10:00 - 12:00",
     location: "Nairobi, Kenya",
     image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
+    imagePosition: "object-top",
     link: "https://www.linkedin.com/events/energytalks-unenjeumondial-desd7265321522360205312/theater/",
     tags: ["Énergie", "Développement durable", "Afrique"]
   },
@@ -35,6 +37,7 @@ export const events: EventProps[] = [
     time: "19:30",
     location: "BFM Business",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    imagePosition: "object-bottom",
     link: "https://www.bfmtv.com/economie/replay-emissions/objectif-croissance/evrard-havyarimana-growth-supply-growth-supply-accompagne-les-industriels-dans-le-parcours-de-leur-transition-energetique-26-07_VN-202307260366.html",
     tags: ["Médias", "Investissement", "Leadership"]
   }, 
@@ -47,18 +50,20 @@ export const events: EventProps[] = [
     time: "12:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    imagePosition: "object-left",
     link: "#",
     tags: ["Digital","ERP"]
   },
   {
     id: 6,
     title: "Web in Action Agora Alliance",
-    description: "J’aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l’Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\n\tLaure Duhorane",
+    description: "J'aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l'Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\n\tLaure Duhorane",
     type: "past",
     date: "25 avril 2025",
     time: "12:00 - 13:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
+    imagePosition: "object-right",
     link: "#",
     tags: ["Digital","ERP"]
   },
