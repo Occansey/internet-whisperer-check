@@ -281,7 +281,7 @@ const Culture = () => {
               <Link to="/carrieres/rejoignez-nous">Voir nos opportunités</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:bg-white hover:text-white">
-              <Link to="/carrieres/engagements">Nos engagements RH</Link>
+              <Link to="/carrieres/engagements-rh">Nos engagements RH</Link>
             </Button>
           </div>
         </div>
