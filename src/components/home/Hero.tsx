@@ -10,7 +10,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -63,7 +63,7 @@ const Hero = () => {
                 <span className="text-lg">→</span>
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-solio-blue bg-white hover:bg-solio-blue hover:text-white backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
+            <Button asChild size="lg" variant="outline" className="border-2 border-blue-400 text-blue-400 bg-white hover:bg-blue-400 hover:text-white backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
               <Link to="/contact" className="flex items-center gap-2">
                 Nous contacter
                 <span className="text-lg">✉</span>
@@ -73,22 +73,32 @@ const Hero = () => {
           
           {/* Modern stats or features */}
           <div className="flex flex-wrap gap-8 pt-8 border-t border-white/20">
-            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+            <Link to="/filiales/growth-energy" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-solio-yellow rounded-full"></div>
               <span className="text-gray-300">Transition énergétique</span>
-            </div>
-            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+            </Link>
+            <Link to="/filiales/asking" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
               <span className="text-gray-300">Transformation digitale</span>
-            </div>
-            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+            </Link>
+            <Link to="/filiales/gem-e-mobility" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
               <span className="text-gray-300">Impact durable</span>
-            </div>
+            </Link>
             <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
               <span className="text-gray-300">Présence internationale</span>
             </div>
+          </div>
+          
+          {/* Discover button below features */}
+          <div className="mt-8">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-3 rounded-full transition-all duration-300">
+              <Link to="/actualites/projets" className="flex items-center gap-2">
+                Découvrir
+                <span className="text-lg">→</span>
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
