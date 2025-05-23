@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -10,7 +9,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed&autoplay=1&loop=1&muted=1&controls=0&start=0"
             title="Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -100,14 +99,6 @@ const Hero = () => {
               </Link>
             </Button>
           </div>
-        </div>
-      </div>
-      
-      {/* Modern scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex flex-col items-center gap-2 text-white/70">
-          <span className="text-sm">Découvrir</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent"></div>
         </div>
       </div>
     </section>
