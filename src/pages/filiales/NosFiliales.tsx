@@ -41,7 +41,7 @@ const filiales: FilialeProps[] = [
     logo: "/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png",
     coverImage: "/lovable-uploads/c2744f62-d010-492a-8da1-204fbeeaecd7.png",
     keyActivities: ["Intégration Divalto", "Intégration JobBOSS", "Support technique et formation"],
-    url: "/filiales/mfg"
+    url: "/filiales/mfg-technologies"
   },
   {
     id: "gem",
