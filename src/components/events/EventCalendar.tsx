@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -163,15 +162,23 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                 key={date.toString()} 
                 className={`h-12 md:h-16 border-r border-b last:border-r-0 relative ${
                   isSameDay(date, new Date()) ? 'bg-blue-50' : ''
-                } ${hasEvents(date) ? 'hover:bg-gray-100 transition-colors' : ''}`}
+                } ${hasEvents(date) ? 'bg-green-50 hover:bg-green-100 transition-colors cursor-pointer' : ''}`}
+                onClick={() => {
+                  if (events.length === 1) {
+                    window.location.href = `/actualites/evenements/${events[0].id}`;
+                  } else if (events.length > 1) {
+                    // Show all events for this day
+                    console.log(`Multiple events on ${date}:`, events);
+                  }
+                }}
               >
-                <div className={`text-center p-1 ${hasEvents(date) ? 'cursor-pointer' : ''}`}>
+                <div className="text-center p-1">
                   <div className="flex flex-col items-center">
                     <span className={`inline-flex items-center justify-center w-5 h-5 md:w-6 md:h-6 rounded-full text-xs md:text-sm ${
                       isSameDay(date, new Date()) 
                         ? 'bg-solio-blue text-white' 
                         : hasEvents(date)
-                        ? 'font-medium' 
+                        ? 'font-medium text-green-700' 
                         : ''
                     }`}>
                       {date.getDate()}
@@ -180,9 +187,8 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                     {events.length > 0 && (
                       <div className="mt-0.5 md:mt-1 flex space-x-0.5 md:space-x-1 justify-center">
                         {events.slice(0, 2).map((event) => (
-                          <Link 
+                          <div 
                             key={event.id}
-                            to={`/actualites/evenements/${event.id}`}
                             className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${getEventColor(event.type)}`}
                           />
                         ))}
@@ -196,19 +202,11 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) =
                 
                 {events.length > 0 && (
                   <div className="absolute bottom-0.5 left-0.5 right-0.5 flex justify-center md:bottom-1 md:left-1 md:right-1">
-                    <div 
-                      className="text-xs text-solio-blue hover:underline cursor-pointer hidden md:block"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (events.length === 1) {
-                          onEventClick(events[0].id);
-                        }
-                      }}
-                    >
+                    <div className="text-xs text-green-700 hover:underline cursor-pointer hidden md:block">
                       {events.length === 1 ? (
-                        <Link to={`/actualites/evenements/${events[0].id}`} className="truncate block max-w-[60px] md:max-w-[80px]">
+                        <span className="truncate block max-w-[60px] md:max-w-[80px]">
                           {events[0].title}
-                        </Link>
+                        </span>
                       ) : (
                         <span>{events.length} événements</span>
                       )}

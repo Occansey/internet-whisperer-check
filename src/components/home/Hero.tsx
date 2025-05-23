@@ -1,46 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
 
 const Hero = () => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  
-  useEffect(() => {
-    // Add YouTube API
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    
-    // Initialize YouTube player when API is loaded
-    window.onYouTubeIframeAPIReady = () => {
-      if (!iframeRef.current) return;
-      
-      new window.YT.Player(iframeRef.current, {
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          rel: 0,
-          showinfo: 0,
-          mute: 1,
-          loop: 1,
-          playlist: 'etY08YozPHQ'
-        },
-        events: {
-          onReady: (event) => {
-            event.target.playVideo();
-            event.target.mute();
-          }
-        }
-      });
-    };
-    
-    return () => {
-      window.onYouTubeIframeAPIReady = undefined;
-    };
-  }, []);
-  
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white h-screen overflow-hidden">
       {/* Video background */}
@@ -48,14 +10,17 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-solio-blue/40 to-transparent z-10"></div>
         <div className="w-full h-full z-0">
           <iframe
-            ref={iframeRef}
-            id="youtube-player"
-            src="https://www.youtube-nocookie.com/embed/etY08YozPHQ?controls=0&rel=0&playsinline=1&cc_load_policy=0&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=etY08YozPHQ"
+            src="https://www.canva.com/design/DAGngVhDss0/f2sLq5z-8036fc9yBZ-TzA/watch?embed"
             title="Background Video"
             frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            className="w-full h-full object-cover"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
+            className="w-full h-full object-cover scale-150"
+            style={{
+              width: '100vw',
+              height: '100vh',
+              objectFit: 'cover'
+            }}
           ></iframe>
         </div>
       </div>
@@ -91,14 +56,14 @@ const Hero = () => {
             Solutions durables pour un avenir plus sobre, plus digitalisé et plus résilient
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6">
+          <div className="flex flex-col sm:flex-row gap-6 mb-12">
             <Button asChild size="lg" className="bg-gradient-to-r from-solio-yellow to-yellow-400 text-solio-blue hover:from-yellow-400 hover:to-solio-yellow font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <Link to="/presentation" className="flex items-center gap-2">
                 Découvrir le groupe
                 <span className="text-lg">→</span>
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:border-white/50">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-solio-blue bg-white hover:bg-solio-blue hover:text-white backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
               <Link to="/contact" className="flex items-center gap-2">
                 Nous contacter
                 <span className="text-lg">✉</span>
@@ -107,18 +72,22 @@ const Hero = () => {
           </div>
           
           {/* Modern stats or features */}
-          <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/20">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-wrap gap-8 pt-8 border-t border-white/20">
+            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-solio-yellow rounded-full"></div>
               <span className="text-gray-300">Transition énergétique</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
               <span className="text-gray-300">Transformation digitale</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
               <span className="text-gray-300">Impact durable</span>
+            </div>
+            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+              <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+              <span className="text-gray-300">Présence internationale</span>
             </div>
           </div>
         </div>
