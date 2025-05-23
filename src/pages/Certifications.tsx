@@ -45,14 +45,6 @@ const certifications: CertificationProps[] = [
     date: "Mars 2024",
     logo: "/lovable-uploads/72a3e16f-eef8-4571-9676-3625f9b8e68d.png",
     category: "industry"
-  },
-  {
-    title: "Microsoft Silver Partner",
-    organization: "Microsoft",
-    description: "Partenariat certifiant notre expertise dans les solutions Microsoft et notre capacité à déployer des solutions cloud Azure.",
-    date: "Janvier 2025",
-    logo: "/lovable-uploads/f6702924-a969-41e2-b595-dcc193b6b123.png",
-    category: "digital"
   }
 ];
 
