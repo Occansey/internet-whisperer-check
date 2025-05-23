@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -43,7 +42,7 @@ const Hero = () => {
                 <span className="text-lg">→</span>
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-2 border-blue-400 text-blue-400 bg-white hover:bg-blue-400 hover:text-white backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-white bg-solio-blue hover:bg-white hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
               <Link to="/contact" className="flex items-center gap-2">
                 Nous contacter
                 <span className="text-lg">✉</span>
@@ -91,10 +90,10 @@ const Hero = () => {
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
               <span className="text-gray-300">Impact durable</span>
             </Link>
-            <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+            <Link to="/presence" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
               <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
               <span className="text-gray-300">Présence internationale</span>
-            </div>
+            </Link>
           </div>
           
           {/* Discover button centered below features */}

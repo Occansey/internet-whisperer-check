@@ -24,6 +24,7 @@ import CommuniqueDetail from './components/articles/ArticleDetail';
 import EventDetail from './components/events/EventDetail';
 import ProjectDetail from './components/projects/ProjectDetail';
 import Media from './pages/Media';
+import Presence from './pages/Presence';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
         <Route path="/culture" element={<Culture />} />
         <Route path="/activites" element={<Activites />} />
         <Route path="/media" element={<Media />} />
+        <Route path="/presence" element={<Presence />} />
         {/* 404 catch-all route */}
         <Route path="*" element={<NotFound />} />
       </Routes>

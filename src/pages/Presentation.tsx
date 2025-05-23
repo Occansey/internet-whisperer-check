@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
@@ -95,7 +94,7 @@ const Presentation = () => {
           </Button>
         </div>
         <div 
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer"
           onClick={scrollToNextSection}
         >
           <ChevronDown size={32} />
