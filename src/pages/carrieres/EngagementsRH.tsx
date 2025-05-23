@@ -1,7 +1,8 @@
+
 import Layout from "@/components/layout/Layout";
-import HeroBanner from "@/components/common/HeroBanner";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, Heart, Lightbulb, Award, BookOpen, Globe2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, useEffect } from "react";
 
 interface EngagementProps {
   title: string;
@@ -180,12 +181,6 @@ const EngagementsRH = () => {
 
   return (
     <Layout>
-      <HeroBanner
-        title="Nos Engagements RH"
-        description="Découvrez nos valeurs et notre engagement envers nos collaborateurs pour créer un environnement de travail épanouissant."
-        glowColor="emerald"
-      />
-
       <div className="py-12 bg-gray-50">
         <div className="container">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-solio-blue">Nos Engagements RH</h1>
