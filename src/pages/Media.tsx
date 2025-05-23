@@ -33,6 +33,12 @@ const Media = () => {
       { src: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png", name: "Fumba Town Project", type: "image" },
       { src: "/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png", name: "Fumba Town Urban", type: "image" },
       { src: "/lovable-uploads/1f05b2ec-7797-4705-aaec-c37c54380da4.png", name: "Projet Tanzanie", type: "image" },
+      { src: "/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png", name: "Solio Group Logo", type: "image" },
+      { src: "/lovable-uploads/76a2eee6-9d7b-4170-8b0a-21ddc4c780fb.png", name: "Asking Logo", type: "image" },
+      { src: "/lovable-uploads/107cf1de-5dfb-449e-a260-1ec6bfd00547.png", name: "MFG Technologies Logo", type: "image" },
+      { src: "/lovable-uploads/27e49278-80d5-4a2f-ab40-e7bf18f9dc01.png", name: "MFG Technologies Team", type: "image" },
+      { src: "/lovable-uploads/6e91967e-5b5b-4ace-89ba-3a3289c82fdf.png", name: "Asking Team", type: "image" },
+      { src: "/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png", name: "Solio Group Favicon", type: "image" },
     ];
 
     setMedia(mediaItems);
