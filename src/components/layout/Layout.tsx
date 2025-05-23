@@ -31,6 +31,11 @@ const globalStyles = `
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  
+  /* Add more specific transitions for the Media page */
+  .media-page main {
+    animation-duration: 0.7s;
+  }
 `;
 
 interface LayoutProps {
@@ -51,6 +56,8 @@ const Layout = ({ children }: LayoutProps) => {
       document.body.classList.add('culture-page');
     } else if (pathname === '/activites') {
       document.body.classList.add('activites-page');
+    } else if (pathname === '/media') {
+      document.body.classList.add('media-page');
     }
   }, [pathname]);
 
@@ -58,7 +65,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="flex flex-col min-h-screen relative">
       <style>{globalStyles}</style>
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 page-transition">
         {children}
       </main>
       <Footer />

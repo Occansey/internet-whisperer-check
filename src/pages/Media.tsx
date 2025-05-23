@@ -38,6 +38,7 @@ const Media = () => {
         
         // This would typically be fetched from an API
         const mediaItems: MediaItem[] = [
+          // Original images
           { src: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png", name: "BFM TV Interview", type: "image" },
           { src: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png", name: "Mobilité Électrique", type: "image" },
           { src: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png", name: "Énergie Solaire", type: "image" },
@@ -58,7 +59,7 @@ const Media = () => {
           { src: "/lovable-uploads/211842b9-97a9-446d-84b2-d28c651fbaf2.png", name: "BFM TV Logo", type: "image" },
           { src: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png", name: "Divalto Logo", type: "image" },
           { src: "/lovable-uploads/05d22a06-afd6-4892-954e-e6bc8b3ddb79.png", name: "Sparklers", type: "image" },
-          // Adding additional images that may not have been included
+          // Additional images that may not have been included
           { src: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png", name: "Image Upload 1", type: "image" },
           { src: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png", name: "Image Upload 2", type: "image" },
           { src: "/lovable-uploads/0439a218-ba49-49d0-84c6-21386f99eb6e.png", name: "Image Upload 3", type: "image" },
@@ -98,6 +99,8 @@ const Media = () => {
           { src: "/lovable-uploads/f6702924-a969-41e2-b595-dcc193b6b123.png", name: "Image Upload 36", type: "image" },
           { src: "/lovable-uploads/fa8439f4-b009-4788-9afe-858ae27b64c1.png", name: "Image Upload 37", type: "image" },
           { src: "/lovable-uploads/ffacf645-b6fc-4cf4-8911-22ee9bbe49cb.png", name: "Image Upload 38", type: "image" },
+          // Adding newly uploaded image
+          { src: "/lovable-uploads/8e08f694-ea04-4afc-a9ce-cf13d17b0b7d.png", name: "New Upload", type: "image" },
         ];
         
         setMedia(mediaItems);
