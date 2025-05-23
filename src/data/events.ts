@@ -68,7 +68,7 @@ export const events: EventProps[] = [
     description: "'J’aurai le plaisir de participer à ce panel organisé par Agora Alliance pour discuter des ponts possibles entre le Canada et l’Afrique, notamment à travers le prisme de la stratégie numérique, de la hashtag#technologie, de la hashtag#durabilité et des relations commerciales transcontinentales.\nSi faire des affaires entre le Canada et l'Afrique t'intéresse, rejoins-nous le 29 avril à partir de midi (EST)\nLaure Duhorane\n\n\n Êtes-vous intéressé.e par le développement des affaires entre le Canada et l'Afrique ?\n\nAlors ne manquez pas ce prochain hashtag#WebInAction : Canada - Afrique : Osez les opportunités d’affaires !\nStratégies et perspectives avec des expertes du terrain :\n- Laure D. de ASKING\n- Magatte Fall de Optimal Logistique Services\n- Hosanne Christelle Yatchou de Conseil d'Affaires des Femmes Afrique - Canada\nTrois profils, trois angles pour aborder le sujet !\nUn échange qui s’annonce riche en contenus !\n\n📅 le 29 avril 2025\n⏲️ dès 12h (heure de Montréal)\n\nWebinaire GRATUIT mais inscription OBLIGATOIRE car le nombre de place est limité. Une fois inscrit.e sur Eventbrite, un lien ZOOM vous sera envoyé avant le début du WebInAction.\n\nPour vous inscrire ➡️ https://lnkd.in/eU4MigVQ",
     type: "past",
     date: "25 avril 2025",
-    time: "12:00",
+    time: "12:00 - 13:00",
     location: "En ligne",
     image: "/lovable-uploads/01a4ab22-92e2-42b9-8388-93e78df5d7d4.png",
     link: "#",
