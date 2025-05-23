@@ -40,7 +40,7 @@ const Presentation = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-                <Link to="/filiales/growth-energy">Découvrir nos filiales</Link>
+                <Link to="/nos-filiales">Découvrir nos filiales</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white text-solio-blue hover:text-white hover:bg-solio-blue/20">
                 <Link to="/contact">Nous contacter</Link>
