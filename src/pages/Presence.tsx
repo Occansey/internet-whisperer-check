@@ -1,9 +1,9 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Building, Globe } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import WorldMap from "@/components/maps/WorldMap";
 
 const Presence = () => {
   const locations = [
@@ -110,48 +110,9 @@ const Presence = () => {
             </p>
           </div>
           
-          {/* Simple Embedded Map */}
-          <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 mb-12">
-            <div className="relative w-full h-[500px] lg:h-[600px]">
-              <iframe
-                src="https://www.google.com/maps/d/embed?mid=1example&ehbc=2E312F"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Solio Group Office Locations"
-                className="rounded-3xl"
-              ></iframe>
-              
-              {/* Fallback for when map fails to load */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center rounded-3xl">
-                <div className="text-center p-8">
-                  <Globe className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-blue-800 mb-2">Carte Interactive</h3>
-                  <p className="text-blue-600 mb-6">Découvrez nos bureaux dans le monde entier</p>
-                  
-                  {/* Interactive Location Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                    {locations.map((location) => (
-                      <div
-                        key={location.id}
-                        className="bg-white/80 backdrop-blur-sm rounded-lg p-4 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                      >
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className={`w-3 h-3 ${location.color} rounded-full`}></div>
-                          <span className="font-medium text-sm text-blue-800">
-                            {location.name.split(',')[0]}
-                          </span>
-                        </div>
-                        <p className="text-xs text-blue-600">{location.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Professional World Map */}
+          <div className="mb-12">
+            <WorldMap locations={locations} />
           </div>
 
           {/* Location Quick Links */}
