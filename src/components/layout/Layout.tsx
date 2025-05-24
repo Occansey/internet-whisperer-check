@@ -1,8 +1,8 @@
-
 import { ReactNode, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
+import { useLenis } from "@/hooks/useLenis";
 
 // Add global CSS styles for specific buttons and animations
 const globalStyles = `
@@ -44,6 +44,9 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { pathname } = useLocation();
+  
+  // Initialize Lenis smooth scroll
+  useLenis();
   
   useEffect(() => {
     window.scrollTo(0, 0);
