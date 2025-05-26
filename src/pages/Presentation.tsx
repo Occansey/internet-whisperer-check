@@ -88,10 +88,10 @@ const Presentation = () => {
       >
         <div className="flex flex-col items-center space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
+            <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400 rounded-lg">
               <Link to="/nos-filiales">Découvrir nos filiales</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue">
+            <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue rounded-lg">
               <Link to="/contact">Nous contacter</Link>
             </Button>
           </div>
@@ -177,7 +177,7 @@ const Presentation = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <Card className="bg-yellow-50 border-none shadow-md mb-6">
+              <Card className="bg-yellow-50 border-none shadow-md mb-6 rounded-lg">
                 <CardContent className="pt-6">
                   <h3 className="text-2xl font-bold mb-2 flex items-center">
                     <span className="text-4xl mr-3">🔆</span>
@@ -189,7 +189,7 @@ const Presentation = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-blue-50 border-none shadow-md">
+              <Card className="bg-blue-50 border-none shadow-md rounded-lg">
                 <CardContent className="pt-6">
                   <h3 className="text-2xl font-bold mb-2 flex items-center">
                     <span className="text-4xl mr-3">🚀</span>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -96,42 +95,45 @@ export const articles: ArticleProps[] = [
 const Communiques = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
-  // Fonction pour convertir la date française en format ISO
+  // Function to convert date to French format
+  const formatFrenchDate = (dateStr: string): string => {
+    const months = [
+      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    ];
+    
+    const date = new Date(dateStr);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    
+    return `${day} ${month} ${year}`;
+  };
+
+  // Function to parse date properly for sorting
   const parseDate = (dateStr: string): Date => {
-    // Si c'est déjà au format ISO (YYYY-MM-DD), utiliser directement
-    if (dateStr.includes('-') && dateStr.split('-').length === 3) {
-      return new Date(dateStr);
-    }
-    
-    // Sinon, parser le format français "DD Mois YYYY"
-    const months: { [key: string]: number } = {
-      'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
-      'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
-    };
-    
-    const parts = dateStr.toLowerCase().split(' ');
-    if (parts.length === 3) {
-      const day = parseInt(parts[0]);
-      const month = months[parts[1]];
-      const year = parseInt(parts[2]);
-      
-      if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-        return new Date(year, month, day);
-      }
-    }
-    
-    // Fallback : retourner la date actuelle si parsing échoue
-    return new Date();
+    return new Date(dateStr);
   };
 
   const filteredAndSortedArticles = articles
-    .filter(article => 
-      searchTerm === "" || 
-      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-    )
+    .filter(article => {
+      const matchesSearch = searchTerm === "" || 
+        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesFilter = selectedFilter === "all" || 
+        article.tags.some(tag => {
+          if (selectedFilter === "asking") return tag === "asking";
+          if (selectedFilter === "growth-energy") return tag === "growth-energy" || tag === "gem";
+          if (selectedFilter === "solio") return tag === "solio";
+          return false;
+        });
+      
+      return matchesSearch && matchesFilter;
+    })
     .sort((a, b) => {
       const dateA = parseDate(a.date).getTime();
       const dateB = parseDate(b.date).getTime();
@@ -158,10 +160,40 @@ const Communiques = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
+            <div className="flex gap-2 flex-wrap">
+              <Button 
+                variant={selectedFilter === "all" ? "default" : "outline"}
+                onClick={() => setSelectedFilter("all")}
+                className="rounded-lg"
+              >
+                Tous
+              </Button>
+              <Button 
+                variant={selectedFilter === "asking" ? "default" : "outline"}
+                onClick={() => setSelectedFilter("asking")}
+                className="rounded-lg"
+              >
+                Asking
+              </Button>
+              <Button 
+                variant={selectedFilter === "growth-energy" ? "default" : "outline"}
+                onClick={() => setSelectedFilter("growth-energy")}
+                className="rounded-lg"
+              >
+                Growth Energy
+              </Button>
+              <Button 
+                variant={selectedFilter === "solio" ? "default" : "outline"}
+                onClick={() => setSelectedFilter("solio")}
+                className="rounded-lg"
+              >
+                Solio
+              </Button>
+            </div>
             <Button 
               variant="outline" 
               onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg"
             >
               {sortOrder === "desc" ? <SortDesc className="h-4 w-4" /> : <SortAsc className="h-4 w-4" />}
               Date {sortOrder === "desc" ? "(Plus récent)" : "(Plus ancien)"}
@@ -171,7 +203,7 @@ const Communiques = () => {
           {filteredAndSortedArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAndSortedArticles.map((article) => (
-                <Card key={article.id} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">
+                <Card key={article.id} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow rounded-lg">
                   <div className="h-48 overflow-hidden">
                     <img 
                       src={article.image} 
@@ -182,7 +214,7 @@ const Communiques = () => {
                   <CardHeader className="flex-initial">
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm text-gray-500">{article.date}</span>
+                      <span className="text-sm text-gray-500">{formatFrenchDate(article.date)}</span>
                     </div>
                     <CardTitle className="text-lg line-clamp-2">{article.title}</CardTitle>
                     <CardDescription className="line-clamp-3">{article.description}</CardDescription>
@@ -190,14 +222,14 @@ const Communiques = () => {
                   <CardContent className="flex-grow">
                     <div className="flex flex-wrap gap-2">
                       {article.tags.map((tag, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                        <Badge key={index} variant="outline" className="text-xs rounded-lg">
                           {tag}
                         </Badge>
                       ))}
                     </div>
                   </CardContent>
                   <CardFooter className="flex-initial">
-                    <Button variant="solio" className="w-full" asChild>
+                    <Button variant="solio" className="w-full rounded-lg" asChild>
                       <Link to={`/actualites/communiques/${article.id}`}>Lire l'article</Link>
                     </Button>
                   </CardFooter>

@@ -1,8 +1,35 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    // Force reload iframe on mobile to ensure autoplay works
+    const handleResize = () => {
+      if (window.innerWidth <= 768 && iframeRef.current) {
+        const src = iframeRef.current.src;
+        iframeRef.current.src = '';
+        setTimeout(() => {
+          if (iframeRef.current) {
+            iframeRef.current.src = src;
+          }
+        }, 100);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Initial check for mobile
+    if (window.innerWidth <= 768) {
+      handleResize();
+    }
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
       {/* Floating elements for modern touch - yellow for homepage */}
@@ -13,7 +40,7 @@ const Hero = () => {
       <div className="container relative z-20 py-20">
         <div className="max-w-4xl">
           {/* Modern badge - kept only on homepage */}
-          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm font-medium mb-8 animate-fade-in">
+          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 text-sm font-medium mb-8 animate-fade-in">
             <span className="w-2 h-2 bg-solio-yellow rounded-full mr-2 animate-pulse"></span>
             Innovation • Durabilité • Excellence
           </div>
@@ -37,13 +64,13 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 mb-12">
-            <Button asChild size="lg" className="bg-gradient-to-r from-solio-yellow to-yellow-400 text-solio-blue hover:from-yellow-400 hover:to-solio-yellow font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <Button asChild size="lg" className="bg-gradient-to-r from-solio-yellow to-yellow-400 text-solio-blue hover:from-yellow-400 hover:to-solio-yellow font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <Link to="/presentation" className="flex items-center gap-2">
                 Découvrir le groupe
                 <span className="text-lg">→</span>
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-white bg-solio-blue hover:bg-white hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-4 rounded-full transition-all duration-300">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-white bg-solio-blue hover:bg-white hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-4 rounded-lg transition-all duration-300">
               <Link to="/contact" className="flex items-center gap-2">
                 Nous contacter
                 <span className="text-lg">✉</span>
@@ -58,7 +85,8 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
         <iframe
-          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1&disablekb=1&fs=0&cc_load_policy=0&origin=window.location.origin"
+          ref={iframeRef}
+          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=1&disablekb=1&fs=0&cc_load_policy=0&title=0&byline=0&portrait=0"
           title="Background Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
@@ -99,7 +127,7 @@ const Hero = () => {
           
           {/* Discover button centered below features */}
           <div className="mt-8 flex justify-center md:justify-start">
-            <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-6 md:px-8 py-3 rounded-full transition-all duration-300">
+            <Button asChild size="lg" variant="outline" className="border-2 border-solio-yellow text-solio-yellow bg-transparent hover:bg-solio-yellow hover:text-solio-blue backdrop-blur-sm font-semibold px-6 md:px-8 py-3 rounded-lg transition-all duration-300">
               <Link to="/actualites/projets" className="flex items-center gap-2">
                 <span className="text-lg">→</span>
               </Link>
