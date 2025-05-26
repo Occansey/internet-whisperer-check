@@ -1,35 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
 
 const Hero = () => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  useEffect(() => {
-    // Force reload iframe on mobile to ensure autoplay works
-    const handleResize = () => {
-      if (window.innerWidth <= 768 && iframeRef.current) {
-        const src = iframeRef.current.src;
-        iframeRef.current.src = '';
-        setTimeout(() => {
-          if (iframeRef.current) {
-            iframeRef.current.src = src;
-          }
-        }, 100);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    
-    // Initial check for mobile
-    if (window.innerWidth <= 768) {
-      handleResize();
-    }
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
       {/* Floating elements for modern touch - yellow for homepage */}
@@ -85,7 +58,6 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
         <iframe
-          ref={iframeRef}
           src="https://www.youtube-nocookie.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&loop=1&playlist=qsLOG7ipHZg&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https%3A%2F%2Fgrowth-energy.fr"
           title="Background Video"
           frameBorder="0"
