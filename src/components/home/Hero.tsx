@@ -1,8 +1,75 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
+  const playerRef = useRef<HTMLDivElement>(null);
+  const playerInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Load YouTube IFrame API
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    }
+
+    // Define the callback function
+    window.onYouTubeIframeAPIReady = () => {
+      if (playerRef.current && window.YT && !playerInstanceRef.current) {
+        playerInstanceRef.current = new window.YT.Player(playerRef.current, {
+          videoId: 'qsLOG7ipHZg',
+          playerVars: {
+            autoplay: 1,
+            mute: 1,
+            controls: 0,
+            rel: 0,
+            modestbranding: 1,
+            playsinline: 1,
+            start: 2
+          },
+          events: {
+            onReady: function (event: any) {
+              event.target.playVideo();
+            },
+            onStateChange: function (event: any) {
+              if (event.data === window.YT?.PlayerState.PLAYING) {
+                const checkTime = setInterval(function () {
+                  if (playerInstanceRef.current) {
+                    const currentTime = playerInstanceRef.current.getCurrentTime();
+                    if (currentTime >= 7) {
+                      playerInstanceRef.current.seekTo(2);
+                    }
+                  }
+                }, 500);
+                
+                // Clear interval when video stops
+                if (event.data !== window.YT?.PlayerState.PLAYING) {
+                  clearInterval(checkTime);
+                }
+              }
+            }
+          }
+        });
+      }
+    };
+
+    // If API is already loaded, initialize immediately
+    if (window.YT && window.YT.Player) {
+      window.onYouTubeIframeAPIReady();
+    }
+
+    return () => {
+      // Cleanup
+      if (playerInstanceRef.current && playerInstanceRef.current.destroy) {
+        playerInstanceRef.current.destroy();
+        playerInstanceRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
       {/* Floating elements for modern touch - yellow for homepage */}
@@ -57,21 +124,14 @@ const Hero = () => {
       <div className="w-full h-96 md:h-[500px] overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/qsLOG7ipHZg?autoplay=1&controls=0&rel=0&playsinline=1&enablejsapi=1&mute=1&loop=1"
-          title="Background Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-          allowFullScreen
-          loading="eager"
-          className="w-full h-full object-cover"
+        <div 
+          ref={playerRef}
+          className="w-full h-full"
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
-            transform: 'scale(1)'
           }}
-        ></iframe>
+        ></div>
       </div>
       
       {/* Content below video */}

@@ -5,13 +5,18 @@ interface YTPlayer {
   mute(): void;
   unMute(): void;
   setLoop(loopPlaylists: boolean): void;
+  getCurrentTime(): number;
+  seekTo(seconds: number): void;
+  destroy(): void;
 }
 
 interface YTPlayerEvent {
   target: YTPlayer;
+  data: number;
 }
 
 interface YTPlayerOptions {
+  videoId: string;
   playerVars?: {
     autoplay?: number;
     controls?: number;
@@ -20,18 +25,27 @@ interface YTPlayerOptions {
     mute?: number;
     loop?: number;
     playlist?: string;
+    modestbranding?: number;
+    playsinline?: number;
+    start?: number;
   };
   events?: {
     onReady?: (event: YTPlayerEvent) => void;
-    onStateChange?: (event: any) => void;
+    onStateChange?: (event: YTPlayerEvent) => void;
   };
 }
 
 interface YT {
   Player: new (
-    element: HTMLIFrameElement | string,
+    element: HTMLElement | string,
     options: YTPlayerOptions
   ) => YTPlayer;
+  PlayerState: {
+    PLAYING: number;
+    PAUSED: number;
+    BUFFERING: number;
+    ENDED: number;
+  };
 }
 
 declare global {
