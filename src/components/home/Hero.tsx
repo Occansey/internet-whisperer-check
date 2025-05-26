@@ -28,7 +28,7 @@ const Hero = () => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            start: 2
+            start: 1
           },
           events: {
             onReady: function (event: any) {
