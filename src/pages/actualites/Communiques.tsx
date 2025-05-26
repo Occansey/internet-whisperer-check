@@ -1,11 +1,8 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
-import { Calendar, SortDesc, SortAsc } from "lucide-react";
+import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
+import CommuniquesList from "@/components/communiques/CommuniquesList";
 
 interface ArticleProps {
   id: string;
@@ -97,22 +94,6 @@ const Communiques = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
-  // Function to convert date to French format
-  const formatFrenchDate = (dateStr: string): string => {
-    const months = [
-      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-    ];
-    
-    const date = new Date(dateStr);
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    
-    return `${day} ${month} ${year}`;
-  };
-
-  // Function to parse date properly for sorting
   const parseDate = (dateStr: string): Date => {
     return new Date(dateStr);
   };
@@ -150,97 +131,16 @@ const Communiques = () => {
       
       <div className="py-12 bg-gray-50">
         <div className="container">
-          <div className="mb-8 flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Rechercher un article..."
-                className="w-full p-3 border rounded-lg"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="flex gap-2 flex-wrap">
-              <Button 
-                variant={selectedFilter === "all" ? "default" : "outline"}
-                onClick={() => setSelectedFilter("all")}
-                className="rounded-lg"
-              >
-                Tous
-              </Button>
-              <Button 
-                variant={selectedFilter === "asking" ? "default" : "outline"}
-                onClick={() => setSelectedFilter("asking")}
-                className="rounded-lg"
-              >
-                Asking
-              </Button>
-              <Button 
-                variant={selectedFilter === "growth-energy" ? "default" : "outline"}
-                onClick={() => setSelectedFilter("growth-energy")}
-                className="rounded-lg"
-              >
-                Growth Energy
-              </Button>
-              <Button 
-                variant={selectedFilter === "solio" ? "default" : "outline"}
-                onClick={() => setSelectedFilter("solio")}
-                className="rounded-lg"
-              >
-                Solio
-              </Button>
-            </div>
-            <Button 
-              variant="outline" 
-              onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
-              className="flex items-center gap-2 rounded-lg"
-            >
-              {sortOrder === "desc" ? <SortDesc className="h-4 w-4" /> : <SortAsc className="h-4 w-4" />}
-              Date {sortOrder === "desc" ? "(Plus récent)" : "(Plus ancien)"}
-            </Button>
-          </div>
+          <CommuniqueFilters 
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+          />
           
-          {filteredAndSortedArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAndSortedArticles.map((article) => (
-                <Card key={article.id} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow rounded-lg">
-                  <div className="h-48 overflow-hidden">
-                    <img 
-                      src={article.image} 
-                      alt={article.title} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardHeader className="flex-initial">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Calendar className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm text-gray-500">{formatFrenchDate(article.date)}</span>
-                    </div>
-                    <CardTitle className="text-lg line-clamp-2">{article.title}</CardTitle>
-                    <CardDescription className="line-clamp-3">{article.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <div className="flex flex-wrap gap-2">
-                      {article.tags.map((tag, index) => (
-                        <Badge key={index} variant="outline" className="text-xs rounded-lg">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex-initial">
-                    <Button variant="solio" className="w-full rounded-lg" asChild>
-                      <Link to={`/actualites/communiques/${article.id}`}>Lire l'article</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-gray-500">Aucun article trouvé pour votre recherche.</p>
-            </div>
-          )}
+          <CommuniquesList articles={filteredAndSortedArticles} />
         </div>
       </div>
     </Layout>
