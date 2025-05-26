@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
@@ -85,19 +86,21 @@ const Presentation = () => {
         description="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale."
         glowColor="blue"
       >
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-            <Link to="/nos-filiales">Découvrir nos filiales</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue">
-            <Link to="/contact">Nous contacter</Link>
-          </Button>
-        </div>
-        <div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer"
-          onClick={scrollToNextSection}
-        >
-          <ChevronDown size={32} />
+        <div className="flex flex-col items-center space-y-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
+              <Link to="/nos-filiales">Découvrir nos filiales</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue">
+              <Link to="/contact">Nous contacter</Link>
+            </Button>
+          </div>
+          <div 
+            className="mt-8 text-white animate-bounce cursor-pointer"
+            onClick={scrollToNextSection}
+          >
+            <ChevronDown size={32} />
+          </div>
         </div>
       </HeroBanner>
 

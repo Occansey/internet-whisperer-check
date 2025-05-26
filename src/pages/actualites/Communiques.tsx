@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -5,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Calendar, ArrowUpDown, SortDesc, SortAsc } from "lucide-react";
+import { Calendar, SortDesc, SortAsc } from "lucide-react";
 
 interface ArticleProps {
   id: string;
@@ -21,7 +22,7 @@ export const articles: ArticleProps[] = [
   {
     id: "growth-supply-becomes-solio",
     title: "Growth Supply becomes Solio Group: for a solar and connected future",
-    date: "12 Avril 2025",
+    date: "2025-04-12",
     description: "Six years ago, Growth Supply was born with an ambitious mission: accelerating the solar transition in Africa.",
     image: "/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png",
     tags: ["solio"],
@@ -30,7 +31,7 @@ export const articles: ArticleProps[] = [
   {
     id: "change-management",
     title: "Change management in the implementation of digital tools",
-    date: "14 Février 2025",
+    date: "2025-02-14",
     description: "Digital transformation projects often involve profound changes to processes, systems and ways of working within an organisation.",
     image: "/lovable-uploads/0d9f69ea-71eb-4bc3-be79-adcca4923d6c.png",
     tags: ["asking", "digital","testtag"],
@@ -39,7 +40,7 @@ export const articles: ArticleProps[] = [
   {
     id: "nairobi-office-opening",
     title: "Ouverture de notre nouveau siège social à Nairobi",
-    date: "05 Septembre 2024",
+    date: "2024-09-05",
     description: "Growth Energy s'installe à Nairobi, le centre économique de l'Afrique de l'Est, pour diriger ses opérations à travers l'Afrique.",
     image: "/lovable-uploads/e30ad55c-eb19-409d-b49a-f5d005911527.png",
     tags: ["growth-energy", "africa", "expansion"],
@@ -48,7 +49,7 @@ export const articles: ArticleProps[] = [
   {
     id: "fumba-town-partnership",
     title: "Un accord de partenariat clé pour un avenir durable",
-    date: "12 Mars 2025",
+    date: "2025-03-12",
     description: "Growth Energy signe un contrat avec CPS Africa pour déployer une centrale solaire à Fumba Town, Zanzibar.",
     image: "/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png",
     tags: ["growth-energy", "partnership", "solar", "africa"],
@@ -57,7 +58,7 @@ export const articles: ArticleProps[] = [
   {
     id: "provence-africa-connect-award",
     title: "Growth Energy remporte le prix Provence Africa Connect",
-    date: "05 Décembre 2024",
+    date: "2024-12-05",
     description: "Notre entreprise a été désignée Lauréat Export 2024 lors du prestigieux concours Provence Africa Connect.",
     image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     tags: ["growth-energy", "award", "africa"],
@@ -66,7 +67,7 @@ export const articles: ArticleProps[] = [
   {
     id: "gem-electric-charging-station",
     title: "Une station de recharge électrique 100% solaire au Burundi",
-    date: "20 Mars 2025",
+    date: "2025-03-20",
     description: "GEM E-mobility annonce la mise en place de la première borne de recharge électrique alimentée par l'énergie solaire au Burundi.",
     image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
     tags: ["gem", "e-mobility", "africa", "innovation"],
@@ -75,26 +76,54 @@ export const articles: ArticleProps[] = [
   {
     id: "mfg-rejoint-asking",
     title: "MFG technologies rejoint ASKING",
-    date: "24 Octobre 2024",
+    date: "2024-10-24",
     description: "MFG Technologies rejoint ASKING, renforçant l'offre ERP au Canada avec Divalto/JobBOSS. Une fusion stratégique après 18 mois.",
     image: "/lovable-uploads/b77cf79f-d356-421a-9ea3-721e54aa6b2f.png",
     tags: ["asking", "digital"],
-    content: "Nous y sommes ! 🎉\n \n C’est officiel : MFG Technologies a rejoint ASKING, renforçant ainsi notre présence au Canada (Business, Politics & Sports).\n \n L'intégration de leur expertise en #ERP, avec des solutions comme #Divalto et #JobBOSS, complète parfaitement notre gamme de services pour répondre aux besoins variés de nos clients.\n \n Alain Normand, je suis vraiment enthousiaste à l’idée de ce #JointVenture, ainsi que de travailler avec une équipe aussi passionnée et partageant nos #valeurs est un réel plaisir.\n \n Je tiens également à exprimer ma gratitude à Nancy C. Normand, Laure D., Isabelle MAUBOUSSIN\n et à toute l'équipe qui s’est donnée corps et âme pour que cette #fusion puisse voir le jour.\n \n Un grand #MERCI à Adexia inc. pour leur soutien précieux,\n et accompagnement tout au long de ces 18 derniers mois vers cette nouvelle étape passionnante.\n \n MFG Technologies\n #NOUS\n #ENSEMBLE\n #MAINTENANT\n Bienvenue à bord!!!!\n \n Curieux de découvrir comment l’offre d’MFG peut transformer votre entreprise ?\n \n Cliquez ici : https://www.mfgtech.ca/fr/"
+    content: "Nous y sommes ! 🎉\n \n C'est officiel : MFG Technologies a rejoint ASKING, renforçant ainsi notre présence au Canada (Business, Politics & Sports).\n \n L'intégration de leur expertise en #ERP, avec des solutions comme #Divalto et #JobBOSS, complète parfaitement notre gamme de services pour répondre aux besoins variés de nos clients.\n \n Alain Normand, je suis vraiment enthousiaste à l'idée de ce #JointVenture, ainsi que de travailler avec une équipe aussi passionnée et partageant nos #valeurs est un réel plaisir.\n \n Je tiens également à exprimer ma gratitude à Nancy C. Normand, Laure D., Isabelle MAUBOUSSIN\n et à toute l'équipe qui s'est donnée corps et âme pour que cette #fusion puisse voir le jour.\n \n Un grand #MERCI à Adexia inc. pour leur soutien précieux,\n et accompagnement tout au long de ces 18 derniers mois vers cette nouvelle étape passionnante.\n \n MFG Technologies\n #NOUS\n #ENSEMBLE\n #MAINTENANT\n Bienvenue à bord!!!!\n \n Curieux de découvrir comment l'offre d'MFG peut transformer votre entreprise ?\n \n Cliquez ici : https://www.mfgtech.ca/fr/"
   },
   {
     id: "crm-performance",
     title: "CRM : Le Pillier Invisible de Votre Croissance Client",
-    date: "20 Février 2025",
-    description: "Un CRM efficace automatise, offre une vision claire et s’adapte à votre croissance – essentiel pour une stratégie client réussie.",
+    date: "2025-02-20",
+    description: "Un CRM efficace automatise, offre une vision claire et s'adapte à votre croissance – essentiel pour une stratégie client réussie.",
     image: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     tags: ["asking", "digital"],
-    content: "💡 Un CRM performant transforme chaque interaction client en levier de croissance !\n\nDans un monde où la relation client est essentielle, il est crucial d’avoir le bon outil pour structurer sa stratégie. Laure D., Directrice générale d’ASKING & membre de Claude, partage 3 éléments clés à considérer avant d’investir dans un CRM :\n\n✅ Automatisation : Gagnez du temps sur les tâches répétitives comme l’envoi d’e-mails ou la qualification des leads.\n\n📊 Vision globale : Assurez-vous d’avoir une vue claire sur votre pipeline de vente et vos opportunités.\n\n🔗 Scalabilité : Choisissez un CRM qui s’intègre à vos autres outils et grandit avec votre entreprise.\n\nMais surtout : un CRM n’est efficace que si votre stratégie est claire en amont ! 🏆 Quels sont vos critères pour choisir un CRM ? Vos expériences nous intéressent !"
+    content: "💡 Un CRM performant transforme chaque interaction client en levier de croissance !\n\nDans un monde où la relation client est essentielle, il est crucial d'avoir le bon outil pour structurer sa stratégie. Laure D., Directrice générale d'ASKING & membre de Claude, partage 3 éléments clés à considérer avant d'investir dans un CRM :\n\n✅ Automatisation : Gagnez du temps sur les tâches répétitives comme l'envoi d'e-mails ou la qualification des leads.\n\n📊 Vision globale : Assurez-vous d'avoir une vue claire sur votre pipeline de vente et vos opportunités.\n\n🔗 Scalabilité : Choisissez un CRM qui s'intègre à vos autres outils et grandit avec votre entreprise.\n\nMais surtout : un CRM n'est efficace que si votre stratégie est claire en amont ! 🏆 Quels sont vos critères pour choisir un CRM ? Vos expériences nous intéressent !"
   }
 ];
 
 const Communiques = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  // Fonction pour convertir la date française en format ISO
+  const parseDate = (dateStr: string): Date => {
+    // Si c'est déjà au format ISO (YYYY-MM-DD), utiliser directement
+    if (dateStr.includes('-') && dateStr.split('-').length === 3) {
+      return new Date(dateStr);
+    }
+    
+    // Sinon, parser le format français "DD Mois YYYY"
+    const months: { [key: string]: number } = {
+      'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+      'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
+    };
+    
+    const parts = dateStr.toLowerCase().split(' ');
+    if (parts.length === 3) {
+      const day = parseInt(parts[0]);
+      const month = months[parts[1]];
+      const year = parseInt(parts[2]);
+      
+      if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+        return new Date(year, month, day);
+      }
+    }
+    
+    // Fallback : retourner la date actuelle si parsing échoue
+    return new Date();
+  };
 
   const filteredAndSortedArticles = articles
     .filter(article => 
@@ -104,8 +133,8 @@ const Communiques = () => {
       article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
     )
     .sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
+      const dateA = parseDate(a.date).getTime();
+      const dateB = parseDate(b.date).getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
 
@@ -135,7 +164,7 @@ const Communiques = () => {
               className="flex items-center gap-2"
             >
               {sortOrder === "desc" ? <SortDesc className="h-4 w-4" /> : <SortAsc className="h-4 w-4" />}
-              Date {sortOrder === "desc" ? "↓" : "↑"}
+              Date {sortOrder === "desc" ? "(Plus récent)" : "(Plus ancien)"}
             </Button>
           </div>
           
