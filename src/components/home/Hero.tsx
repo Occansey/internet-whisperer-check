@@ -39,7 +39,7 @@ const Hero = () => {
                 const checkTime = setInterval(function () {
                   if (playerInstanceRef.current) {
                     const currentTime = playerInstanceRef.current.getCurrentTime();
-                    if (currentTime >= 7) {
+                    if (currentTime >= 15) {
                       playerInstanceRef.current.seekTo(2);
                     }
                   }
