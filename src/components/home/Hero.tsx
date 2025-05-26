@@ -58,7 +58,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
         <iframe
-          src="https://www.youtube-nocookie.com/embed/qsLOG7ipHZg?autoplay=1&loop=1&playlist=qsLOG7ipHZg&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https%3A%2F%2Fgrowth-energy.fr&mute=1"
+          src="https://www.youtube-nocookie.com/embed/qsLOG7ipHZg?autoplay=1&loop=1&controls=0&rel=0&playsinline=1&enablejsapi=1&mute=1"
           title="Background Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
