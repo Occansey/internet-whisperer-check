@@ -7,7 +7,7 @@ import { EventType } from '@/types/events';
 interface EventTypeFiltersProps {
   selectedType: EventType | "all";
   onTypeChange: (type: EventType | "all") => void;
-  eventCounts: Record<EventType | "all", number>;
+  eventCounts: Record<string, number>;
 }
 
 const EventTypeFilters: React.FC<EventTypeFiltersProps> = ({
@@ -17,8 +17,8 @@ const EventTypeFilters: React.FC<EventTypeFiltersProps> = ({
 }) => {
   const filterOptions = [
     { key: "all" as const, label: "Tous les événements" },
-    { key: "upcoming" as const, label: "À venir" },
-    { key: "past" as const, label: "Passés" },
+    { key: "à venir" as const, label: "À venir" },
+    { key: "passé" as const, label: "Passés" },
     { key: "spotlight" as const, label: "Spotlight" }
   ];
 
@@ -34,7 +34,7 @@ const EventTypeFilters: React.FC<EventTypeFiltersProps> = ({
         >
           {option.label}
           <Badge variant="secondary" className="ml-1">
-            {eventCounts[option.key]}
+            {eventCounts[option.key] || 0}
           </Badge>
         </Button>
       ))}

@@ -47,11 +47,41 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const displayTime = wpEvent?.heure || event.time;
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
   const displayLocation = wpEvent?.lieu || event.location;
-  const eventType = wpEvent?.type || event.type;
+  const eventType = event.type; // Use the updated type from the event object
   const enSavoirPlusUrl = wpEvent?.en_savoir_plus;
 
   // Decode HTML entities in description
   const decodedDescription = decodeHtmlEntities(event.description);
+
+  const getEventTypeBadgeStyle = (type: string) => {
+    switch (type) {
+      case "à venir":
+      case "upcoming":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "spotlight":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "passé":
+      case "past":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
+    }
+  };
+
+  const getEventTypeLabel = (type: string) => {
+    switch (type) {
+      case "à venir":
+      case "upcoming":
+        return "À venir";
+      case "spotlight":
+        return "Spotlight";
+      case "passé":
+      case "past":
+        return "Passé";
+      default:
+        return type;
+    }
+  };
 
   return (
     <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg">
@@ -66,14 +96,8 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
       )}
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
-          <Badge variant="outline" className={
-            eventType === "upcoming" || eventType === "à venir" ? "bg-green-100 text-green-800" :
-            eventType === "spotlight" ? "bg-yellow-100 text-yellow-800" :
-            "bg-blue-100 text-blue-800"
-          }>
-            {eventType === "upcoming" || eventType === "à venir" ? "À venir" :
-             eventType === "spotlight" ? "Spotlight" :
-             "Passé"}
+          <Badge variant="outline" className={getEventTypeBadgeStyle(eventType)}>
+            {getEventTypeLabel(eventType)}
           </Badge>
           <div className="flex items-center space-x-2">
             <SocialShare title={event.title} compact={true} />

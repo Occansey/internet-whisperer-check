@@ -26,6 +26,58 @@ const transformWordPressToEventProps = (wpEvent: any): EventProps => {
   };
 };
 
+const parseEventDate = (dateStr: string): Date => {
+  if (!dateStr) return new Date();
+  
+  // Handle WordPress ACF date format (DD/MM/YYYY)
+  if (dateStr.includes('/')) {
+    const [day, month, year] = dateStr.split('/');
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  }
+  
+  // Handle French date format like "10 Juin 2025"
+  if (dateStr.includes('-')) {
+    dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
+  }
+  
+  try {
+    const parts = dateStr.split(' ');
+    
+    if (parts.length >= 3) {
+      const day = parseInt(parts[0]);
+      const monthName = parts[1];
+      const year = parseInt(parts[2]);
+      
+      const months: { [key: string]: number } = {
+        'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+        'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11,
+        'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
+        'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
+      };
+      
+      if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
+        return new Date(year, months[monthName], day);
+      }
+    }
+    
+    return new Date();
+  } catch (error) {
+    console.error('Error parsing date:', dateStr, error);
+    return new Date();
+  }
+};
+
+const determineEventType = (event: EventProps, wpEvent?: any): EventType => {
+  if (event.type === "spotlight") return "spotlight";
+  
+  const eventDate = parseEventDate(wpEvent?.date || event.date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  eventDate.setHours(0, 0, 0, 0);
+  
+  return eventDate >= today ? "à venir" : "passé";
+};
+
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"cards" | "calendar">("cards");
@@ -41,9 +93,16 @@ const Evenements = () => {
   };
 
   // Use WordPress events if available, otherwise fallback to static events
-  const eventsSource = wordpressEvents && wordpressEvents.length > 0 
+  const rawEventsSource = wordpressEvents && wordpressEvents.length > 0 
     ? wordpressEvents.map(transformWordPressToEventProps)
     : staticEvents;
+
+  // Update event types based on current date
+  const eventsSource = rawEventsSource.map(event => {
+    const wpEvent = wordpressEvents?.find(wp => wp.id === event.id);
+    const updatedType = determineEventType(event, wpEvent);
+    return { ...event, type: updatedType };
+  });
 
   const filterEvents = (searchFilter: string, typeFilter: EventType | "all"): EventProps[] => {
     let filtered = [...eventsSource];
@@ -69,8 +128,8 @@ const Evenements = () => {
   const getEventCounts = () => {
     return {
       all: eventsSource.length,
-      upcoming: eventsSource.filter(e => e.type === "à venir").length,
-      past: eventsSource.filter(e => e.type === "passé").length,
+      "à venir": eventsSource.filter(e => e.type === "à venir").length,
+      "passé": eventsSource.filter(e => e.type === "passé").length,
       spotlight: eventsSource.filter(e => e.type === "spotlight").length
     };
   };
