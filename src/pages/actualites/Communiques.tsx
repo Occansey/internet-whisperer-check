@@ -1,9 +1,10 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
-import { useWordPressPosts } from "@/hooks/useWordPress";
+import { useWordPressCommuniques } from "@/hooks/useWordPress";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface ArticleProps {
@@ -97,7 +98,7 @@ const Communiques = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   // Fetch WordPress posts for communiques
-  const { data: wordpressPosts, isLoading, error } = useWordPressPosts({
+  const { data: wordpressPosts, isLoading, error } = useWordPressCommuniques({
     per_page: 20,
   });
 
@@ -107,14 +108,28 @@ const Communiques = () => {
 
   // Transform WordPress posts to match the expected article format
   const transformWordPressPosts = (posts: any[]) => {
-    return posts.map(post => ({
-      id: post.slug || post.id.toString(),
-      title: post.title.rendered,
-      date: post.date.split('T')[0], // Extract date part
-      description: post.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
-      image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
-      tags: ['wordpress'] // You can enhance this to map actual WordPress categories/tags
-    }));
+    return posts.map(post => {
+      // Use ACF date if available, otherwise use post date
+      const postDate = post.acf?.date 
+        ? post.acf.date.replace(/\//g, '-') // Convert "20/03/2025" to "20-03-2025"
+        : post.date.split('T')[0];
+      
+      // Use ACF id if available, otherwise use slug or post id
+      const postId = post.acf?.id || post.slug || post.id.toString();
+      
+      // Use ACF tags if available, otherwise default to wordpress
+      const postTags = post.acf?.tags || ['wordpress'];
+
+      return {
+        id: postId,
+        title: post.title.rendered,
+        date: postDate,
+        description: post.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
+        image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+        tags: postTags,
+        content: post.content.rendered // Add content for detail view
+      };
+    });
   };
 
   // Use WordPress posts if available, otherwise fallback to static articles

@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
 import { articles } from '@/pages/actualites/Communiques';
 import WordPressContent from '@/components/wordpress/WordPressContent';
+import { useWordPressCommunique } from '@/hooks/useWordPress';
 
 const CommuniqueDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,24 +15,38 @@ const CommuniqueDetail = () => {
   const [article, setArticle] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Try to fetch from WordPress first
+  const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
+
   useEffect(() => {
     if (id) {
-      // Find the article from the articles list
-      const found = articles.find(a => a.id === id);
-      
-      if (found) {
-        setArticle(found);
+      // If WordPress data is available, use it
+      if (wpCommunique && !wpLoading) {
+        const transformedArticle = {
+          id: wpCommunique.acf?.id || wpCommunique.slug || wpCommunique.id.toString(),
+          title: wpCommunique.title.rendered,
+          date: wpCommunique.acf?.date?.replace(/\//g, '-') || wpCommunique.date.split('T')[0],
+          content: wpCommunique.content.rendered,
+          image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+          tags: wpCommunique.acf?.tags || ['wordpress']
+        };
+        setArticle(transformedArticle);
+        setLoading(false);
+      } 
+      // If WordPress fails or no data, try static articles
+      else if (wpError || (!wpLoading && !wpCommunique)) {
+        const found = articles.find(a => a.id === id);
+        setArticle(found || null);
+        setLoading(false);
       }
-      
-      setLoading(false);
     }
-  }, [id]);
+  }, [id, wpCommunique, wpLoading, wpError]);
 
   const handleBack = () => {
     navigate('/actualites/communiques');
   };
 
-  if (loading) {
+  if (loading || wpLoading) {
     return (
       <Layout>
         <div className="container py-12">
@@ -88,8 +103,13 @@ const CommuniqueDetail = () => {
               </div>
             )}
             
-            <div className="prose prose-lg max-w-none whitespace-pre-line">
-              {article.content}
+            <div className="prose prose-lg max-w-none">
+              {/* Use WordPressContent for HTML content, fallback to plain text */}
+              {article.content?.includes('<') ? (
+                <WordPressContent content={article.content} />
+              ) : (
+                <div className="whitespace-pre-line">{article.content}</div>
+              )}
             </div>
             
             {/* Social sharing section */}

@@ -17,6 +17,11 @@ export interface WordPressPost {
   featured_media: number;
   categories: number[];
   tags: number[];
+  acf?: {
+    date?: string;
+    id?: string;
+    tags?: string[];
+  };
   _embedded?: {
     'wp:featuredmedia'?: {
       source_url: string;
@@ -123,6 +128,22 @@ const wordpressApi = {
       return isNumeric ? response.data as WordPressPost : response.data[0] as WordPressPost;
     } catch (error) {
       console.error('Error fetching WordPress post:', error);
+      throw error;
+    }
+  },
+
+  // New method specifically for fetching a single communique
+  getCommunique: async (identifier: number | string) => {
+    try {
+      const isNumeric = !isNaN(Number(identifier));
+      const endpoint = isNumeric 
+        ? `https://api.solio-group.com/wp-json/wp/v2/communiques/${identifier}?_embed` 
+        : `https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`;
+      
+      const response = await axios.get(endpoint);
+      return isNumeric ? response.data as WordPressPost : response.data[0] as WordPressPost;
+    } catch (error) {
+      console.error('Error fetching WordPress communique:', error);
       throw error;
     }
   },
