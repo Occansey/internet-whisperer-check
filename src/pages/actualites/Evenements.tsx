@@ -69,7 +69,7 @@ const Evenements = () => {
   const getEventCounts = () => {
     return {
       all: eventsSource.length,
-      upcoming: eventsSource.filter(e => e.type === "upcoming").length,
+      upcoming: eventsSource.filter(e => e.type === "à venir").length,
       past: eventsSource.filter(e => e.type === "past").length,
       spotlight: eventsSource.filter(e => e.type === "spotlight").length
     };
