@@ -26,6 +26,19 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode 
   };
 
   const parseEventDate = (dateStr: string): Date => {
+    console.log('Parsing event date:', dateStr);
+    
+    if (!dateStr) return new Date();
+    
+    // Handle WordPress ACF date format (DD/MM/YYYY)
+    if (dateStr.includes('/')) {
+      const [day, month, year] = dateStr.split('/');
+      const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      console.log('Parsed ACF date:', parsedDate);
+      return parsedDate;
+    }
+    
+    // Handle French date format like "10 Juin 2025"
     if (dateStr.includes('-')) {
       dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
     }
@@ -46,23 +59,32 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode 
         };
         
         if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
-          return new Date(year, months[monthName], day);
+          const parsedDate = new Date(year, months[monthName], day);
+          console.log('Parsed French date:', parsedDate);
+          return parsedDate;
         }
       }
       
       return new Date();
     } catch (error) {
+      console.error('Error parsing date:', dateStr, error);
       return new Date();
     }
   };
 
   const isSameDay = (dateStr: string, date2: Date) => {
     const d1 = parseEventDate(dateStr);
-    return d1.toDateString() === date2.toDateString();
+    const result = d1.toDateString() === date2.toDateString();
+    console.log('Comparing dates:', dateStr, '->', d1.toDateString(), 'vs', date2.toDateString(), '=', result);
+    return result;
   };
 
   const filteredEvents = viewMode === "full" ? events : 
-    (selectedDate ? events.filter(event => isSameDay(event.date, selectedDate)) : events);
+    (selectedDate ? events.filter(event => {
+      const wpEvent = wpEvents.find(wp => wp.id === event.id);
+      const eventDate = wpEvent?.date || event.date;
+      return isSameDay(eventDate, selectedDate);
+    }) : events);
 
   return (
     <div className="space-y-6">

@@ -1,6 +1,6 @@
-
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { decodeHtmlEntities } from '@/utils/htmlUtils';
 
 const API_URL = "https://api.solio-group.com/wp-json/wp/v2/evenements?_embed";
 
@@ -16,6 +16,7 @@ interface WordPressEvent {
     lieu?: string;
     type?: string;
     en_savoir_plus?: string;
+    'heure-fin'?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: Array<{
@@ -35,6 +36,7 @@ interface TransformedEvent {
   type: string;
   image: string;
   en_savoir_plus?: string;
+  'heure-fin'?: string;
 }
 
 const formatDateToFrench = (dateStr: string): string => {
@@ -78,15 +80,16 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
   return response.data.map((event: WordPressEvent) => {
     const transformed = {
       id: event.id,
-      title: event.title.rendered,
-      excerpt: event.excerpt.rendered,
-      content: event.content.rendered,
+      title: decodeHtmlEntities(event.title.rendered),
+      excerpt: decodeHtmlEntities(event.excerpt.rendered),
+      content: decodeHtmlEntities(event.content.rendered),
       date: event.acf?.date || formatDateToFrench(event.date),
       heure: event.acf?.heure || '',
-      lieu: event.acf?.lieu || '',
+      lieu: decodeHtmlEntities(event.acf?.lieu || ''),
       type: event.acf?.type || '',
       image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
       en_savoir_plus: event.acf?.en_savoir_plus || '',
+      'heure-fin': event.acf?.['heure-fin'] || '',
     };
     
     console.log('Transformed event:', transformed);

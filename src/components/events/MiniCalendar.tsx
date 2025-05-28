@@ -13,6 +13,18 @@ interface MiniCalendarProps {
 }
 
 const parseEventDate = (dateStr: string): Date => {
+  console.log('MiniCalendar parsing date:', dateStr);
+  
+  if (!dateStr) return new Date();
+  
+  // Handle WordPress ACF date format (DD/MM/YYYY)
+  if (dateStr.includes('/')) {
+    const [day, month, year] = dateStr.split('/');
+    const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    console.log('MiniCalendar parsed ACF date:', parsedDate);
+    return parsedDate;
+  }
+  
   // Handle date ranges like "5-7 septembre 2025"
   if (dateStr.includes('-')) {
     dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
@@ -34,12 +46,15 @@ const parseEventDate = (dateStr: string): Date => {
       };
       
       if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
-        return new Date(year, months[monthName], day);
+        const parsedDate = new Date(year, months[monthName], day);
+        console.log('MiniCalendar parsed French date:', parsedDate);
+        return parsedDate;
       }
     }
     
     return new Date();
   } catch (error) {
+    console.error('MiniCalendar error parsing date:', dateStr, error);
     return new Date();
   }
 };
@@ -70,7 +85,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect, selec
   };
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm border-green-500 border-2">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center justify-between">
           <Button variant="ghost" size="icon" onClick={goToPreviousMonth}>
@@ -101,7 +116,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect, selec
             row: "flex w-full mt-2",
             cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
             day: `h-8 w-8 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md`,
-            day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+            day_selected: "bg-green-600 text-white hover:bg-green-700 hover:text-white focus:bg-green-600 focus:text-white border-2 border-green-800",
             day_today: "bg-accent text-accent-foreground",
             day_outside: "text-muted-foreground opacity-50",
             day_disabled: "text-muted-foreground opacity-50",
@@ -110,7 +125,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect, selec
             eventDay: isDayWithEvent
           }}
           modifiersClassNames={{
-            eventDay: "bg-blue-100 text-blue-800 border-2 border-blue-300 font-semibold hover:bg-blue-200"
+            eventDay: "bg-green-100 text-green-800 border-2 border-green-500 font-bold hover:bg-green-200"
           }}
         />
       </CardContent>

@@ -7,6 +7,7 @@ import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SocialShare } from "@/components/ui/social-share";
 import { EventProps } from "@/types/events";
+import { decodeHtmlEntities } from "@/utils/htmlUtils";
 
 interface EventCardProps {
   event: EventProps;
@@ -48,6 +49,9 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const displayLocation = wpEvent?.lieu || event.location;
   const eventType = wpEvent?.type || event.type;
   const enSavoirPlusUrl = wpEvent?.en_savoir_plus;
+
+  // Decode HTML entities in description
+  const decodedDescription = decodeHtmlEntities(event.description);
 
   return (
     <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg">
@@ -97,7 +101,7 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">{event.description}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">{decodedDescription}</p>
         {event.tags && (
           <div className="flex flex-wrap gap-2 mt-4">
             {event.tags.map((tag, index) => (
