@@ -1,11 +1,11 @@
-
-import { useState } from "react";
+import React, { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
 import { useWordPressCommuniques } from "@/hooks/useWordPress";
 import { Skeleton } from "@/components/ui/skeleton";
+import ScreenLoader from "@/components/ui/screen-loader";
 
 interface ArticleProps {
   id: string;
@@ -98,6 +98,7 @@ const Communiques = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [allArticles, setAllArticles] = useState<any[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
   const ARTICLES_PER_PAGE = 12;
 
   // Fetch WordPress posts for communiques
@@ -221,6 +222,7 @@ const Communiques = () => {
 
   return (
     <Layout>
+      {isNavigating && <ScreenLoader message="Chargement de l'article..." />}
       <HeroBanner 
         title="Communiqués"
         description="Découvrez les dernières actualités et communiqués de presse du groupe Solio."
@@ -258,7 +260,10 @@ const Communiques = () => {
               </p>
             </div>
           ) : (
-            <CommuniquesList articles={paginatedArticles} />
+            <CommuniquesList 
+              articles={paginatedArticles} 
+              onNavigate={() => setIsNavigating(true)}
+            />
           )}
         </div>
       </div>
