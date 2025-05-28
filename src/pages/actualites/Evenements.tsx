@@ -70,7 +70,7 @@ const Evenements = () => {
     return {
       all: eventsSource.length,
       upcoming: eventsSource.filter(e => e.type === "à venir").length,
-      past: eventsSource.filter(e => e.type === "past").length,
+      past: eventsSource.filter(e => e.type === "passé").length,
       spotlight: eventsSource.filter(e => e.type === "spotlight").length
     };
   };
