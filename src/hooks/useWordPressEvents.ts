@@ -15,6 +15,7 @@ interface WordPressEvent {
     heure?: string;
     lieu?: string;
     type?: string;
+    en_savoir_plus?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: Array<{
@@ -33,19 +34,29 @@ interface TransformedEvent {
   lieu: string;
   type: string;
   image: string;
+  en_savoir_plus?: string;
 }
 
 const formatDateToFrench = (dateStr: string): string => {
-  // Handle both ACF date format (10/06/2025) and ISO format (2025-05-28T21:12:44)
+  console.log('Hook formatting date:', dateStr);
+  
+  if (!dateStr) return '';
+  
   let date: Date;
   
   if (dateStr.includes('/')) {
-    // ACF date format: 10/06/2025
+    // ACF date format: 10/06/2025 or 22/03/2024
     const [day, month, year] = dateStr.split('/');
     date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
   } else {
     // ISO format or other
     date = new Date(dateStr);
+  }
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    console.error('Invalid date in hook:', dateStr);
+    return dateStr;
   }
   
   const months = [
@@ -62,17 +73,25 @@ const formatDateToFrench = (dateStr: string): string => {
 
 const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
   const response = await axios.get(API_URL);
-  return response.data.map((event: WordPressEvent) => ({
-    id: event.id,
-    title: event.title.rendered,
-    excerpt: event.excerpt.rendered,
-    content: event.content.rendered,
-    date: event.acf?.date ? formatDateToFrench(event.acf.date) : formatDateToFrench(event.date),
-    heure: event.acf?.heure || '',
-    lieu: event.acf?.lieu || '',
-    type: event.acf?.type || '',
-    image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-  }));
+  console.log('Raw WordPress events:', response.data);
+  
+  return response.data.map((event: WordPressEvent) => {
+    const transformed = {
+      id: event.id,
+      title: event.title.rendered,
+      excerpt: event.excerpt.rendered,
+      content: event.content.rendered,
+      date: event.acf?.date || formatDateToFrench(event.date),
+      heure: event.acf?.heure || '',
+      lieu: event.acf?.lieu || '',
+      type: event.acf?.type || '',
+      image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+      en_savoir_plus: event.acf?.en_savoir_plus || '',
+    };
+    
+    console.log('Transformed event:', transformed);
+    return transformed;
+  });
 };
 
 export const useWordPressEvents = () => {

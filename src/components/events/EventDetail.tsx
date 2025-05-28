@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink, CalendarPlus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SocialShare } from '@/components/ui/social-share';
 import { events } from '@/data/events';
@@ -12,16 +12,25 @@ import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const formatDateToFrench = (dateStr: string): string => {
-  // Handle both ACF date format (10/06/2025) and ISO format (2025-05-28T21:12:44)
+  console.log('Formatting date:', dateStr);
+  
+  if (!dateStr) return '';
+  
   let date: Date;
   
   if (dateStr.includes('/')) {
-    // ACF date format: 10/06/2025
+    // ACF date format: 10/06/2025 or 22/03/2024
     const [day, month, year] = dateStr.split('/');
     date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
   } else {
     // ISO format or other
     date = new Date(dateStr);
+  }
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    console.error('Invalid date:', dateStr);
+    return dateStr;
   }
   
   const months = [
@@ -36,31 +45,81 @@ const formatDateToFrench = (dateStr: string): string => {
   return `${day} ${month} ${year}`;
 };
 
+const generateCalendarUrl = (event: any) => {
+  if (!event.date || !event.time) return '';
+  
+  // Parse the date
+  let eventDate: Date;
+  if (event.date.includes('/')) {
+    const [day, month, year] = event.date.split('/');
+    eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  } else {
+    eventDate = new Date(event.date);
+  }
+  
+  // Parse time (assuming format like "10:00 am")
+  const timeMatch = event.time.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+  if (timeMatch) {
+    let hours = parseInt(timeMatch[1]);
+    const minutes = parseInt(timeMatch[2]);
+    const ampm = timeMatch[3].toLowerCase();
+    
+    if (ampm === 'pm' && hours !== 12) hours += 12;
+    if (ampm === 'am' && hours === 12) hours = 0;
+    
+    eventDate.setHours(hours, minutes, 0, 0);
+  }
+  
+  // Create end date (1 hour later by default)
+  const endDate = new Date(eventDate.getTime() + 60 * 60 * 1000);
+  
+  // Format for Google Calendar
+  const formatDateForCalendar = (date: Date) => {
+    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  };
+  
+  const startTime = formatDateForCalendar(eventDate);
+  const endTime = formatDateForCalendar(endDate);
+  
+  const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(event.description || '')}&location=${encodeURIComponent(event.location || '')}`;
+  
+  return calendarUrl;
+};
+
 const EventDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventProps | null>(null);
+  const [wpEvent, setWpEvent] = useState<any>(null);
   
   // Fetch WordPress events
   const { data: wordpressEvents, isLoading } = useWordPressEvents();
 
   useEffect(() => {
+    console.log('EventDetail useEffect - id:', id);
+    console.log('WordPressEvents:', wordpressEvents);
+    
     if (id) {
       const eventId = parseInt(id);
       
       // First try to find in WordPress events
       if (wordpressEvents && wordpressEvents.length > 0) {
-        const wpEvent = wordpressEvents.find(e => e.id === eventId);
-        if (wpEvent) {
+        const foundWpEvent = wordpressEvents.find(e => e.id === eventId);
+        console.log('Found WP event:', foundWpEvent);
+        
+        if (foundWpEvent) {
+          setWpEvent(foundWpEvent);
+          
+          // Transform for display
           const transformedEvent: EventProps = {
-            id: wpEvent.id,
-            title: wpEvent.title,
-            date: formatDateToFrench(wpEvent.date),
-            description: wpEvent.excerpt.replace(/<[^>]*>/g, ''),
-            location: wpEvent.lieu || 'Lieu à déterminer',
-            time: wpEvent.heure || '',
-            image: wpEvent.image || '/placeholder.svg',
-            type: (wpEvent.type as any) || 'upcoming',
+            id: foundWpEvent.id,
+            title: foundWpEvent.title,
+            date: foundWpEvent.date,
+            description: foundWpEvent.excerpt.replace(/<[^>]*>/g, ''),
+            location: foundWpEvent.lieu || 'Lieu à déterminer',
+            time: foundWpEvent.heure || '',
+            image: foundWpEvent.image || '/placeholder.svg',
+            type: (foundWpEvent.type as any) || 'upcoming',
             tags: []
           };
           setEvent(transformedEvent);
@@ -83,7 +142,7 @@ const EventDetail = () => {
   if (isLoading) {
     return (
       <Layout>
-        <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+        <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white dark:from-gray-800 dark:to-blue-800">
           <div className="container py-12">
             <Button 
               variant="ghost" 
@@ -129,9 +188,17 @@ const EventDetail = () => {
     );
   }
 
+  const calendarUrl = generateCalendarUrl({
+    title: event.title,
+    date: wpEvent?.date || event.date,
+    time: wpEvent?.heure || event.time,
+    description: event.description,
+    location: event.location
+  });
+
   return (
     <Layout>
-      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white dark:from-gray-800 dark:to-blue-800">
         <div className="container py-12">
           <div className="flex justify-between items-center mb-8">
             <Button 
@@ -148,12 +215,12 @@ const EventDetail = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <Badge variant="outline" className={
-                event.type === "upcoming" ? "bg-green-100 text-green-800" :
-                event.type === "spotlight" ? "bg-yellow-100 text-yellow-800" :
+                event.type === "upcoming" || wpEvent?.type === "à venir" ? "bg-green-100 text-green-800" :
+                event.type === "spotlight" || wpEvent?.type === "spotlight" ? "bg-yellow-100 text-yellow-800" :
                 "bg-blue-100 text-blue-800"
               }>
-                {event.type === "upcoming" ? "À venir" :
-                event.type === "spotlight" ? "Spotlight" :
+                {event.type === "upcoming" || wpEvent?.type === "à venir" ? "À venir" :
+                event.type === "spotlight" || wpEvent?.type === "spotlight" ? "Spotlight" :
                 "Passé"}
               </Badge>
               
@@ -162,33 +229,47 @@ const EventDetail = () => {
               <div className="flex flex-col space-y-3 mb-6">
                 <div className="flex items-center">
                   <Calendar className="mr-2 h-5 w-5" />
-                  <span>{event.date}</span>
+                  <span>{formatDateToFrench(wpEvent?.date || event.date)}</span>
                 </div>
                 
-                {event.time && (
+                {(event.time || wpEvent?.heure) && (
                   <div className="flex items-center">
                     <Clock className="mr-2 h-5 w-5" />
-                    <span>{event.time}</span>
+                    <span>{wpEvent?.heure || event.time}</span>
                   </div>
                 )}
                 
                 <div className="flex items-center">
                   <MapPin className="mr-2 h-5 w-5" />
-                  <span>{event.location}</span>
+                  <span>{wpEvent?.lieu || event.location}</span>
                 </div>
               </div>
 
-              {event.link && event.link.startsWith('http') && (
-                <Button 
-                  asChild
-                  className="bg-solio-yellow text-solio-blue hover:bg-yellow-400 mb-6"
-                >
-                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    En savoir plus
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+              <div className="flex flex-wrap gap-3 mb-6">
+                {calendarUrl && (
+                  <Button 
+                    asChild
+                    className="bg-blue-600 text-white hover:bg-blue-700"
+                  >
+                    <a href={calendarUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <CalendarPlus className="h-4 w-4" />
+                      Ajouter à votre calendrier
+                    </a>
+                  </Button>
+                )}
+
+                {(wpEvent?.en_savoir_plus || (event.link && event.link.startsWith('http'))) && (
+                  <Button 
+                    asChild
+                    className="bg-solio-yellow text-solio-blue hover:bg-yellow-400"
+                  >
+                    <a href={wpEvent?.en_savoir_plus || event.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      En savoir plus
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+              </div>
             </div>
             
             {event.image && (
@@ -206,7 +287,7 @@ const EventDetail = () => {
       
       <div className="container py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="prose prose-lg max-w-none mb-12">
+          <div className="prose prose-lg max-w-none mb-12 dark:prose-invert">
             <p>{event.description}</p>
             
             <p>Pour plus d'informations ou pour vous inscrire à cet événement, veuillez contacter notre équipe.</p>
