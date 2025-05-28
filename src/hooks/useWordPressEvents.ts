@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const API_URL = "https://solio-group.com/wp-json/wp/v2/evenements?_embed";
+const API_URL = "https://api.solio-group.com/wp-json/wp/v2/evenements?_embed";
 
 interface WordPressEvent {
   id: number;
