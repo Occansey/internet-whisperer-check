@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SocialShare } from "@/components/ui/social-share";
+import ColoredBadge from "@/components/ui/colored-badge";
 import { EventProps } from "@/types/events";
 import { decodeHtmlEntities } from "@/utils/htmlUtils";
 
@@ -47,8 +48,9 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const displayTime = wpEvent?.heure || event.time;
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
   const displayLocation = wpEvent?.lieu || event.location;
-  const eventType = event.type; // Use the updated type from the event object
+  const eventType = event.type;
   const enSavoirPlusUrl = wpEvent?.en_savoir_plus;
+  const tags = wpEvent?.tags || event.tags || [];
 
   // Decode HTML entities in description
   const decodedDescription = decodeHtmlEntities(event.description);
@@ -56,12 +58,10 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const getEventTypeBadgeStyle = (type: string) => {
     switch (type) {
       case "à venir":
-      case "upcoming":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "spotlight":
         return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "passé":
-      case "past":
+      case "passés":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
@@ -71,13 +71,11 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const getEventTypeLabel = (type: string) => {
     switch (type) {
       case "à venir":
-      case "upcoming":
         return "À venir";
       case "spotlight":
         return "Spotlight";
-      case "passé":
-      case "past":
-        return "Passé";
+      case "passés":
+        return "Passés";
       default:
         return type;
     }
@@ -103,8 +101,8 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
             <SocialShare title={event.title} compact={true} />
           </div>
         </div>
-        <CardTitle className="mt-2 text-lg leading-tight">{event.title}</CardTitle>
-        <CardDescription className="flex flex-col gap-2 text-sm">
+        <CardTitle className="mt-2 text-lg leading-tight text-gray-900 dark:text-white">{event.title}</CardTitle>
+        <CardDescription className="flex flex-col gap-2 text-sm text-gray-600 dark:text-gray-300">
           <div className="flex items-center">
             <Calendar className="mr-2 h-4 w-4 flex-shrink-0" />
             <span>{formatDateToFrench(displayDate)}</span>
@@ -126,12 +124,10 @@ const EventCard = ({ event, wpEvent }: EventCardProps) => {
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">{decodedDescription}</p>
-        {event.tags && (
+        {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-4">
-            {event.tags.map((tag, index) => (
-              <Badge key={index} variant="secondary" className="text-xs">
-                {tag}
-              </Badge>
+            {tags.map((tag: string, index: number) => (
+              <ColoredBadge key={index} tag={tag} />
             ))}
           </div>
         )}

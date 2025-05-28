@@ -1,3 +1,4 @@
+
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
@@ -17,6 +18,11 @@ interface WordPressEvent {
     type?: string;
     en_savoir_plus?: string;
     'heure-fin'?: string;
+    tags?: Array<{
+      term_id: number;
+      name: string;
+      slug: string;
+    }>;
   };
   _embedded?: {
     'wp:featuredmedia'?: Array<{
@@ -37,6 +43,7 @@ interface TransformedEvent {
   image: string;
   en_savoir_plus?: string;
   'heure-fin'?: string;
+  tags?: string[];
 }
 
 const formatDateToFrench = (dateStr: string): string => {
@@ -90,6 +97,7 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
       image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
       en_savoir_plus: event.acf?.en_savoir_plus || '',
       'heure-fin': event.acf?.['heure-fin'] || '',
+      tags: event.acf?.tags?.map(tag => tag.name) || [],
     };
     
     console.log('Transformed event:', transformed);
