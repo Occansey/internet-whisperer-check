@@ -7,8 +7,24 @@ import EventsList from "@/components/events/EventsList";
 import ViewModeToggle from "@/components/events/ViewModeToggle";
 import EventCalendar from "@/components/events/EventCalendar";
 import EventTypeFilters from "@/components/events/EventTypeFilters";
-import { events } from "@/data/events";
+import { events as staticEvents } from "@/data/events";
 import { EventProps, EventType } from '@/types/events';
+import { useWordPressEvents } from "@/hooks/useWordPressEvents";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const transformWordPressToEventProps = (wpEvent: any): EventProps => {
+  return {
+    id: wpEvent.id,
+    title: wpEvent.title,
+    date: wpEvent.date,
+    description: wpEvent.excerpt.replace(/<[^>]*>/g, ''), // Strip HTML
+    location: wpEvent.lieu || 'Lieu à déterminer',
+    time: wpEvent.heure || '',
+    image: wpEvent.image || '/placeholder.svg',
+    type: (wpEvent.type as EventType) || 'upcoming',
+    tags: []
+  };
+};
 
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,13 +32,21 @@ const Evenements = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedType, setSelectedType] = useState<EventType | "all">("all");
   
+  // Fetch WordPress events
+  const { data: wordpressEvents, isLoading, error } = useWordPressEvents();
+  
   const handleEventClick = (eventId: number) => {
     console.log(`Event clicked: ${eventId}`);
     // Navigate to event detail page or open modal
   };
 
+  // Use WordPress events if available, otherwise fallback to static events
+  const eventsSource = wordpressEvents && wordpressEvents.length > 0 
+    ? wordpressEvents.map(transformWordPressToEventProps)
+    : staticEvents;
+
   const filterEvents = (searchFilter: string, typeFilter: EventType | "all"): EventProps[] => {
-    let filtered = [...events];
+    let filtered = [...eventsSource];
     
     if (searchFilter) {
       const term = searchFilter.toLowerCase();
@@ -44,15 +68,40 @@ const Evenements = () => {
 
   const getEventCounts = () => {
     return {
-      all: events.length,
-      upcoming: events.filter(e => e.type === "upcoming").length,
-      past: events.filter(e => e.type === "past").length,
-      spotlight: events.filter(e => e.type === "spotlight").length
+      all: eventsSource.length,
+      upcoming: eventsSource.filter(e => e.type === "upcoming").length,
+      past: eventsSource.filter(e => e.type === "past").length,
+      spotlight: eventsSource.filter(e => e.type === "spotlight").length
     };
   };
 
   const filteredEvents = filterEvents(searchTerm, selectedType);
   const calendarFilteredEvents = filterEvents(searchTerm, "all");
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <HeroBanner 
+          title="Événements"
+          description="Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias."
+          glowColor="emerald"
+        />
+        <div className="py-12 bg-gray-50">
+          <div className="container">
+            <div className="space-y-4">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <Skeleton key={i} className="h-64 w-full" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -82,6 +131,14 @@ const Evenements = () => {
               onTypeChange={setSelectedType}
               eventCounts={getEventCounts()}
             />
+          )}
+
+          {error && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+              <p className="text-yellow-800">
+                Erreur lors du chargement des événements WordPress. Affichage des événements statiques.
+              </p>
+            </div>
           )}
           
           <div className="animate-fade-in">

@@ -6,7 +6,6 @@ import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
 import { useWordPressCommuniques } from "@/hooks/useWordPress";
 import { Skeleton } from "@/components/ui/skeleton";
-import ScreenLoader from "@/components/ui/screen-loader";
 
 interface ArticleProps {
   id: string;
@@ -97,20 +96,11 @@ const Communiques = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
-  const [showLoader, setShowLoader] = useState(true);
 
   // Fetch WordPress posts for communiques
   const { data: wordpressPosts, isLoading, error } = useWordPressCommuniques({
     per_page: 20,
   });
-
-  // Hide loader after initial load
-  React.useEffect(() => {
-    if (!isLoading) {
-      const timer = setTimeout(() => setShowLoader(false), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
 
   const parseDate = (dateStr: string): Date => {
     return new Date(dateStr);
@@ -196,8 +186,33 @@ const Communiques = () => {
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
 
-  if (showLoader || isLoading) {
-    return <ScreenLoader message="Chargement des communiqués..." />;
+  if (isLoading) {
+    return (
+      <Layout>
+        <HeroBanner 
+          title="Communiqués"
+          description="Découvrez les dernières actualités et communiqués de presse du groupe Solio."
+          glowColor="orange"
+        />
+        <div className="py-12 bg-gray-50">
+          <div className="container">
+            <div className="space-y-4 mb-8">
+              <Skeleton className="h-10 w-full" />
+              <div className="flex gap-4">
+                <Skeleton className="h-10 w-32" />
+                <Skeleton className="h-10 w-32" />
+                <Skeleton className="h-10 w-32" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 
   return (

@@ -8,48 +8,39 @@ interface ColoredBadgeProps {
 }
 
 const tagColors: Record<string, string> = {
-  // Existing tags
+  // Existing tags with new color palette
   "solio": "bg-solio-blue text-white",
-  "wordpress": "bg-blue-500 text-white",
-  "asking": "bg-purple-500 text-white",
-  "growth-energy": "bg-green-500 text-white",
-  "gem": "bg-emerald-500 text-white",
-  "mfg": "bg-orange-500 text-white",
-  "digital": "bg-cyan-500 text-white",
-  "testtag": "bg-pink-500 text-white",
-  "africa": "bg-yellow-600 text-white",
-  "expansion": "bg-indigo-500 text-white",
-  "partnership": "bg-teal-500 text-white",
-  "solar": "bg-amber-500 text-white",
-  "award": "bg-red-500 text-white",
-  "e-mobility": "bg-lime-500 text-white",
-  "innovation": "bg-violet-500 text-white",
+  "wordpress": "text-blue-800 border-blue-300" + " " + "bg-[rgb(219,234,254)]",
+  "asking": "text-purple-800 border-purple-300" + " " + "bg-[rgb(233,213,255)]",
+  "growth-energy": "text-green-800 border-green-300" + " " + "bg-[rgb(220,252,231)]",
+  "gem": "text-emerald-800 border-emerald-300" + " " + "bg-[rgb(220,252,231)]",
+  "mfg": "text-orange-800 border-orange-300" + " " + "bg-[rgb(255,237,213)]",
+  "digital": "text-cyan-800 border-cyan-300" + " " + "bg-[rgb(219,234,254)]",
+  "testtag": "text-pink-800 border-pink-300" + " " + "bg-[rgb(252,231,243)]",
+  "africa": "text-yellow-800 border-yellow-300" + " " + "bg-[rgb(236,252,203)]",
+  "expansion": "text-indigo-800 border-indigo-300" + " " + "bg-[rgb(219,234,254)]",
+  "partnership": "text-teal-800 border-teal-300" + " " + "bg-[rgb(220,252,231)]",
+  "solar": "text-amber-800 border-amber-300" + " " + "bg-[rgb(255,237,213)]",
+  "award": "text-red-800 border-red-300" + " " + "bg-[rgb(254,226,226)]",
+  "e-mobility": "text-lime-800 border-lime-300" + " " + "bg-[rgb(236,252,203)]",
+  "innovation": "text-violet-800 border-violet-300" + " " + "bg-[rgb(233,213,255)]",
 };
 
 const getRandomColor = () => {
   const colors = [
-    "bg-slate-500 text-white",
-    "bg-gray-500 text-white",
-    "bg-zinc-500 text-white",
-    "bg-neutral-500 text-white",
-    "bg-stone-500 text-white",
-    "bg-red-400 text-white",
-    "bg-orange-400 text-white",
-    "bg-amber-400 text-white",
-    "bg-yellow-500 text-white",
-    "bg-lime-400 text-white",
-    "bg-green-400 text-white",
-    "bg-emerald-400 text-white",
-    "bg-teal-400 text-white",
-    "bg-cyan-400 text-white",
-    "bg-sky-400 text-white",
-    "bg-blue-400 text-white",
-    "bg-indigo-400 text-white",
-    "bg-violet-400 text-white",
-    "bg-purple-400 text-white",
-    "bg-fuchsia-400 text-white",
-    "bg-pink-400 text-white",
-    "bg-rose-400 text-white",
+    "text-slate-800 border-slate-300 bg-[rgb(248,250,252)]",
+    "text-gray-800 border-gray-300 bg-[rgb(249,250,251)]",
+    "text-green-800 border-green-300 bg-[rgb(220,252,231)]",
+    "text-lime-800 border-lime-300 bg-[rgb(236,252,203)]",
+    "text-orange-800 border-orange-300 bg-[rgb(255,237,213)]",
+    "text-blue-800 border-blue-300 bg-[rgb(219,234,254)]",
+    "text-purple-800 border-purple-300 bg-[rgb(233,213,255)]",
+    "text-pink-800 border-pink-300 bg-[rgb(252,231,243)]",
+    "text-yellow-800 border-yellow-300 bg-[rgb(254,249,195)]",
+    "text-teal-800 border-teal-300 bg-[rgb(204,251,241)]",
+    "text-cyan-800 border-cyan-300 bg-[rgb(207,250,254)]",
+    "text-indigo-800 border-indigo-300 bg-[rgb(224,231,255)]",
+    "text-red-800 border-red-300 bg-[rgb(254,226,226)]",
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -60,7 +51,7 @@ const ColoredBadge: React.FC<ColoredBadgeProps> = ({ tag, variant = "outline", c
   // If the tag has a predefined color, use it
   if (tagColors[lowerTag]) {
     return (
-      <Badge className={`${tagColors[lowerTag]} ${className} text-xs rounded-lg`}>
+      <Badge className={`${tagColors[lowerTag]} border ${className} text-xs rounded-lg`}>
         {tag}
       </Badge>
     );
@@ -72,7 +63,7 @@ const ColoredBadge: React.FC<ColoredBadgeProps> = ({ tag, variant = "outline", c
   }
   
   return (
-    <Badge className={`${tagColors[lowerTag]} ${className} text-xs rounded-lg`}>
+    <Badge className={`${tagColors[lowerTag]} border ${className} text-xs rounded-lg`}>
       {tag}
     </Badge>
   );
