@@ -52,6 +52,7 @@ const Evenements = () => {
   };
 
   const filteredEvents = filterEvents(searchTerm, selectedType);
+  const calendarFilteredEvents = filterEvents(searchTerm, "all");
 
   return (
     <Layout>
@@ -88,14 +89,14 @@ const Evenements = () => {
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <div className="lg:col-span-1">
                   <MiniCalendar 
-                    events={filterEvents(searchTerm, "all")}
+                    events={calendarFilteredEvents}
                     onDateSelect={setSelectedDate}
                     selectedDate={selectedDate}
                   />
                 </div>
                 <div className="lg:col-span-3">
                   <EventCalendar 
-                    events={filterEvents(searchTerm, "all")} 
+                    events={calendarFilteredEvents} 
                     selectedDate={selectedDate}
                     onEventClick={handleEventClick} 
                   />
