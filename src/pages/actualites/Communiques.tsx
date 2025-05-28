@@ -106,16 +106,40 @@ const Communiques = () => {
     return new Date(dateStr);
   };
 
+  // Helper function to convert DD/MM/YYYY to YYYY-MM-DD
+  const convertACFDate = (acfDate: string): string => {
+    if (!acfDate) return '';
+    
+    // Handle DD/MM/YYYY format from ACF
+    if (acfDate.includes('/')) {
+      const parts = acfDate.split('/');
+      if (parts.length === 3) {
+        const [day, month, year] = parts;
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      }
+    }
+    
+    return acfDate;
+  };
+
   // Transform WordPress posts to match the expected article format
   const transformWordPressPosts = (posts: any[]) => {
     return posts.map(post => {
       // Use ACF date if available, otherwise use post date
-      const postDate = post.acf?.date 
-        ? post.acf.date.replace(/\//g, '-') // Convert "20/03/2025" to "20-03-2025"
-        : post.date.split('T')[0];
+      let postDate = '';
+      if (post.acf?.date) {
+        postDate = convertACFDate(post.acf.date);
+      } else {
+        postDate = post.date.split('T')[0];
+      }
       
-      // Use ACF id if available, otherwise use slug or post id
-      const postId = post.acf?.id || post.slug || post.id.toString();
+      // Use ACF id if available (cleaned), otherwise use slug or post id
+      let postId = '';
+      if (post.acf?.id) {
+        postId = post.acf.id.trim(); // Remove trailing spaces
+      } else {
+        postId = post.slug || post.id.toString();
+      }
       
       // Use ACF tags if available, otherwise default to wordpress
       const postTags = post.acf?.tags || ['wordpress'];

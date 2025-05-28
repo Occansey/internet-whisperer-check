@@ -18,14 +18,38 @@ const CommuniqueDetail = () => {
   // Try to fetch from WordPress first
   const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
 
+  // Helper function to convert DD/MM/YYYY to YYYY-MM-DD
+  const convertACFDate = (acfDate: string): string => {
+    if (!acfDate) return '';
+    
+    // Handle DD/MM/YYYY format from ACF
+    if (acfDate.includes('/')) {
+      const parts = acfDate.split('/');
+      if (parts.length === 3) {
+        const [day, month, year] = parts;
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      }
+    }
+    
+    return acfDate;
+  };
+
   useEffect(() => {
     if (id) {
       // If WordPress data is available, use it
       if (wpCommunique && !wpLoading) {
+        // Use ACF date if available, otherwise use post date
+        let postDate = '';
+        if (wpCommunique.acf?.date) {
+          postDate = convertACFDate(wpCommunique.acf.date);
+        } else {
+          postDate = wpCommunique.date.split('T')[0];
+        }
+        
         const transformedArticle = {
-          id: wpCommunique.acf?.id || wpCommunique.slug || wpCommunique.id.toString(),
+          id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
           title: wpCommunique.title.rendered,
-          date: wpCommunique.acf?.date?.replace(/\//g, '-') || wpCommunique.date.split('T')[0],
+          date: postDate,
           content: wpCommunique.content.rendered,
           image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
           tags: wpCommunique.acf?.tags || ['wordpress']

@@ -135,13 +135,39 @@ const wordpressApi = {
   // New method specifically for fetching a single communique
   getCommunique: async (identifier: number | string) => {
     try {
-      const isNumeric = !isNaN(Number(identifier));
-      const endpoint = isNumeric 
-        ? `https://api.solio-group.com/wp-json/wp/v2/communiques/${identifier}?_embed` 
-        : `https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`;
+      console.log('Fetching communique with identifier:', identifier);
       
-      const response = await axios.get(endpoint);
-      return isNumeric ? response.data as WordPressPost : response.data[0] as WordPressPost;
+      const isNumeric = !isNaN(Number(identifier));
+      
+      if (isNumeric) {
+        // Fetch by numeric ID
+        const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques/${identifier}?_embed`);
+        return response.data as WordPressPost;
+      } else {
+        // First try to fetch by slug
+        let response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`);
+        
+        if (response.data && response.data.length > 0) {
+          return response.data[0] as WordPressPost;
+        }
+        
+        // If not found by slug, try to fetch all posts and match by ACF ID
+        const allPostsResponse = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?_embed&per_page=100`);
+        
+        if (allPostsResponse.data && allPostsResponse.data.length > 0) {
+          // Find post by ACF ID (trimmed to handle spaces)
+          const foundPost = allPostsResponse.data.find((post: any) => 
+            post.acf?.id?.trim() === identifier
+          );
+          
+          if (foundPost) {
+            return foundPost as WordPressPost;
+          }
+        }
+        
+        // If still not found, throw an error
+        throw new Error(`Communique with identifier "${identifier}" not found`);
+      }
     } catch (error) {
       console.error('Error fetching WordPress communique:', error);
       throw error;
