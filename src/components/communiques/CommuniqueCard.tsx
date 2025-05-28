@@ -15,6 +15,7 @@ interface CommuniqueCardProps {
     image: string;
     tags: string[];
   };
+  onNavigate?: () => void;
 }
 
 const CommuniqueCard: React.FC<CommuniqueCardProps> = ({ article }) => {
