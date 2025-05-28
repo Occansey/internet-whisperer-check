@@ -61,7 +61,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" 
               alt="Solio Group Logo" 
-              className="h-20 w-auto object-contain"
+              className="h-32 w-auto object-contain"
             />
           </Link>
 

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -6,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink, CalendarPlus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SocialShare } from '@/components/ui/social-share';
+import ColoredBadge from '@/components/ui/colored-badge';
 import { events } from '@/data/events';
 import { EventProps } from '@/types/events';
 import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
+import { decodeHtmlEntities } from '@/utils/htmlUtils';
 
 const formatDateToFrench = (dateStr: string): string => {
   console.log('Formatting date:', dateStr);
@@ -154,12 +155,12 @@ const EventDetail = () => {
             id: foundWpEvent.id,
             title: foundWpEvent.title,
             date: foundWpEvent.date,
-            description: foundWpEvent.excerpt.replace(/<[^>]*>/g, ''),
+            description: decodeHtmlEntities(foundWpEvent.excerpt.replace(/<[^>]*>/g, '')),
             location: foundWpEvent.lieu || 'Lieu à déterminer',
             time: foundWpEvent.heure || '',
             image: foundWpEvent.image || '/placeholder.svg',
             type: (foundWpEvent.type as any) || 'upcoming',
-            tags: []
+            tags: foundWpEvent.tags || []
           };
           setEvent(transformedEvent);
           return;
@@ -227,6 +228,7 @@ const EventDetail = () => {
   }
 
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
+  const tags = wpEvent?.tags || event?.tags || [];
 
   return (
     <Layout>
@@ -280,6 +282,14 @@ const EventDetail = () => {
                 </div>
               </div>
 
+              {tags && tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {tags.map((tag: any, index: number) => (
+                    <ColoredBadge key={index} tag={typeof tag === 'string' ? tag : tag.name} />
+                  ))}
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-3 mb-6">
                 <Button 
                   onClick={() => downloadICS({
@@ -331,19 +341,6 @@ const EventDetail = () => {
             
             <p>Pour plus d'informations ou pour vous inscrire à cet événement, veuillez contacter notre équipe.</p>
           </div>
-          
-          {event.tags && (
-            <div className="mb-8">
-              <h3 className="text-lg font-medium mb-3">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {event.tags.map((tag, index) => (
-                  <Badge key={index} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
           
           <div className="mt-12 pt-6 border-t">
             <SocialShare title={event.title} className="justify-center" />
