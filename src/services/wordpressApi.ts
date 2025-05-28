@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * WordPress REST API service for integrating with WordPress as a headless CMS
  */
-const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
+const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2/communiques?_embed';
 const COMMUNIQUES_API_URL = "https://api.solio-group.com/wp-json/wp/v2/communiques?_embed";
 
 // Types for WordPress API responses
