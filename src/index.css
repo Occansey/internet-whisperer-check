@@ -205,17 +205,19 @@
     @apply text-white;
   }
   
-  /* Form elements */
+  /* Form elements - using direct CSS instead of @apply to avoid circular dependency */
   .dark input[type="text"],
   .dark input[type="email"],
   .dark textarea {
-    @apply bg-gray-800 text-white border-gray-600;
+    background-color: rgba(3, 15, 43, 0.8) !important;
+    color: white;
+    border-color: rgb(75 85 99);
   }
   
   .dark input[type="text"]::placeholder,
   .dark input[type="email"]::placeholder,
   .dark textarea::placeholder {
-    @apply text-gray-300;
+    color: rgb(209 213 219);
   }
   
   /* Event badge improvements */
@@ -256,7 +258,7 @@
     @apply text-gray-300;
   }
   
-  /* Testimonial cards */
+  /* Testimonial cards - using direct CSS to avoid circular dependency */
   .dark .bg-gray-800 {
     background: rgba(3, 15, 43, 0.8) !important;
     border: 1px solid rgba(59, 130, 246, 0.3);
