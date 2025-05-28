@@ -96,13 +96,10 @@ const Communiques = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [allArticles, setAllArticles] = useState<any[]>([]);
-  const ARTICLES_PER_PAGE = 12;
 
   // Fetch WordPress posts for communiques
   const { data: wordpressPosts, isLoading, error } = useWordPressCommuniques({
-    per_page: 50, // Fetch more posts to handle pagination
+    per_page: 20,
   });
 
   const parseDate = (dateStr: string): Date => {
@@ -123,18 +120,6 @@ const Communiques = () => {
     }
     
     return acfDate;
-  };
-
-  // Helper function to clean HTML entities
-  const cleanHtmlEntities = (text: string): string => {
-    return text
-      .replace(/&#8217;/g, "'")
-      .replace(/&hellip;/g, "...")
-      .replace(/&#8211;/g, "–")
-      .replace(/&#8212;/g, "—")
-      .replace(/&quot;/g, '"')
-      .replace(/&amp;/g, "&")
-      .replace(/<[^>]*>/g, ''); // Strip HTML tags
   };
 
   // Transform WordPress posts to match the expected article format
@@ -161,9 +146,9 @@ const Communiques = () => {
 
       return {
         id: postId,
-        title: cleanHtmlEntities(post.title.rendered),
+        title: post.title.rendered,
         date: postDate,
-        description: cleanHtmlEntities(post.excerpt.rendered),
+        description: post.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
         image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
         tags: postTags,
         content: post.content.rendered // Add content for detail view
@@ -186,10 +171,9 @@ const Communiques = () => {
       const matchesFilter = selectedFilter === "all" || 
         article.tags.some(tag => {
           if (selectedFilter === "asking") return tag === "asking";
-          if (selectedFilter === "growth-energy") return tag === "growth-energy";
-          if (selectedFilter === "gem") return tag === "gem";
-          if (selectedFilter === "mfg") return tag === "mfg";
+          if (selectedFilter === "growth-energy") return tag === "growth-energy" || tag === "gem";
           if (selectedFilter === "solio") return tag === "solio";
+          if (selectedFilter === "wordpress") return tag === "wordpress";
           return false;
         });
       
@@ -200,24 +184,6 @@ const Communiques = () => {
       const dateB = parseDate(b.date).getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
-
-  // Pagination logic
-  const totalArticles = filteredAndSortedArticles.length;
-  const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE);
-  const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
-  const paginatedArticles = filteredAndSortedArticles.slice(startIndex, startIndex + ARTICLES_PER_PAGE);
-  const hasMore = currentPage < totalPages;
-
-  const handleLoadMore = () => {
-    if (hasMore) {
-      setCurrentPage(prev => prev + 1);
-    }
-  };
-
-  // Reset pagination when filters change
-  React.useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedFilter, sortOrder]);
 
   return (
     <Layout>
@@ -236,9 +202,6 @@ const Communiques = () => {
             setSelectedFilter={setSelectedFilter}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
-            isLoadingMore={false}
           />
           
           {isLoading ? (
@@ -258,7 +221,7 @@ const Communiques = () => {
               </p>
             </div>
           ) : (
-            <CommuniquesList articles={paginatedArticles} />
+            <CommuniquesList articles={filteredAndSortedArticles} />
           )}
         </div>
       </div>
