@@ -110,7 +110,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect, selec
             eventDay: isDayWithEvent
           }}
           modifiersClassNames={{
-            eventDay: "bg-solio-blue text-white hover:bg-solio-blue/80"
+            eventDay: "bg-blue-100 text-blue-800 border-2 border-blue-300 font-semibold hover:bg-blue-200"
           }}
         />
       </CardContent>
