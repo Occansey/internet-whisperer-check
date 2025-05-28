@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import wordpressApi, { 
   WordPressPost, 
@@ -78,6 +77,18 @@ export const useWordPressMedia = (id: number) => {
     queryKey: ['wp-media', id],
     queryFn: () => wordpressApi.getMedia(id),
     enabled: !!id,
+  });
+};
+
+// New hook specifically for communiques
+export const useWordPressCommuniques = (params: {
+  page?: number;
+  per_page?: number;
+  search?: string;
+} = {}) => {
+  return useQuery({
+    queryKey: ['wp-communiques', params],
+    queryFn: () => wordpressApi.getCommuniques(params),
   });
 };
 

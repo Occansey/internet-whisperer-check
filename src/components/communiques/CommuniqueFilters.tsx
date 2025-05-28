@@ -40,6 +40,13 @@ const CommuniqueFilters: React.FC<CommuniqueFiltersProps> = ({
           Tous
         </Button>
         <Button 
+          variant={selectedFilter === "wordpress" ? "default" : "outline"}
+          onClick={() => setSelectedFilter("wordpress")}
+          className="rounded-lg"
+        >
+          WordPress
+        </Button>
+        <Button 
           variant={selectedFilter === "asking" ? "default" : "outline"}
           onClick={() => setSelectedFilter("asking")}
           className="rounded-lg"

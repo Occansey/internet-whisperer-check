@@ -4,6 +4,7 @@ import axios from 'axios';
  * WordPress REST API service for integrating with WordPress as a headless CMS
  */
 const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
+const COMMUNIQUES_API_URL = "https://your-wordpress-site.com/wp-json/wp/v2/communiques?_embed";
 
 // Types for WordPress API responses
 export interface WordPressPost {
@@ -90,6 +91,23 @@ const wordpressApi = {
       return response.data as WordPressPost[];
     } catch (error) {
       console.error('Error fetching WordPress posts:', error);
+      throw error;
+    }
+  },
+
+  // Specific method for fetching communiques
+  getCommuniques: async (params: { 
+    page?: number; 
+    per_page?: number;
+    search?: string;
+  } = {}) => {
+    try {
+      const response = await axios.get(COMMUNIQUES_API_URL, {
+        params,
+      });
+      return response.data as WordPressPost[];
+    } catch (error) {
+      console.error('Error fetching WordPress communiques:', error);
       throw error;
     }
   },

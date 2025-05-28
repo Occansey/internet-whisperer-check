@@ -3,6 +3,8 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
+import { useWordPressPosts } from "@/hooks/useWordPress";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ArticleProps {
   id: string;
@@ -94,11 +96,33 @@ const Communiques = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
+  // Fetch WordPress posts for communiques
+  const { data: wordpressPosts, isLoading, error } = useWordPressPosts({
+    per_page: 20,
+  });
+
   const parseDate = (dateStr: string): Date => {
     return new Date(dateStr);
   };
 
-  const filteredAndSortedArticles = articles
+  // Transform WordPress posts to match the expected article format
+  const transformWordPressPosts = (posts: any[]) => {
+    return posts.map(post => ({
+      id: post.slug || post.id.toString(),
+      title: post.title.rendered,
+      date: post.date.split('T')[0], // Extract date part
+      description: post.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
+      image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+      tags: ['wordpress'] // You can enhance this to map actual WordPress categories/tags
+    }));
+  };
+
+  // Use WordPress posts if available, otherwise fallback to static articles
+  const articlesSource = wordpressPosts && wordpressPosts.length > 0 
+    ? transformWordPressPosts(wordpressPosts)
+    : articles;
+
+  const filteredAndSortedArticles = articlesSource
     .filter(article => {
       const matchesSearch = searchTerm === "" || 
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -110,6 +134,7 @@ const Communiques = () => {
           if (selectedFilter === "asking") return tag === "asking";
           if (selectedFilter === "growth-energy") return tag === "growth-energy" || tag === "gem";
           if (selectedFilter === "solio") return tag === "solio";
+          if (selectedFilter === "wordpress") return tag === "wordpress";
           return false;
         });
       
@@ -140,7 +165,25 @@ const Communiques = () => {
             setSortOrder={setSortOrder}
           />
           
-          <CommuniquesList articles={filteredAndSortedArticles} />
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="space-y-4">
+                  <Skeleton className="h-48 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-500">
+                Erreur lors du chargement des articles. Affichage des articles statiques.
+              </p>
+            </div>
+          ) : (
+            <CommuniquesList articles={filteredAndSortedArticles} />
+          )}
         </div>
       </div>
     </Layout>
