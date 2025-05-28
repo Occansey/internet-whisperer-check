@@ -16,7 +16,7 @@ interface EventTypeFiltersProps {
 
 const EventTypeFilters = ({ selectedType, onTypeChange, eventCounts }: EventTypeFiltersProps) => {
   const filterOptions = [
-    { key: "all", label: "Tous", count: eventCounts.all },
+    { key: "all" as const, label: "Tous", count: eventCounts.all },
     { key: "à venir" as EventType, label: "À venir", count: eventCounts.upcoming },
     { key: "passé" as EventType, label: "Passés", count: eventCounts.past },
     { key: "spotlight" as EventType, label: "Spotlight", count: eventCounts.spotlight },
@@ -33,7 +33,7 @@ const EventTypeFilters = ({ selectedType, onTypeChange, eventCounts }: EventType
             flex items-center gap-2 transition-all duration-200
             ${selectedType === option.key 
               ? "bg-solio-blue text-white hover:bg-solio-blue/90 dark:bg-solio-yellow dark:text-solio-blue dark:hover:bg-solio-yellow/90" 
-              : "border-white/30 text-gray-700 dark:text-white hover:bg-white/20 dark:hover:bg-white/10"
+              : "border-white/30 text-white dark:text-white hover:bg-white/20 dark:hover:bg-white/10"
             }
           `}
         >
@@ -43,7 +43,7 @@ const EventTypeFilters = ({ selectedType, onTypeChange, eventCounts }: EventType
             className={`
               ${selectedType === option.key 
                 ? "bg-white/20 text-white dark:bg-solio-blue/20 dark:text-solio-blue" 
-                : "bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-white"
+                : "bg-white/10 text-white dark:bg-white/10 dark:text-white"
               }
             `}
           >
