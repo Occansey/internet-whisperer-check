@@ -11,8 +11,7 @@ const ScreenLoader: React.FC<ScreenLoaderProps> = ({ message = "Chargement..." }
       <div className="text-center">
         <div className="relative mb-8">
           <img 
-            src="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" 
-            alt="Solio Logo" 
+            src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png"            alt="Solio Logo" 
             className="w-24 h-24 mx-auto animate-pulse"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-solio-blue via-solio-yellow to-solio-blue bg-[length:200%_100%] animate-[shimmer_2s_ease-in-out_infinite] rounded-full opacity-30"></div>
