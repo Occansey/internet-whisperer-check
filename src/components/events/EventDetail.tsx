@@ -8,26 +8,113 @@ import { Badge } from '@/components/ui/badge';
 import { SocialShare } from '@/components/ui/social-share';
 import { events } from '@/data/events';
 import { EventProps } from '@/types/events';
+import { useWordPressEvents } from '@/hooks/useWordPressEvents';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const formatDateToFrench = (dateStr: string): string => {
+  // Handle both ACF date format (10/06/2025) and ISO format (2025-05-28T21:12:44)
+  let date: Date;
+  
+  if (dateStr.includes('/')) {
+    // ACF date format: 10/06/2025
+    const [day, month, year] = dateStr.split('/');
+    date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  } else {
+    // ISO format or other
+    date = new Date(dateStr);
+  }
+  
+  const months = [
+    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+  ];
+  
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  
+  return `${day} ${month} ${year}`;
+};
 
 const EventDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventProps | null>(null);
+  
+  // Fetch WordPress events
+  const { data: wordpressEvents, isLoading } = useWordPressEvents();
 
   useEffect(() => {
     if (id) {
       const eventId = parseInt(id);
-      const found = events.find(e => e.id === eventId);
       
-      if (found) {
-        setEvent(found);
+      // First try to find in WordPress events
+      if (wordpressEvents && wordpressEvents.length > 0) {
+        const wpEvent = wordpressEvents.find(e => e.id === eventId);
+        if (wpEvent) {
+          const transformedEvent: EventProps = {
+            id: wpEvent.id,
+            title: wpEvent.title,
+            date: formatDateToFrench(wpEvent.date),
+            description: wpEvent.excerpt.replace(/<[^>]*>/g, ''),
+            location: wpEvent.lieu || 'Lieu à déterminer',
+            time: wpEvent.heure || '',
+            image: wpEvent.image || '/placeholder.svg',
+            type: (wpEvent.type as any) || 'upcoming',
+            tags: []
+          };
+          setEvent(transformedEvent);
+          return;
+        }
+      }
+      
+      // Fallback to static events
+      const staticEvent = events.find(e => e.id === eventId);
+      if (staticEvent) {
+        setEvent(staticEvent);
       }
     }
-  }, [id]);
+  }, [id, wordpressEvents]);
 
   const handleBack = () => {
     navigate('/actualites/evenements');
   };
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+          <div className="container py-12">
+            <Button 
+              variant="ghost" 
+              className="flex items-center text-white hover:bg-white/10 mb-8" 
+              onClick={handleBack}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Retour
+            </Button>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <Skeleton className="h-6 w-20 mb-4" />
+                <Skeleton className="h-10 w-3/4 mb-6" />
+                <div className="space-y-3 mb-6">
+                  <Skeleton className="h-5 w-1/2" />
+                  <Skeleton className="h-5 w-1/3" />
+                  <Skeleton className="h-5 w-2/3" />
+                </div>
+              </div>
+              <Skeleton className="h-64 w-full rounded-lg" />
+            </div>
+          </div>
+        </div>
+        <div className="container py-12">
+          <div className="max-w-3xl mx-auto">
+            <Skeleton className="h-32 w-full" />
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (!event) {
     return (
@@ -36,7 +123,7 @@ const EventDetail = () => {
           <Button variant="outline" onClick={handleBack} className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" /> Retour aux événements
           </Button>
-          <p className="text-center">Événement non trouvé ou chargement en cours...</p>
+          <p className="text-center">Événement non trouvé.</p>
         </div>
       </Layout>
     );
@@ -122,7 +209,6 @@ const EventDetail = () => {
           <div className="prose prose-lg max-w-none mb-12">
             <p>{event.description}</p>
             
-            {/* Additional content would go here */}
             <p>Pour plus d'informations ou pour vous inscrire à cet événement, veuillez contacter notre équipe.</p>
           </div>
           
@@ -139,7 +225,6 @@ const EventDetail = () => {
             </div>
           )}
           
-          {/* Social sharing section */}
           <div className="mt-12 pt-6 border-t">
             <SocialShare title={event.title} className="justify-center" />
           </div>
