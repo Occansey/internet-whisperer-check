@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -6,6 +5,7 @@ import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
 import { useWordPressCommuniques } from "@/hooks/useWordPress";
 import { Skeleton } from "@/components/ui/skeleton";
+import ScreenLoader from "@/components/ui/screen-loader";
 
 interface ArticleProps {
   id: string;
@@ -78,7 +78,7 @@ export const articles: ArticleProps[] = [
     date: "2024-10-24",
     description: "MFG Technologies rejoint ASKING, renforçant l'offre ERP au Canada avec Divalto/JobBOSS. Une fusion stratégique après 18 mois.",
     image: "/lovable-uploads/b77cf79f-d356-421a-9ea3-721e54aa6b2f.png",
-    tags: ["asking", "digital"],
+    tags: ["asking", "mfg"],
     content: "Nous y sommes ! 🎉\n \n C'est officiel : MFG Technologies a rejoint ASKING, renforçant ainsi notre présence au Canada (Business, Politics & Sports).\n \n L'intégration de leur expertise en #ERP, avec des solutions comme #Divalto et #JobBOSS, complète parfaitement notre gamme de services pour répondre aux besoins variés de nos clients.\n \n Alain Normand, je suis vraiment enthousiaste à l'idée de ce #JointVenture, ainsi que de travailler avec une équipe aussi passionnée et partageant nos #valeurs est un réel plaisir.\n \n Je tiens également à exprimer ma gratitude à Nancy C. Normand, Laure D., Isabelle MAUBOUSSIN\n et à toute l'équipe qui s'est donnée corps et âme pour que cette #fusion puisse voir le jour.\n \n Un grand #MERCI à Adexia inc. pour leur soutien précieux,\n et accompagnement tout au long de ces 18 derniers mois vers cette nouvelle étape passionnante.\n \n MFG Technologies\n #NOUS\n #ENSEMBLE\n #MAINTENANT\n Bienvenue à bord!!!!\n \n Curieux de découvrir comment l'offre d'MFG peut transformer votre entreprise ?\n \n Cliquez ici : https://www.mfgtech.ca/fr/"
   },
   {
@@ -96,11 +96,20 @@ const Communiques = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [showLoader, setShowLoader] = useState(true);
 
   // Fetch WordPress posts for communiques
   const { data: wordpressPosts, isLoading, error } = useWordPressCommuniques({
     per_page: 20,
   });
+
+  // Hide loader after initial load
+  React.useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => setShowLoader(false), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
 
   const parseDate = (dateStr: string): Date => {
     return new Date(dateStr);
@@ -172,8 +181,9 @@ const Communiques = () => {
         article.tags.some(tag => {
           if (selectedFilter === "asking") return tag === "asking";
           if (selectedFilter === "growth-energy") return tag === "growth-energy" || tag === "gem";
+          if (selectedFilter === "gem") return tag === "gem";
+          if (selectedFilter === "mfg") return tag === "mfg";
           if (selectedFilter === "solio") return tag === "solio";
-          if (selectedFilter === "wordpress") return tag === "wordpress";
           return false;
         });
       
@@ -184,6 +194,10 @@ const Communiques = () => {
       const dateB = parseDate(b.date).getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
+
+  if (showLoader || isLoading) {
+    return <ScreenLoader message="Chargement des communiqués..." />;
+  }
 
   return (
     <Layout>
@@ -204,17 +218,7 @@ const Communiques = () => {
             setSortOrder={setSortOrder}
           />
           
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="h-48 w-full" />
-                  <Skeleton className="h-4 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              ))}
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="text-center py-12">
               <p className="text-lg text-gray-500">
                 Erreur lors du chargement des articles. Affichage des articles statiques.

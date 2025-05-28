@@ -8,12 +8,15 @@ import { SocialShare } from '@/components/ui/social-share';
 import { articles } from '@/pages/actualites/Communiques';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
+import ScreenLoader from '@/components/ui/screen-loader';
+import ColoredBadge from '@/components/ui/colored-badge';
 
 const CommuniqueDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [article, setArticle] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+  const [contentVisible, setContentVisible] = useState(false);
 
   // Try to fetch from WordPress first
   const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
@@ -56,12 +59,18 @@ const CommuniqueDetail = () => {
         };
         setArticle(transformedArticle);
         setLoading(false);
+        
+        // Add fade-in delay for smooth transition
+        setTimeout(() => setContentVisible(true), 100);
       } 
       // If WordPress fails or no data, try static articles
       else if (wpError || (!wpLoading && !wpCommunique)) {
         const found = articles.find(a => a.id === id);
         setArticle(found || null);
         setLoading(false);
+        
+        // Add fade-in delay for smooth transition
+        setTimeout(() => setContentVisible(true), 100);
       }
     }
   }, [id, wpCommunique, wpLoading, wpError]);
@@ -71,13 +80,7 @@ const CommuniqueDetail = () => {
   };
 
   if (loading || wpLoading) {
-    return (
-      <Layout>
-        <div className="container py-12">
-          <p className="text-center">Chargement de l'article...</p>
-        </div>
-      </Layout>
-    );
+    return <ScreenLoader message="Chargement de l'article..." />;
   }
 
   if (!article) {
@@ -95,7 +98,7 @@ const CommuniqueDetail = () => {
 
   return (
     <Layout>
-      <article className="bg-white">
+      <article className={`bg-white transition-opacity duration-500 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container py-12">
           <div className="flex justify-between items-center mb-8">
             <Button 
@@ -124,6 +127,16 @@ const CommuniqueDetail = () => {
                   alt={article.title} 
                   className="w-full h-full object-cover"
                 />
+              </div>
+            )}
+            
+            {article.tags && (
+              <div className="mb-8">
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag: string, index: number) => (
+                    <ColoredBadge key={index} tag={tag} />
+                  ))}
+                </div>
               </div>
             )}
             

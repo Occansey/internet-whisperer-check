@@ -43,8 +43,8 @@ export function SocialShare({ title, className = "", compact = false }: SocialSh
       <div className={`flex justify-end gap-2 ${className}`}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Share2 className="h-4 w-4" />
+            <Button variant="outline" size="icon" className="text-blue-600 hover:text-blue-700">
+              <Share2 className="h-4 w-4 text-blue-600" />
               <span className="sr-only">Partager</span>
             </Button>
           </DropdownMenuTrigger>

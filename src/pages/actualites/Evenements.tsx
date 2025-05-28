@@ -2,30 +2,28 @@
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import EventCalendar from "@/components/events/EventCalendar";
-import EventSearch from "@/components/events/EventSearch";
+import MiniCalendar from "@/components/events/MiniCalendar";
+import EventsList from "@/components/events/EventsList";
 import ViewModeToggle from "@/components/events/ViewModeToggle";
+import EventCalendar from "@/components/events/EventCalendar";
 import { events } from "@/data/events";
 import { EventProps } from '@/types/events';
 
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"cards" | "calendar">("cards");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   
   const handleEventClick = (eventId: number) => {
     console.log(`Event clicked: ${eventId}`);
     // Navigate to event detail page or open modal
   };
 
-  const filterEvents = (type: string) => {
+  const filterEvents = (searchFilter: string): EventProps[] => {
     let filtered = [...events];
     
-    if (type !== "all") {
-      filtered = filtered.filter(event => event.type === type);
-    }
-    
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
+    if (searchFilter) {
+      const term = searchFilter.toLowerCase();
       filtered = filtered.filter(
         event => 
           event.title.toLowerCase().includes(term) ||
@@ -37,6 +35,8 @@ const Evenements = () => {
     
     return filtered;
   };
+
+  const filteredEvents = filterEvents(searchTerm);
 
   return (
     <Layout>
@@ -62,9 +62,22 @@ const Evenements = () => {
           
           <div className="animate-fade-in">
             {viewMode === "calendar" ? (
-              <EventCalendar events={events} onEventClick={handleEventClick} />
+              <EventCalendar events={filteredEvents} onEventClick={handleEventClick} />
             ) : (
-              <EventSearch searchTerm={searchTerm} filterEvents={filterEvents} />
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div className="lg:col-span-1">
+                  <MiniCalendar 
+                    onDateSelect={setSelectedDate}
+                    selectedDate={selectedDate}
+                  />
+                </div>
+                <div className="lg:col-span-3">
+                  <EventsList 
+                    events={filteredEvents}
+                    selectedDate={selectedDate}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>
