@@ -183,7 +183,7 @@ const Communiques = () => {
           if (selectedFilter === "asking") return tag === "asking";
           if (selectedFilter === "growth-energy") return tag === "growth-energy" || tag === "gem";
           if (selectedFilter === "gem") return tag === "gem";
-          if (selectedFilter === "mfg") return tag === "mfg";
+          if (selectedFilter === "mfg") return tag === "mfg technologies";
           if (selectedFilter === "solio") return tag === "solio";
           return false;
         });
