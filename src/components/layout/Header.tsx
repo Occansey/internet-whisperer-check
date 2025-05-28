@@ -37,7 +37,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <Link to="/" className="flex items-center" onClick={closeAllDropdowns}>
             <img 
-              src="/lovable-uploads/fcbc8227-957f-4d1e-8871-724c4dc371a6.png" 
+              src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" 
               alt="Solio Group Logo" 
               className="header-logo"
             />
