@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -7,27 +8,33 @@ import { ThemeToggle } from '@/components/theme/theme-toggle';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdowns, setDropdowns] = useState({
+    accueil: false,
+    filiales: false,
+    gouvernance: false,
     actualites: false,
     carrieres: false,
-    gouvernance: false,
-    filiales: false,
   });
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
 
   const toggleDropdown = (dropdown: keyof typeof dropdowns) => {
     setDropdowns(prev => ({
-      ...prev,
+      accueil: false,
+      filiales: false,
+      gouvernance: false,
+      actualites: false,
+      carrieres: false,
       [dropdown]: !prev[dropdown]
     }));
   };
 
   const closeAllDropdowns = () => {
     setDropdowns({
+      accueil: false,
+      filiales: false,
+      gouvernance: false,
       actualites: false,
       carrieres: false,
-      gouvernance: false,
-      filiales: false,
     });
     setIsOpen(false);
   };
@@ -54,12 +61,87 @@ const Header = () => {
             <img 
               src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" 
               alt="Solio Group Logo" 
-              className="h-32 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8 items-center">
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('accueil')}>
+                Accueil
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.accueil ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.accueil && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/presentation" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Présentation
+                    </Link>
+                    <Link to="/mission-vision" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Mission & Vision
+                    </Link>
+                    <Link to="/certifications" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Certifications
+                    </Link>
+                    <Link to="/culture" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Culture
+                    </Link>
+                    <Link to="/activites" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Activités
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('filiales')}>
+                Filiales
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.filiales && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/nos-filiales" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Nos Filiales
+                    </Link>
+                    <Link to="/filiales/growth-energy" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Growth Energy
+                    </Link>
+                    <Link to="/filiales/asking" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Asking
+                    </Link>
+                    <Link to="/filiales/mfg-technologies" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      MFG Technologies
+                    </Link>
+                    <Link to="/filiales/gem-e-mobility" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      GEM E-Mobility
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('gouvernance')}>
+                Gouvernance
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.gouvernance && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/gouvernance/direction" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Direction
+                    </Link>
+                    <Link to="/gouvernance/comite-executif" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Comité Exécutif
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="relative group">
               <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('actualites')}>
                 Actualités
@@ -100,53 +182,6 @@ const Header = () => {
                 </div>
               )}
             </div>
-
-            <div className="relative group">
-              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('gouvernance')}>
-                Gouvernance
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
-              </Button>
-              {dropdowns.gouvernance && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
-                  <div className="py-1" role="none">
-                    <Link to="/gouvernance/direction" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Direction
-                    </Link>
-                    <Link to="/gouvernance/comite-executif" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Comité Exécutif
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="relative group">
-              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('filiales')}>
-                Filiales
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
-              </Button>
-              {dropdowns.filiales && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
-                  <div className="py-1" role="none">
-                    <Link to="/nos-filiales" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Nos Filiales
-                    </Link>
-                    <Link to="/filiales/growth-energy" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Growth Energy
-                    </Link>
-                    <Link to="/filiales/asking" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Asking
-                    </Link>
-                    <Link to="/filiales/mfg-technologies" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      MFG Technologies
-                    </Link>
-                    <Link to="/filiales/gem-e-mobility" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      GEM E-Mobility
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
             
             <div className="flex items-center space-x-4">
               <ThemeToggle />
@@ -180,10 +215,51 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="lg:hidden py-4 border-t dark:border-gray-700">
-            <Link to="/presentation" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Présentation</Link>
-            <Link to="/mission-vision" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Mission & Vision</Link>
-            <Link to="/certifications" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Certifications</Link>
-            
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('accueil')}>
+                Accueil
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.accueil ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.accueil && (
+                <div className="ml-4">
+                  <Link to="/presentation" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Présentation</Link>
+                  <Link to="/mission-vision" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Mission & Vision</Link>
+                  <Link to="/certifications" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Certifications</Link>
+                  <Link to="/culture" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Culture</Link>
+                  <Link to="/activites" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Activités</Link>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('filiales')}>
+                Filiales
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.filiales && (
+                <div className="ml-4">
+                  <Link to="/nos-filiales" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos Filiales</Link>
+                  <Link to="/filiales/growth-energy" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Growth Energy</Link>
+                  <Link to="/filiales/asking" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Asking</Link>
+                  <Link to="/filiales/mfg-technologies" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>MFG Technologies</Link>
+                  <Link to="/filiales/gem-e-mobility" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>GEM E-Mobility</Link>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('gouvernance')}>
+                Gouvernance
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.gouvernance && (
+                <div className="ml-4">
+                  <Link to="/gouvernance/direction" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Direction</Link>
+                  <Link to="/gouvernance/comite-executif" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Comité Exécutif</Link>
+                </div>
+              )}
+            </div>
+
             <div className="relative">
               <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('actualites')}>
                 Actualités
@@ -207,35 +283,6 @@ const Header = () => {
                 <div className="ml-4">
                   <Link to="/carrieres/engagements-rh" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos engagements RH</Link>
                   <Link to="/carrieres/rejoignez-nous" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Rejoignez-nous</Link>
-                </div>
-              )}
-            </div>
-
-            <div className="relative">
-              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('gouvernance')}>
-                Gouvernance
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
-              </Button>
-              {dropdowns.gouvernance && (
-                <div className="ml-4">
-                  <Link to="/gouvernance/direction" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Direction</Link>
-                  <Link to="/gouvernance/comite-executif" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Comité Exécutif</Link>
-                </div>
-              )}
-            </div>
-
-            <div className="relative">
-              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('filiales')}>
-                Filiales
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
-              </Button>
-              {dropdowns.filiales && (
-                <div className="ml-4">
-                  <Link to="/nos-filiales" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos Filiales</Link>
-                  <Link to="/filiales/growth-energy" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Growth Energy</Link>
-                  <Link to="/filiales/asking" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Asking</Link>
-                  <Link to="/filiales/mfg-technologies" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>MFG Technologies</Link>
-                  <Link to="/filiales/gem-e-mobility" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>GEM E-Mobility</Link>
                 </div>
               )}
             </div>

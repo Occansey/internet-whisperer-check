@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -85,7 +86,7 @@ const Evenements = () => {
           description="Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias."
           glowColor="emerald"
         />
-        <div className="py-12 bg-gray-50">
+        <div className="py-12 bg-gray-50 dark:bg-gray-900">
           <div className="container">
             <div className="space-y-4">
               <Skeleton className="h-10 w-full" />
@@ -110,7 +111,7 @@ const Evenements = () => {
         glowColor="emerald"
       />
 
-      <div className="py-12 bg-gray-50 animate-fade-in">
+      <div className="py-12 bg-gray-50 dark:bg-gray-900 animate-fade-in">
         <div className="container">
           <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
 
@@ -118,7 +119,7 @@ const Evenements = () => {
             <input
               type="text"
               placeholder="Rechercher un événement..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -133,8 +134,8 @@ const Evenements = () => {
           )}
 
           {error && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-              <p className="text-yellow-800">
+            <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
+              <p className="text-yellow-800 dark:text-yellow-200">
                 Erreur lors du chargement des événements WordPress. Affichage des événements statiques.
               </p>
             </div>
@@ -148,13 +149,15 @@ const Evenements = () => {
                     events={calendarFilteredEvents}
                     onDateSelect={setSelectedDate}
                     selectedDate={selectedDate}
+                    wpEvents={wordpressEvents || []}
                   />
                 </div>
                 <div className="lg:col-span-3">
                   <EventCalendar 
                     events={calendarFilteredEvents} 
                     selectedDate={selectedDate}
-                    onEventClick={handleEventClick} 
+                    onEventClick={handleEventClick}
+                    wpEvents={wordpressEvents || []}
                   />
                 </div>
               </div>
