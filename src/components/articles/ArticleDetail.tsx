@@ -8,12 +8,14 @@ import { SocialShare } from '@/components/ui/social-share';
 import { articles } from '@/pages/actualites/Communiques';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
+import ScreenLoader from '@/components/ui/screen-loader';
 
 const CommuniqueDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [article, setArticle] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showScreenLoader, setShowScreenLoader] = useState(true);
 
   // Try to fetch from WordPress first
   const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
@@ -34,7 +36,23 @@ const CommuniqueDetail = () => {
     return acfDate;
   };
 
+  // Helper function to clean HTML entities
+  const cleanHtmlEntities = (text: string): string => {
+    return text
+      .replace(/&#8217;/g, "'")
+      .replace(/&hellip;/g, "...")
+      .replace(/&#8211;/g, "–")
+      .replace(/&#8212;/g, "—")
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, "&");
+  };
+
   useEffect(() => {
+    // Show screen loader for a brief moment to indicate navigation
+    const loaderTimer = setTimeout(() => {
+      setShowScreenLoader(false);
+    }, 800);
+
     if (id) {
       // If WordPress data is available, use it
       if (wpCommunique && !wpLoading) {
@@ -48,7 +66,7 @@ const CommuniqueDetail = () => {
         
         const transformedArticle = {
           id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
-          title: wpCommunique.title.rendered,
+          title: cleanHtmlEntities(wpCommunique.title.rendered),
           date: postDate,
           content: wpCommunique.content.rendered,
           image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
@@ -64,11 +82,17 @@ const CommuniqueDetail = () => {
         setLoading(false);
       }
     }
+
+    return () => clearTimeout(loaderTimer);
   }, [id, wpCommunique, wpLoading, wpError]);
 
   const handleBack = () => {
     navigate('/actualites/communiques');
   };
+
+  if (showScreenLoader) {
+    return <ScreenLoader message="Chargement de l'article..." />;
+  }
 
   if (loading || wpLoading) {
     return (
@@ -132,7 +156,7 @@ const CommuniqueDetail = () => {
               {article.content?.includes('<') ? (
                 <WordPressContent content={article.content} />
               ) : (
-                <div className="whitespace-pre-line">{article.content}</div>
+                <div className="whitespace-pre-line">{cleanHtmlEntities(article.content)}</div>
               )}
             </div>
             

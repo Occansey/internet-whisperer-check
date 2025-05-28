@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import ColoredBadge from "@/components/ui/colored-badge";
 import { Link } from "react-router-dom";
 import { Calendar } from "lucide-react";
 
@@ -25,12 +25,23 @@ const CommuniqueCard: React.FC<CommuniqueCardProps> = ({ article }) => {
     ];
     
     const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr; // Return original if invalid
+    
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     
     return `${day} ${month} ${year}`;
   };
+
+  // Clean description from HTML entities
+  const cleanDescription = article.description
+    .replace(/&#8217;/g, "'")
+    .replace(/&hellip;/g, "...")
+    .replace(/&#8211;/g, "–")
+    .replace(/&#8212;/g, "—")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
 
   return (
     <Card className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow rounded-lg">
@@ -47,14 +58,12 @@ const CommuniqueCard: React.FC<CommuniqueCardProps> = ({ article }) => {
           <span className="text-sm text-gray-500">{formatFrenchDate(article.date)}</span>
         </div>
         <CardTitle className="text-lg line-clamp-2">{article.title}</CardTitle>
-        <CardDescription className="line-clamp-3">{article.description}</CardDescription>
+        <CardDescription className="line-clamp-3">{cleanDescription}</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="flex flex-wrap gap-2">
           {article.tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs rounded-lg">
-              {tag}
-            </Badge>
+            <ColoredBadge key={index} tag={tag} />
           ))}
         </div>
       </CardContent>
