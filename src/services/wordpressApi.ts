@@ -4,7 +4,7 @@ import axios from 'axios';
  * WordPress REST API service for integrating with WordPress as a headless CMS
  */
 const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
-const COMMUNIQUES_API_URL = "https://your-wordpress-site.com/wp-json/wp/v2/communiques?_embed";
+const COMMUNIQUES_API_URL = "https://api.solio-group.com/wp-json/wp/v2/communiques?_embed";
 
 // Types for WordPress API responses
 export interface WordPressPost {
