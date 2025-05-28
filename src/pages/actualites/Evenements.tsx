@@ -2,19 +2,27 @@
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
+import MiniCalendar from "@/components/events/MiniCalendar";
+import EventsList from "@/components/events/EventsList";
+import ViewModeToggle from "@/components/events/ViewModeToggle";
 import EventCalendar from "@/components/events/EventCalendar";
 import EventSearch from "@/components/events/EventSearch";
-import ViewModeToggle from "@/components/events/ViewModeToggle";
 import { events } from "@/data/events";
 import { EventProps } from '@/types/events';
 
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [viewMode, setViewMode] = useState<"cards" | "calendar">("cards");
+  const [viewMode, setViewMode] = useState<"cards" | "calendar">("calendar");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedEvents, setSelectedEvents] = useState<any[]>([]);
   
   const handleEventClick = (eventId: number) => {
     console.log(`Event clicked: ${eventId}`);
-    // Navigate to event detail page or open modal
+  };
+
+  const handleDateSelect = (date: Date, eventsForDate: any[]) => {
+    setSelectedDate(date);
+    setSelectedEvents(eventsForDate);
   };
 
   const filterEvents = (type: string) => {
@@ -38,6 +46,17 @@ const Evenements = () => {
     return filtered;
   };
 
+  // Filter events based on search term for calendar view
+  const filteredEvents = searchTerm 
+    ? events.filter(event => {
+        const term = searchTerm.toLowerCase();
+        return event.title.toLowerCase().includes(term) ||
+               event.description.toLowerCase().includes(term) ||
+               event.location.toLowerCase().includes(term) ||
+               (event.tags && event.tags.some(tag => tag.toLowerCase().includes(term)));
+      })
+    : events;
+
   return (
     <Layout>
       <HeroBanner 
@@ -54,7 +73,7 @@ const Evenements = () => {
             <input
               type="text"
               placeholder="Rechercher un événement..."
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-solio-blue focus:border-solio-blue outline-none transition-colors"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -62,7 +81,20 @@ const Evenements = () => {
           
           <div className="animate-fade-in">
             {viewMode === "calendar" ? (
-              <EventCalendar events={events} onEventClick={handleEventClick} />
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-1">
+                  <MiniCalendar 
+                    events={filteredEvents} 
+                    onDateSelect={handleDateSelect}
+                  />
+                </div>
+                <div className="lg:col-span-2">
+                  <EventsList 
+                    events={selectedEvents}
+                    selectedDate={selectedDate}
+                  />
+                </div>
+              </div>
             ) : (
               <EventSearch searchTerm={searchTerm} filterEvents={filterEvents} />
             )}
