@@ -62,22 +62,27 @@ const Evenements = () => {
           
           <div className="animate-fade-in">
             {viewMode === "calendar" ? (
-              <EventCalendar events={filteredEvents} onEventClick={handleEventClick} />
-            ) : (
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <div className="lg:col-span-1">
                   <MiniCalendar 
+                    events={filteredEvents}
                     onDateSelect={setSelectedDate}
                     selectedDate={selectedDate}
                   />
                 </div>
                 <div className="lg:col-span-3">
-                  <EventsList 
-                    events={filteredEvents}
+                  <EventCalendar 
+                    events={filteredEvents} 
                     selectedDate={selectedDate}
+                    onEventClick={handleEventClick} 
                   />
                 </div>
               </div>
+            ) : (
+              <EventsList 
+                events={filteredEvents}
+                viewMode="full"
+              />
             )}
           </div>
         </div>

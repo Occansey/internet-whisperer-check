@@ -10,9 +10,10 @@ import { EventProps } from '@/types/events';
 interface EventsListProps {
   events: EventProps[];
   selectedDate?: Date;
+  viewMode?: "full" | "filtered";
 }
 
-const EventsList: React.FC<EventsListProps> = ({ events, selectedDate }) => {
+const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode = "filtered" }) => {
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('fr-FR', {
@@ -22,14 +23,45 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate }) => {
     });
   };
 
-  const isSameDay = (date1: string, date2: Date) => {
-    const d1 = new Date(date1);
+  const parseEventDate = (dateStr: string): Date => {
+    // Handle date ranges like "5-7 septembre 2025"
+    if (dateStr.includes('-')) {
+      dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
+    }
+    
+    try {
+      const parts = dateStr.split(' ');
+      
+      if (parts.length >= 3) {
+        const day = parseInt(parts[0]);
+        const monthName = parts[1];
+        const year = parseInt(parts[2]);
+        
+        const months: { [key: string]: number } = {
+          'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+          'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11,
+          'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
+          'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
+        };
+        
+        if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
+          return new Date(year, months[monthName], day);
+        }
+      }
+      
+      return new Date();
+    } catch (error) {
+      return new Date();
+    }
+  };
+
+  const isSameDay = (dateStr: string, date2: Date) => {
+    const d1 = parseEventDate(dateStr);
     return d1.toDateString() === date2.toDateString();
   };
 
-  const filteredEvents = selectedDate 
-    ? events.filter(event => isSameDay(event.date, selectedDate))
-    : events;
+  const filteredEvents = viewMode === "full" ? events : 
+    (selectedDate ? events.filter(event => isSameDay(event.date, selectedDate)) : events);
 
   const getEventTypeColor = (type: string) => {
     switch (type) {
@@ -55,20 +87,22 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-semibold">
-          {selectedDate ? (
-            <>Événements du {formatDate(selectedDate.toISOString())}</>
-          ) : (
-            <>Tous les événements</>
+      {viewMode === "filtered" && (
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-semibold">
+            {selectedDate ? (
+              <>Événements du {formatDate(selectedDate.toISOString())}</>
+            ) : (
+              <>Tous les événements</>
+            )}
+          </h3>
+          {filteredEvents.length > 0 && (
+            <Badge variant="secondary" className="text-sm">
+              {filteredEvents.length} événement{filteredEvents.length > 1 ? 's' : ''}
+            </Badge>
           )}
-        </h3>
-        {filteredEvents.length > 0 && (
-          <Badge variant="secondary" className="text-sm">
-            {filteredEvents.length} événement{filteredEvents.length > 1 ? 's' : ''}
-          </Badge>
-        )}
-      </div>
+        </div>
+      )}
 
       {filteredEvents.length === 0 ? (
         <Card>
@@ -102,7 +136,7 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate }) => {
                       </Badge>
                       <div className="flex items-center text-sm text-gray-500">
                         <Calendar className="mr-1 h-4 w-4" />
-                        {formatDate(event.date)}
+                        {event.date}
                       </div>
                     </div>
                     <CardTitle className="text-lg line-clamp-2">{event.title}</CardTitle>
