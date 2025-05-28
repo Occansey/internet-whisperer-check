@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -54,7 +55,7 @@ const EventDetail = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
-            <SocialShare title={event.title} compact={true} iconColor="#3b82f6" />
+            <SocialShare title={event.title} compact={true} />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
