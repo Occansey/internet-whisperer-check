@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, ExternalLink } from 'lucide-react';
-import { ColoredBadge } from '@/components/ui/colored-badge';
+import ColoredBadge from '@/components/ui/colored-badge';
 import { SocialShare } from '@/components/ui/social-share';
 import ScreenLoader from '@/components/ui/screen-loader';
 
