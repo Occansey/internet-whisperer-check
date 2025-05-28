@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,14 +6,16 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EventProps } from '@/types/events';
+import EventCard from './EventCard';
 
 interface EventsListProps {
   events: EventProps[];
   selectedDate?: Date;
   viewMode?: "full" | "filtered";
+  wpEvents?: any[];
 }
 
-const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode = "filtered" }) => {
+const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode = "filtered", wpEvents = [] }) => {
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('fr-FR', {
@@ -23,7 +26,6 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode 
   };
 
   const parseEventDate = (dateStr: string): Date => {
-    // Handle date ranges like "5-7 septembre 2025"
     if (dateStr.includes('-')) {
       dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
     }
@@ -62,28 +64,6 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode 
   const filteredEvents = viewMode === "full" ? events : 
     (selectedDate ? events.filter(event => isSameDay(event.date, selectedDate)) : events);
 
-  const getEventTypeColor = (type: string) => {
-    switch (type) {
-      case "upcoming":
-        return "bg-green-100 text-green-800";
-      case "spotlight":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-blue-100 text-blue-800";
-    }
-  };
-
-  const getEventTypeLabel = (type: string) => {
-    switch (type) {
-      case "upcoming":
-        return "À venir";
-      case "spotlight":
-        return "Spotlight";
-      default:
-        return "Passé";
-    }
-  };
-
   return (
     <div className="space-y-6">
       {viewMode === "filtered" && (
@@ -115,63 +95,16 @@ const EventsList: React.FC<EventsListProps> = ({ events, selectedDate, viewMode 
         </Card>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredEvents.map((event) => (
-            <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-              {event.image && (
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={event.image} 
-                    alt={event.title} 
-                    className={`w-full h-full object-cover ${event.imagePosition || 'object-center'}`}
-                  />
-                </div>
-              )}
-              <div className="flex-1 flex flex-col">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <Badge variant="outline" className={getEventTypeColor(event.type)}>
-                      {getEventTypeLabel(event.type)}
-                    </Badge>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Calendar className="mr-1 h-4 w-4" />
-                      {event.date}
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg line-clamp-2">{event.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0 flex-1 flex flex-col">
-                  <div className="space-y-2 mb-4">
-                    {event.time && (
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Clock className="mr-2 h-4 w-4" />
-                        {event.time}
-                      </div>
-                    )}
-                    <div className="flex items-center text-sm text-gray-600">
-                      <MapPin className="mr-2 h-4 w-4" />
-                      {event.location}
-                    </div>
-                  </div>
-                  <p className="text-gray-700 text-sm line-clamp-3 mb-4 flex-1">{event.description}</p>
-                  <div className="flex gap-2 mt-auto">
-                    <Button size="sm" variant="outline" asChild>
-                      <Link to={`/actualites/evenements/${event.id}`}>
-                        Consulter
-                      </Link>
-                    </Button>
-                    {event.link && event.link.startsWith('http') && (
-                      <Button size="sm" variant="outline" asChild>
-                        <a href={event.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                          En savoir plus
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          ))}
+          {filteredEvents.map((event) => {
+            const wpEvent = wpEvents.find(wp => wp.id === event.id);
+            return (
+              <EventCard 
+                key={event.id} 
+                event={event} 
+                wpEvent={wpEvent}
+              />
+            );
+          })}
         </div>
       )}
     </div>

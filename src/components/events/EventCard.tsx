@@ -8,7 +8,47 @@ import { Link } from "react-router-dom";
 import { SocialShare } from "@/components/ui/social-share";
 import { EventProps } from "@/types/events";
 
-const EventCard = ({ event }: { event: EventProps }) => {
+interface EventCardProps {
+  event: EventProps;
+  wpEvent?: any;
+}
+
+const EventCard = ({ event, wpEvent }: EventCardProps) => {
+  const formatDateToFrench = (dateStr: string): string => {
+    if (!dateStr) return '';
+    
+    let date: Date;
+    
+    if (dateStr.includes('/')) {
+      const [day, month, year] = dateStr.split('/');
+      date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    } else {
+      date = new Date(dateStr);
+    }
+    
+    if (isNaN(date.getTime())) {
+      return dateStr;
+    }
+    
+    const months = [
+      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    ];
+    
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    
+    return `${day} ${month} ${year}`;
+  };
+
+  const displayDate = wpEvent?.date || event.date;
+  const displayTime = wpEvent?.heure || event.time;
+  const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
+  const displayLocation = wpEvent?.lieu || event.location;
+  const eventType = wpEvent?.type || event.type;
+  const enSavoirPlusUrl = wpEvent?.en_savoir_plus;
+
   return (
     <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg">
       {event.image && (
@@ -21,37 +61,43 @@ const EventCard = ({ event }: { event: EventProps }) => {
         </div>
       )}
       <CardHeader>
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start mb-2">
           <Badge variant="outline" className={
-            event.type === "upcoming" ? "bg-green-100 text-green-800" :
-            event.type === "spotlight" ? "bg-yellow-100 text-yellow-800" :
+            eventType === "upcoming" || eventType === "à venir" ? "bg-green-100 text-green-800" :
+            eventType === "spotlight" ? "bg-yellow-100 text-yellow-800" :
             "bg-blue-100 text-blue-800"
           }>
-            {event.type === "upcoming" ? "À venir" :
-             event.type === "spotlight" ? "Spotlight" :
+            {eventType === "upcoming" || eventType === "à venir" ? "À venir" :
+             eventType === "spotlight" ? "Spotlight" :
              "Passé"}
           </Badge>
-          <div className="flex items-center text-sm text-gray-500">
-            <Calendar className="mr-1 h-4 w-4" />
-            {event.date}
+          <div className="flex items-center space-x-2">
+            <SocialShare title={event.title} compact={true} />
           </div>
         </div>
-        <CardTitle className="mt-2">{event.title}</CardTitle>
-        <CardDescription className="flex flex-col gap-1">
-          {event.time && (
-            <span className="flex items-center">
-              <Clock className="mr-1 h-4 w-4" />
-              {event.time}
-            </span>
+        <CardTitle className="mt-2 text-lg leading-tight">{event.title}</CardTitle>
+        <CardDescription className="flex flex-col gap-2 text-sm">
+          <div className="flex items-center">
+            <Calendar className="mr-2 h-4 w-4 flex-shrink-0" />
+            <span>{formatDateToFrench(displayDate)}</span>
+          </div>
+          {displayTime && (
+            <div className="flex items-center">
+              <Clock className="mr-2 h-4 w-4 flex-shrink-0" />
+              <span>
+                {displayTime}
+                {endTime && endTime !== displayTime && ` - ${endTime}`}
+              </span>
+            </div>
           )}
-          <span className="flex items-center">
-            <MapPin className="mr-1 h-4 w-4" />
-            {event.location}
-          </span>
+          <div className="flex items-center">
+            <MapPin className="mr-2 h-4 w-4 flex-shrink-0" />
+            <span className="truncate">{displayLocation}</span>
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-gray-700">{event.description}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">{event.description}</p>
         {event.tags && (
           <div className="flex flex-wrap gap-2 mt-4">
             {event.tags.map((tag, index) => (
@@ -62,34 +108,31 @@ const EventCard = ({ event }: { event: EventProps }) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex flex-col gap-3">
-        <div className="flex justify-between items-center w-full">
-          <div className="flex gap-2">
+      <CardFooter className="flex flex-col gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-2 w-full">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            asChild
+            className="flex items-center gap-2 flex-1"
+          >
+            <Link to={`/actualites/evenements/${event.id}`}>
+              Consulter
+            </Link>
+          </Button>
+          {enSavoirPlusUrl && (
             <Button 
               variant="outline" 
               size="sm" 
               asChild
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 flex-1"
             >
-              <Link to={`/actualites/evenements/${event.id}`}>
-                Consulter
-              </Link>
+              <a href={enSavoirPlusUrl} target="_blank" rel="noopener noreferrer">
+                En savoir plus
+                <ExternalLink className="h-3 w-3" />
+              </a>
             </Button>
-            {event.link && event.link.startsWith('http') && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                asChild
-                className="flex items-center gap-2"
-              >
-                <a href={event.link} target="_blank" rel="noopener noreferrer">
-                  En savoir plus
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-          </div>
-          <SocialShare title={event.title} compact={true} />
+          )}
         </div>
       </CardFooter>
     </Card>

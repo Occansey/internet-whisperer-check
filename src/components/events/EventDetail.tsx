@@ -19,15 +19,12 @@ const formatDateToFrench = (dateStr: string): string => {
   let date: Date;
   
   if (dateStr.includes('/')) {
-    // ACF date format: 10/06/2025 or 22/03/2024
     const [day, month, year] = dateStr.split('/');
     date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
   } else {
-    // ISO format or other
     date = new Date(dateStr);
   }
   
-  // Check if date is valid
   if (isNaN(date.getTime())) {
     console.error('Invalid date:', dateStr);
     return dateStr;
@@ -45,8 +42,8 @@ const formatDateToFrench = (dateStr: string): string => {
   return `${day} ${month} ${year}`;
 };
 
-const generateCalendarUrl = (event: any) => {
-  if (!event.date || !event.time) return '';
+const generateICSFile = (event: any) => {
+  if (!event.date || !event.time) return null;
   
   // Parse the date
   let eventDate: Date;
@@ -57,12 +54,12 @@ const generateCalendarUrl = (event: any) => {
     eventDate = new Date(event.date);
   }
   
-  // Parse time (assuming format like "10:00 am")
-  const timeMatch = event.time.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
-  if (timeMatch) {
-    let hours = parseInt(timeMatch[1]);
-    const minutes = parseInt(timeMatch[2]);
-    const ampm = timeMatch[3].toLowerCase();
+  // Parse start time
+  const startTimeMatch = event.time.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+  if (startTimeMatch) {
+    let hours = parseInt(startTimeMatch[1]);
+    const minutes = parseInt(startTimeMatch[2]);
+    const ampm = startTimeMatch[3].toLowerCase();
     
     if (ampm === 'pm' && hours !== 12) hours += 12;
     if (ampm === 'am' && hours === 12) hours = 0;
@@ -70,20 +67,65 @@ const generateCalendarUrl = (event: any) => {
     eventDate.setHours(hours, minutes, 0, 0);
   }
   
-  // Create end date (1 hour later by default)
-  const endDate = new Date(eventDate.getTime() + 60 * 60 * 1000);
+  // Calculate end time
+  let endDate = new Date(eventDate.getTime() + 60 * 60 * 1000); // Default 1 hour later
   
-  // Format for Google Calendar
-  const formatDateForCalendar = (date: Date) => {
+  if (event.endTime) {
+    const endTimeMatch = event.endTime.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+    if (endTimeMatch) {
+      let endHours = parseInt(endTimeMatch[1]);
+      const endMinutes = parseInt(endTimeMatch[2]);
+      const endAmpm = endTimeMatch[3].toLowerCase();
+      
+      if (endAmpm === 'pm' && endHours !== 12) endHours += 12;
+      if (endAmpm === 'am' && endHours === 12) endHours = 0;
+      
+      endDate = new Date(eventDate);
+      endDate.setHours(endHours, endMinutes, 0, 0);
+    }
+  }
+  
+  // Format dates for ICS (YYYYMMDDTHHMMSSZ)
+  const formatICSDate = (date: Date) => {
     return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
   };
   
-  const startTime = formatDateForCalendar(eventDate);
-  const endTime = formatDateForCalendar(endDate);
+  const startTime = formatICSDate(eventDate);
+  const endTime = formatICSDate(endDate);
+  const now = formatICSDate(new Date());
   
-  const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(event.description || '')}&location=${encodeURIComponent(event.location || '')}`;
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Solio Group//Event Calendar//FR',
+    'BEGIN:VEVENT',
+    `UID:${event.id || 'event'}-${now}@solio-group.com`,
+    `DTSTAMP:${now}`,
+    `DTSTART:${startTime}`,
+    `DTEND:${endTime}`,
+    `SUMMARY:${event.title || 'Événement'}`,
+    `DESCRIPTION:${(event.description || '').replace(/\n/g, '\\n')}`,
+    `LOCATION:${event.location || ''}`,
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
   
-  return calendarUrl;
+  return icsContent;
+};
+
+const downloadICS = (event: any) => {
+  const icsContent = generateICSFile(event);
+  if (!icsContent) return;
+  
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `${(event.title || 'evenement').replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(link.href);
 };
 
 const EventDetail = () => {
@@ -92,7 +134,6 @@ const EventDetail = () => {
   const [event, setEvent] = useState<EventProps | null>(null);
   const [wpEvent, setWpEvent] = useState<any>(null);
   
-  // Fetch WordPress events
   const { data: wordpressEvents, isLoading } = useWordPressEvents();
 
   useEffect(() => {
@@ -102,7 +143,6 @@ const EventDetail = () => {
     if (id) {
       const eventId = parseInt(id);
       
-      // First try to find in WordPress events
       if (wordpressEvents && wordpressEvents.length > 0) {
         const foundWpEvent = wordpressEvents.find(e => e.id === eventId);
         console.log('Found WP event:', foundWpEvent);
@@ -110,7 +150,6 @@ const EventDetail = () => {
         if (foundWpEvent) {
           setWpEvent(foundWpEvent);
           
-          // Transform for display
           const transformedEvent: EventProps = {
             id: foundWpEvent.id,
             title: foundWpEvent.title,
@@ -127,7 +166,6 @@ const EventDetail = () => {
         }
       }
       
-      // Fallback to static events
       const staticEvent = events.find(e => e.id === eventId);
       if (staticEvent) {
         setEvent(staticEvent);
@@ -188,13 +226,7 @@ const EventDetail = () => {
     );
   }
 
-  const calendarUrl = generateCalendarUrl({
-    title: event.title,
-    date: wpEvent?.date || event.date,
-    time: wpEvent?.heure || event.time,
-    description: event.description,
-    location: event.location
-  });
+  const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
 
   return (
     <Layout>
@@ -235,7 +267,10 @@ const EventDetail = () => {
                 {(event.time || wpEvent?.heure) && (
                   <div className="flex items-center">
                     <Clock className="mr-2 h-5 w-5" />
-                    <span>{wpEvent?.heure || event.time}</span>
+                    <span>
+                      {wpEvent?.heure || event.time}
+                      {endTime && endTime !== (wpEvent?.heure || event.time) && ` - ${endTime}`}
+                    </span>
                   </div>
                 )}
                 
@@ -246,17 +281,21 @@ const EventDetail = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 mb-6">
-                {calendarUrl && (
-                  <Button 
-                    asChild
-                    className="bg-blue-600 text-white hover:bg-blue-700"
-                  >
-                    <a href={calendarUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <CalendarPlus className="h-4 w-4" />
-                      Ajouter à votre calendrier
-                    </a>
-                  </Button>
-                )}
+                <Button 
+                  onClick={() => downloadICS({
+                    title: event.title,
+                    date: wpEvent?.date || event.date,
+                    time: wpEvent?.heure || event.time,
+                    endTime: endTime,
+                    description: event.description,
+                    location: wpEvent?.lieu || event.location,
+                    id: event.id
+                  })}
+                  className="bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  <CalendarPlus className="h-4 w-4 mr-2" />
+                  Ajouter à votre calendrier
+                </Button>
 
                 {(wpEvent?.en_savoir_plus || (event.link && event.link.startsWith('http'))) && (
                   <Button 

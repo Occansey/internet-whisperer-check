@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -17,7 +16,7 @@ const transformWordPressToEventProps = (wpEvent: any): EventProps => {
     id: wpEvent.id,
     title: wpEvent.title,
     date: wpEvent.date,
-    description: wpEvent.excerpt.replace(/<[^>]*>/g, ''), // Strip HTML
+    description: wpEvent.excerpt.replace(/<[^>]*>/g, ''),
     location: wpEvent.lieu || 'Lieu à déterminer',
     time: wpEvent.heure || '',
     image: wpEvent.image || '/placeholder.svg',
@@ -163,6 +162,7 @@ const Evenements = () => {
               <EventsList 
                 events={filteredEvents}
                 viewMode="full"
+                wpEvents={wordpressEvents || []}
               />
             )}
           </div>
