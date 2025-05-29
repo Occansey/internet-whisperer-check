@@ -65,6 +65,7 @@ const App = () => (
               <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
               
               <Route path="/actualites/communiques" element={<Communiques />} />
+              <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
               <Route path="/actualites/evenements" element={<Evenements />} />
               <Route path="/actualites/evenements/:id" element={<EventDetail />} />
               <Route path="/actualites/projets" element={<Projets />} />

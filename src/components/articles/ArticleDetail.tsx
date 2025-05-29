@@ -11,12 +11,14 @@ import { useWordPressCommunique } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
 
-const CommuniqueDetail = () => {
+const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [article, setArticle] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
+
+  console.log('ArticleDetail - ID from params:', id);
 
   // Try to fetch from WordPress first
   const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
@@ -38,6 +40,8 @@ const CommuniqueDetail = () => {
   };
 
   useEffect(() => {
+    console.log('ArticleDetail useEffect - id:', id, 'wpCommunique:', wpCommunique, 'wpLoading:', wpLoading, 'wpError:', wpError);
+    
     if (id) {
       // If WordPress data is available, use it
       if (wpCommunique && !wpLoading) {
@@ -160,4 +164,4 @@ const CommuniqueDetail = () => {
   );
 };
 
-export default CommuniqueDetail;
+export default ArticleDetail;
