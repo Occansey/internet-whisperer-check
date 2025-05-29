@@ -55,7 +55,7 @@ const Header = () => {
 
   return (
     <header ref={headerRef} className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-200">
-      <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2">
         <div className="flex justify-between items-center py-1">
           <Link to="/" className="flex items-center" onClick={closeAllDropdowns}>
             <img 
