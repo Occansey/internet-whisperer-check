@@ -15,6 +15,12 @@ const directeurs: DirecteurProps[] = [
     titre: "Président du Groupe et du Comex",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24"
   },
+    {
+    photo: "/lovable-uploads/7ae14399-4ddf-44fe-aec4-6a1c3a702edb.png",
+    nom: "Isabelle Mauboussin",
+    titre: "Directrice Administrative et Financière – Groupe",
+    linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card"
+  },
   {
     photo: "/lovable-uploads/21b71e09-5fdb-4819-a954-2c32bfebb440.png",
     nom: "John Okoro",
@@ -22,22 +28,16 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png",
-    nom: "Laure Duhorane",
-    titre: "Directeur Général - Asking",
-    linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
-  },
-  {
-    photo: "/lovable-uploads/7ae14399-4ddf-44fe-aec4-6a1c3a702edb.png",
-    nom: "Isabelle Mauboussin",
-    titre: "Directrice Administrative et Financière – Groupe",
-    linkedin: "https://fr.linkedin.com/in/isabelle-mauboussin-53036930a?trk=people-guest_people_search-card"
-  },
-  {
     photo: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png",
     nom: "Alain Normand",
     titre: "Directeur Général - MFG Technologies",
     linkedin: "https://www.linkedin.com/in/alainnormand1/"
+  },
+    {
+    photo: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png",
+    nom: "Laure Duhorane",
+    titre: "Directeur Général - Asking",
+    linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
   },
   {
     photo: "/lovable-uploads/de408ee9-d343-4578-bd30-ae9d93b1c647.png",
