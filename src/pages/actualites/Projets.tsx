@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -9,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useWordPressProjects } from "@/hooks/useWordPress";
+import ScreenLoader from "@/components/ui/screen-loader";
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -20,13 +21,14 @@ interface ProjectProps {
   progress: number; // 0-100
   subsidiary: ProjectSubsidiary;
   location: string;
+  isWordPress?: boolean;
 }
 
 export const projects: ProjectProps[] = [
   {
     id: 1,
     title: "Projet Télécom - Econet Leo",
-    description: "Modernisation des antennes de télécommunication d’Econet Leo afin d’améliorer la couverture réseau et de préparer l’infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
+    description: "Modernisation des antennes de télécommunication d'Econet Leo afin d'améliorer la couverture réseau et de préparer l'infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
     image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     progress: 25,
     subsidiary: "growth-energy",
@@ -133,9 +135,16 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
       </div>
       <CardHeader className="flex-initial">
         <div className="flex justify-between items-start mb-2">
-          <Badge variant="outline" className={subsidiaryDetails.color}>
-            {subsidiaryDetails.name}
-          </Badge>
+          <div className="flex gap-2">
+            <Badge variant="outline" className={subsidiaryDetails.color}>
+              {subsidiaryDetails.name}
+            </Badge>
+            {project.isWordPress && (
+              <Badge variant="outline" className="bg-blue-100 text-blue-800">
+                WordPress
+              </Badge>
+            )}
+          </div>
           <div className="text-sm text-gray-500 flex items-center">
             <Progress 
               value={project.progress} 
@@ -164,9 +173,33 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 
 const Projets = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Fetch WordPress projects
+  const { data: wpProjects, isLoading: wpLoading, error: wpError } = useWordPressProjects({
+    per_page: 50
+  });
+
+  // Transform WordPress projects to match our interface
+  const transformWordPressProjects = (): ProjectProps[] => {
+    if (!wpProjects) return [];
+    
+    return wpProjects.map((wpProject) => ({
+      id: wpProject.id,
+      title: wpProject.title.rendered,
+      description: wpProject.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
+      image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+      progress: wpProject.acf?.progress || 0,
+      subsidiary: (wpProject.acf?.subsidiary as ProjectSubsidiary) || "growth-energy",
+      location: wpProject.acf?.location || "Non spécifié",
+      isWordPress: true
+    }));
+  };
+
+  // Combine static and WordPress projects
+  const allProjects = [...projects, ...transformWordPressProjects()];
 
   const filterProjects = (tab: string) => {
-    let filtered = [...projects];
+    let filtered = [...allProjects];
     
     if (tab !== "all") {
       filtered = filtered.filter(project => project.subsidiary === tab);
@@ -184,6 +217,15 @@ const Projets = () => {
     
     return filtered;
   };
+
+  if (wpLoading) {
+    return <ScreenLoader message="Chargement des projets..." />;
+  }
+
+  if (wpError) {
+    console.error('WordPress projects error:', wpError);
+    // Continue with static projects only
+  }
 
   return (
     <Layout>
@@ -221,7 +263,7 @@ const Projets = () => {
                 {filterProjects(tab).length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filterProjects(tab).map((project) => (
-                      <ProjectCard key={project.id} project={project} />
+                      <ProjectCard key={`${project.isWordPress ? 'wp' : 'static'}-${project.id}`} project={project} />
                     ))}
                   </div>
                 ) : (

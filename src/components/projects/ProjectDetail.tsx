@@ -8,6 +8,9 @@ import { toast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SocialShare } from "@/components/ui/social-share";
+import { useWordPressProject } from '@/hooks/useWordPress';
+import WordPressContent from '@/components/wordpress/WordPressContent';
+import ScreenLoader from '@/components/ui/screen-loader';
 
 // Import projects from the Projets page
 import { projects } from '@/pages/actualites/Projets';
@@ -16,26 +19,47 @@ const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [project, setProject] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Try to fetch from WordPress first
+  const { data: wpProject, isLoading: wpLoading, error: wpError } = useWordPressProject(id || '');
 
   useEffect(() => {
     if (id) {
-      // Find the project with the matching ID
-      const projectId = Number(id);
-      const foundProject = projects.find(p => p.id === projectId);
-      
-      if (foundProject) {
-        setProject(foundProject);
-      } else {
-        // If project not found, navigate back to the projects page
-        navigate('/actualites/projets');
-        toast({
-          title: "Projet non trouvé",
-          description: "Le projet que vous recherchez n'existe pas.",
-          variant: "destructive",
-        });
+      // If WordPress data is available, use it
+      if (wpProject && !wpLoading) {
+        const transformedProject = {
+          id: wpProject.id,
+          title: wpProject.title.rendered,
+          description: wpProject.content.rendered,
+          image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+          progress: wpProject.acf?.progress || 0,
+          subsidiary: wpProject.acf?.subsidiary || "growth-energy",
+          location: wpProject.acf?.location || "Non spécifié",
+          isWordPress: true
+        };
+        setProject(transformedProject);
+        setLoading(false);
+      } 
+      // If WordPress fails or no data, try static projects
+      else if (wpError || (!wpLoading && !wpProject)) {
+        const projectId = Number(id);
+        const foundProject = projects.find(p => p.id === projectId);
+        
+        if (foundProject) {
+          setProject(foundProject);
+          setLoading(false);
+        } else {
+          navigate('/actualites/projets');
+          toast({
+            title: "Projet non trouvé",
+            description: "Le projet que vous recherchez n'existe pas.",
+            variant: "destructive",
+          });
+        }
       }
     }
-  }, [id, navigate]);
+  }, [id, navigate, wpProject, wpLoading, wpError]);
 
   const handleBack = () => {
     navigate('/actualites/projets');
@@ -62,6 +86,10 @@ const ProjectDetail = () => {
         return { name: "Autre", color: "bg-gray-100 text-gray-800" };
     }
   };
+
+  if (loading || wpLoading) {
+    return <ScreenLoader message="Chargement du projet..." />;
+  }
 
   if (!project) {
     return (
@@ -114,9 +142,16 @@ const ProjectDetail = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
             <div>
-              <Badge className={subsidiaryDetails.color + " mb-4"}>
-                {subsidiaryDetails.name}
-              </Badge>
+              <div className="flex gap-2 mb-4">
+                <Badge className={subsidiaryDetails.color}>
+                  {subsidiaryDetails.name}
+                </Badge>
+                {project.isWordPress && (
+                  <Badge className="bg-blue-100 text-blue-800">
+                    WordPress
+                  </Badge>
+                )}
+              </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 {project.title}
               </h1>
@@ -169,62 +204,68 @@ const ProjectDetail = () => {
             <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow">
               <h2 className="text-2xl font-bold mb-4 text-solio-blue">Description du projet</h2>
               <div className="prose max-w-none text-gray-700">
-                <p className="mb-4">{project.description}</p>
-                
-                {/* Additional fake content for demo purposes */}
-                {project.subsidiary === "growth-energy" && (
+                {project.isWordPress ? (
+                  <WordPressContent content={project.description} />
+                ) : (
                   <>
-                    <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
-                    <ul className="list-disc pl-5 space-y-2 mb-6">
-                      <li>Réduction de la dépendance aux générateurs diesel</li>
-                      <li>Diminution significative des émissions de CO₂</li>
-                      <li>Assurer une alimentation électrique fiable et durable</li>
-                    </ul>
+                    <p className="mb-4">{project.description}</p>
                     
-                    <h3 className="text-xl font-semibold mb-3">Impact</h3>
-                    <p>Ce projet contribue directement à la transition énergétique en Afrique en fournissant une source d'énergie propre et renouvelable, tout en réduisant l'empreinte carbone et en améliorant la fiabilité énergétique.</p>
-                  </>
-                )}
-                
-                {project.subsidiary === "asking" && (
-                  <>
-                    <h3 className="text-xl font-semibold mt-6 mb-3">Fonctionnalités</h3>
-                    <ul className="list-disc pl-5 space-y-2 mb-6">
-                      <li>Interface intuitive et personnalisable</li>
-                      <li>Analyse en temps réel des données</li>
-                      <li>Tableau de bord analytique</li>
-                    </ul>
+                    {/* Additional fake content for demo purposes */}
+                    {project.subsidiary === "growth-energy" && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
+                        <ul className="list-disc pl-5 space-y-2 mb-6">
+                          <li>Réduction de la dépendance aux générateurs diesel</li>
+                          <li>Diminution significative des émissions de CO₂</li>
+                          <li>Assurer une alimentation électrique fiable et durable</li>
+                        </ul>
+                        
+                        <h3 className="text-xl font-semibold mb-3">Impact</h3>
+                        <p>Ce projet contribue directement à la transition énergétique en Afrique en fournissant une source d'énergie propre et renouvelable, tout en réduisant l'empreinte carbone et en améliorant la fiabilité énergétique.</p>
+                      </>
+                    )}
                     
-                    <h3 className="text-xl font-semibold mb-3">Impact</h3>
-                    <p>Cette solution transforme la gestion des données en fournissant des insights précieux et en améliorant l'efficacité opérationnelle de l'entreprise.</p>
-                  </>
-                )}
-                
-                {project.subsidiary === "mfg-technologies" && (
-                  <>
-                    <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
-                    <ul className="list-disc pl-5 space-y-2 mb-6">
-                      <li>Intégration complète avec les systèmes existants</li>
-                      <li>Formation approfondie des utilisateurs</li>
-                      <li>Support technique personnalisé</li>
-                    </ul>
+                    {project.subsidiary === "asking" && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Fonctionnalités</h3>
+                        <ul className="list-disc pl-5 space-y-2 mb-6">
+                          <li>Interface intuitive et personnalisable</li>
+                          <li>Analyse en temps réel des données</li>
+                          <li>Tableau de bord analytique</li>
+                        </ul>
+                        
+                        <h3 className="text-xl font-semibold mb-3">Impact</h3>
+                        <p>Cette solution transforme la gestion des données en fournissant des insights précieux et en améliorant l'efficacité opérationnelle de l'entreprise.</p>
+                      </>
+                    )}
                     
-                    <h3 className="text-xl font-semibold mb-3">Impact</h3>
-                    <p>Cette implémentation ERP a considérablement amélioré l'efficacité des processus internes, réduisant les délais et augmentant la productivité globale.</p>
-                  </>
-                )}
-                
-                {project.subsidiary === "gem" && (
-                  <>
-                    <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
-                    <ul className="list-disc pl-5 space-y-2 mb-6">
-                      <li>Alimentation 100% solaire</li>
-                      <li>Batterie de secours pour une disponibilité constante</li>
-                      <li>Interface utilisateur intuitive</li>
-                    </ul>
+                    {project.subsidiary === "mfg-technologies" && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
+                        <ul className="list-disc pl-5 space-y-2 mb-6">
+                          <li>Intégration complète avec les systèmes existants</li>
+                          <li>Formation approfondie des utilisateurs</li>
+                          <li>Support technique personnalisé</li>
+                        </ul>
+                        
+                        <h3 className="text-xl font-semibold mb-3">Impact</h3>
+                        <p>Cette implémentation ERP a considérablement amélioré l'efficacité des processus internes, réduisant les délais et augmentant la productivité globale.</p>
+                      </>
+                    )}
                     
-                    <h3 className="text-xl font-semibold mb-3">Impact</h3>
-                    <p>Cette installation contribue directement à l'adoption de la mobilité électrique dans la région, en offrant une infrastructure de recharge fiable et durable.</p>
+                    {project.subsidiary === "gem" && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
+                        <ul className="list-disc pl-5 space-y-2 mb-6">
+                          <li>Alimentation 100% solaire</li>
+                          <li>Batterie de secours pour une disponibilité constante</li>
+                          <li>Interface utilisateur intuitive</li>
+                        </ul>
+                        
+                        <h3 className="text-xl font-semibold mb-3">Impact</h3>
+                        <p>Cette installation contribue directement à l'adoption de la mobilité électrique dans la région, en offrant une infrastructure de recharge fiable et durable.</p>
+                      </>
+                    )}
                   </>
                 )}
               </div>
