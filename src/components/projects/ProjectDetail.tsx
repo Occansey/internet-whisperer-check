@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, Lightbulb, Activity, BarChart } from "lucide-react";
+import { ArrowLeft, MapPin, Lightbulb, Activity, BarChart, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
@@ -63,7 +63,8 @@ const ProjectDetail = () => {
             stockage: wpProject.acf?.stockage,
             objectifs: wpProject.acf?.objectifs,
             annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
-            impact: wpProject.acf?.impact
+            impact: wpProject.acf?.impact,
+            optimisation: wpProject.acf?.optimisation
           }
         };
         setProject(transformedProject);
@@ -135,7 +136,7 @@ const ProjectDetail = () => {
   const projectStats = [
     {
       title: "Capacité installée",
-      value: project.wpData?.capacite || (project.subsidiary === "growth-energy" ? "600 kWc" : "N/A"),
+      value: project.wpData?.capacite ? `${project.wpData.capacite} kW` : (project.subsidiary === "growth-energy" ? "600 kWc" : "N/A"),
       icon: <Lightbulb className="h-6 w-6 text-yellow-500" />
     },
     {
@@ -147,7 +148,12 @@ const ProjectDetail = () => {
       title: "Stockage d'énergie",
       value: project.wpData?.stockage ? `${project.wpData.stockage} kWh` : (project.subsidiary === "growth-energy" ? "600 kWh" : "N/A"),
       icon: <BarChart className="h-6 w-6 text-blue-500" />
-    }
+    },
+    ...(project.wpData?.optimisation ? [{
+      title: "Optimisation",
+      value: project.wpData.optimisation,
+      icon: <TrendingUp className="h-6 w-6 text-purple-500" />
+    }] : [])
   ];
 
   return (
@@ -213,7 +219,7 @@ const ProjectDetail = () => {
       {/* Project Details Section */}
       <div className="bg-gray-50 py-12">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {projectStats.map((stat, index) => (
               <Card key={index} className={stat.value === "N/A" ? "opacity-50" : ""}>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -333,13 +339,19 @@ const ProjectDetail = () => {
                     {project.wpData.capacite && (
                       <div>
                         <h3 className="font-semibold mb-2">Capacité</h3>
-                        <p className="text-gray-700">{project.wpData.capacite}</p>
+                        <p className="text-gray-700">{project.wpData.capacite} kW</p>
                       </div>
                     )}
                     {project.wpData.stockage && (
                       <div>
                         <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
                         <p className="text-gray-700">{project.wpData.stockage} kWh</p>
+                      </div>
+                    )}
+                    {project.wpData.optimisation && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Optimisation</h3>
+                        <p className="text-gray-700">{project.wpData.optimisation}</p>
                       </div>
                     )}
                   </>

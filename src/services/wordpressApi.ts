@@ -33,6 +33,7 @@ export interface WordPressPost {
     objectifs?: string;
     annual_co2_reduction?: string;
     impact?: string;
+    optimisation?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: {
