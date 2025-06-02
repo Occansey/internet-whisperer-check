@@ -24,6 +24,15 @@ export interface WordPressPost {
     progress?: number;
     subsidiary?: string;
     location?: string;
+    pays?: string;
+    filiale?: string;
+    progression?: string;
+    capacite?: string;
+    technologie?: string;
+    stockage?: string;
+    objectifs?: string;
+    annual_co2_reduction?: string;
+    impact?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: {

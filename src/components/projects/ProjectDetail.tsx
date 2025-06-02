@@ -24,6 +24,25 @@ const ProjectDetail = () => {
   // Try to fetch from WordPress first
   const { data: wpProject, isLoading: wpLoading, error: wpError } = useWordPressProject(id || '');
 
+  const mapSubsidiaryFromWordPress = (filiale: string): string => {
+    const filialeNormalized = filiale?.toLowerCase() || '';
+    
+    if (filialeNormalized.includes('growth') || filialeNormalized.includes('energy')) {
+      return 'growth-energy';
+    }
+    if (filialeNormalized.includes('asking')) {
+      return 'asking';
+    }
+    if (filialeNormalized.includes('mfg') || filialeNormalized.includes('technologies')) {
+      return 'mfg-technologies';
+    }
+    if (filialeNormalized.includes('gem') || filialeNormalized.includes('mobility')) {
+      return 'gem';
+    }
+    
+    return 'growth-energy'; // default
+  };
+
   useEffect(() => {
     if (id) {
       // If WordPress data is available, use it
@@ -33,10 +52,19 @@ const ProjectDetail = () => {
           title: wpProject.title.rendered,
           description: wpProject.content.rendered,
           image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
-          progress: wpProject.acf?.progress || 0,
-          subsidiary: wpProject.acf?.subsidiary || "growth-energy",
-          location: wpProject.acf?.location || "Non spécifié",
-          isWordPress: true
+          progress: wpProject.acf?.progression ? parseInt(wpProject.acf.progression) : 0,
+          subsidiary: mapSubsidiaryFromWordPress(wpProject.acf?.filiale || ''),
+          location: wpProject.acf?.pays || "Non spécifié",
+          isWordPress: true,
+          // WordPress-specific fields
+          wpData: {
+            capacite: wpProject.acf?.capacite,
+            technologie: wpProject.acf?.technologie,
+            stockage: wpProject.acf?.stockage,
+            objectifs: wpProject.acf?.objectifs,
+            annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
+            impact: wpProject.acf?.impact
+          }
         };
         setProject(transformedProject);
         setLoading(false);
@@ -103,21 +131,21 @@ const ProjectDetail = () => {
 
   const subsidiaryDetails = getSubsidiaryDetails(project.subsidiary);
   
-  // Project stats data (fictional, would be replaced with real data)
+  // Project stats data - use WordPress data if available, fallback to fictional data
   const projectStats = [
     {
       title: "Capacité installée",
-      value: project.subsidiary === "growth-energy" ? "600 kWc" : "N/A",
+      value: project.wpData?.capacite || (project.subsidiary === "growth-energy" ? "600 kWc" : "N/A"),
       icon: <Lightbulb className="h-6 w-6 text-yellow-500" />
     },
     {
       title: "Réduction CO₂ annuelle",
-      value: project.subsidiary === "growth-energy" ? "350 tonnes" : "N/A",
+      value: project.wpData?.annual_co2_reduction ? `${project.wpData.annual_co2_reduction} tonnes` : (project.subsidiary === "growth-energy" ? "350 tonnes" : "N/A"),
       icon: <Activity className="h-6 w-6 text-green-500" />
     },
     {
-      title: "Optimisation",
-      value: project.subsidiary === "asking" || project.subsidiary === "mfg-technologies" ? "+40%" : "N/A",
+      title: "Stockage d'énergie",
+      value: project.wpData?.stockage ? `${project.wpData.stockage} kWh` : (project.subsidiary === "growth-energy" ? "600 kWh" : "N/A"),
       icon: <BarChart className="h-6 w-6 text-blue-500" />
     }
   ];
@@ -205,9 +233,27 @@ const ProjectDetail = () => {
               <h2 className="text-2xl font-bold mb-4 text-solio-blue">Description du projet</h2>
               <div className="prose max-w-none text-gray-700">
                 {project.isWordPress ? (
-                  <WordPressContent content={project.description} />
+                  <>
+                    <WordPressContent content={project.description} />
+                    
+                    {/* WordPress-specific content */}
+                    {project.wpData?.objectifs && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
+                        <div dangerouslySetInnerHTML={{ __html: project.wpData.objectifs }} />
+                      </>
+                    )}
+                    
+                    {project.wpData?.impact && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Impact</h3>
+                        <p>{project.wpData.impact}</p>
+                      </>
+                    )}
+                  </>
                 ) : (
                   <>
+                    {/* ... keep existing code (static project content) */}
                     <p className="mb-4">{project.description}</p>
                     
                     {/* Additional fake content for demo purposes */}
@@ -276,71 +322,97 @@ const ProjectDetail = () => {
               <h2 className="text-xl font-bold mb-6 text-solio-blue">Détails techniques</h2>
               
               <div className="space-y-6">
-                {project.subsidiary === "growth-energy" && (
+                {project.isWordPress && project.wpData ? (
                   <>
-                    <div>
-                      <h3 className="font-semibold mb-2">Technologie</h3>
-                      <p className="text-gray-700">Panneaux solaires haute efficacité avec suiveur solaire</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Capacité</h3>
-                      <p className="text-gray-700">600 kWc</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
-                      <p className="text-gray-700">Système de batteries lithium-ion 600 kWh</p>
-                    </div>
+                    {project.wpData.technologie && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Technologie</h3>
+                        <p className="text-gray-700">{project.wpData.technologie}</p>
+                      </div>
+                    )}
+                    {project.wpData.capacite && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Capacité</h3>
+                        <p className="text-gray-700">{project.wpData.capacite}</p>
+                      </div>
+                    )}
+                    {project.wpData.stockage && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
+                        <p className="text-gray-700">{project.wpData.stockage} kWh</p>
+                      </div>
+                    )}
                   </>
-                )}
-                
-                {project.subsidiary === "asking" && (
+                ) : (
                   <>
-                    <div>
-                      <h3 className="font-semibold mb-2">Architecture</h3>
-                      <p className="text-gray-700">Système cloud avec API sécurisée</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Base de données</h3>
-                      <p className="text-gray-700">MongoDB avec réplication</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Sécurité</h3>
-                      <p className="text-gray-700">Authentification multi-facteurs et chiffrement des données</p>
-                    </div>
-                  </>
-                )}
-                
-                {project.subsidiary === "mfg-technologies" && (
-                  <>
-                    <div>
-                      <h3 className="font-semibold mb-2">Solution ERP</h3>
-                      <p className="text-gray-700">Divalto Infinity v12</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Modules déployés</h3>
-                      <p className="text-gray-700">Finance, Production, Logistique, CRM</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Intégrations</h3>
-                      <p className="text-gray-700">API vers les systèmes de production et la comptabilité</p>
-                    </div>
-                  </>
-                )}
-                
-                {project.subsidiary === "gem" && (
-                  <>
-                    <div>
-                      <h3 className="font-semibold mb-2">Type de borne</h3>
-                      <p className="text-gray-700">Borne de recharge rapide DC 50kW</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Alimentation</h3>
-                      <p className="text-gray-700">Panneaux solaires 20kWc avec stockage 30kWh</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Connectivité</h3>
-                      <p className="text-gray-700">4G avec système de gestion à distance</p>
-                    </div>
+                    {/* ... keep existing code (static technical details) */}
+                    {project.subsidiary === "growth-energy" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Technologie</h3>
+                          <p className="text-gray-700">Panneaux solaires haute efficacité avec suiveur solaire</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Capacité</h3>
+                          <p className="text-gray-700">600 kWc</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
+                          <p className="text-gray-700">Système de batteries lithium-ion 600 kWh</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "asking" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Architecture</h3>
+                          <p className="text-gray-700">Système cloud avec API sécurisée</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Base de données</h3>
+                          <p className="text-gray-700">MongoDB avec réplication</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Sécurité</h3>
+                          <p className="text-gray-700">Authentification multi-facteurs et chiffrement des données</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "mfg-technologies" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Solution ERP</h3>
+                          <p className="text-gray-700">Divalto Infinity v12</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Modules déployés</h3>
+                          <p className="text-gray-700">Finance, Production, Logistique, CRM</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Intégrations</h3>
+                          <p className="text-gray-700">API vers les systèmes de production et la comptabilité</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "gem" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Type de borne</h3>
+                          <p className="text-gray-700">Borne de recharge rapide DC 50kW</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Alimentation</h3>
+                          <p className="text-gray-700">Panneaux solaires 20kWc avec stockage 30kWh</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Connectivité</h3>
+                          <p className="text-gray-700">4G avec système de gestion à distance</p>
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
                 

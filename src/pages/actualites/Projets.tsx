@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -121,6 +122,25 @@ const getSubsidiaryDetails = (subsidiary: ProjectSubsidiary) => {
   }
 };
 
+const mapSubsidiaryFromWordPress = (filiale: string): ProjectSubsidiary => {
+  const filialeNormalized = filiale?.toLowerCase() || '';
+  
+  if (filialeNormalized.includes('growth') || filialeNormalized.includes('energy')) {
+    return 'growth-energy';
+  }
+  if (filialeNormalized.includes('asking')) {
+    return 'asking';
+  }
+  if (filialeNormalized.includes('mfg') || filialeNormalized.includes('technologies')) {
+    return 'mfg-technologies';
+  }
+  if (filialeNormalized.includes('gem') || filialeNormalized.includes('mobility')) {
+    return 'gem';
+  }
+  
+  return 'growth-energy'; // default
+};
+
 const ProjectCard = ({ project }: { project: ProjectProps }) => {
   const subsidiaryDetails = getSubsidiaryDetails(project.subsidiary);
   
@@ -186,11 +206,11 @@ const Projets = () => {
     return wpProjects.map((wpProject) => ({
       id: wpProject.id,
       title: wpProject.title.rendered,
-      description: wpProject.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
+      description: wpProject.content.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
       image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
-      progress: wpProject.acf?.progress || 0,
-      subsidiary: (wpProject.acf?.subsidiary as ProjectSubsidiary) || "growth-energy",
-      location: wpProject.acf?.location || "Non spécifié",
+      progress: wpProject.acf?.progression ? parseInt(wpProject.acf.progression) : 0,
+      subsidiary: mapSubsidiaryFromWordPress(wpProject.acf?.filiale || ''),
+      location: wpProject.acf?.pays || "Non spécifié",
       isWordPress: true
     }));
   };
