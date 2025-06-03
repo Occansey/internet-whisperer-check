@@ -12,7 +12,7 @@ const GemPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-1">
               <div className="mb-8">
-                <img src="/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png" alt="GEM E-Mobility" className="h-60 md:h-40" />
+                <img src="/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png" alt="GEM E-Mobility" className="h-60 md:h-40" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
                 Pionniers dans le domaine de la mobilité électrique, nous pilotons notre transformation technologique grâce à des solutions logicielles de pointe, des infrastructures cloud innovantes et des systèmes IT robustes — offrant une mobilité plus intelligente et plus durable pour tous.
@@ -26,7 +26,7 @@ const GemPage = () => {
             <div className="flex-1">
               <div className="aspect-video rounded-lg shadow-md overflow-hidden">
                 <img 
-                  src="/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png" 
+                  src="/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png" 
                   alt="GEM Team" 
                   className="w-full h-full object-cover"
                 />
