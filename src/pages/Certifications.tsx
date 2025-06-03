@@ -50,7 +50,7 @@ const certifications: CertificationProps[] = [
   {
     title: "AWS Certified Solutions Architect - Associate",
     organization: "Amazon Web Services",
-    description: "certification qui valide les compétences pour concevoir des architectures cloud évolutives, sécurisées et rentables sur AWS.",
+    description: "Certification qui valide les compétences pour concevoir des architectures cloud évolutives, sécurisées et rentables sur AWS.",
     date: "Novembre 2023",
     logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     category: "cloud"
@@ -62,6 +62,14 @@ const certifications: CertificationProps[] = [
   date: "Mai 2020",
   logo: "/lovable-uploads/pmp-logo.png",
   category: "management"
+  },
+  {
+    title: "Certified Expert in Climate & Renewable Energy Finance",
+    organization: "Frankfurt School of Finance & Management",
+    description: "Certification en finance climat et énergies renouvelables, renforçant notre expertise stratégique pour structurer, financer et piloter des projets durables à fort impact environnemental et économique.",
+    date: "Novembre 2017",
+    logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
+    category: "energy"
   }
 
 ];
