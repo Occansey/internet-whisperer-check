@@ -46,7 +46,24 @@ const certifications: CertificationProps[] = [
     date: "Mars 2024",
     logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     category: "industry"
+  },
+  {
+    title: "AWS Certified Solutions Architect - Associate",
+    organization: "Amazon Web Services",
+    description: "certification qui valide les compétences pour concevoir des architectures cloud évolutives, sécurisées et rentables sur AWS.",
+    date: "Novembre 2023",
+    logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
+    category: "cloud"
+  },
+  {
+  title: "Project Management Professional (PMP)",
+  organization: "Project Management Institute (PMI)",
+  description: "Reconnaissance mondiale de nos compétences en gestion de projet, démontrant expertise, leadership et maîtrise des meilleures pratiques.",
+  date: "Mai 2020",
+  logo: "/lovable-uploads/pmp-logo.png",
+  category: "management"
   }
+
 ];
 
 const getCategoryColor = (category: string) => {
@@ -59,6 +76,10 @@ const getCategoryColor = (category: string) => {
       return "bg-purple-100 text-purple-800";
     case "quality":
       return "bg-green-100 text-green-800";
+    case "cloud":
+      return "bg-black-100 text-black-800";
+    case "management":
+      return "bg-brown-100 text-brown-800";
     default:
       return "bg-gray-100 text-gray-800";
   }
