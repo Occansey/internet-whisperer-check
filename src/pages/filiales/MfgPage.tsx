@@ -35,9 +35,9 @@ const MfgPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            <StatCard value={20} suffix="+" label="années d'expérience" />
-            <StatCard value={100} suffix="+" label="entreprises servies" />
-            <StatCard value={100} label="projets réalisés" />
+            <StatCard value="20+" label="années d'expérience" />
+            <StatCard value="100+" label="entreprises servies" />
+            <StatCard value="100" label="projets réalisés" />
           </div>
         </div>
       </section>
