@@ -227,6 +227,12 @@ const Contact = () => {
                         <a href="#" className="text-gray-700 hover:text-solio-blue">
                           LinkedIn
                         </a>
+                        <a href="#" className="text-gray-700 hover:text-solio-blue">
+                          Twitter/X
+                        </a>
+                        <a href="#" className="text-gray-700 hover:text-solio-blue">
+                          YouTube
+                        </a>
                       </div>
                     </div>
 

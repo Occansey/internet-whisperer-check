@@ -104,17 +104,9 @@ const Presence = () => {
               Présence Mondiale
             </div>
             <h2 className="text-4xl font-bold text-solio-blue mb-4">Nos Bureaux Internationaux</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Implantés sur 3 continents pour vous accompagner au plus près de vos besoins
             </p>
-            
-            <div className="mb-8">
-              <img 
-                src="/lovable-uploads/cc45fa41-f7d2-457c-b6dd-662b9f21ace1.png" 
-                alt="Carte de présence mondiale Solio Group" 
-                className="mx-auto max-w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
           </div>
 
           <div className="mb-12">
