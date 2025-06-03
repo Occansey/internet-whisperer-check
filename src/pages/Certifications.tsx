@@ -77,7 +77,7 @@ const getCategoryColor = (category: string) => {
     case "quality":
       return "bg-green-100 text-green-800";
     case "cloud":
-      return "bg-black-100 text-black-800";
+      return "bg-green-100 text-green-800";
     case "management":
       return "bg-brown-100 text-brown-800";
     default:
