@@ -15,6 +15,12 @@ import ScreenLoader from '@/components/ui/screen-loader';
 // Import projects from the Projets page
 import { projects } from '@/pages/actualites/Projets';
 
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -132,21 +138,21 @@ const ProjectDetail = () => {
 
   const subsidiaryDetails = getSubsidiaryDetails(project.subsidiary);
   
-  // Project stats data - use WordPress data if available, fallback to fictional data
+  // Project stats data - filter out N/A values
   const projectStats = [
     {
       title: "Capacité installée",
-      value: project.wpData?.capacite ? `${project.wpData.capacite} kW` : (project.subsidiary === "growth-energy" ? "600 kWc" : "N/A"),
+      value: project.wpData?.capacite ? `${project.wpData.capacite} kW` : (project.subsidiary === "growth-energy" ? "600 kWc" : null),
       icon: <Lightbulb className="h-6 w-6 text-yellow-500" />
     },
     {
       title: "Réduction CO₂ annuelle",
-      value: project.wpData?.annual_co2_reduction ? `${project.wpData.annual_co2_reduction} tonnes` : (project.subsidiary === "growth-energy" ? "350 tonnes" : "N/A"),
+      value: project.wpData?.annual_co2_reduction ? `${project.wpData.annual_co2_reduction} tonnes` : (project.subsidiary === "growth-energy" ? "350 tonnes" : null),
       icon: <Activity className="h-6 w-6 text-green-500" />
     },
     {
       title: "Stockage d'énergie",
-      value: project.wpData?.stockage ? `${project.wpData.stockage} kWh` : (project.subsidiary === "growth-energy" ? "600 kWh" : "N/A"),
+      value: project.wpData?.stockage ? `${project.wpData.stockage} kWh` : (project.subsidiary === "growth-energy" ? "600 kWh" : null),
       icon: <BarChart className="h-6 w-6 text-blue-500" />
     },
     ...(project.wpData?.optimisation ? [{
@@ -154,7 +160,7 @@ const ProjectDetail = () => {
       value: project.wpData.optimisation,
       icon: <TrendingUp className="h-6 w-6 text-purple-500" />
     }] : [])
-  ];
+  ].filter(stat => stat.value && stat.value !== "N/A" && !stat.value.includes("N/A"));
 
   return (
     <Layout>
@@ -170,7 +176,7 @@ const ProjectDetail = () => {
             </Button>
             
             <div className="[&_button]:border-blue-500 [&_button]:text-blue-500 [&_button]:hover:bg-blue-500 [&_button]:hover:text-white">
-              <SocialShare title={project.title} compact={true} />
+              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} />
             </div>
           </div>
           
@@ -180,18 +186,13 @@ const ProjectDetail = () => {
                 <Badge className={subsidiaryDetails.color}>
                   {subsidiaryDetails.name}
                 </Badge>
-                {project.isWordPress && (
-                  <Badge className="bg-blue-100 text-blue-800">
-                    WordPress
-                  </Badge>
-                )}
               </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                {project.title}
+                {decodeHtmlEntities(project.title)}
               </h1>
               <div className="flex items-center mb-6">
                 <MapPin className="mr-2 h-5 w-5" />
-                <span>{project.location}</span>
+                <span>{decodeHtmlEntities(project.location)}</span>
               </div>
               <div className="mb-6">
                 <div className="flex justify-between mb-2">
@@ -208,7 +209,7 @@ const ProjectDetail = () => {
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
                 src={project.image} 
-                alt={project.title} 
+                alt={decodeHtmlEntities(project.title)}
                 className="w-full h-auto"
               />
             </div>
@@ -219,19 +220,21 @@ const ProjectDetail = () => {
       {/* Project Details Section */}
       <div className="bg-gray-50 py-12">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {projectStats.map((stat, index) => (
-              <Card key={index} className={stat.value === "N/A" ? "opacity-50" : ""}>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-lg">{stat.title}</CardTitle>
-                  {stat.icon}
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">{stat.value}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {projectStats.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {projectStats.map((stat, index) => (
+                <Card key={index}>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-lg">{stat.title}</CardTitle>
+                    {stat.icon}
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold">{stat.value}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Description content */}
@@ -246,20 +249,19 @@ const ProjectDetail = () => {
                     {project.wpData?.objectifs && (
                       <>
                         <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
-                        <div dangerouslySetInnerHTML={{ __html: project.wpData.objectifs }} />
+                        <div dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.objectifs) }} />
                       </>
                     )}
                     
                     {project.wpData?.impact && (
                       <>
                         <h3 className="text-xl font-semibold mt-6 mb-3">Impact</h3>
-                        <p>{project.wpData.impact}</p>
+                        <p>{decodeHtmlEntities(project.wpData.impact)}</p>
                       </>
                     )}
                   </>
                 ) : (
                   <>
-                    {/* ... keep existing code (static project content) */}
                     <p className="mb-4">{project.description}</p>
                     
                     {/* Additional fake content for demo purposes */}
@@ -333,31 +335,30 @@ const ProjectDetail = () => {
                     {project.wpData.technologie && (
                       <div>
                         <h3 className="font-semibold mb-2">Technologie</h3>
-                        <p className="text-gray-700">{project.wpData.technologie}</p>
+                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.technologie)}</p>
                       </div>
                     )}
-                    {project.wpData.capacite && (
+                    {project.wpData.capacite && project.wpData.capacite !== "N/A" && (
                       <div>
                         <h3 className="font-semibold mb-2">Capacité</h3>
                         <p className="text-gray-700">{project.wpData.capacite} kW</p>
                       </div>
                     )}
-                    {project.wpData.stockage && (
+                    {project.wpData.stockage && project.wpData.stockage !== "N/A" && (
                       <div>
                         <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
                         <p className="text-gray-700">{project.wpData.stockage} kWh</p>
                       </div>
                     )}
-                    {project.wpData.optimisation && (
+                    {project.wpData.optimisation && project.wpData.optimisation !== "N/A" && (
                       <div>
                         <h3 className="font-semibold mb-2">Optimisation</h3>
-                        <p className="text-gray-700">{project.wpData.optimisation}</p>
+                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.optimisation)}</p>
                       </div>
                     )}
                   </>
                 ) : (
                   <>
-                    {/* ... keep existing code (static technical details) */}
                     {project.subsidiary === "growth-energy" && (
                       <>
                         <div>
@@ -438,7 +439,7 @@ const ProjectDetail = () => {
           
           {/* Social sharing section */}
           <div className="mt-12 p-6 bg-white rounded-lg shadow">
-            <SocialShare title={project.title} className="justify-center" />
+            <SocialShare title={decodeHtmlEntities(project.title)} className="justify-center" />
           </div>
         </div>
       </div>

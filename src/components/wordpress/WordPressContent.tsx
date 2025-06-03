@@ -7,11 +7,19 @@ interface WordPressContentProps {
   className?: string;
 }
 
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 const WordPressContent: React.FC<WordPressContentProps> = ({ content, className = '' }) => {
+  const decodedContent = decodeHtmlEntities(content);
+  
   return (
     <div 
       className={`wordpress-content ${className}`}
-      dangerouslySetInnerHTML={renderWordPressContent(content)}
+      dangerouslySetInnerHTML={renderWordPressContent(decodedContent)}
     />
   );
 };

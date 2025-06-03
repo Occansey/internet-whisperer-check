@@ -55,7 +55,7 @@ const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
         <img 
           src={photo} 
           alt={nom} 
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-center"
         />
       </div>
       <div className="p-6">

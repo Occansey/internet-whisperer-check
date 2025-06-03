@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -100,6 +99,12 @@ export const projects: ProjectProps[] = [
   }
 ];
 
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 const getProgressColor = (progress: number) => {
   if (progress < 25) return "bg-red-500";
   if (progress < 50) return "bg-orange-500";
@@ -149,7 +154,7 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
       <div className="h-48 overflow-hidden">
         <img 
           src={project.image} 
-          alt={project.title} 
+          alt={decodeHtmlEntities(project.title)}
           className="w-full h-full object-cover"
         />
       </div>
@@ -159,11 +164,6 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
             <Badge variant="outline" className={subsidiaryDetails.color}>
               {subsidiaryDetails.name}
             </Badge>
-            {project.isWordPress && (
-              <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                WordPress
-              </Badge>
-            )}
           </div>
           <div className="text-sm text-gray-500 flex items-center">
             <Progress 
@@ -173,14 +173,14 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
             <span className="ml-2">{project.progress}%</span>
           </div>
         </div>
-        <CardTitle className="text-lg">{project.title}</CardTitle>
+        <CardTitle className="text-lg">{decodeHtmlEntities(project.title)}</CardTitle>
         <CardDescription className="flex items-center text-sm mt-1">
           <MapPin className="h-4 w-4 mr-1" />
-          {project.location}
+          {decodeHtmlEntities(project.location)}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-sm text-gray-700">{project.description}</p>
+        <p className="text-sm text-gray-700">{decodeHtmlEntities(project.description)}</p>
       </CardContent>
       <CardFooter className="flex-initial">
         <Button variant="solio" className="w-full" asChild>
@@ -206,7 +206,7 @@ const Projets = () => {
     return wpProjects.map((wpProject) => ({
       id: wpProject.id,
       title: wpProject.title.rendered,
-      description: wpProject.content.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
+      description: wpProject.content.rendered.replace(/<[^>]*>/g, ''),
       image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
       progress: wpProject.acf?.progression ? parseInt(wpProject.acf.progression) : 0,
       subsidiary: mapSubsidiaryFromWordPress(wpProject.acf?.filiale || ''),
@@ -215,8 +215,8 @@ const Projets = () => {
     }));
   };
 
-  // Combine static and WordPress projects
-  const allProjects = [...projects, ...transformWordPressProjects()];
+  // Only use WordPress projects
+  const allProjects = transformWordPressProjects();
 
   const filterProjects = (tab: string) => {
     let filtered = [...allProjects];
@@ -229,9 +229,9 @@ const Projets = () => {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
         project => 
-          project.title.toLowerCase().includes(term) ||
-          project.description.toLowerCase().includes(term) ||
-          project.location.toLowerCase().includes(term)
+          decodeHtmlEntities(project.title).toLowerCase().includes(term) ||
+          decodeHtmlEntities(project.description).toLowerCase().includes(term) ||
+          decodeHtmlEntities(project.location).toLowerCase().includes(term)
       );
     }
     
@@ -244,7 +244,22 @@ const Projets = () => {
 
   if (wpError) {
     console.error('WordPress projects error:', wpError);
-    // Continue with static projects only
+    return (
+      <Layout>
+        <HeroBanner 
+          title="Projets en Cours"
+          description="Découvrez les projets actuellement déployés par les différentes filiales du groupe Solio."
+          glowColor="cyan"
+        />
+        <div className="py-12 bg-gray-50">
+          <div className="container">
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-500">Erreur lors du chargement des projets.</p>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 
   return (
@@ -283,7 +298,7 @@ const Projets = () => {
                 {filterProjects(tab).length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filterProjects(tab).map((project) => (
-                      <ProjectCard key={`${project.isWordPress ? 'wp' : 'static'}-${project.id}`} project={project} />
+                      <ProjectCard key={`wp-${project.id}`} project={project} />
                     ))}
                   </div>
                 ) : (
