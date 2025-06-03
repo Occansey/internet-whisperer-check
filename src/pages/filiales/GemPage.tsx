@@ -35,8 +35,8 @@ const GemPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-            <StatCard value="#1" label="station de recharge d'Afrique de l'Est en développement au Burundi" />
-            <StatCard value="120" suffix=" kW" label="Capacité de recharge disponible" />
+            <StatCard value={1} prefix="#" label="station de recharge d’Afrique de l’Est en développement au Burundi" />
+            <StatCard value={120} suffix="kW" label="Capacité de recharge disponible" />
           </div>
         </div>
       </section>

@@ -8,7 +8,6 @@ import { toast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SocialShare } from "@/components/ui/social-share";
-import { StatCard } from "@/components/ui/stat-card";
 import { useWordPressProject } from '@/hooks/useWordPress';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ScreenLoader from '@/components/ui/screen-loader';
@@ -143,29 +142,25 @@ const ProjectDetail = () => {
   const projectStats = [
     {
       title: "Capacité installée",
-      value: project.wpData?.capacite ? parseInt(project.wpData.capacite) : (project.subsidiary === "growth-energy" ? 600 : null),
-      suffix: " kW",
+      value: project.wpData?.capacite ? `${project.wpData.capacite} kW` : (project.subsidiary === "growth-energy" ? "600 kWc" : null),
       icon: <Lightbulb className="h-6 w-6 text-yellow-500" />
     },
     {
       title: "Réduction CO₂ annuelle",
-      value: project.wpData?.annual_co2_reduction ? parseInt(project.wpData.annual_co2_reduction) : (project.subsidiary === "growth-energy" ? 350 : null),
-      suffix: " tonnes",
+      value: project.wpData?.annual_co2_reduction ? `${project.wpData.annual_co2_reduction} tonnes` : (project.subsidiary === "growth-energy" ? "350 tonnes" : null),
       icon: <Activity className="h-6 w-6 text-green-500" />
     },
     {
       title: "Stockage d'énergie",
-      value: project.wpData?.stockage ? parseInt(project.wpData.stockage) : (project.subsidiary === "growth-energy" ? 600 : null),
-      suffix: " kWh",
+      value: project.wpData?.stockage ? `${project.wpData.stockage} kWh` : (project.subsidiary === "growth-energy" ? "600 kWh" : null),
       icon: <BarChart className="h-6 w-6 text-blue-500" />
     },
-    ...(project.wpData?.optimisation && !project.wpData.optimisation.includes("N/A") ? [{
+    ...(project.wpData?.optimisation ? [{
       title: "Optimisation",
       value: project.wpData.optimisation,
-      suffix: "",
       icon: <TrendingUp className="h-6 w-6 text-purple-500" />
     }] : [])
-  ].filter(stat => stat.value && !String(stat.value).includes("N/A"));
+  ].filter(stat => stat.value && stat.value !== "N/A" && !stat.value.includes("N/A"));
 
   return (
     <Layout>
@@ -228,12 +223,15 @@ const ProjectDetail = () => {
           {projectStats.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {projectStats.map((stat, index) => (
-                <StatCard
-                  key={index}
-                  value={typeof stat.value === 'string' ? stat.value : stat.value || 0}
-                  label={stat.title}
-                  suffix={typeof stat.value === 'number' ? stat.suffix : ''}
-                />
+                <Card key={index}>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-lg">{stat.title}</CardTitle>
+                    {stat.icon}
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold">{stat.value}</p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}
