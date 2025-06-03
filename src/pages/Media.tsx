@@ -117,6 +117,11 @@ const Media = () => {
           // New logos uploaded
           { src: "/lovable-uploads/3dd749b3-0de1-4510-80e1-4d56e139d21f.png", name: "MFG Technologies Logo Alt", type: "image" },
           { src: "/lovable-uploads/6ae660c2-d5e5-4f50-bad4-b52418a0d06b.png", name: "Growth Energy Logo Alt", type: "image" },
+          
+          // Newly uploaded certification and organization logos
+          { src: "/lovable-uploads/c28bf123-f6da-4e8d-8c27-a47aa3c51b53.png", name: "UN & FirmaChain Logos", type: "image" },
+          { src: "/lovable-uploads/59025817-0801-4171-9599-0f1f1a6ae2e1.png", name: "PMP Professional Certification", type: "image" },
+          { src: "/lovable-uploads/142cf028-3e1b-438f-b97e-d6f76c24b0a5.png", name: "AWS Logo", type: "image" },
         ];
         
         setMedia(mediaItems);

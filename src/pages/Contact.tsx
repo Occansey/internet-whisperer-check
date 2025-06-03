@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
@@ -27,6 +26,9 @@ const Contact = () => {
     const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
     existingSubmissions.push(submission);
     localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('formSubmitted'));
   };
 
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -42,6 +44,7 @@ const Contact = () => {
         message: `Sujet: ${sujet}\n\nMessage: ${message}`, // Include subject in message
         formType: "contact",
         recipient: "contact@solio-group.com",
+        hasCv: false,
       };
       
       // Save to localStorage

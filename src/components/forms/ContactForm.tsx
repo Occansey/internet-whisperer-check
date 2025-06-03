@@ -23,6 +23,21 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
   const [cv, setCv] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const saveSubmission = (formData: any) => {
+    const submission = {
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      ...formData,
+    };
+
+    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+    existingSubmissions.push(submission);
+    localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('formSubmitted'));
+  };
+
   const getTitle = () => {
     switch (type) {
       case "candidature":
@@ -36,18 +51,6 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
       default:
         return "Formulaire de contact";
     }
-  };
-
-  const saveSubmission = (formData: any) => {
-    const submission = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      ...formData,
-    };
-
-    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-    existingSubmissions.push(submission);
-    localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -209,3 +212,4 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
 };
 
 export default ContactForm;
+
