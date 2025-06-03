@@ -59,8 +59,8 @@ const GrowthEnergyPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
             <StatCard value={5} suffix="+" label="partenaires de développement" />
             <StatCard value={115} label="MWP déployés en Afrique" />
-            <StatCard value={24} suffix="+" label="entreprises servies" />
-            <StatCard value={20} suffix="+" label="clients satisfaits" />
+            <StatCard value={24} suffix="+" label="clients satisfaits" />
+            <StatCard value={100} suffix="k+" label="tonnes d'objectif réduction de CO2" />
           </div>
         </div>
       </section>
