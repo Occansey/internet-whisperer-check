@@ -140,8 +140,8 @@ const Presence = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div> */}
+          </div> */}
+        </div>
       </section>
 
       <section className="py-20 bg-white">
