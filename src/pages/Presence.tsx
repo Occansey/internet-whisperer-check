@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -110,7 +111,7 @@ const Presence = () => {
             
             <div className="mb-8">
               <img 
-                src="/lovable-uploads/cc45fa41-f7d2-457c-b6dd-662b9f21ace1.png" 
+                src="/lovable-uploads/c7c0edee-3ef3-4f0b-b962-33108c08125a.png" 
                 alt="Carte de présence mondiale Solio Group" 
                 className="mx-auto max-w-full h-auto rounded-lg shadow-lg"
               />
