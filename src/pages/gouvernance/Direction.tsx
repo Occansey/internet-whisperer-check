@@ -50,22 +50,22 @@ const directeurs: DirecteurProps[] = [
 
 const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
   return (
-    <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
-      <div className="h-64 overflow-hidden flex-shrink-0">
+    <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+      <div className="h-80 sm:h-80 md:h-64 lg:h-72 overflow-hidden">
         <img 
           src={photo} 
           alt={nom} 
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-contain object-center bg-gray-50"
         />
       </div>
-      <div className="p-6 flex-grow flex flex-col">
+      <div className="p-6">
         <h3 className="text-xl font-semibold mb-2 text-solio-blue">{nom}</h3>
-        <p className="text-gray-700 mb-4 flex-grow">{titre}</p>
+        <p className="text-gray-700 mb-4">{titre}</p>
         <a 
           href={linkedin} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="solio-button self-start"
+          className="solio-button"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
             <path 
