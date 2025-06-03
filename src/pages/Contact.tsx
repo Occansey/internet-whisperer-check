@@ -203,15 +203,13 @@ const Contact = () => {
                         <div className="mt-3">
                           <p className="font-medium">Nigeria (Growth Energy Nigeria Limited)</p>
                           <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
-                          <p><strong>Lagos:</strong> 16, Idowu Martins, Victoria Island, Lagos</p>
-                          <p><strong>Enugu:</strong> Manamuz; 68B Chime Avenue, New Haven, Enugu</p>
                         </div>
                         <div className="mt-3">
                           <p className="font-medium">Burundi</p>
-                          <p>Bujumbura: Rue Pierre Ngendandumwe, Bujumbura, Burundi</p>
+                          <p>84 Avenue Ndamukiza , Bujumbura, Burundi</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Tanzania (LifeExpress Office)</p>
+                          <p className="font-medium">Tanzania</p>
                           <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
                         </div>
                         <p className="mt-4">
