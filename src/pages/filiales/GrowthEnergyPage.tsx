@@ -58,7 +58,7 @@ const GrowthEnergyPage = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
             <StatCard value={5} suffix="+" label="partenaires de développement" />
-            <StatCard value={115} label="MWP déployés en Afrique" />
+            <StatCard value={115} label="MWP en cours de déploiement en Afrique" />
             <StatCard value={24} suffix="+" label="clients satisfaits" />
             <StatCard value={100} suffix="k+" label="tonnes d'objectif réduction de CO2" />
           </div>
@@ -99,7 +99,7 @@ const GrowthEnergyPage = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2">John Okoro invité à Energy Talks</h3>
                 <p className="text-gray-600 mb-4">
-                  Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks à Nairobi.
+                  Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks.
                 </p>
                 <Button 
                   variant="outline" 
@@ -120,7 +120,7 @@ const GrowthEnergyPage = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2">Ouverture du nouveau siège à Nairobi</h3>
                 <p className="text-gray-600 mb-4">
-                  GEM E-Mobility a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.
+                  Growth Energy a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.
                 </p>
                 <div className="flex items-center text-green-600 text-sm">
                   <CheckCircle className="h-4 w-4 mr-1" /> Inauguration officielle en septembre 2024
