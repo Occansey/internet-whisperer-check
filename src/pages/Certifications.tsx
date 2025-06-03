@@ -79,7 +79,7 @@ const getCategoryColor = (category: string) => {
     case "cloud":
       return "bg-green-100 text-green-800";
     case "management":
-      return "bg-brown-100 text-brown-800";
+      return "bg-orange-100 text-orange-800";
     default:
       return "bg-gray-100 text-gray-800";
   }
@@ -95,6 +95,8 @@ const CertificationCard = ({ certification }: { certification: CertificationProp
             {certification.category === "digital" && "Numérique"}
             {certification.category === "industry" && "Industrie"}
             {certification.category === "quality" && "Qualité"}
+            {certification.category === "cloud" && "Cloud"}
+            {certification.category === "management" && "Management"}
           </Badge>
           <div className="flex items-center text-sm text-gray-500">
             <CalendarIcon className="mr-1 h-4 w-4" />
