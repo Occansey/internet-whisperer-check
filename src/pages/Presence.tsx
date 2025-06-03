@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
-import { Globe } from "lucide-react";
+import { MapPin, Building, Globe } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import WorldMap from "@/components/maps/WorldMap";
 
@@ -66,7 +66,7 @@ const Presence = () => {
     {
       id: 'enugu',
       name: 'Enugu, Nigeria',
-      address: '68B Chime Avenue, New Haven, Enugu',
+      address: 'Manamuz; 68B Chime Avenue, New Haven, Enugu',
       description: 'Growth Energy Nigeria Limited',
       color: 'bg-orange-600',
       coordinates: { lat: 6.4602, lng: 7.5220 }
@@ -86,6 +86,7 @@ const Presence = () => {
       <Helmet>
         <title>Notre Présence Internationale | Solio Group</title>
         <meta name="description" content="Découvrez la présence internationale de Solio Group avec nos bureaux en Europe, Afrique et Amérique du Nord pour accompagner vos projets énergétiques et digitaux." />
+        <meta name="keywords" content="présence internationale, bureaux Solio Group, Afrique, Europe, Canada, énergie solaire, transformation digitale" />
         <link rel="canonical" href="https://solio-group.com/presence" />
       </Helmet>
 
@@ -106,10 +107,110 @@ const Presence = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-12">
               Implantés sur 3 continents pour vous accompagner au plus près de vos besoins
             </p>
+            
+            {/* World Map Image */}
+            <div className="mb-12">
+              <img 
+                src="/lovable-uploads/b2166923-4d02-4c9a-96fc-302c6d1b4fd2.png" 
+                alt="Carte mondiale des bureaux Solio Group" 
+                className="w-full max-w-4xl mx-auto rounded-xl shadow-lg"
+              />
+            </div>
           </div>
 
           <div className="mb-12">
             <WorldMap locations={locations} />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {locations.map((location) => (
+              <div
+                key={location.id}
+                className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 ${location.color} rounded-full`}></div>
+                  <div>
+                    <h3 className="font-semibold text-sm text-solio-blue group-hover:text-blue-600 transition-colors">
+                      {location.name.split(',')[0]}
+                    </h3>
+                    <p className="text-xs text-gray-500">{location.name.split(',')[1]}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">Nos Bureaux par Région</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* France */}
+            <Card className="border-l-4 border-l-blue-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-blue-700 mb-6">
+                  <span className="w-4 h-4 bg-blue-500 rounded-full"></span> France
+                </h3>
+                <p className="mb-3 text-sm"><strong>Paris :</strong> 4 Rue De Longchamp, 75016, Paris</p>
+                <p className="text-sm"><strong>Marseille :</strong> 211 Chem. de la Madrague-Ville, 13015 Marseille</p>
+              </CardContent>
+            </Card>
+
+            {/* Canada */}
+            <Card className="border-l-4 border-l-red-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-red-700 mb-6">
+                  <span className="w-4 h-4 bg-red-500 rounded-full"></span> Canada
+                </h3>
+                <p className="text-sm">Montréal : 368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
+              </CardContent>
+            </Card>
+
+            {/* HQ Africa */}
+            <Card className="border-l-4 border-l-green-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-green-700 mb-6">
+                  <span className="w-4 h-4 bg-green-500 rounded-full"></span> Africa HQ
+                </h3>
+                <p className="text-sm">Nairobi : GEFI Solutions SEZ Limited, Two Rivers Finance and Innovation Center</p>
+              </CardContent>
+            </Card>
+
+            {/* Nigeria */}
+            <Card className="border-l-4 border-l-orange-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-orange-700 mb-6">
+                  <span className="w-4 h-4 bg-orange-500 rounded-full"></span> Nigeria
+                </h3>
+                <ul className="text-sm space-y-2">
+                  <li><strong>Abuja :</strong> 9, A-Avenue, Citec Estate, Mbora District</li>
+                  <li><strong>Lagos :</strong> 16, Idowu Martins, Victoria Island</li>
+                  <li><strong>Enugu :</strong> 68B Chime Avenue, New Haven</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Zanzibar */}
+            <Card className="border-l-4 border-l-emerald-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-emerald-700 mb-6">
+                  <span className="w-4 h-4 bg-emerald-500 rounded-full"></span> Zanzibar
+                </h3>
+                <p className="text-sm">Fumba Town, Urban West, Zanzibar</p>
+              </CardContent>
+            </Card>
+
+            {/* Burundi */}
+            <Card className="border-l-4 border-l-purple-500 hover:shadow-xl group transition-all duration-300">
+              <CardContent className="p-8">
+                <h3 className="flex items-center gap-2 text-xl font-bold text-purple-700 mb-6">
+                  <span className="w-4 h-4 bg-purple-500 rounded-full"></span> Burundi
+                </h3>
+                <p className="text-sm">Rue Pierre Ngendandumwe, Bujumbura</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
