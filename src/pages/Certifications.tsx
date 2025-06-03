@@ -11,7 +11,7 @@ interface CertificationProps {
   description: string;
   date: string;
   logo: string;
-  category: "energy" | "digital" | "industry" | "quality";
+  category: "energy" | "digital" | "industry" | "quality" | "cloud" | "management";
 }
 
 const certifications: CertificationProps[] = [
