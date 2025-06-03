@@ -224,14 +224,8 @@ const Contact = () => {
                     <div>
                       <h3 className="text-lg font-semibold mb-2 text-solio-blue">Suivez-nous</h3>
                       <div className="flex space-x-4">
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
+                        <a href="https://www.linkedin.com/company/solio-group/" className="text-gray-700 hover:text-solio-blue">
                           LinkedIn
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          Twitter/X
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          YouTube
                         </a>
                       </div>
                     </div>
