@@ -159,7 +159,7 @@ const Certifications = () => {
                 <ul className="list-disc pl-5 text-gray-700 space-y-2">
                   <li>+14 MW et +20 MWh de projets en cours de développement</li>
                   <li>+18 millions USD déjà sécurisés pour le financement des projets C&I en Afrique</li>
-                  <li>+30 projets déployés sur le continent africain</li>
+                  <li>+30 projets déployés sur le continent africain dans 5 pays différents</li>
                   <li>37 000 vies transformées par l'accès à l'énergie</li>
                 </ul>
               </div>
