@@ -109,6 +109,7 @@ const Presence = () => {
             </p>
             
             {/* World Map Image */}
+            
             <div className="mb-12">
               <img 
                 src="/lovable-uploads/b2166923-4d02-4c9a-96fc-302c6d1b4fd2.png" 
@@ -118,11 +119,11 @@ const Presence = () => {
             </div>
           </div>
 
-          <div className="mb-12">
+          {/* <div className="mb-12">
             <WorldMap locations={locations} />
-          </div>
+          </div> */}
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {locations.map((location) => (
               <div
                 key={location.id}
@@ -140,7 +141,7 @@ const Presence = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </section>
 
       <section className="py-20 bg-white">
