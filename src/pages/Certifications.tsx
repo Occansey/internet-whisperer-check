@@ -52,7 +52,7 @@ const certifications: CertificationProps[] = [
     organization: "Amazon Web Services",
     description: "Certification qui valide les compétences pour concevoir des architectures cloud évolutives, sécurisées et rentables sur AWS.",
     date: "Novembre 2023",
-    logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
+    logo: "/lovable-uploads/142cf028-3e1b-438f-b97e-d6f76c24b0a5.png",
     category: "cloud"
   },
   {
@@ -60,7 +60,7 @@ const certifications: CertificationProps[] = [
   organization: "Project Management Institute (PMI)",
   description: "Reconnaissance mondiale de nos compétences en gestion de projet, démontrant expertise, leadership et maîtrise des meilleures pratiques.",
   date: "Mai 2020",
-  logo: "/lovable-uploads/pmp-logo.png",
+  logo: "/lovable-uploads/59025817-0801-4171-9599-0f1f1a6ae2e1.png",
   category: "management"
   },
   {
@@ -68,7 +68,7 @@ const certifications: CertificationProps[] = [
     organization: "Frankfurt School of Finance & Management",
     description: "Certification en finance climat et énergies renouvelables, renforçant notre expertise stratégique pour structurer, financer et piloter des projets durables à fort impact environnemental et économique.",
     date: "Novembre 2017",
-    logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
+    logo: "/lovable-uploads/c28bf123-f6da-4e8d-8c27-a47aa3c51b53.png",
     category: "energy"
   }
 
