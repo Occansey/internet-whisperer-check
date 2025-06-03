@@ -9,19 +9,19 @@ import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
 const processSteps = [
   {
     title: "Évaluation des besoins",
-    description: "Analyse détaillée des besoins en mobilité électrique de votre organisation"
+    description: "Analyse détaillée des besoins énergétique de votre organisation"
   },
   {
     title: "Conception technique",
     description: "Élaboration d'une solution sur mesure adaptée à vos contraintes"
   },
   {
-    title: "Installation",
-    description: "Mise en place des infrastructures de recharge et configuration des systèmes"
+    title: "Déploiement",
+    description: "Réalisation clé en mains des centrales solaires et de batteries (BESS) y compris l'ingénierie, approvisionnement et installation avec leur systèmes de gestion de l'énergie et de suivi à distance."
   },
   {
-    title: "Maintenance",
-    description: "Suivi et maintenance préventive et corrective des installations"
+    title: "Opération et maintenance",
+    description: "Suivi et maintenance préventive et corrective des installations et gestion des actifs (Asset Management) afin d'assurer la bonne performance, les indicateurs d'ESG ainsi que le rendement financier de l'investissement."
   }
 ];
 
