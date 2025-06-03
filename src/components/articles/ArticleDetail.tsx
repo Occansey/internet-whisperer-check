@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -10,6 +9,7 @@ import WordPressContent from '@/components/wordpress/WordPressContent';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
+import { decodeHtmlEntities } from '@/utils/htmlUtils';
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -55,9 +55,9 @@ const ArticleDetail = () => {
         
         const transformedArticle = {
           id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
-          title: wpCommunique.title.rendered,
+          title: decodeHtmlEntities(wpCommunique.title.rendered),
           date: postDate,
-          content: wpCommunique.content.rendered,
+          content: decodeHtmlEntities(wpCommunique.content.rendered),
           image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
           tags: wpCommunique.acf?.tags || ['wordpress']
         };
