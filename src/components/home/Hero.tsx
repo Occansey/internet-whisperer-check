@@ -34,7 +34,9 @@ const Hero = () => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            start: 1
+            start: 1,
+            loop: 1,
+            playlist: 'qsLOG7ipHZg'
           },
           events: {
             onReady: function (event: any) {
@@ -62,22 +64,7 @@ const Hero = () => {
               }
             },
             onStateChange: function (event: any) {
-              if (event.data === window.YT?.PlayerState.PLAYING) {
-                const checkTime = setInterval(function () {
-                  if (playerInstanceRef.current) {
-                    const currentTime = playerInstanceRef.current.getCurrentTime();
-                    if (currentTime >= 15) {
-                      playerInstanceRef.current.seekTo(2);
-                    }
-                  }
-                }, 500);
-                
-                // Clear interval when video stops
-                if (event.data !== window.YT?.PlayerState.PLAYING) {
-                  clearInterval(checkTime);
-                }
-              }
-              
+              // Remove the loop handling code since we're using YouTube's native loop
               // Force play on mobile if video gets paused
               if (isMobile && event.data === window.YT?.PlayerState.PAUSED) {
                 setTimeout(() => {
