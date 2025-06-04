@@ -34,13 +34,7 @@ const Hero = () => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            start: 1,
-            enablejsapi: 1,
-            html5: 1,
-            iv_load_policy: 3,
-            cc_load_policy: 0,
-            disablekb: 1,
-            fs: 0
+            start: 1
           },
           events: {
             onReady: function (event: any) {
