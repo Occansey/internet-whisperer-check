@@ -1,13 +1,20 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const playerRef = useRef<HTMLDivElement>(null);
   const playerInstanceRef = useRef<any>(null);
+  const isMobile = useIsMobile();
+  const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
+    // Check if this is the first visit to homepage
+    const hasVisitedHomepage = localStorage.getItem('visited-homepage');
+    const isFirstVisit = !hasVisitedHomepage;
+
     // Load YouTube IFrame API
     if (!window.YT) {
       const tag = document.createElement('script');
@@ -33,6 +40,15 @@ const Hero = () => {
           events: {
             onReady: function (event: any) {
               event.target.playVideo();
+              
+              // Refresh video once on mobile and first visit
+              if (isMobile && isFirstVisit && !hasRefreshed) {
+                setTimeout(() => {
+                  event.target.seekTo(2);
+                  event.target.playVideo();
+                  setHasRefreshed(true);
+                }, 1000);
+              }
             },
             onStateChange: function (event: any) {
               if (event.data === window.YT?.PlayerState.PLAYING) {
@@ -56,6 +72,11 @@ const Hero = () => {
       }
     };
 
+    // Mark homepage as visited
+    if (isFirstVisit) {
+      localStorage.setItem('visited-homepage', 'true');
+    }
+
     // If API is already loaded, initialize immediately
     if (window.YT && window.YT.Player) {
       window.onYouTubeIframeAPIReady();
@@ -68,7 +89,7 @@ const Hero = () => {
         playerInstanceRef.current = null;
       }
     };
-  }, []);
+  }, [isMobile, hasRefreshed]);
 
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
