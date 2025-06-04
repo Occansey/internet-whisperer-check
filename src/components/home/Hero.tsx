@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -35,19 +34,37 @@ const Hero = () => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            start: 1
+            start: 1,
+            enablejsapi: 1,
+            html5: 1,
+            iv_load_policy: 3,
+            cc_load_policy: 0,
+            disablekb: 1,
+            fs: 0
           },
           events: {
             onReady: function (event: any) {
-              event.target.playVideo();
+              // Multiple attempts to ensure autoplay on mobile
+              const attemptPlay = () => {
+                event.target.mute();
+                event.target.playVideo();
+              };
               
-              // Refresh video once on mobile and first visit
-              if (isMobile && isFirstVisit && !hasRefreshed) {
-                setTimeout(() => {
-                  event.target.seekTo(2);
-                  event.target.playVideo();
-                  setHasRefreshed(true);
-                }, 1000);
+              attemptPlay();
+              
+              // Additional play attempts for mobile
+              if (isMobile) {
+                setTimeout(attemptPlay, 100);
+                setTimeout(attemptPlay, 500);
+                
+                // Refresh video once on mobile and first visit
+                if (isFirstVisit && !hasRefreshed) {
+                  setTimeout(() => {
+                    event.target.seekTo(2);
+                    event.target.playVideo();
+                    setHasRefreshed(true);
+                  }, 1000);
+                }
               }
             },
             onStateChange: function (event: any) {
@@ -65,6 +82,13 @@ const Hero = () => {
                 if (event.data !== window.YT?.PlayerState.PLAYING) {
                   clearInterval(checkTime);
                 }
+              }
+              
+              // Force play on mobile if video gets paused
+              if (isMobile && event.data === window.YT?.PlayerState.PAUSED) {
+                setTimeout(() => {
+                  event.target.playVideo();
+                }, 100);
               }
             }
           }
