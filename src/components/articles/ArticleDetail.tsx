@@ -1,15 +1,27 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
-import { articles } from '@/pages/actualites/Communiques';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
+
+// Static articles data for fallback
+const staticArticles = [
+  {
+    id: "1",
+    title: "Solio Group annonce son expansion en Afrique de l'Est",
+    date: "2024-03-15",
+    content: "Solio Group poursuit sa stratégie d'expansion avec de nouveaux projets en Afrique de l'Est...",
+    image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
+    tags: ["expansion", "afrique"]
+  }
+];
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,7 +81,7 @@ const ArticleDetail = () => {
       } 
       // If WordPress fails or no data, try static articles
       else if (wpError || (!wpLoading && !wpCommunique)) {
-        const found = articles.find(a => a.id === id);
+        const found = staticArticles.find(a => a.id === id);
         setArticle(found || null);
         setLoading(false);
         
