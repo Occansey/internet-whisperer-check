@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -7,7 +8,7 @@ import { ThemeToggle } from '@/components/theme/theme-toggle';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdowns, setDropdowns] = useState({
-    accueil: false,
+    apropos: false,
     filiales: false,
     gouvernance: false,
     actualites: false,
@@ -18,7 +19,7 @@ const Header = () => {
 
   const toggleDropdown = (dropdown: keyof typeof dropdowns) => {
     setDropdowns(prev => ({
-      accueil: false,
+      apropos: false,
       filiales: false,
       gouvernance: false,
       actualites: false,
@@ -29,7 +30,7 @@ const Header = () => {
 
   const closeAllDropdowns = () => {
     setDropdowns({
-      accueil: false,
+      apropos: false,
       filiales: false,
       gouvernance: false,
       actualites: false,
@@ -67,11 +68,11 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8 items-center">
             <div className="relative group">
-              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('accueil')}>
-                Accueil
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.accueil ? 'rotate-180' : ''}`} />
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('apropos')}>
+                À propos
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.apropos ? 'rotate-180' : ''}`} />
               </Button>
-              {dropdowns.accueil && (
+              {dropdowns.apropos && (
                 <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                   <div className="py-1" role="none">
                     <Link to="/presentation" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
@@ -94,21 +95,15 @@ const Header = () => {
               )}
             </div>
 
-            <Link 
-              to="/nos-filiales"
-              className={`${
-                location.pathname === '/nos-filiales' 
-                  ? 'text-solio-blue' 
-                  : 'text-gray-700 dark:text-gray-300 hover:text-solio-blue dark:hover:text-solio-yellow'
-              } transition-colors`}
-              onClick={closeAllDropdowns}
-            >
-              Nos Filiales
-            </Link>
-
             <div className="relative group">
               <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('filiales')}>
-                Filiales
+                <Link 
+                  to="/nos-filiales"
+                  className="flex items-center gap-1"
+                  onClick={closeAllDropdowns}
+                >
+                  Filiales
+                </Link>
                 <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
               </Button>
               {dropdowns.filiales && (
@@ -224,11 +219,11 @@ const Header = () => {
         {isOpen && (
           <div className="lg:hidden py-4 border-t dark:border-gray-700">
             <div className="relative">
-              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('accueil')}>
-                Accueil
-                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.accueil ? 'rotate-180' : ''}`} />
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('apropos')}>
+                À propos
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.apropos ? 'rotate-180' : ''}`} />
               </Button>
-              {dropdowns.accueil && (
+              {dropdowns.apropos && (
                 <div className="ml-4">
                   <Link to="/presentation" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Présentation</Link>
                   <Link to="/mission-vision" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Mission & Vision</Link>
@@ -239,11 +234,9 @@ const Header = () => {
               )}
             </div>
 
-            <Link to="/nos-filiales" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos Filiales</Link>
-
             <div className="relative">
               <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('filiales')}>
-                Filiales
+                <Link to="/nos-filiales" className="flex-1 text-left" onClick={closeAllDropdowns}>Filiales</Link>
                 <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
               </Button>
               {dropdowns.filiales && (

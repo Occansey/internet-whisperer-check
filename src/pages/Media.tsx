@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -126,6 +125,9 @@ const Media = () => {
           
           // Big Data Word Cloud
           { src: "/lovable-uploads/8b0d0b11-1809-4db3-ae9a-f64b14595d0c.png", name: "Big Data Word Cloud", type: "image" },
+          
+          // Nouvelle image ajoutée
+          { src: "/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png", name: "Fumba Town Aerial View", type: "image" },
         ];
         
         setMedia(mediaItems);
