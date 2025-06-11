@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -95,6 +94,18 @@ const Header = () => {
               )}
             </div>
 
+            <Link 
+              to="/nos-filiales"
+              className={`${
+                location.pathname === '/nos-filiales' 
+                  ? 'text-solio-blue' 
+                  : 'text-gray-700 dark:text-gray-300 hover:text-solio-blue dark:hover:text-solio-yellow'
+              } transition-colors`}
+              onClick={closeAllDropdowns}
+            >
+              Nos Filiales
+            </Link>
+
             <div className="relative group">
               <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('filiales')}>
                 Filiales
@@ -103,9 +114,6 @@ const Header = () => {
               {dropdowns.filiales && (
                 <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                   <div className="py-1" role="none">
-                    <Link to="/nos-filiales" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
-                      Nos Filiales
-                    </Link>
                     <Link to="/filiales/growth-energy" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
                       Growth Energy
                     </Link>
@@ -231,6 +239,8 @@ const Header = () => {
               )}
             </div>
 
+            <Link to="/nos-filiales" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos Filiales</Link>
+
             <div className="relative">
               <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('filiales')}>
                 Filiales
@@ -238,7 +248,6 @@ const Header = () => {
               </Button>
               {dropdowns.filiales && (
                 <div className="ml-4">
-                  <Link to="/nos-filiales" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos Filiales</Link>
                   <Link to="/filiales/growth-energy" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Growth Energy</Link>
                   <Link to="/filiales/asking" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Asking</Link>
                   <Link to="/filiales/mfg-technologies" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>MFG Technologies</Link>
@@ -281,8 +290,8 @@ const Header = () => {
               </Button>
               {dropdowns.carrieres && (
                 <div className="ml-4">
-                  <Link to="/carrieres/engagements-rh" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos engagements RH</Link>
-                  <Link to="/carrieres/rejoignez-nous" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Rejoignez-nous</Link>
+                  <Link to="/carrieres/engagements-rh" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos engagements RH</Link>
+                  <Link to="/carrieres/rejoignez-nous" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Rejoignez-nous</Link>
                 </div>
               )}
             </div>
