@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -11,7 +12,7 @@ import { EventProps } from '@/types/events';
 import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
-import { findBySlug } from '@/utils/slugUtils';
+import { findBySlug, generateSlug } from '@/utils/slugUtils';
 
 const formatDateToFrench = (dateStr: string): string => {
   console.log('Formatting date:', dateStr);
@@ -260,7 +261,7 @@ const EventDetail = () => {
 
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
   const tags = wpEvent?.tags || event?.tags || [];
-  const isPastEvent = event.type === "passé" || wpEvent?.type === "passé";
+  const isPastEvent = event.type === "passé" || wpEvent?.type === "passé" || tags.includes("passé");
 
   return (
     <Layout>
@@ -384,5 +385,3 @@ const EventDetail = () => {
 };
 
 export default EventDetail;
-
-}
