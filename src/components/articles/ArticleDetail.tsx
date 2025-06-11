@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
 import WordPressContent from '@/components/wordpress/WordPressContent';
+import ImageGallery from '@/components/ui/image-gallery';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
@@ -19,6 +20,7 @@ const staticArticles = [
     date: "2024-03-15",
     content: "Solio Group poursuit sa stratégie d'expansion avec de nouveaux projets en Afrique de l'Est...",
     image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
+    images: ["/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png"],
     tags: ["expansion", "afrique"]
   }
 ];
@@ -51,6 +53,19 @@ const ArticleDetail = () => {
     return acfDate;
   };
 
+  // Extract images from WordPress content
+  const extractImagesFromContent = (content: string): string[] => {
+    const images: string[] = [];
+    const imgRegex = /<img[^>]+src="([^">]+)"/g;
+    let match;
+    
+    while ((match = imgRegex.exec(content)) !== null) {
+      images.push(match[1]);
+    }
+    
+    return images;
+  };
+
   useEffect(() => {
     console.log('ArticleDetail useEffect - id:', id, 'wpCommunique:', wpCommunique, 'wpLoading:', wpLoading, 'wpError:', wpError);
     
@@ -65,12 +80,22 @@ const ArticleDetail = () => {
           postDate = wpCommunique.date.split('T')[0];
         }
         
+        // Extract images from content
+        const contentImages = extractImagesFromContent(wpCommunique.content.rendered);
+        const featuredImage = wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+        
+        // Combine featured image with content images, ensuring featured image is first
+        const allImages = featuredImage 
+          ? [featuredImage, ...contentImages.filter(img => img !== featuredImage)]
+          : contentImages;
+        
         const transformedArticle = {
           id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
           title: decodeHtmlEntities(wpCommunique.title.rendered),
           date: postDate,
           content: decodeHtmlEntities(wpCommunique.content.rendered),
-          image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+          image: featuredImage || '/placeholder.svg',
+          images: allImages.length > 0 ? allImages : [featuredImage || '/placeholder.svg'],
           tags: wpCommunique.acf?.tags || ['wordpress']
         };
         setArticle(transformedArticle);
@@ -136,13 +161,9 @@ const ArticleDetail = () => {
               <span>{article.date}</span>
             </div>
             
-            {article.image && (
-              <div className="aspect-video rounded-lg overflow-hidden mb-8">
-                <img 
-                  src={article.image} 
-                  alt={article.title} 
-                  className="w-full h-full object-cover"
-                />
+            {article.images && article.images.length > 0 && (
+              <div className="mb-8">
+                <ImageGallery images={article.images} />
               </div>
             )}
             
