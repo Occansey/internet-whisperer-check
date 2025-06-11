@@ -31,7 +31,7 @@ const filialesList: FilialeProps[] = [
     name: "Asking",
     description: "Asking est une entreprise spécialisée dans la visualisation et l'analyse de données. Nous accompagnons les entreprises dans l'exploitation stratégique de leurs données pour une prise de décision éclairée et un pilotage optimisé de leur activité.",
     logo: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
-    coverImage: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
+    coverImage: "/lovable-uploads/8b0d0b11-1809-4db3-ae9a-f64b14595d0c.png",
     keyActivities: ["Consulting en données", "Tableaux de bord interactifs", "Formation et accompagnement"],
     url: "/filiales/asking"
   },
