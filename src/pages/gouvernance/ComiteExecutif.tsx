@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,7 +17,7 @@ const executives: ExecutiveMemberProps[] = [
     name: "Evrard Havyarimana",
     title: "Président du Groupe et du COMEX",
     linkedin: "https://fr.linkedin.com/in/evrard-havyarimana-07450a24",
-    bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n Diplômé d’un Master en Finance des Entreprises à l’IAE Bordeaux IV – Université de Bordeaux, il débute sa carrière dans les secteurs bancaire et du conseil, avant de se consacrer à l’entrepreneuriat avec la volonté d’apporter des solutions concrètes aux défis énergétiques et technologiques des marchés émergents.\n En 2019, il fonde à Paris Growth Supply, une entreprise dédiée à l’accompagnement de la croissance des entreprises.\n En 2025, cette entreprise devient Solio Group, pour refléter une ambition élargie et structurée autour de deux axes majeurs : la transition énergétique et la transformation digitale.\n En 2022, il co-fonde Growth Energy, une filiale spécialisée dans le développement, le financement et le déploiement de centrales solaires pour le secteur industriel et commercial, avec une attention particulière portée aux marchés africains.\n En 2023, il fonde Asking en France et au Canada, une entreprise technologique dédiée à l’exploitation intelligente des données pour renforcer la performance et la résilience des entreprises.\n En 2024, Solio Group (ex Growth Supply) accélère son expansion externe en rachetant MFG Technologies, intégrateur montréalais de solutions CRM et ERP fort de 20 ans d’expertise.\n À travers Solio Group et ses filiales, Evrard Havyarimana pilote une stratégie de croissance responsable, fondée sur l’impact mesurable, l’innovation technologique et la création de valeur durable sur les trois continents où le groupe est actif.\n"
+    bio: "Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n Diplômé d'un Master en Finance des Entreprises à l'IAE Bordeaux IV – Université de Bordeaux, il débute sa carrière dans les secteurs bancaire et du conseil, avant de se consacrer à l'entrepreneuriat avec la volonté d'apporter des solutions concrètes aux défis énergétiques et technologiques des marchés émergents.\n En 2019, il fonde à Paris Growth Supply, une entreprise dédiée à l'accompagnement de la croissance des entreprises.\n En 2025, cette entreprise devient Solio Group, pour refléter une ambition élargie et structurée autour de deux axes majeurs : la transition énergétique et la transformation digitale.\n En 2022, il co-fonde Growth Energy, une filiale spécialisée dans le développement, le financement et le déploiement de centrales solaires pour le secteur industriel et commercial, avec une attention particulière portée aux marchés africains.\n En 2023, il fonde Asking en France et au Canada, une entreprise technologique dédiée à l'exploitation intelligente des données pour renforcer la performance et la résilience des entreprises.\n En 2024, Solio Group (ex Growth Supply) accélère son expansion externe en rachetant MFG Technologies, intégrateur montréalais de solutions CRM et ERP fort de 20 ans d'expertise.\n À travers Solio Group et ses filiales, Evrard Havyarimana pilote une stratégie de croissance responsable, fondée sur l'impact mesurable, l'innovation technologique et la création de valeur durable sur les trois continents où le groupe est actif.\n"
   },
   {
     photo:  "/lovable-uploads/21b71e09-5fdb-4819-a954-2c32bfebb440.png",
@@ -58,7 +57,7 @@ const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) =>
           <img 
             src={executive.photo} 
             alt={executive.name} 
-            className="w-full h-auto aspect-[3/4] object-cover object-top"
+            className="w-full h-auto aspect-[3/4] object-cover object-top scale-75 md:scale-100"
           />
         </div>
         <div className="mt-4">
