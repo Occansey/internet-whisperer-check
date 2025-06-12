@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -9,7 +10,7 @@ import EventTypeFilters from "@/components/events/EventTypeFilters";
 import { events as staticEvents } from "@/data/events";
 import { EventProps, EventType } from '@/types/events';
 import { useWordPressEvents } from "@/hooks/useWordPressEvents";
-import ScreenLoader from "@/components/ui/screen-loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const transformWordPressToEventProps = (wpEvent: any): EventProps => {
   return {
@@ -91,10 +92,6 @@ const Evenements = () => {
     // Navigate to event detail page or open modal
   };
 
-  if (isLoading) {
-    return <ScreenLoader message="Chargement des événements..." />;
-  }
-
   // Use WordPress events if available, otherwise fallback to static events
   const rawEventsSource = wordpressEvents && wordpressEvents.length > 0 
     ? wordpressEvents.map(transformWordPressToEventProps)
@@ -139,6 +136,31 @@ const Evenements = () => {
 
   const filteredEvents = filterEvents(searchTerm, selectedType);
   const calendarFilteredEvents = filterEvents(searchTerm, "all");
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <HeroBanner 
+          title="Événements"
+          description="Découvrez les événements à venir et passés du groupe Solio, ainsi que nos moments forts dans les médias."
+          glowColor="emerald"
+        />
+        <div className="py-12 bg-gray-50 dark:bg-gray-900">
+          <div className="container">
+            <div className="space-y-4">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <Skeleton key={i} className="h-64 w-full" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
