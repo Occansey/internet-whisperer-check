@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import Contact from "./pages/Contact";
 import Presentation from "./pages/Presentation";
@@ -40,48 +41,52 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/presentation" element={<Presentation />} />
-              <Route path="/mission-vision" element={<MissionVision />} />
-              <Route path="/certifications" element={<Certifications />} />
-              <Route path="/culture" element={<Culture />} />
-              <Route path="/activites" element={<Activites />} />
-              <Route path="/presence" element={<Presence />} />
-              
-              <Route path="/filiales" element={<Filiales />} />
-              <Route path="/nos-filiales" element={<NosFiliales />} />
-              <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
-              <Route path="/filiales/asking" element={<AskingPage />} />
-              <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
-              <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
-              
-              <Route path="/gouvernance/direction" element={<Direction />} />
-              <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
-              
-              <Route path="/actualites/communiques" element={<Communiques />} />
-              <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
-              <Route path="/actualites/evenements" element={<Evenements />} />
-              <Route path="/actualites/evenements/:id" element={<EventDetail />} />
-              <Route path="/actualites/projets" element={<Projets />} />
-              <Route path="/actualites/projets/:id" element={<ProjectDetail />} />
-              <Route path="/actualites/articles/:id" element={<ArticleDetail />} />
-              
-              <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
-              <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
-              
-              <Route path="/media" element={<Media />} />
-              <Route path="/all-submissions" element={<AllSubmissions />} />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/presentation" element={<Presentation />} />
+                <Route path="/mission-vision" element={<MissionVision />} />
+                <Route path="/certifications" element={<Certifications />} />
+                <Route path="/culture" element={<Culture />} />
+                <Route path="/activites" element={<Activites />} />
+                <Route path="/presence" element={<Presence />} />
+                
+                <Route path="/filiales" element={<Filiales />} />
+                <Route path="/nos-filiales" element={<NosFiliales />} />
+                <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
+                <Route path="/filiales/asking" element={<AskingPage />} />
+                <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
+                <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
+                
+                <Route path="/gouvernance/direction" element={<Direction />} />
+                <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
+                
+                <Route path="/actualites/communiques" element={<Communiques />} />
+                <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
+                <Route path="/actualites/evenements" element={<Evenements />} />
+                {/* Support both numeric IDs and slugs for events */}
+                <Route path="/actualites/evenements/:id" element={<EventDetail />} />
+                <Route path="/actualites/projets" element={<Projets />} />
+                {/* Support both numeric IDs and slugs for projects */}
+                <Route path="/actualites/projets/:id" element={<ProjectDetail />} />
+                <Route path="/actualites/articles/:id" element={<ArticleDetail />} />
+                
+                <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
+                <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
+                
+                <Route path="/media" element={<Media />} />
+                <Route path="/all-submissions" element={<AllSubmissions />} />
+                
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </HelmetProvider>
   </QueryClientProvider>

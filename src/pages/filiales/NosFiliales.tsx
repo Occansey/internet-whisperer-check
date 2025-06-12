@@ -31,7 +31,7 @@ const filiales: FilialeProps[] = [
     name: "Asking",
     description: "Asking est une entreprise spécialisée dans la visualisation et l'analyse de données. Nous accompagnons les entreprises dans l'exploitation stratégique de leurs données pour une prise de décision éclairée et un pilotage optimisé de leur activité.",
     logo: "/lovable-uploads/47829a40-c956-456e-96cf-da18c4a1d3c3.png",
-    coverImage: "/lovable-uploads/c9668ae7-8e30-4d4b-8173-f61c96c000e2.png",
+    coverImage: "/lovable-uploads/8b0d0b11-1809-4db3-ae9a-f64b14595d0c.png",
     keyActivities: ["Consulting en données", "Tableaux de bord interactifs", "Formation et accompagnement"],
     url: "/filiales/asking"
   },
@@ -49,7 +49,7 @@ const filiales: FilialeProps[] = [
     name: "GEM E-Mobility",
     description: "GEM E-Mobility est une entreprise spécialisée dans les solutions de mobilité électrique. Nous concevons et déployons des infrastructures de recharge pour véhicules électriques adaptées aux besoins spécifiques des entreprises et collectivités.",
     logo: "/lovable-uploads/177d3a76-7f07-4882-a771-364510133ee1.png",
-    coverImage: "/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png",
+    coverImage: "/lovable-uploads/20a6522c-136d-4370-b398-38eb31ab96c2.png",
     keyActivities: ["Bornes de recharge", "Stations solaires", "Gestion de flotte électrique"],
     url: "/filiales/gem-e-mobility"
   }

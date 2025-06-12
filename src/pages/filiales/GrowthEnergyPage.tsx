@@ -1,10 +1,12 @@
-
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/ui/stat-card";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
+import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
+import SubsidiaryDetailNavigation from '@/components/ui/subsidiary-detail-navigation';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const processSteps = [
   {
@@ -26,6 +28,8 @@ const processSteps = [
 ];
 
 const GrowthEnergyPage = () => {
+  const { t } = useLanguage();
+
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -134,7 +138,7 @@ const GrowthEnergyPage = () => {
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-1">
                 <img 
-                  src="/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png" 
+                  src="/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png" 
                   alt="Fumba Town Project" 
                   className="rounded-lg shadow-md w-full"
                 />
@@ -145,7 +149,7 @@ const GrowthEnergyPage = () => {
                 </p>
                 <div className="mt-4">
                   <Button variant="solio" asChild>
-                    <Link to="/actualites/projets/7">Découvrir le projet</Link>
+                    <Link to="/actualites/projets/4732">Découvrir le projet</Link>
                   </Button>
                 </div>
               </div>
@@ -153,6 +157,15 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Add navigation at the bottom */}
+      <SubsidiaryDetailNavigation 
+        websiteUrl="https://growth-energy.fr/"
+        nextSubsidiary={{
+          name: "Asking",
+          path: "/filiales/asking"
+        }}
+      />
     </Layout>
   );
 };

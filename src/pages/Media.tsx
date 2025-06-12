@@ -122,6 +122,12 @@ const Media = () => {
           { src: "/lovable-uploads/c28bf123-f6da-4e8d-8c27-a47aa3c51b53.png", name: "UN & FirmaChain Logos", type: "image" },
           { src: "/lovable-uploads/59025817-0801-4171-9599-0f1f1a6ae2e1.png", name: "PMP Professional Certification", type: "image" },
           { src: "/lovable-uploads/142cf028-3e1b-438f-b97e-d6f76c24b0a5.png", name: "AWS Logo", type: "image" },
+          
+          // Big Data Word Cloud
+          { src: "/lovable-uploads/8b0d0b11-1809-4db3-ae9a-f64b14595d0c.png", name: "Big Data Word Cloud", type: "image" },
+          
+          // Nouvelle image ajoutée
+          { src: "/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png", name: "Fumba Town Aerial View", type: "image" },
         ];
         
         setMedia(mediaItems);
