@@ -201,7 +201,7 @@ const Contact = () => {
                         <div className="mt-3">
                           <p className="font-medium">Africa HQ</p>
                           <p>GEFI Solutions SEZ Limited</p>
-                          <p>9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
+                          <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
                         </div>
                         <div className="mt-3">
                           <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
