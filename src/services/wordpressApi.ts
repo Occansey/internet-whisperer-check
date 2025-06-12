@@ -35,8 +35,22 @@ export interface WordPressPost {
     annual_co2_reduction?: string;
     impact?: string;
     optimisation?: string;
-    // Add gallery and video fields
-    galerie?: any[];
+    // Updated gallery structure
+    photo_gallery?: {
+      galerie?: Array<Array<{
+        id: number;
+        title: string;
+        caption: string;
+        full_image_url: string;
+        thumbnail_image_url: string;
+        large_srcset: string;
+        medium_srcset: string;
+        media_details: any;
+        alt_text: string;
+        url: string;
+        target: string;
+      }>>;
+    };
     video_youtube?: string;
     video_linkedin?: string;
     // Event-specific fields
