@@ -266,13 +266,7 @@ const ProjectDetail = () => {
                 </div>
               )}
               
-              {/* Project Video */}
-              {(project.wpData?.video_youtube || project.wpData?.video_linkedin) && (
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4">Vidéo du projet</h3>
-                  <VideoEmbed url={project.wpData.video_youtube || project.wpData.video_linkedin} />
-                </div>
-              )}
+
               
               <div className="prose max-w-none text-gray-700">
                 {project.isWordPress ? (
@@ -293,6 +287,13 @@ const ProjectDetail = () => {
                         <p>{decodeHtmlEntities(project.wpData.impact)}</p>
                       </>
                     )}
+                   {/* Project Video */}
+                  {(project.wpData?.video_youtube || project.wpData?.video_linkedin) && (
+                    <div className="mb-8">
+                      <h3 className="text-xl font-semibold mb-4">Vidéo du projet</h3>
+                      <VideoEmbed url={project.wpData.video_youtube || project.wpData.video_linkedin} />
+                    </div>
+                  )}
                   </>
                 ) : (
                   <>
