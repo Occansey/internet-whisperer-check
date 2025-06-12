@@ -134,7 +134,7 @@ const GrowthEnergyPage = () => {
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-1">
                 <img 
-                  src="/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png" 
+                  src="/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png" 
                   alt="Fumba Town Project" 
                   className="rounded-lg shadow-md w-full"
                 />
@@ -145,7 +145,7 @@ const GrowthEnergyPage = () => {
                 </p>
                 <div className="mt-4">
                   <Button variant="solio" asChild>
-                    <Link to="/actualites/projets/4732">Découvrir le projet</Link>
+                    <Link to="/actualites/projets/7">Découvrir le projet</Link>
                   </Button>
                 </div>
               </div>
