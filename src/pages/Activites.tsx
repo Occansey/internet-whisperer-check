@@ -8,7 +8,7 @@ const Activites = () => {
   return (
     <Layout>
       <HeroBanner
-        title="Nos Activités"
+        title="Nos domaines d'activité"
         description="Découvrez comment Solio Group accompagne ses clients dans leur transformation énergétique et digitale."
         glowColor="blue"
       />

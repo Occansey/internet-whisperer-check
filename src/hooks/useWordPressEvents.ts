@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
@@ -18,6 +17,13 @@ interface WordPressEvent {
     type?: string;
     en_savoir_plus?: string;
     'heure-fin'?: string;
+    photo_gallery?: {
+      gallery?: any[][];
+      galerie?: any[][];
+    };
+    galerie?: any[];
+    video_youtube?: string;
+    video_linkedin?: string;
     tags?: Array<{
       term_id: number;
       name: string;
@@ -44,6 +50,9 @@ interface TransformedEvent {
   en_savoir_plus?: string;
   'heure-fin'?: string;
   tags?: string[];
+  gallery?: any[];
+  video_youtube?: string;
+  video_linkedin?: string;
 }
 
 const formatDateToFrench = (dateStr: string): string => {
@@ -85,6 +94,16 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
   console.log('Raw WordPress events:', response.data);
   
   return response.data.map((event: WordPressEvent) => {
+    // Extract gallery from ACF
+    let gallery: any[] = [];
+    if (event.acf?.photo_gallery?.gallery?.[0]) {
+      gallery = event.acf.photo_gallery.gallery[0];
+    } else if (event.acf?.photo_gallery?.galerie?.[0]) {
+      gallery = event.acf.photo_gallery.galerie[0];
+    } else if (event.acf?.galerie) {
+      gallery = event.acf.galerie;
+    }
+
     const transformed = {
       id: event.id,
       title: decodeHtmlEntities(event.title.rendered),
@@ -98,6 +117,9 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
       en_savoir_plus: event.acf?.en_savoir_plus || '',
       'heure-fin': event.acf?.['heure-fin'] || '',
       tags: event.acf?.tags?.map(tag => tag.name) || [],
+      gallery,
+      video_youtube: event.acf?.video_youtube,
+      video_linkedin: event.acf?.video_linkedin,
     };
     
     console.log('Transformed event:', transformed);

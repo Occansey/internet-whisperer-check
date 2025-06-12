@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -7,7 +6,10 @@ import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ImageGallery from '@/components/ui/image-gallery';
-import { useWordPressCommunique } from '@/hooks/useWordPress';
+import VideoEmbed from '@/components/ui/video-embed';
+import ContentNavigation from '@/components/ui/content-navigation';
+import RelatedContent from '@/components/ui/related-content';
+import { useWordPressCommunique, useWordPressCommuniques } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
@@ -34,8 +36,9 @@ const ArticleDetail = () => {
 
   console.log('ArticleDetail - ID from params:', id);
 
-  // Try to fetch from WordPress first
+  // Fetch current article and all articles for navigation
   const { data: wpCommunique, isLoading: wpLoading, error: wpError } = useWordPressCommunique(id || '');
+  const { data: allCommuniques } = useWordPressCommuniques({ per_page: 100 });
 
   // Helper function to convert DD/MM/YYYY to YYYY-MM-DD
   const convertACFDate = (acfDate: string): string => {
@@ -72,7 +75,14 @@ const ArticleDetail = () => {
     if (id) {
       // If WordPress data is available, use it
       if (wpCommunique && !wpLoading) {
-        // Use ACF date if available, otherwise use post date
+        // Extract gallery from ACF
+        let gallery: any[] = [];
+        if (wpCommunique.acf?.photo_gallery?.galerie?.[0]) {
+          gallery = wpCommunique.acf.photo_gallery.galerie[0];
+        } else if (wpCommunique.acf?.galerie) {
+          gallery = wpCommunique.acf.galerie;
+        }
+
         let postDate = '';
         if (wpCommunique.acf?.date) {
           postDate = convertACFDate(wpCommunique.acf.date);
@@ -80,11 +90,9 @@ const ArticleDetail = () => {
           postDate = wpCommunique.date.split('T')[0];
         }
         
-        // Extract images from content
         const contentImages = extractImagesFromContent(wpCommunique.content.rendered);
         const featuredImage = wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url;
         
-        // Combine featured image with content images, ensuring featured image is first
         const allImages = featuredImage 
           ? [featuredImage, ...contentImages.filter(img => img !== featuredImage)]
           : contentImages;
@@ -96,7 +104,10 @@ const ArticleDetail = () => {
           content: decodeHtmlEntities(wpCommunique.content.rendered),
           image: featuredImage || '/placeholder.svg',
           images: allImages.length > 0 ? allImages : [featuredImage || '/placeholder.svg'],
-          tags: wpCommunique.acf?.tags || ['wordpress']
+          tags: wpCommunique.acf?.tags || ['wordpress'],
+          gallery,
+          video_youtube: wpCommunique.acf?.video_youtube,
+          video_linkedin: wpCommunique.acf?.video_linkedin,
         };
         setArticle(transformedArticle);
         setLoading(false);
@@ -115,6 +126,52 @@ const ArticleDetail = () => {
       }
     }
   }, [id, wpCommunique, wpLoading, wpError]);
+
+  // Get navigation items
+  const getNavigationItems = () => {
+    if (!allCommuniques || !article) return { previousItem: null, nextItem: null };
+    
+    const currentIndex = allCommuniques.findIndex(comm => 
+      comm.id.toString() === article.id || 
+      comm.slug === article.id ||
+      comm.acf?.id?.trim() === article.id
+    );
+    
+    const previousItem = currentIndex > 0 ? {
+      id: allCommuniques[currentIndex - 1].acf?.id?.trim() || 
+          allCommuniques[currentIndex - 1].slug || 
+          allCommuniques[currentIndex - 1].id.toString(),
+      title: decodeHtmlEntities(allCommuniques[currentIndex - 1].title.rendered)
+    } : null;
+    
+    const nextItem = currentIndex < allCommuniques.length - 1 ? {
+      id: allCommuniques[currentIndex + 1].acf?.id?.trim() || 
+          allCommuniques[currentIndex + 1].slug || 
+          allCommuniques[currentIndex + 1].id.toString(),
+      title: decodeHtmlEntities(allCommuniques[currentIndex + 1].title.rendered)
+    } : null;
+    
+    return { previousItem, nextItem };
+  };
+
+  // Get related articles for the bottom section
+  const getRelatedArticles = () => {
+    if (!allCommuniques) return [];
+    
+    return allCommuniques
+      .filter(comm => {
+        const commId = comm.acf?.id?.trim() || comm.slug || comm.id.toString();
+        return commId !== article?.id;
+      })
+      .slice(0, 4)
+      .map(comm => ({
+        id: comm.acf?.id?.trim() || comm.slug || comm.id.toString(),
+        title: decodeHtmlEntities(comm.title.rendered),
+        excerpt: decodeHtmlEntities(comm.excerpt.rendered.replace(/<[^>]*>/g, '')),
+        image: comm._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+        date: comm.acf?.date || comm.date.split('T')[0]
+      }));
+  };
 
   const handleBack = () => {
     navigate('/actualites/communiques');
@@ -136,6 +193,9 @@ const ArticleDetail = () => {
       </Layout>
     );
   }
+
+  const { previousItem, nextItem } = getNavigationItems();
+  const relatedArticles = getRelatedArticles();
 
   return (
     <Layout>
@@ -161,9 +221,23 @@ const ArticleDetail = () => {
               <span>{article.date}</span>
             </div>
             
-            {article.images && article.images.length > 0 && (
+            {/* Gallery Section - prioritized with cover image */}
+            {(article.gallery && article.gallery.length > 0) || article.images?.length > 0 && (
               <div className="mb-8">
-                <ImageGallery images={article.images} />
+                <ImageGallery 
+                  images={article.gallery && article.gallery.length > 0 
+                    ? [article.image, ...article.gallery.map((img: any) => img.full_image_url || img.source_url || img.url)]
+                    : article.images
+                  } 
+                />
+              </div>
+            )}
+            
+            {/* Video Section */}
+            {(article.video_youtube || article.video_linkedin) && (
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-4">Vidéo</h3>
+                <VideoEmbed url={article.video_youtube || article.video_linkedin} />
               </div>
             )}
             
@@ -186,12 +260,31 @@ const ArticleDetail = () => {
               )}
             </div>
             
-            {/* Social sharing section */}
+            {/* Navigation between articles */}
+            <div className="my-12">
+              <ContentNavigation 
+                previousItem={previousItem}
+                nextItem={nextItem}
+                basePath="/actualites/communiques"
+              />
+            </div>
+            
             <div className="mt-12 pt-6 border-t">
               <SocialShare title={article.title} className="justify-center" />
             </div>
           </div>
         </div>
+        
+        {/* Related Articles Section */}
+        {relatedArticles.length > 0 && (
+          <RelatedContent 
+            items={relatedArticles}
+            title="Lire les autres communiqués"
+            linkText="Voir tous les communiqués"
+            basePath="/actualites/communiques"
+            allItemsPath="/actualites/communiques"
+          />
+        )}
       </article>
     </Layout>
   );
