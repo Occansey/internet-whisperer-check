@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,3 +91,8 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </div>
+    </Layout>
+  );
+};
+
+export default GrowthEnergyPage;
