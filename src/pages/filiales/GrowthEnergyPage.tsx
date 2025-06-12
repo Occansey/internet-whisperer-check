@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/ui/stat-card";
@@ -5,8 +6,6 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
 import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
-import SubsidiaryDetailNavigation from '@/components/ui/subsidiary-detail-navigation';
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const processSteps = [
   {
@@ -28,8 +27,6 @@ const processSteps = [
 ];
 
 const GrowthEnergyPage = () => {
-  const { t } = useLanguage();
-
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -157,15 +154,6 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </section>
-      
-      {/* Add navigation at the bottom */}
-      <SubsidiaryDetailNavigation 
-        websiteUrl="https://growth-energy.fr/"
-        nextSubsidiary={{
-          name: "Asking",
-          path: "/filiales/asking"
-        }}
-      />
     </Layout>
   );
 };
