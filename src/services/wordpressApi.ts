@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 /**
@@ -5,7 +6,6 @@ import axios from 'axios';
  */
 const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
 const COMMUNIQUES_API_URL = "https://api.solio-group.com/wp-json/wp/v2/communiques?_embed";
-const EVENTS_API_URL = "https://api.solio-group.com/wp-json/wp/v2/evenements?_embed";
 
 // Types for WordPress API responses
 export interface WordPressPost {
@@ -23,11 +23,11 @@ export interface WordPressPost {
     id?: string;
     tags?: string[];
     progress?: number;
-    progression?: string;
     subsidiary?: string;
     location?: string;
     pays?: string;
     filiale?: string;
+    progression?: string;
     capacite?: string;
     technologie?: string;
     stockage?: string;
@@ -35,36 +35,8 @@ export interface WordPressPost {
     annual_co2_reduction?: string;
     impact?: string;
     optimisation?: string;
-    // Updated gallery structure for projects
-    photo_gallery?: {
-      galerie?: Array<Array<{
-        id: number;
-        title: string;
-        caption: string;
-        full_image_url: string;
-        thumbnail_image_url: string;
-        large_srcset: string;
-        medium_srcset: string;
-        media_details: any;
-        alt_text: string;
-        url: string;
-        target: string;
-      }>>;
-    };
-    // Events gallery structure  
-    gallery?: Array<Array<{
-      id: number;
-      title: string;
-      caption: string;
-      full_image_url: string;
-      thumbnail_image_url: string;
-      large_srcset: string;
-      medium_srcset: string;
-      media_details: any;
-      alt_text: string;
-      url: string;
-      target: string;
-    }>>;
+    // Add gallery and video fields
+    galerie?: any[];
     video_youtube?: string;
     video_linkedin?: string;
     // Event-specific fields
@@ -147,48 +119,6 @@ const wordpressApi = {
       return response.data as WordPressPost[];
     } catch (error) {
       console.error('Error fetching WordPress posts:', error);
-      throw error;
-    }
-  },
-
-  // Events - new method for fetching events
-  getEvents: async (params: { 
-    page?: number; 
-    per_page?: number;
-    search?: string;
-  } = {}) => {
-    try {
-      const response = await axios.get(EVENTS_API_URL, {
-        params,
-      });
-      return response.data as WordPressPost[];
-    } catch (error) {
-      console.error('Error fetching WordPress events:', error);
-      throw error;
-    }
-  },
-
-  // Single event
-  getEvent: async (identifier: number | string) => {
-    try {
-      console.log('Fetching event with identifier:', identifier);
-      
-      const isNumeric = !isNaN(Number(identifier));
-      
-      if (isNumeric) {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements?slug=${identifier}&_embed`);
-        
-        if (response.data && response.data.length > 0) {
-          return response.data[0] as WordPressPost;
-        }
-        
-        throw new Error(`Event with identifier "${identifier}" not found`);
-      }
-    } catch (error) {
-      console.error('Error fetching WordPress event:', error);
       throw error;
     }
   },

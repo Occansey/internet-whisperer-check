@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -15,13 +14,13 @@ import ScreenLoader from "@/components/ui/screen-loader";
 const transformWordPressToEventProps = (wpEvent: any): EventProps => {
   return {
     id: wpEvent.id,
-    title: wpEvent.title.rendered,
+    title: wpEvent.title,
     date: wpEvent.date,
-    description: wpEvent.content.rendered.replace(/<[^>]*>/g, ''),
-    location: wpEvent.acf?.lieu || 'Lieu à déterminer',
-    time: wpEvent.acf?.heure || '',
-    image: wpEvent._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
-    type: 'upcoming' as EventType,
+    description: wpEvent.excerpt.replace(/<[^>]*>/g, ''),
+    location: wpEvent.lieu || 'Lieu à déterminer',
+    time: wpEvent.heure || '',
+    image: wpEvent.image || '/placeholder.svg',
+    type: (wpEvent.type as EventType) || 'upcoming',
     tags: []
   };
 };

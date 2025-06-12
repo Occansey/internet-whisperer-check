@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
 import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
-import SubsidiaryDetailNavigation from '@/components/ui/subsidiary-detail-navigation';
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const processSteps = [
@@ -158,14 +157,8 @@ const GrowthEnergyPage = () => {
         </div>
       </section>
       
-      {/* Add navigation at the bottom */}
-      <SubsidiaryDetailNavigation 
-        websiteUrl="https://growth-energy.fr/"
-        nextSubsidiary={{
-          name: "Asking",
-          path: "/filiales/asking"
-        }}
-      />
+      {/* Add SubsidiaryNavigation component */}
+      <SubsidiaryNavigation />
     </Layout>
   );
 };
