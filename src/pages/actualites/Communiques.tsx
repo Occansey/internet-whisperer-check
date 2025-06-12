@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -5,7 +6,6 @@ import CommuniqueFilters from "@/components/communiques/CommuniqueFilters";
 import CommuniquesList from "@/components/communiques/CommuniquesList";
 import { useWordPressCommuniques } from "@/hooks/useWordPress";
 import { Skeleton } from "@/components/ui/skeleton";
-import { decodeHtmlEntities } from '@/utils/htmlUtils';
 
 interface ArticleProps {
   id: string;
@@ -146,12 +146,12 @@ const Communiques = () => {
 
       return {
         id: postId,
-        title: decodeHtmlEntities(post.title.rendered),
+        title: post.title.rendered,
         date: postDate,
-        description: decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')), // Strip HTML tags and decode
+        description: post.excerpt.rendered.replace(/<[^>]*>/g, ''), // Strip HTML tags
         image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
         tags: postTags,
-        content: decodeHtmlEntities(post.content.rendered) // Add content for detail view and decode
+        content: post.content.rendered // Add content for detail view
       };
     });
   };
