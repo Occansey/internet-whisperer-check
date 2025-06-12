@@ -66,7 +66,7 @@ const Presence = () => {
     {
       id: 'enugu',
       name: 'Enugu, Nigeria',
-      address: 'Manamuz; 68B Chime Avenue, New Haven, Enugu',
+      address: '68B Chime Avenue, New Haven, Enugu',
       description: 'Growth Energy Nigeria Limited',
       color: 'bg-orange-600',
       coordinates: { lat: 6.4602, lng: 7.5220 }
@@ -107,9 +107,6 @@ const Presence = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-12">
               Implantés sur 3 continents pour vous accompagner au plus près de vos besoins
             </p>
-            
-            {/* World Map Image */}
-            
             <div className="mb-12">
               <img 
                 src="/lovable-uploads/b2166923-4d02-4c9a-96fc-302c6d1b4fd2.png" 
@@ -119,11 +116,11 @@ const Presence = () => {
             </div>
           </div>
 
-          {/* <div className="mb-12">
+          <div className="mb-12">
             <WorldMap locations={locations} />
-          </div> */}
+          </div>
 
-          {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {locations.map((location) => (
               <div
                 key={location.id}
@@ -140,7 +137,7 @@ const Presence = () => {
                 </div>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </section>
 
@@ -148,7 +145,6 @@ const Presence = () => {
         <div className="container max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">Nos Bureaux par Région</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* France */}
             <Card className="border-l-4 border-l-blue-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-blue-700 mb-6">
@@ -159,7 +155,6 @@ const Presence = () => {
               </CardContent>
             </Card>
 
-            {/* Canada */}
             <Card className="border-l-4 border-l-red-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-red-700 mb-6">
@@ -169,7 +164,6 @@ const Presence = () => {
               </CardContent>
             </Card>
 
-            {/* HQ Africa */}
             <Card className="border-l-4 border-l-green-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-green-700 mb-6">
@@ -179,7 +173,6 @@ const Presence = () => {
               </CardContent>
             </Card>
 
-            {/* Nigeria */}
             <Card className="border-l-4 border-l-orange-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-orange-700 mb-6">
@@ -193,17 +186,15 @@ const Presence = () => {
               </CardContent>
             </Card>
 
-            {/* Zanzibar */}
             <Card className="border-l-4 border-l-emerald-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-emerald-700 mb-6">
                   <span className="w-4 h-4 bg-emerald-500 rounded-full"></span> Zanzibar
                 </h3>
-                <p className="text-sm">Fumba Town, Urban West, Zanzibar</p>
+                <p className="text-sm">Fumba Town, Main Entrance, Urban West, P.O. Box 3564</p>
               </CardContent>
             </Card>
 
-            {/* Burundi */}
             <Card className="border-l-4 border-l-purple-500 hover:shadow-xl group transition-all duration-300">
               <CardContent className="p-8">
                 <h3 className="flex items-center gap-2 text-xl font-bold text-purple-700 mb-6">
