@@ -9,14 +9,14 @@ export const useWordPressEvents = (params: {
 } = {}) => {
   return useQuery({
     queryKey: ['wp-events', params],
-    queryFn: () => wordpressApi.getEvents(params),
+    queryFn: () => wordpressApi.getPosts({ ...params, categories: [1] }), // Assuming events category ID is 1
   });
 };
 
 export const useWordPressEvent = (identifier: number | string) => {
   return useQuery({
     queryKey: ['wp-event', identifier],
-    queryFn: () => wordpressApi.getEvent(identifier),
+    queryFn: () => wordpressApi.getPost(identifier),
     enabled: !!identifier,
   });
 };
