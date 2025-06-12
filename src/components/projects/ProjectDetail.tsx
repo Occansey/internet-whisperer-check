@@ -11,6 +11,9 @@ import { SocialShare } from "@/components/ui/social-share";
 import { useWordPressProject } from '@/hooks/useWordPress';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ScreenLoader from '@/components/ui/screen-loader';
+import ImageGallery from '@/components/ui/image-gallery';
+import VideoEmbed from '@/components/ui/video-embed';
+import { generateSlug, findProjectBySlug } from '@/utils/slugUtils';
 
 // Import projects from the Projets page
 import { projects } from '@/pages/actualites/Projets';
@@ -63,24 +66,38 @@ const ProjectDetail = () => {
           location: wpProject.acf?.pays || "Non spécifié",
           isWordPress: true,
           // WordPress-specific fields
-            wpData: {
-              capacite: wpProject.acf?.capacite,
-              technologie: wpProject.acf?.technologie,
-              stockage: wpProject.acf?.stockage,
-              objectifs: wpProject.acf?.objectifs.replace(/(\r\n|\n|\r)/g, '<br>'),
-              annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
-              impact: wpProject.acf?.impact,
-              optimisation: wpProject.acf?.optimisation
-            }
-          };
+          wpData: {
+            capacite: wpProject.acf?.capacite,
+            technologie: wpProject.acf?.technologie,
+            stockage: wpProject.acf?.stockage,
+            objectifs: wpProject.acf?.objectifs?.replace(/(\r\n|\n|\r)/g, '<br>'),
+            annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
+            impact: wpProject.acf?.impact,
+            optimisation: wpProject.acf?.optimisation,
+            // Gallery and video fields
+            galerie: wpProject.acf?.galerie || [],
+            video_youtube: wpProject.acf?.video_youtube,
+            video_linkedin: wpProject.acf?.video_linkedin
+          }
+        };
         setProject(transformedProject);
         setLoading(false);
       } 
-      // If WordPress fails or no data, try static projects
+      // If WordPress fails or no data, try static projects by slug
       else if (wpError || (!wpLoading && !wpProject)) {
-        const projectId = Number(id);
-        const foundProject = projects.find(p => p.id === projectId);
+        // Try numeric ID first for backwards compatibility
+        const projectId = parseInt(id);
+        if (!isNaN(projectId)) {
+          const foundProject = projects.find(p => p.id === projectId);
+          if (foundProject) {
+            setProject(foundProject);
+            setLoading(false);
+            return;
+          }
+        }
         
+        // Try slug-based search
+        const foundProject = findProjectBySlug(projects, id);
         if (foundProject) {
           setProject(foundProject);
           setLoading(false);
@@ -240,6 +257,23 @@ const ProjectDetail = () => {
             {/* Description content */}
             <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow">
               <h2 className="text-2xl font-bold mb-4 text-solio-blue">Description du projet</h2>
+              
+              {/* Project Gallery */}
+              {project.wpData?.galerie && project.wpData.galerie.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4">Galerie du projet</h3>
+                  <ImageGallery images={project.wpData.galerie} />
+                </div>
+              )}
+              
+              {/* Project Video */}
+              {(project.wpData?.video_youtube || project.wpData?.video_linkedin) && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4">Vidéo du projet</h3>
+                  <VideoEmbed url={project.wpData.video_youtube || project.wpData.video_linkedin} />
+                </div>
+              )}
+              
               <div className="prose max-w-none text-gray-700">
                 {project.isWordPress ? (
                   <>

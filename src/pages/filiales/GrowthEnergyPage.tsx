@@ -1,10 +1,11 @@
-
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/ui/stat-card";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
+import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
+import { useLanguage } from "@/context/language";
 
 const processSteps = [
   {
@@ -26,6 +27,8 @@ const processSteps = [
 ];
 
 const GrowthEnergyPage = () => {
+  const { t } = useLanguage();
+
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -153,6 +156,9 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Add SubsidiaryNavigation component */}
+      <SubsidiaryNavigation />
     </Layout>
   );
 };

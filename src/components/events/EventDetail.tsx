@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -12,7 +11,9 @@ import { EventProps } from '@/types/events';
 import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
-import { findBySlug, generateSlug } from '@/utils/slugUtils';
+import { findBySlug, generateSlug, findEventBySlug } from '@/utils/slugUtils';
+import ImageGallery from '@/components/ui/image-gallery';
+import VideoEmbed from '@/components/ui/video-embed';
 
 const formatDateToFrench = (dateStr: string): string => {
   console.log('Formatting date:', dateStr);
@@ -179,7 +180,7 @@ const EventDetail = () => {
       
       // Try to find by slug
       if (wordpressEvents && wordpressEvents.length > 0) {
-        const foundWpEvent = findBySlug(wordpressEvents, id, 'title');
+        const foundWpEvent = findEventBySlug(wordpressEvents, id);
         if (foundWpEvent) {
           setWpEvent(foundWpEvent);
           
@@ -199,7 +200,7 @@ const EventDetail = () => {
         }
       }
       
-      const staticEvent = findBySlug(events, id, 'title');
+      const staticEvent = findEventBySlug(events, id);
       if (staticEvent) {
         setEvent(staticEvent);
       }
@@ -262,6 +263,12 @@ const EventDetail = () => {
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
   const tags = wpEvent?.tags || event?.tags || [];
   const isPastEvent = event.type === "passé" || wpEvent?.type === "passé" || tags.includes("passé");
+  
+  // Get gallery images from WordPress ACF fields
+  const galleryImages = wpEvent?.acf?.galerie || wpEvent?.galerie || [];
+  
+  // Get video URL from WordPress ACF fields
+  const videoUrl = wpEvent?.acf?.video_youtube || wpEvent?.video_youtube || wpEvent?.acf?.video_linkedin || wpEvent?.video_linkedin;
 
   return (
     <Layout>
@@ -370,7 +377,23 @@ const EventDetail = () => {
       </div>
       
       <div className="container py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
+          {/* Event Gallery */}
+          {galleryImages && galleryImages.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4">Galerie</h3>
+              <ImageGallery images={galleryImages} />
+            </div>
+          )}
+          
+          {/* Video Section */}
+          {videoUrl && (
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4">Vidéo</h3>
+              <VideoEmbed url={videoUrl} />
+            </div>
+          )}
+          
           <div className="prose prose-lg max-w-none mb-12 dark:prose-invert">
             <p>{event.description}</p>
           </div>

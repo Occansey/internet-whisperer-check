@@ -67,8 +67,10 @@ const App = () => (
               <Route path="/actualites/communiques" element={<Communiques />} />
               <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
               <Route path="/actualites/evenements" element={<Evenements />} />
+              {/* Support both numeric IDs and slugs for events */}
               <Route path="/actualites/evenements/:id" element={<EventDetail />} />
               <Route path="/actualites/projets" element={<Projets />} />
+              {/* Support both numeric IDs and slugs for projects */}
               <Route path="/actualites/projets/:id" element={<ProjectDetail />} />
               <Route path="/actualites/articles/:id" element={<ArticleDetail />} />
               

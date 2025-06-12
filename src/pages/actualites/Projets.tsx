@@ -10,6 +10,7 @@ import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useWordPressProjects } from "@/hooks/useWordPress";
 import ScreenLoader from "@/components/ui/screen-loader";
+import { generateSlug } from '@/utils/slugUtils';
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -148,6 +149,8 @@ const mapSubsidiaryFromWordPress = (filiale: string): ProjectSubsidiary => {
 
 const ProjectCard = ({ project }: { project: ProjectProps }) => {
   const subsidiaryDetails = getSubsidiaryDetails(project.subsidiary);
+  const projectSlug = generateSlug(decodeHtmlEntities(project.title));
+  const projectUrl = `/actualites/projets/${projectSlug}`;
   
   return (
     <Card className="h-full flex flex-col">
@@ -184,7 +187,7 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
       </CardContent>
       <CardFooter className="flex-initial">
         <Button variant="solio" className="w-full" asChild>
-          <Link to={`/actualites/projets/${project.id}`}>Détails du projet</Link>
+          <Link to={projectUrl}>Détails du projet</Link>
         </Button>
       </CardFooter>
     </Card>
