@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -12,7 +11,6 @@ import { EventProps } from '@/types/events';
 import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
-import { findBySlug, generateSlug } from '@/utils/slugUtils';
 
 const formatDateToFrench = (dateStr: string): string => {
   console.log('Formatting date:', dateStr);
@@ -144,42 +142,12 @@ const EventDetail = () => {
     console.log('WordPressEvents:', wordpressEvents);
     
     if (id) {
-      // First try to find by numeric ID (backwards compatibility)
       const eventId = parseInt(id);
-      if (!isNaN(eventId)) {
-        if (wordpressEvents && wordpressEvents.length > 0) {
-          const foundWpEvent = wordpressEvents.find(e => e.id === eventId);
-          console.log('Found WP event:', foundWpEvent);
-          
-          if (foundWpEvent) {
-            setWpEvent(foundWpEvent);
-            
-            const transformedEvent: EventProps = {
-              id: foundWpEvent.id,
-              title: foundWpEvent.title,
-              date: foundWpEvent.date,
-              description: decodeHtmlEntities(foundWpEvent.excerpt.replace(/<[^>]*>/g, '')),
-              location: foundWpEvent.lieu || 'Lieu à déterminer',
-              time: foundWpEvent.heure || '',
-              image: foundWpEvent.image || '/placeholder.svg',
-              type: (foundWpEvent.type as any) || 'upcoming',
-              tags: foundWpEvent.tags || []
-            };
-            setEvent(transformedEvent);
-            return;
-          }
-        }
-        
-        const staticEvent = events.find(e => e.id === eventId);
-        if (staticEvent) {
-          setEvent(staticEvent);
-          return;
-        }
-      }
       
-      // Try to find by slug
       if (wordpressEvents && wordpressEvents.length > 0) {
-        const foundWpEvent = findBySlug(wordpressEvents, id, 'title');
+        const foundWpEvent = wordpressEvents.find(e => e.id === eventId);
+        console.log('Found WP event:', foundWpEvent);
+        
         if (foundWpEvent) {
           setWpEvent(foundWpEvent);
           
@@ -199,7 +167,7 @@ const EventDetail = () => {
         }
       }
       
-      const staticEvent = findBySlug(events, id, 'title');
+      const staticEvent = events.find(e => e.id === eventId);
       if (staticEvent) {
         setEvent(staticEvent);
       }
@@ -261,7 +229,6 @@ const EventDetail = () => {
 
   const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
   const tags = wpEvent?.tags || event?.tags || [];
-  const isPastEvent = event.type === "passé" || wpEvent?.type === "passé" || tags.includes("passé");
 
   return (
     <Layout>
@@ -324,23 +291,21 @@ const EventDetail = () => {
               )}
 
               <div className="flex flex-wrap gap-3 mb-6">
-                {!isPastEvent && (
-                  <Button 
-                    onClick={() => downloadICS({
-                      title: event.title,
-                      date: wpEvent?.date || event.date,
-                      time: wpEvent?.heure || event.time,
-                      endTime: endTime,
-                      description: event.description,
-                      location: wpEvent?.lieu || event.location,
-                      id: event.id
-                    })}
-                    className="bg-blue-600 text-white hover:bg-blue-700"
-                  >
-                    <CalendarPlus className="h-4 w-4 mr-2" />
-                    Ajouter à votre calendrier
-                  </Button>
-                )}
+                <Button 
+                  onClick={() => downloadICS({
+                    title: event.title,
+                    date: wpEvent?.date || event.date,
+                    time: wpEvent?.heure || event.time,
+                    endTime: endTime,
+                    description: event.description,
+                    location: wpEvent?.lieu || event.location,
+                    id: event.id
+                  })}
+                  className="bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  <CalendarPlus className="h-4 w-4 mr-2" />
+                  Ajouter à votre calendrier
+                </Button>
 
                 {(wpEvent?.en_savoir_plus || (event.link && event.link.startsWith('http'))) && (
                   <Button 
@@ -373,6 +338,8 @@ const EventDetail = () => {
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-lg max-w-none mb-12 dark:prose-invert">
             <p>{event.description}</p>
+            
+            <p>Pour plus d'informations ou pour vous inscrire à cet événement, veuillez contacter notre équipe.</p>
           </div>
           
           <div className="mt-12 pt-6 border-t">

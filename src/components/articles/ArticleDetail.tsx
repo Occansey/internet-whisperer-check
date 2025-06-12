@@ -1,29 +1,15 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { SocialShare } from '@/components/ui/social-share';
+import { articles } from '@/pages/actualites/Communiques';
 import WordPressContent from '@/components/wordpress/WordPressContent';
-import ImageGallery from '@/components/ui/image-gallery';
 import { useWordPressCommunique } from '@/hooks/useWordPress';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ColoredBadge from '@/components/ui/colored-badge';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
-
-// Static articles data for fallback
-const staticArticles = [
-  {
-    id: "1",
-    title: "Solio Group annonce son expansion en Afrique de l'Est",
-    date: "2024-03-15",
-    content: "Solio Group poursuit sa stratégie d'expansion avec de nouveaux projets en Afrique de l'Est...",
-    image: "/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png",
-    images: ["/lovable-uploads/299e9fbc-e3ad-4d6a-b200-0a5e76ab1ece.png"],
-    tags: ["expansion", "afrique"]
-  }
-];
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -53,19 +39,6 @@ const ArticleDetail = () => {
     return acfDate;
   };
 
-  // Extract images from WordPress content
-  const extractImagesFromContent = (content: string): string[] => {
-    const images: string[] = [];
-    const imgRegex = /<img[^>]+src="([^">]+)"/g;
-    let match;
-    
-    while ((match = imgRegex.exec(content)) !== null) {
-      images.push(match[1]);
-    }
-    
-    return images;
-  };
-
   useEffect(() => {
     console.log('ArticleDetail useEffect - id:', id, 'wpCommunique:', wpCommunique, 'wpLoading:', wpLoading, 'wpError:', wpError);
     
@@ -80,22 +53,12 @@ const ArticleDetail = () => {
           postDate = wpCommunique.date.split('T')[0];
         }
         
-        // Extract images from content
-        const contentImages = extractImagesFromContent(wpCommunique.content.rendered);
-        const featuredImage = wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-        
-        // Combine featured image with content images, ensuring featured image is first
-        const allImages = featuredImage 
-          ? [featuredImage, ...contentImages.filter(img => img !== featuredImage)]
-          : contentImages;
-        
         const transformedArticle = {
           id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
           title: decodeHtmlEntities(wpCommunique.title.rendered),
           date: postDate,
           content: decodeHtmlEntities(wpCommunique.content.rendered),
-          image: featuredImage || '/placeholder.svg',
-          images: allImages.length > 0 ? allImages : [featuredImage || '/placeholder.svg'],
+          image: wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
           tags: wpCommunique.acf?.tags || ['wordpress']
         };
         setArticle(transformedArticle);
@@ -106,7 +69,7 @@ const ArticleDetail = () => {
       } 
       // If WordPress fails or no data, try static articles
       else if (wpError || (!wpLoading && !wpCommunique)) {
-        const found = staticArticles.find(a => a.id === id);
+        const found = articles.find(a => a.id === id);
         setArticle(found || null);
         setLoading(false);
         
@@ -161,9 +124,13 @@ const ArticleDetail = () => {
               <span>{article.date}</span>
             </div>
             
-            {article.images && article.images.length > 0 && (
-              <div className="mb-8">
-                <ImageGallery images={article.images} />
+            {article.image && (
+              <div className="aspect-video rounded-lg overflow-hidden mb-8">
+                <img 
+                  src={article.image} 
+                  alt={article.title} 
+                  className="w-full h-full object-cover"
+                />
               </div>
             )}
             

@@ -50,15 +50,15 @@ const directeurs: DirecteurProps[] = [
 
 const DirectionCard = ({ photo, nom, titre, linkedin }: DirecteurProps) => {
   return (
-    <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col">
-      <div className="flex-1 overflow-hidden">
+    <div className="rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+      <div className="h-80 sm:h-80 md:h-64 lg:h-72 overflow-hidden">
         <img 
           src={photo} 
           alt={nom} 
           className="w-full h-full object-cover object-top"
         />
       </div>
-      <div className="p-6 mt-auto">
+      <div className="p-6">
         <h3 className="text-xl font-semibold mb-2 text-solio-blue">{nom}</h3>
         <p className="text-gray-700 mb-4">{titre}</p>
         <a 
