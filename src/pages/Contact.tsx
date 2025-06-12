@@ -201,18 +201,18 @@ const Contact = () => {
                         <div className="mt-3">
                           <p className="font-medium">Africa HQ</p>
                           <p>GEFI Solutions SEZ Limited</p>
-                          <p>9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
+                          <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Nigeria (Growth Energy Nigeria Limited)</p>
+                          <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
                           <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Burundi</p>
+                          <p className="font-medium">Burundi - Growth Energy Solutions Burundi </p>
                           <p>84 Avenue Ndamukiza , Bujumbura, Burundi</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Tanzania</p>
+                          <p className="font-medium">Tanzania - Growth Energy Solutions Zanzibar </p>
                           <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
                         </div>
                         <p className="mt-4">
