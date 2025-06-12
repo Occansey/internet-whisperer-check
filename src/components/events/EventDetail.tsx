@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -12,7 +13,6 @@ import { useWordPressEvents } from '@/hooks/useWordPressEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
 import { findBySlug, generateSlug } from '@/utils/slugUtils';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const formatDateToFrench = (dateStr: string): string => {
   console.log('Formatting date:', dateStr);
@@ -136,7 +136,6 @@ const EventDetail = () => {
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventProps | null>(null);
   const [wpEvent, setWpEvent] = useState<any>(null);
-  const { t } = useLanguage();
   
   const { data: wordpressEvents, isLoading } = useWordPressEvents();
 
@@ -221,7 +220,7 @@ const EventDetail = () => {
               className="flex items-center text-white hover:bg-white/10 mb-8" 
               onClick={handleBack}
             >
-              <ArrowLeft className="mr-2 h-4 w-4" /> {t('common.back')}
+              <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -252,9 +251,9 @@ const EventDetail = () => {
       <Layout>
         <div className="container py-12">
           <Button variant="outline" onClick={handleBack} className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" /> {t('events.return')}
+            <ArrowLeft className="mr-2 h-4 w-4" /> Retour aux événements
           </Button>
-          <p className="text-center">{t('events.not-found')}</p>
+          <p className="text-center">Événement non trouvé.</p>
         </div>
       </Layout>
     );
@@ -274,7 +273,7 @@ const EventDetail = () => {
               className="flex items-center text-white hover:bg-white/10" 
               onClick={handleBack}
             >
-              <ArrowLeft className="mr-2 h-4 w-4" /> {t('common.back')}
+              <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
             <SocialShare title={event.title} compact={true} />
@@ -287,9 +286,9 @@ const EventDetail = () => {
                 event.type === "spotlight" || wpEvent?.type === "spotlight" ? "bg-yellow-100 text-yellow-800" :
                 "bg-blue-100 text-blue-800"
               }>
-                {event.type === "upcoming" || wpEvent?.type === "à venir" ? t('events.upcoming') :
-                event.type === "spotlight" || wpEvent?.type === "spotlight" ? t('events.spotlight') :
-                t('events.past')}
+                {event.type === "upcoming" || wpEvent?.type === "à venir" ? "À venir" :
+                event.type === "spotlight" || wpEvent?.type === "spotlight" ? "Spotlight" :
+                "Passé"}
               </Badge>
               
               <h1 className="text-3xl md:text-4xl font-bold my-4">{event.title}</h1>
@@ -339,7 +338,7 @@ const EventDetail = () => {
                     className="bg-blue-600 text-white hover:bg-blue-700"
                   >
                     <CalendarPlus className="h-4 w-4 mr-2" />
-                    {t('events.add-to-calendar')}
+                    Ajouter à votre calendrier
                   </Button>
                 )}
 
@@ -349,7 +348,7 @@ const EventDetail = () => {
                     className="bg-solio-yellow text-solio-blue hover:bg-yellow-400"
                   >
                     <a href={wpEvent?.en_savoir_plus || event.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      {t('common.learn-more')}
+                      En savoir plus
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>

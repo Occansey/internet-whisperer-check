@@ -5,8 +5,6 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
-import SubsidiaryNavigation from "@/components/ui/subsidiary-navigation";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const processSteps = [
   {
@@ -28,8 +26,6 @@ const processSteps = [
 ];
 
 const GrowthEnergyPage = () => {
-  const { t } = useLanguage();
-
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -45,7 +41,7 @@ const GrowthEnergyPage = () => {
               </p>
               <Button asChild className="bg-solio-blue hover:bg-solio-blue/90">
                 <Link to="https://growth-energy.fr/" target="_blank" rel="noopener noreferrer">
-                  {t('common.learn-more')}
+                  En savoir plus
                 </Link>
               </Button>
             </div>
@@ -111,7 +107,7 @@ const GrowthEnergyPage = () => {
                   asChild
                 >
                   <Link to="/actualites/evenements/3">
-                    <ExternalLink className="w-4 h-4" /> {t('common.learn-more')}
+                    <ExternalLink className="w-4 h-4" /> En savoir plus
                   </Link>
                 </Button>
               </CardContent>
@@ -157,8 +153,6 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </section>
-
-      <SubsidiaryNavigation />
     </Layout>
   );
 };

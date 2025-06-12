@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from './button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const subsidiaries = [
   { name: 'Growth Energy', path: '/filiales/growth-energy', color: 'bg-green-600' },
@@ -15,7 +14,6 @@ const subsidiaries = [
 const SubsidiaryNavigation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useLanguage();
   
   const currentIndex = subsidiaries.findIndex(sub => sub.path === location.pathname);
   
@@ -36,7 +34,7 @@ const SubsidiaryNavigation: React.FC = () => {
             >
               <ChevronLeft className="h-4 w-4" />
               <div className="text-left">
-                <div className="text-sm text-gray-500">{t('subsidiaries.navigation.previous')}</div>
+                <div className="text-sm text-gray-500">Précédent</div>
                 <div className="font-medium">{previousSub.name}</div>
               </div>
             </Button>
@@ -51,7 +49,7 @@ const SubsidiaryNavigation: React.FC = () => {
               className="flex items-center gap-2 hover:bg-gray-100"
             >
               <div className="text-right">
-                <div className="text-sm text-gray-500">{t('subsidiaries.navigation.next')}</div>
+                <div className="text-sm text-gray-500">Suivant</div>
                 <div className="font-medium">{nextSub.name}</div>
               </div>
               <ChevronRight className="h-4 w-4" />
