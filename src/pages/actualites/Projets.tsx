@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -9,6 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useWordPressProjects } from "@/hooks/useWordPress";
+import ScreenLoader from "@/components/ui/screen-loader";
+import { generateSlug } from '@/utils/slugUtils';
 
 type ProjectSubsidiary = "growth-energy" | "asking" | "mfg-technologies" | "gem";
 
@@ -20,13 +22,14 @@ interface ProjectProps {
   progress: number; // 0-100
   subsidiary: ProjectSubsidiary;
   location: string;
+  isWordPress?: boolean;
 }
 
 export const projects: ProjectProps[] = [
   {
     id: 1,
     title: "Projet Télécom - Econet Leo",
-    description: "Modernisation des antennes de télécommunication d’Econet Leo afin d’améliorer la couverture réseau et de préparer l’infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
+    description: "Modernisation des antennes de télécommunication d'Econet Leo afin d'améliorer la couverture réseau et de préparer l'infrastructure aux technologies mobiles de nouvelle génération comme la 4G et la 5G.",
     image: "/lovable-uploads/8bdd11d4-99ce-4578-8741-bcbb837a012a.png",
     progress: 25,
     subsidiary: "growth-energy",
@@ -97,6 +100,12 @@ export const projects: ProjectProps[] = [
   }
 ];
 
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 const getProgressColor = (progress: number) => {
   if (progress < 25) return "bg-red-500";
   if (progress < 50) return "bg-orange-500";
@@ -119,23 +128,46 @@ const getSubsidiaryDetails = (subsidiary: ProjectSubsidiary) => {
   }
 };
 
+const mapSubsidiaryFromWordPress = (filiale: string): ProjectSubsidiary => {
+  const filialeNormalized = filiale?.toLowerCase() || '';
+  
+  if (filialeNormalized.includes('growth') || filialeNormalized.includes('energy')) {
+    return 'growth-energy';
+  }
+  if (filialeNormalized.includes('asking')) {
+    return 'asking';
+  }
+  if (filialeNormalized.includes('mfg') || filialeNormalized.includes('technologies')) {
+    return 'mfg-technologies';
+  }
+  if (filialeNormalized.includes('gem') || filialeNormalized.includes('mobility')) {
+    return 'gem';
+  }
+  
+  return 'growth-energy'; // default
+};
+
 const ProjectCard = ({ project }: { project: ProjectProps }) => {
   const subsidiaryDetails = getSubsidiaryDetails(project.subsidiary);
+  const projectSlug = generateSlug(decodeHtmlEntities(project.title));
+  const projectUrl = `/actualites/projets/${projectSlug}`;
   
   return (
     <Card className="h-full flex flex-col">
       <div className="h-48 overflow-hidden">
         <img 
           src={project.image} 
-          alt={project.title} 
+          alt={decodeHtmlEntities(project.title)}
           className="w-full h-full object-cover"
         />
       </div>
       <CardHeader className="flex-initial">
         <div className="flex justify-between items-start mb-2">
-          <Badge variant="outline" className={subsidiaryDetails.color}>
-            {subsidiaryDetails.name}
-          </Badge>
+          <div className="flex gap-2">
+            <Badge variant="outline" className={subsidiaryDetails.color}>
+              {subsidiaryDetails.name}
+            </Badge>
+          </div>
           <div className="text-sm text-gray-500 flex items-center">
             <Progress 
               value={project.progress} 
@@ -144,18 +176,18 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
             <span className="ml-2">{project.progress}%</span>
           </div>
         </div>
-        <CardTitle className="text-lg">{project.title}</CardTitle>
+        <CardTitle className="text-lg">{decodeHtmlEntities(project.title)}</CardTitle>
         <CardDescription className="flex items-center text-sm mt-1">
           <MapPin className="h-4 w-4 mr-1" />
-          {project.location}
+          {decodeHtmlEntities(project.location)}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-sm text-gray-700">{project.description}</p>
+        <p className="text-sm text-gray-700">{decodeHtmlEntities(project.description)}</p>
       </CardContent>
       <CardFooter className="flex-initial">
         <Button variant="solio" className="w-full" asChild>
-          <Link to={`/actualites/projets/${project.id}`}>Détails du projet</Link>
+          <Link to={projectUrl}>Détails du projet</Link>
         </Button>
       </CardFooter>
     </Card>
@@ -164,9 +196,33 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 
 const Projets = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Fetch WordPress projects
+  const { data: wpProjects, isLoading: wpLoading, error: wpError } = useWordPressProjects({
+    per_page: 50
+  });
+
+  // Transform WordPress projects to match our interface
+  const transformWordPressProjects = (): ProjectProps[] => {
+    if (!wpProjects) return [];
+    
+    return wpProjects.map((wpProject) => ({
+      id: wpProject.id,
+      title: wpProject.title.rendered,
+      description: wpProject.content.rendered.replace(/<[^>]*>/g, ''),
+      image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+      progress: wpProject.acf?.progression ? parseInt(wpProject.acf.progression) : 0,
+      subsidiary: mapSubsidiaryFromWordPress(wpProject.acf?.filiale || ''),
+      location: wpProject.acf?.pays || "Non spécifié",
+      isWordPress: true
+    }));
+  };
+
+  // Only use WordPress projects
+  const allProjects = transformWordPressProjects();
 
   const filterProjects = (tab: string) => {
-    let filtered = [...projects];
+    let filtered = [...allProjects];
     
     if (tab !== "all") {
       filtered = filtered.filter(project => project.subsidiary === tab);
@@ -176,14 +232,38 @@ const Projets = () => {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
         project => 
-          project.title.toLowerCase().includes(term) ||
-          project.description.toLowerCase().includes(term) ||
-          project.location.toLowerCase().includes(term)
+          decodeHtmlEntities(project.title).toLowerCase().includes(term) ||
+          decodeHtmlEntities(project.description).toLowerCase().includes(term) ||
+          decodeHtmlEntities(project.location).toLowerCase().includes(term)
       );
     }
     
     return filtered;
   };
+
+  if (wpLoading) {
+    return <ScreenLoader message="Chargement des projets..." />;
+  }
+
+  if (wpError) {
+    console.error('WordPress projects error:', wpError);
+    return (
+      <Layout>
+        <HeroBanner 
+          title="Projets en Cours"
+          description="Découvrez les projets actuellement déployés par les différentes filiales du groupe Solio."
+          glowColor="cyan"
+        />
+        <div className="py-12 bg-gray-50">
+          <div className="container">
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-500">Erreur lors du chargement des projets.</p>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -221,7 +301,7 @@ const Projets = () => {
                 {filterProjects(tab).length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filterProjects(tab).map((project) => (
-                      <ProjectCard key={project.id} project={project} />
+                      <ProjectCard key={`wp-${project.id}`} project={project} />
                     ))}
                   </div>
                 ) : (

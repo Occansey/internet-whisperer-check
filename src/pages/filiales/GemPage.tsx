@@ -26,7 +26,7 @@ const GemPage = () => {
             <div className="flex-1">
               <div className="aspect-video rounded-lg shadow-md overflow-hidden">
                 <img 
-                  src="/lovable-uploads/a8105aa6-5ff6-4a6c-bc55-611ba551e9bc.png" 
+                  src="/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png" 
                   alt="GEM Team" 
                   className="w-full h-full object-cover"
                 />
@@ -35,8 +35,8 @@ const GemPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-            <StatCard value={1} prefix="#" label="station de recharge électrique solaire en Afrique de l'Est" />
-            <StatCard value={15} prefix="$" suffix=" M USD" label="Investissement" />
+            <StatCard value={1} prefix="#" label="station de recharge d’Afrique de l’Est en développement au Burundi" />
+            <StatCard value={120} suffix="kW" label="Capacité de recharge disponible" />
           </div>
         </div>
       </section>

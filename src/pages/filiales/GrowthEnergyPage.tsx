@@ -1,31 +1,34 @@
-
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/ui/stat-card";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
+import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
+import { useLanguage } from "@/context/language";
 
 const processSteps = [
   {
     title: "Évaluation des besoins",
-    description: "Analyse détaillée des besoins en mobilité électrique de votre organisation"
+    description: "Analyse détaillée des besoins énergétique de votre organisation"
   },
   {
     title: "Conception technique",
     description: "Élaboration d'une solution sur mesure adaptée à vos contraintes"
   },
   {
-    title: "Installation",
-    description: "Mise en place des infrastructures de recharge et configuration des systèmes"
+    title: "Déploiement",
+    description: "Réalisation clé en mains des centrales solaires et de batteries (BESS) y compris l'ingénierie, approvisionnement et installation avec leur systèmes de gestion de l'énergie et de suivi à distance."
   },
   {
-    title: "Maintenance",
-    description: "Suivi et maintenance préventive et corrective des installations"
+    title: "Opération et maintenance",
+    description: "Suivi et maintenance préventive et corrective des installations et gestion des actifs (Asset Management) afin d'assurer la bonne performance, les indicateurs d'ESG ainsi que le rendement financier de l'investissement."
   }
 ];
 
 const GrowthEnergyPage = () => {
+  const { t } = useLanguage();
+
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -57,10 +60,10 @@ const GrowthEnergyPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
-            <StatCard value={5} suffix="+" label="partenaires de développement" />
-            <StatCard value={115} label="MWP déployés en Afrique" />
-            <StatCard value={24} suffix="+" label="entreprises servies" />
-            <StatCard value={20} suffix="+" label="clients satisfaits" />
+            <StatCard value={5} suffix="+" label="partenaires stratégiques" />
+            <StatCard value={115} label="MWP en cours de déploiement en Afrique" />
+            <StatCard value={24} suffix="+" label="clients satisfaits" />
+            <StatCard value={100} suffix="k+" label="tonnes d'objectif réduction de CO2" />
           </div>
         </div>
       </section>
@@ -99,7 +102,7 @@ const GrowthEnergyPage = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2">John Okoro invité à Energy Talks</h3>
                 <p className="text-gray-600 mb-4">
-                  Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks à Nairobi.
+                  Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks.
                 </p>
                 <Button 
                   variant="outline" 
@@ -120,7 +123,7 @@ const GrowthEnergyPage = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2">Ouverture du nouveau siège à Nairobi</h3>
                 <p className="text-gray-600 mb-4">
-                  GEM E-Mobility a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.
+                  Growth Energy a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.
                 </p>
                 <div className="flex items-center text-green-600 text-sm">
                   <CheckCircle className="h-4 w-4 mr-1" /> Inauguration officielle en septembre 2024
@@ -134,7 +137,7 @@ const GrowthEnergyPage = () => {
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-1">
                 <img 
-                  src="/lovable-uploads/edf32f55-1dff-4fb5-a043-9370022d89b9.png" 
+                  src="/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png" 
                   alt="Fumba Town Project" 
                   className="rounded-lg shadow-md w-full"
                 />
@@ -145,7 +148,7 @@ const GrowthEnergyPage = () => {
                 </p>
                 <div className="mt-4">
                   <Button variant="solio" asChild>
-                    <Link to="/actualites/projets/7">Découvrir le projet</Link>
+                    <Link to="/actualites/projets/4732">Découvrir le projet</Link>
                   </Button>
                 </div>
               </div>
@@ -153,6 +156,9 @@ const GrowthEnergyPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Add SubsidiaryNavigation component */}
+      <SubsidiaryNavigation />
     </Layout>
   );
 };

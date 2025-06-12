@@ -1,26 +1,32 @@
 
 import React, { useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
-import { fr } from 'date-fns/locale';
-
-interface Event {
-  id: number;
-  title: string;
-  date: string;
-  type: string;
-}
+import { EventProps } from '@/types/events';
 
 interface MiniCalendarProps {
-  events: Event[];
-  onDateSelect: (date: Date, events: Event[]) => void;
+  events: EventProps[];
+  onDateSelect: (date: Date | undefined) => void;
+  selectedDate?: Date;
+  wpEvents?: any[];
 }
 
-const parseDate = (dateStr: string) => {
+const parseEventDate = (dateStr: string): Date => {
+  console.log('MiniCalendar parsing date:', dateStr);
+  
   if (!dateStr) return new Date();
   
+  // Handle WordPress ACF date format (DD/MM/YYYY)
+  if (dateStr.includes('/')) {
+    const [day, month, year] = dateStr.split('/');
+    const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    console.log('MiniCalendar parsed ACF date:', parsedDate);
+    return parsedDate;
+  }
+  
+  // Handle date ranges like "5-7 septembre 2025"
   if (dateStr.includes('-')) {
     dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
   }
@@ -41,97 +47,92 @@ const parseDate = (dateStr: string) => {
       };
       
       if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
-        return new Date(year, months[monthName], day);
+        const parsedDate = new Date(year, months[monthName], day);
+        console.log('MiniCalendar parsed French date:', parsedDate);
+        return parsedDate;
       }
     }
     
     return new Date();
   } catch (error) {
+    console.error('MiniCalendar error parsing date:', dateStr, error);
     return new Date();
   }
 };
 
-const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect }) => {
+const MiniCalendar: React.FC<MiniCalendarProps> = ({ events, onDateSelect, selectedDate, wpEvents = [] }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  
-  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
-  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
-  
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
-  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
-  
-  const parsedEvents = events.map(event => ({
-    ...event,
-    dateObj: parseDate(event.date)
-  }));
-  
-  const monthEvents = parsedEvents.filter(event => {
-    const eventDate = event.dateObj;
-    return eventDate >= monthStart && eventDate <= monthEnd;
-  });
-  
-  const hasEvents = (date: Date) => {
-    return monthEvents.some(event => isSameDay(date, event.dateObj));
+
+  const goToPreviousMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
   };
-  
-  const getEventsForDate = (date: Date) => {
-    return monthEvents.filter(event => isSameDay(date, event.dateObj));
+
+  const goToNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
+
+  const monthNames = [
+    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+  ];
+
+  // Get event dates from ACF date field or fallback to event date
+  const eventDates = events.map(event => {
+    const wpEvent = wpEvents.find(wp => wp.id === event.id);
+    const acfDate = wpEvent?.date || event.date;
+    return parseEventDate(acfDate);
+  });
+
+  const isDayWithEvent = (date: Date) => {
+    return eventDates.some(eventDate => 
+      eventDate.toDateString() === date.toDateString()
+    );
   };
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-solio-blue">
-            {format(currentMonth, 'MMMM yyyy', { locale: fr })}
-          </h3>
-          <div className="flex space-x-1">
-            <Button variant="ghost" size="sm" onClick={prevMonth} className="h-8 w-8 p-0">
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={nextMonth} className="h-8 w-8 p-0">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium mb-2">
-          {['D', 'L', 'M', 'M', 'J', 'V', 'S'].map(day => (
-            <div key={day} className="p-1 text-gray-500">{day}</div>
-          ))}
-        </div>
-        
-        <div className="grid grid-cols-7 gap-1">
-          {Array.from({ length: monthStart.getDay() }).map((_, i) => (
-            <div key={`empty-${i}`} className="h-8"></div>
-          ))}
-          
-          {daysInMonth.map(date => {
-            const dayEvents = getEventsForDate(date);
-            const hasEventToday = hasEvents(date);
-            const isToday = isSameDay(date, new Date());
-            
-            return (
-              <button
-                key={date.toString()}
-                onClick={() => onDateSelect(date, dayEvents)}
-                className={`h-8 w-8 text-xs rounded-md transition-colors ${
-                  isToday 
-                    ? 'bg-solio-blue text-white' 
-                    : hasEventToday
-                    ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                    : 'hover:bg-gray-100'
-                }`}
-              >
-                {date.getDate()}
-                {hasEventToday && (
-                  <div className="w-1 h-1 bg-green-500 rounded-full mx-auto mt-0.5"></div>
-                )}
-              </button>
-            );
-          })}
-        </div>
+    <Card className="w-full max-w-sm border-blue-500 border-2">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg flex items-center justify-between">
+          <Button variant="ghost" size="icon" onClick={goToPreviousMonth}>
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-center">
+            {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+          </span>
+          <Button variant="ghost" size="icon" onClick={goToNextMonth}>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-3">
+        <Calendar
+          mode="single"
+          selected={selectedDate}
+          onSelect={onDateSelect}
+          month={currentMonth}
+          onMonthChange={setCurrentMonth}
+          className="w-full"
+          classNames={{
+            month: "space-y-4",
+            caption: "hidden",
+            table: "w-full border-collapse space-y-1",
+            head_row: "flex",
+            head_cell: "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
+            row: "flex w-full mt-2",
+            cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+            day: `h-8 w-8 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md`,
+            day_selected: "bg-blue-600 text-white hover:bg-blue-700 hover:text-white focus:bg-blue-600 focus:text-white border-2 border-blue-800",
+            day_today: "bg-accent text-accent-foreground",
+            day_outside: "text-muted-foreground opacity-50",
+            day_disabled: "text-muted-foreground opacity-50",
+          }}
+          modifiers={{
+            eventDay: isDayWithEvent
+          }}
+          modifiersClassNames={{
+            eventDay: "bg-blue-100 text-blue-800 border-2 border-blue-500 font-bold hover:bg-blue-200"
+          }}
+        />
       </CardContent>
     </Card>
   );

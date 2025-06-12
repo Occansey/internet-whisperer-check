@@ -1,5 +1,5 @@
 
-export type EventType = "upcoming" | "past" | "spotlight";
+export type EventType = "upcoming" | "past" | "spotlight" | "à venir" | "passé";
 export type ImagePosition = "object-center" | "object-top" | "object-bottom" | "object-left" | "object-right" | "object-left-top" | "object-right-top" | "object-left-bottom" | "object-right-bottom";
 
 export interface EventProps {

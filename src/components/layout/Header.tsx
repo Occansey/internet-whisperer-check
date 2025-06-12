@@ -1,315 +1,297 @@
 
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import React from "react";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-solio-blue/10 hover:text-solio-blue focus:bg-solio-blue/10 focus:text-solio-blue",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
-
-const MobileMenuItem = ({ to, children }: { to: string; children: React.ReactNode }) => {
-  const [open, setOpen] = useState(false);
-  
-  return (
-    <Link 
-      to={to} 
-      className="block py-3 px-4 text-lg text-solio-blue hover:bg-gray-100 rounded-lg"
-      onClick={() => setOpen(false)}
-    >
-      {children}
-    </Link>
-  );
-};
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme/theme-toggle';
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [dropdowns, setDropdowns] = useState({
+    apropos: false,
+    filiales: false,
+    gouvernance: false,
+    actualites: false,
+    carrieres: false,
+  });
   const location = useLocation();
+  const headerRef = useRef<HTMLElement>(null);
+
+  const toggleDropdown = (dropdown: keyof typeof dropdowns) => {
+    setDropdowns(prev => ({
+      apropos: false,
+      filiales: false,
+      gouvernance: false,
+      actualites: false,
+      carrieres: false,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
+
+  const closeAllDropdowns = () => {
+    setDropdowns({
+      apropos: false,
+      filiales: false,
+      gouvernance: false,
+      actualites: false,
+      carrieres: false,
+    });
+    setIsOpen(false);
+  };
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <header className="border-b bg-white shadow-sm sticky top-0 z-50">
-      <div className="container flex h-20 items-center justify-between">
-        <Link to="/" className="font-oval font-bold text-xl mr-6 text-solio-blue flex items-center">
-          <img src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" alt="Solio Group" className="h-32 w-auto mr-2" />
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:block flex-1">
-          <NavigationMenu className="mx-auto">
-            <NavigationMenuList className="relative">
-              {/* Accueil */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
-                  Accueil
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-0">
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    <ListItem
-                      href="/presentation"
-                      title="Présentation du Groupe"
-                    >
-                      Un groupe multidisciplinaire dédié à l'accompagnement des entreprises
-                    </ListItem>
-                    <ListItem
-                      href="/mission-vision"
-                      title="Notre mission & vision"
-                    >
-                      Bâtir un modèle d'entreprise durable et responsable
-                    </ListItem>
-                    <ListItem
-                      href="/culture"
-                      title="Notre culture d'entreprise"
-                    >
-                      L'humain au cœur de notre développement
-                    </ListItem>
-                    <ListItem
-                      href="/activites"
-                      title="Nos domaines d'activité"
-                    >
-                      Transition énergétique et transformation digitale
-                    </ListItem>
-                    <ListItem
-                      href="/certifications"
-                      title="Nos certifications"
-                    >
-                      Les reconnaissances de notre expertise
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+    <header ref={headerRef} className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-200">
+        <div className="container mx-auto px-2">
+        <div className="flex justify-between items-center py-1">
+          <Link to="/" className="flex items-center" onClick={closeAllDropdowns}>
+            <img 
+              src="/lovable-uploads/2f77179c-5f56-4952-8e92-625fc37a10e2.png" 
+              alt="Solio Group Logo" 
+              className="h-28 w-auto object-contain"
+            />
+          </Link>
 
-              {/* Nos Filiales */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
-                  Nos Filiales
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-0">
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    <ListItem
-                      href="/nos-filiales"
-                      title="Voir nos filiales"
-                    >
-                      Aperçu de toutes nos filiales
-                    </ListItem>
-                    <ListItem
-                      href="/filiales/growth-energy"
-                      title="⚡️ Growth Energy"
-                    >
-                      Solutions énergétiques industrielles
-                    </ListItem>
-                    <ListItem
-                      href="/filiales/gem-e-mobility"
-                      title="🚗 GEM E-Mobility"
-                    >
-                      Mobilité électrique pour professionnels
-                    </ListItem>
-                    <ListItem
-                      href="/filiales/asking"
-                      title="💻 Asking"
-                    >
-                      Transformation numérique & IA
-                    </ListItem>
-                    <ListItem
-                      href="/filiales/mfg-technologies"
-                      title="🏭 MFG Technologies"
-                    >
-                      Intégration ERP & technologies industrielles
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex space-x-8 items-center">
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('apropos')}>
+                À propos
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.apropos ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.apropos && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/presentation" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Présentation
+                    </Link>
+                    <Link to="/mission-vision" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Mission & Vision
+                    </Link>
+                    <Link to="/certifications" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Certifications
+                    </Link>
+                    <Link to="/culture" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Culture
+                    </Link>
+                    <Link to="/activites" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Activités
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
 
-              {/* Gouvernance */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
-                  Gouvernance
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-0">
-                  <ul className="grid w-[400px] gap-3 p-4">
-                    <ListItem
-                      href="/gouvernance/comite-executif"
-                      title="Comité exécutif (COMEX)"
-                    >
-                      Direction stratégique et alignement des activités
-                    </ListItem>
-                    <ListItem
-                      href="/gouvernance/direction"
-                      title="Équipe de direction"
-                    >
-                      Expertise sectorielle, vision stratégique et innovation
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Actualités */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
-                  Actualités
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
-                    <ListItem
-                      href="/actualites/communiques"
-                      title="Communiqués"
-                    >
-                      Annonces officielles et partenariats
-                    </ListItem>
-                    <ListItem
-                      href="/actualites/projets"
-                      title="Projets en cours"
-                    >
-                      Découvrez nos projets en déploiement
-                    </ListItem>
-                    <ListItem
-                      href="/actualites/evenements"
-                      title="Événements"
-                    >
-                      Événements passés et à venir
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Carrières */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-gray-100 hover:text-solio-blue data-[state=open]:bg-gray-100 data-[state=open]:text-solio-blue">
-                  Carrières
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-0">
-                  <ul className="grid w-[400px] gap-3 p-4">
-                    <ListItem
-                      href="/carrieres/rejoignez-nous"
-                      title="Rejoignez-nous"
-                    >
-                      Opportunités d'emploi et candidatures
-                    </ListItem>
-                    <ListItem
-                      href="/carrieres/engagements-rh"
-                      title="Nos engagements RH"
-                    >
-                      Valeurs et culture d'entreprise
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Contact - Lien direct */}
-              <NavigationMenuItem>
-                <Link to="/contact" className={cn(navigationMenuTriggerStyle(), "hover:bg-gray-100 hover:text-solio-blue")}>
-                  Contact
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('filiales')}>
+                <Link 
+                  to="/nos-filiales"
+                  className="flex items-center gap-1"
+                  onClick={closeAllDropdowns}
+                >
+                  Filiales
                 </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.filiales && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/filiales/growth-energy" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Growth Energy
+                    </Link>
+                    <Link to="/filiales/asking" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Asking
+                    </Link>
+                    <Link to="/filiales/mfg-technologies" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      MFG Technologies
+                    </Link>
+                    <Link to="/filiales/gem-e-mobility" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      GEM E-Mobility
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('gouvernance')}>
+                Gouvernance
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.gouvernance && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/gouvernance/direction" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Direction
+                    </Link>
+                    <Link to="/gouvernance/comite-executif" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Comité Exécutif
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('actualites')}>
+                Actualités
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.actualites ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.actualites && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/actualites/communiques" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Communiqués
+                    </Link>
+                    <Link to="/actualites/evenements" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Événements
+                    </Link>
+                    <Link to="/actualites/projets" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Projets
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative group">
+              <Button variant="ghost" className="gap-1 py-1.5" onClick={() => toggleDropdown('carrieres')}>
+                Carrières
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.carrieres ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.carrieres && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                  <div className="py-1" role="none">
+                    <Link to="/carrieres/engagements-rh" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Nos engagements RH
+                    </Link>
+                    <Link to="/carrieres/rejoignez-nous" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" role="menuitem" onClick={closeAllDropdowns} tabIndex={-1}>
+                      Rejoignez-nous
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              <Link 
+                to="/contact"
+                className={`${
+                  location.pathname === '/contact' 
+                    ? 'text-solio-blue' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-solio-blue dark:hover:text-solio-yellow'
+                } transition-colors`}
+                onClick={closeAllDropdowns}
+              >
+                Contact
+              </Link>
+            </div>
+          </nav>
+
+          {/* Mobile menu button */}
+          <div className="lg:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <Button
+              variant="ghost"
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Menu">
-                <Menu className="h-8 w-8" />
-                <span className="sr-only">Menu</span>
+        {isOpen && (
+          <div className="lg:hidden py-4 border-t dark:border-gray-700">
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('apropos')}>
+                À propos
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.apropos ? 'rotate-180' : ''}`} />
               </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] sm:w-[350px] overflow-y-auto">
-              <div className="flex flex-col gap-4 py-4">
-                <h2 className="text-lg font-bold mb-4">Menu</h2>
-                
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="accueil">
-                    <AccordionTrigger className="hover:no-underline">Accueil</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        <MobileMenuItem to="/presentation">Présentation du Groupe</MobileMenuItem>
-                        <MobileMenuItem to="/mission-vision">Notre mission & vision</MobileMenuItem>
-                        <MobileMenuItem to="/culture">Notre culture d'entreprise</MobileMenuItem>
-                        <MobileMenuItem to="/activites">Nos domaines d'activité</MobileMenuItem>
-                        <MobileMenuItem to="/certifications">Nos certifications</MobileMenuItem>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                
-                  <AccordionItem value="filiales">
-                    <AccordionTrigger className="hover:no-underline">Nos Filiales</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        <MobileMenuItem to="/nos-filiales">Voir nos filiales</MobileMenuItem>
-                        <MobileMenuItem to="/filiales/growth-energy">Growth Energy</MobileMenuItem>
-                        <MobileMenuItem to="/filiales/gem-e-mobility">GEM E-Mobility</MobileMenuItem>
-                        <MobileMenuItem to="/filiales/asking">Asking</MobileMenuItem>
-                        <MobileMenuItem to="/filiales/mfg-technologies">MFG Technologies</MobileMenuItem>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                
-                  <AccordionItem value="gouvernance">
-                    <AccordionTrigger className="hover:no-underline">Gouvernance</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        <MobileMenuItem to="/gouvernance/comite-executif">Comité exécutif (COMEX)</MobileMenuItem>
-                        <MobileMenuItem to="/gouvernance/direction">Équipe de direction</MobileMenuItem>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                
-                  <AccordionItem value="actualites">
-                    <AccordionTrigger className="hover:no-underline">Actualités</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        <MobileMenuItem to="/actualites/communiques">Communiqués</MobileMenuItem>
-                        <MobileMenuItem to="/actualites/projets">Projets en cours</MobileMenuItem>
-                        <MobileMenuItem to="/actualites/evenements">Événements</MobileMenuItem>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                
-                  <AccordionItem value="carrieres">
-                    <AccordionTrigger className="hover:no-underline">Carrières</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        <MobileMenuItem to="/carrieres/rejoignez-nous">Rejoignez-nous</MobileMenuItem>
-                        <MobileMenuItem to="/carrieres/engagements-rh">Nos engagements RH</MobileMenuItem>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                
-                <div className="px-1 pt-4">
-                  <MobileMenuItem to="/contact">Contact</MobileMenuItem>
+              {dropdowns.apropos && (
+                <div className="ml-4">
+                  <Link to="/presentation" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Présentation</Link>
+                  <Link to="/mission-vision" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Mission & Vision</Link>
+                  <Link to="/certifications" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Certifications</Link>
+                  <Link to="/culture" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Culture</Link>
+                  <Link to="/activites" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Activités</Link>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('filiales')}>
+                <Link to="/nos-filiales" className="flex-1 text-left" onClick={closeAllDropdowns}>Filiales</Link>
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.filiales ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.filiales && (
+                <div className="ml-4">
+                  <Link to="/filiales/growth-energy" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Growth Energy</Link>
+                  <Link to="/filiales/asking" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Asking</Link>
+                  <Link to="/filiales/mfg-technologies" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>MFG Technologies</Link>
+                  <Link to="/filiales/gem-e-mobility" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>GEM E-Mobility</Link>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('gouvernance')}>
+                Gouvernance
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.gouvernance ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.gouvernance && (
+                <div className="ml-4">
+                  <Link to="/gouvernance/direction" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Direction</Link>
+                  <Link to="/gouvernance/comite-executif" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Comité Exécutif</Link>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('actualites')}>
+                Actualités
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.actualites ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.actualites && (
+                <div className="ml-4">
+                  <Link to="/actualites/communiques" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Communiqués</Link>
+                  <Link to="/actualites/evenements" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Événements</Link>
+                  <Link to="/actualites/projets" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Projets</Link>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <Button variant="ghost" className="w-full justify-start gap-1 py-1.5 px-4" onClick={() => toggleDropdown('carrieres')}>
+                Carrières
+                <ChevronDown className={`h-4 w-4 transition-transform ${dropdowns.carrieres ? 'rotate-180' : ''}`} />
+              </Button>
+              {dropdowns.carrieres && (
+                <div className="ml-4">
+                  <Link to="/carrieres/engagements-rh" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Nos engagements RH</Link>
+                  <Link to="/carrieres/rejoignez-nous" className="block py-2 px-4 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Rejoignez-nous</Link>
+                </div>
+              )}
+            </div>
+            
+            <Link to="/contact" className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-solio-blue dark:hover:text-solio-yellow transition-colors" onClick={closeAllDropdowns}>Contact</Link>
+          </div>
+        )}
       </div>
     </header>
   );
