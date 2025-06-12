@@ -27,7 +27,7 @@ const Communiques = () => {
         <HeroBanner 
           title="Communiqués de Presse"
           description="Découvrez les dernières actualités et communiqués officiels du groupe Solio."
-          glowColor="amber"
+          glowColor="emerald"
         />
         <div className="py-12 bg-gray-50">
           <div className="container">
@@ -45,7 +45,7 @@ const Communiques = () => {
       <HeroBanner 
         title="Communiqués de Presse"
         description="Découvrez les dernières actualités et communiqués officiels du groupe Solio."
-        glowColor="amber"
+        glowColor="emerald"
       />
       
       <div className="py-12 bg-gray-50">
