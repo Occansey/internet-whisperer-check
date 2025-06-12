@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ const Activites = () => {
   return (
     <Layout>
       <HeroBanner
-        title="Nos domaines d'activité"
+        title="Nos domaines d'expertise"
         description="Découvrez comment Solio Group accompagne ses clients dans leur transformation énergétique et digitale."
         glowColor="blue"
       />

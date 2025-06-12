@@ -5,6 +5,7 @@ import axios from 'axios';
  */
 const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
 const COMMUNIQUES_API_URL = "https://api.solio-group.com/wp-json/wp/v2/communiques?_embed";
+const EVENTS_API_URL = "https://api.solio-group.com/wp-json/wp/v2/evenements?_embed";
 
 // Types for WordPress API responses
 export interface WordPressPost {
@@ -34,21 +35,43 @@ export interface WordPressPost {
     annual_co2_reduction?: string;
     impact?: string;
     optimisation?: string;
-    // Gallery and video fields
+    // Updated gallery structure for projects
     photo_gallery?: {
-      galerie?: any[][];
-      gallery?: any[][];
+      galerie?: Array<Array<{
+        id: number;
+        title: string;
+        caption: string;
+        full_image_url: string;
+        thumbnail_image_url: string;
+        large_srcset: string;
+        medium_srcset: string;
+        media_details: any;
+        alt_text: string;
+        url: string;
+        target: string;
+      }>>;
     };
-    galerie?: any[];
+    // Events gallery structure  
+    gallery?: Array<Array<{
+      id: number;
+      title: string;
+      caption: string;
+      full_image_url: string;
+      thumbnail_image_url: string;
+      large_srcset: string;
+      medium_srcset: string;
+      media_details: any;
+      alt_text: string;
+      url: string;
+      target: string;
+    }>>;
     video_youtube?: string;
     video_linkedin?: string;
     // Event-specific fields
     lieu?: string;
     heure?: string;
     heure_fin?: string;
-    'heure-fin'?: string;
     en_savoir_plus?: string;
-    type?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: {
@@ -124,6 +147,48 @@ const wordpressApi = {
       return response.data as WordPressPost[];
     } catch (error) {
       console.error('Error fetching WordPress posts:', error);
+      throw error;
+    }
+  },
+
+  // Events - new method for fetching events
+  getEvents: async (params: { 
+    page?: number; 
+    per_page?: number;
+    search?: string;
+  } = {}) => {
+    try {
+      const response = await axios.get(EVENTS_API_URL, {
+        params,
+      });
+      return response.data as WordPressPost[];
+    } catch (error) {
+      console.error('Error fetching WordPress events:', error);
+      throw error;
+    }
+  },
+
+  // Single event
+  getEvent: async (identifier: number | string) => {
+    try {
+      console.log('Fetching event with identifier:', identifier);
+      
+      const isNumeric = !isNaN(Number(identifier));
+      
+      if (isNumeric) {
+        const response = await axios.get(`${WORDPRESS_API_URL}/evenements/${identifier}?_embed`);
+        return response.data as WordPressPost;
+      } else {
+        const response = await axios.get(`${WORDPRESS_API_URL}/evenements?slug=${identifier}&_embed`);
+        
+        if (response.data && response.data.length > 0) {
+          return response.data[0] as WordPressPost;
+        }
+        
+        throw new Error(`Event with identifier "${identifier}" not found`);
+      }
+    } catch (error) {
+      console.error('Error fetching WordPress event:', error);
       throw error;
     }
   },
@@ -321,45 +386,6 @@ const wordpressApi = {
       return response.data as WordPressMedia;
     } catch (error) {
       console.error('Error fetching WordPress media:', error);
-      throw error;
-    }
-  },
-
-  // Enhanced method for fetching events with ACF fields
-  getEvents: async (params: { 
-    page?: number; 
-    per_page?: number;
-    search?: string;
-  } = {}) => {
-    try {
-      const response = await axios.get(`${WORDPRESS_API_URL}/evenements?_embed`, {
-        params,
-      });
-      return response.data as WordPressPost[];
-    } catch (error) {
-      console.error('Error fetching WordPress events:', error);
-      throw error;
-    }
-  },
-
-  getEvent: async (identifier: number | string) => {
-    try {
-      const isNumeric = !isNaN(Number(identifier));
-      
-      if (isNumeric) {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements?slug=${identifier}&_embed`);
-        
-        if (response.data && response.data.length > 0) {
-          return response.data[0] as WordPressPost;
-        }
-        
-        throw new Error(`Event with identifier "${identifier}" not found`);
-      }
-    } catch (error) {
-      console.error('Error fetching WordPress event:', error);
       throw error;
     }
   },

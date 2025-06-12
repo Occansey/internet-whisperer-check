@@ -2,18 +2,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, Lightbulb, Activity, BarChart, TrendingUp } from "lucide-react";
+import { ArrowLeft, MapPin, Lightbulb, Activity, BarChart, TrendingUp, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SocialShare } from "@/components/ui/social-share";
-import { useWordPressProject } from '@/hooks/useWordPress';
+import { useWordPressProject, useWordPressProjects } from '@/hooks/useWordPress';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ImageGallery from '@/components/ui/image-gallery';
 import VideoEmbed from '@/components/ui/video-embed';
 import { generateSlug, findProjectBySlug } from '@/utils/slugUtils';
+import { Link } from 'react-router-dom';
 
 // Import projects from the Projets page
 import { projects } from '@/pages/actualites/Projets';
@@ -32,6 +33,9 @@ const ProjectDetail = () => {
 
   // Try to fetch from WordPress first
   const { data: wpProject, isLoading: wpLoading, error: wpError } = useWordPressProject(id || '');
+  
+  // Fetch other projects for "read more" section
+  const { data: allProjects } = useWordPressProjects({ per_page: 10 });
 
   const mapSubsidiaryFromWordPress = (filiale: string): string => {
     const filialeNormalized = filiale?.toLowerCase() || '';
@@ -56,6 +60,9 @@ const ProjectDetail = () => {
     if (id) {
       // If WordPress data is available, use it
       if (wpProject && !wpLoading) {
+        // Extract gallery images from new structure
+        const galleryImages = wpProject.acf?.photo_gallery?.galerie?.flat().map(img => img.full_image_url).filter(Boolean) || [];
+        
         const transformedProject = {
           id: wpProject.id,
           title: wpProject.title.rendered,
@@ -74,8 +81,8 @@ const ProjectDetail = () => {
             annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
             impact: wpProject.acf?.impact,
             optimisation: wpProject.acf?.optimisation,
-            // Gallery and video fields
-            galerie: wpProject.acf?.galerie || [],
+            // Updated gallery handling
+            galerie: galleryImages,
             video_youtube: wpProject.acf?.video_youtube,
             video_linkedin: wpProject.acf?.video_linkedin
           }
@@ -178,6 +185,9 @@ const ProjectDetail = () => {
       icon: <TrendingUp className="h-6 w-6 text-purple-500" />
     }] : [])
   ].filter(stat => stat.value && stat.value !== "N/A" && !stat.value.includes("N/A"));
+
+  // Get other projects for "read more" section
+  const otherProjects = allProjects?.filter(p => p.id !== project.id).slice(0, 2) || [];
 
   return (
     <Layout>
@@ -293,6 +303,7 @@ const ProjectDetail = () => {
                         <p>{decodeHtmlEntities(project.wpData.impact)}</p>
                       </>
                     )}
+                   {/* Project Video */}
                   </>
                 ) : (
                   <>
@@ -470,6 +481,47 @@ const ProjectDetail = () => {
               </div>
             </div>
           </div>
+          
+          {/* Discover More Projects Section */}
+          {otherProjects.length > 0 && (
+            <div className="mt-16">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-bold text-solio-blue">Découvrir plus de projets</h2>
+                <Button asChild variant="outline">
+                  <Link to="/actualites/projets">
+                    Voir tous les projets <ExternalLink className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {otherProjects.map((otherProject) => (
+                  <Card key={otherProject.id} className="overflow-hidden">
+                    <div className="h-48">
+                      <img 
+                        src={otherProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg'}
+                        alt={decodeHtmlEntities(otherProject.title.rendered)}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{decodeHtmlEntities(otherProject.title.rendered)}</CardTitle>
+                      <CardDescription>
+                        {decodeHtmlEntities(otherProject.content.rendered.replace(/<[^>]*>/g, '')).substring(0, 100)}...
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button asChild className="w-full">
+                        <Link to={`/actualites/projets/${otherProject.slug}`}>
+                          Voir le projet
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
           
           {/* Social sharing section */}
           <div className="mt-12 p-6 bg-white rounded-lg shadow">
