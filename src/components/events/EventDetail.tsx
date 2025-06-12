@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -36,8 +37,8 @@ const EventDetail = () => {
   useEffect(() => {
     if (id) {
       if (wpEvent && !wpLoading) {
-        // Extract gallery images from new structure
-        const galleryImages = wpEvent.acf?.photo_gallery?.galerie?.flat().map(img => img.full_image_url).filter(Boolean) || [];
+        // Extract gallery images from events structure
+        const galleryImages = wpEvent.acf?.gallery?.flat().map(img => img.full_image_url).filter(Boolean) || [];
         
         const transformedEvent = {
           id: wpEvent.id,
