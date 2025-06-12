@@ -15,21 +15,21 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Nos sièges</h3>
+            <h3 className="text-lg font-semibold mb-4">Nos bureaux</h3>
             <address className="not-italic">
               <ul className="space-y-3 text-gray-400">
                 <li className="flex flex-col">
-                  <span className="font-medium text-white">Europe HQ</span>
+                  <span className="font-medium text-white">France</span>
                   <span>Paris, 75116, 4 rue de Longchamp</span>
                   <span>Marseille, 13015, 211 Chem. de la Madrague-Ville</span>
                 </li>
                 <li className="flex flex-col">
-                  <span className="font-medium text-white">Amérique du Nord HQ</span>
+                  <span className="font-medium text-white">Canada</span>
                   <span>Montréal, QC H2Y 1T9, 368 R. Notre Dame O</span>
                 </li>
                 <li className="flex flex-col">
-                  <span className="font-medium text-white">Africa HQ</span>
-                  <span>Nairobi, 4th Floor, North Tower, Two Rivers Finance and Innovation Center</span>
+                  <span className="font-medium text-white">Kenya</span>
+                  <span>Nairobi, 9th Floor, North Tower, Two Rivers Finance and Innovation Center</span>
                 </li>
               </ul>
             </address>
