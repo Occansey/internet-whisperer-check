@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
 import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
-import { useLanguage } from "@/context/language";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const processSteps = [
   {

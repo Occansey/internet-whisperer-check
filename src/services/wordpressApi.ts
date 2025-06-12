@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 /**
@@ -34,6 +35,15 @@ export interface WordPressPost {
     annual_co2_reduction?: string;
     impact?: string;
     optimisation?: string;
+    // Add gallery and video fields
+    galerie?: any[];
+    video_youtube?: string;
+    video_linkedin?: string;
+    // Event-specific fields
+    lieu?: string;
+    heure?: string;
+    heure_fin?: string;
+    en_savoir_plus?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: {
