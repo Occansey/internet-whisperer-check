@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,15 +9,13 @@ import { SocialShare } from "@/components/ui/social-share";
 import ColoredBadge from "@/components/ui/colored-badge";
 import { EventProps } from "@/types/events";
 import { decodeHtmlEntities } from "@/utils/htmlUtils";
-import { generateSlug } from '@/utils/slugUtils';
 
 interface EventCardProps {
   event: EventProps;
   wpEvent?: any;
-  compact?: boolean;
 }
 
-const EventCard = ({ event, compact = false, wpEvent }: EventCardProps) => {
+const EventCard = ({ event, wpEvent }: EventCardProps) => {
   const formatDateToFrench = (dateStr: string): string => {
     if (!dateStr) return '';
     
@@ -82,12 +81,8 @@ const EventCard = ({ event, compact = false, wpEvent }: EventCardProps) => {
     }
   };
 
-  // Generate slug for the event
-  const eventSlug = generateSlug(event.title);
-  const eventUrl = `/actualites/evenements/${eventSlug}`;
-
   return (
-    <Card className={`${compact ? 'h-auto' : 'h-full'} flex flex-col`}>
+    <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg">
       {event.image && (
         <div className="h-48 overflow-hidden">
           <img 
@@ -137,10 +132,32 @@ const EventCard = ({ event, compact = false, wpEvent }: EventCardProps) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex-initial">
-        <Button variant="solio" className="w-full" asChild>
-          <Link to={eventUrl}>Voir les détails</Link>
-        </Button>
+      <CardFooter className="flex flex-col gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-2 w-full">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            asChild
+            className="flex items-center gap-2 flex-1"
+          >
+            <Link to={`/actualites/evenements/${event.id}`}>
+              Consulter
+            </Link>
+          </Button>
+          {enSavoirPlusUrl && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              asChild
+              className="flex items-center gap-2 flex-1"
+            >
+              <a href={enSavoirPlusUrl} target="_blank" rel="noopener noreferrer">
+                En savoir plus
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );

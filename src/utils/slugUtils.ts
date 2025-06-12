@@ -13,17 +13,3 @@ export const generateSlug = (text: string): string => {
 export const findBySlug = (items: any[], slug: string, titleField: string = 'title') => {
   return items.find(item => generateSlug(item[titleField]) === slug);
 };
-
-export const findEventBySlug = (events: any[], slug: string) => {
-  return events.find(event => {
-    const eventSlug = generateSlug(event.title || event.title?.rendered || '');
-    return eventSlug === slug;
-  });
-};
-
-export const findProjectBySlug = (projects: any[], slug: string) => {
-  return projects.find(project => {
-    const projectSlug = generateSlug(project.title || project.title?.rendered || '');
-    return projectSlug === slug;
-  });
-};
