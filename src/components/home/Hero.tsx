@@ -1,19 +1,13 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
   const playerRef = useRef<HTMLDivElement>(null);
   const playerInstanceRef = useRef<any>(null);
-  const isMobile = useIsMobile();
-  const [hasRefreshed, setHasRefreshed] = useState(false);
 
   useEffect(() => {
-    // Check if this is the first visit to homepage
-    const hasVisitedHomepage = localStorage.getItem('visited-homepage');
-    const isFirstVisit = !hasVisitedHomepage;
-
     // Load YouTube IFrame API
     if (!window.YT) {
       const tag = document.createElement('script');
@@ -34,53 +28,33 @@ const Hero = () => {
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            start: 1,
-            loop: 1,
-            playlist: 'qsLOG7ipHZg'
+            start: 1
           },
           events: {
             onReady: function (event: any) {
-              // Multiple attempts to ensure autoplay on mobile
-              const attemptPlay = () => {
-                event.target.mute();
-                event.target.playVideo();
-              };
-              
-              attemptPlay();
-              
-              // Additional play attempts for mobile
-              if (isMobile) {
-                setTimeout(attemptPlay, 100);
-                setTimeout(attemptPlay, 500);
-                
-                // Refresh video once on mobile and first visit
-                if (isFirstVisit && !hasRefreshed) {
-                  setTimeout(() => {
-                    event.target.seekTo(2);
-                    event.target.playVideo();
-                    setHasRefreshed(true);
-                  }, 1000);
-                }
-              }
+              event.target.playVideo();
             },
             onStateChange: function (event: any) {
-              // Remove the loop handling code since we're using YouTube's native loop
-              // Force play on mobile if video gets paused
-              if (isMobile && event.data === window.YT?.PlayerState.PAUSED) {
-                setTimeout(() => {
-                  event.target.playVideo();
-                }, 100);
+              if (event.data === window.YT?.PlayerState.PLAYING) {
+                const checkTime = setInterval(function () {
+                  if (playerInstanceRef.current) {
+                    const currentTime = playerInstanceRef.current.getCurrentTime();
+                    if (currentTime >= 15) {
+                      playerInstanceRef.current.seekTo(2);
+                    }
+                  }
+                }, 500);
+                
+                // Clear interval when video stops
+                if (event.data !== window.YT?.PlayerState.PLAYING) {
+                  clearInterval(checkTime);
+                }
               }
             }
           }
         });
       }
     };
-
-    // Mark homepage as visited
-    if (isFirstVisit) {
-      localStorage.setItem('visited-homepage', 'true');
-    }
 
     // If API is already loaded, initialize immediately
     if (window.YT && window.YT.Player) {
@@ -94,7 +68,7 @@ const Hero = () => {
         playerInstanceRef.current = null;
       }
     };
-  }, [isMobile, hasRefreshed]);
+  }, []);
 
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">

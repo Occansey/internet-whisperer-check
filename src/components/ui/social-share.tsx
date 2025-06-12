@@ -1,4 +1,3 @@
-
 import { Facebook, Twitter, Share2, Copy } from "lucide-react";
 import { Button } from "./button";
 import { toast } from "./use-toast";
@@ -13,9 +12,10 @@ interface SocialShareProps {
   title: string;
   className?: string;
   compact?: boolean;
+  iconColor?: string;
 }
 
-export function SocialShare({ title, className = "", compact = false }: SocialShareProps) {
+export function SocialShare({ title, className = "", compact = false, iconColor }: SocialShareProps) {
   const url = window.location.href;
   
   const shareOnWhatsApp = () => {
@@ -43,8 +43,8 @@ export function SocialShare({ title, className = "", compact = false }: SocialSh
       <div className={`flex justify-end gap-2 ${className}`}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="text-blue-600 hover:text-blue-700">
-              <Share2 className="h-4 w-4 text-blue-600" />
+            <Button variant="outline" size="icon">
+              <Share2 className={`h-4 w-4 ${iconColor || ''}`} style={iconColor ? { color: iconColor } : {}} />
               <span className="sr-only">Partager</span>
             </Button>
           </DropdownMenuTrigger>

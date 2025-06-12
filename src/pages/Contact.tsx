@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
@@ -16,21 +17,6 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const saveSubmission = (formData: any) => {
-    const submission = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      ...formData,
-    };
-
-    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-    existingSubmissions.push(submission);
-    localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('formSubmitted'));
-  };
-
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
@@ -38,19 +24,17 @@ const Contact = () => {
     try {
       // Prepare data for email submission
       const formData = {
-        name: `${prenom} ${nom}`, // Combine first and last name
+        nom,
+        prenom,
         email,
-        phone: telephone,
-        message: `Sujet: ${sujet}\n\nMessage: ${message}`, // Include subject in message
-        formType: "contact",
-        recipient: "contact@solio-group.com",
-        hasCv: false,
+        telephone,
+        sujet,
+        message,
+        recipient: "contact@solio-group.com", // Email recipient
       };
       
-      // Save to localStorage
-      saveSubmission(formData);
-      
       // In a real implementation, this would send to your backend API
+      // For demo purposes, we'll simulate the API call
       console.log("Form data to be sent to contact@solio-group.com:", formData);
       
       // Simulate API delay
@@ -89,7 +73,7 @@ const Contact = () => {
         glowColor="orange"
       />
       
-      <div className="py-12 bg-gray-50 dark:bg-gray-900">
+      <div className="py-12 bg-gray-50">
         <div className="container">
           <div className="grid md:grid-cols-5 gap-8">
             <Card className="md:col-span-3 border-none shadow-md">
@@ -97,32 +81,30 @@ const Contact = () => {
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="nom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Nom</label>
+                      <label htmlFor="nom" className="text-sm font-medium">Nom</label>
                       <Input 
                         id="nom" 
                         placeholder="Votre nom" 
                         required 
                         value={nom}
                         onChange={(e) => setNom(e.target.value)}
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="prenom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Prénom</label>
+                      <label htmlFor="prenom" className="text-sm font-medium">Prénom</label>
                       <Input 
                         id="prenom" 
                         placeholder="Votre prénom" 
                         required 
                         value={prenom}
                         onChange={(e) => setPrenom(e.target.value)}
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-900 dark:text-gray-100">Email</label>
+                      <label htmlFor="email" className="text-sm font-medium">Email</label>
                       <Input 
                         id="email" 
                         type="email" 
@@ -130,35 +112,32 @@ const Contact = () => {
                         required 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="telephone" className="text-sm font-medium text-gray-900 dark:text-gray-100">Téléphone</label>
+                      <label htmlFor="telephone" className="text-sm font-medium">Téléphone</label>
                       <Input 
                         id="telephone" 
                         placeholder="Votre numéro de téléphone" 
                         value={telephone}
                         onChange={(e) => setTelephone(e.target.value)}
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="sujet" className="text-sm font-medium text-gray-900 dark:text-gray-100">Sujet</label>
+                    <label htmlFor="sujet" className="text-sm font-medium">Sujet</label>
                     <Input 
                       id="sujet" 
                       placeholder="Sujet de votre message" 
                       required 
                       value={sujet}
                       onChange={(e) => setSujet(e.target.value)}
-                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-900 dark:text-gray-100">Message</label>
+                    <label htmlFor="message" className="text-sm font-medium">Message</label>
                     <Textarea 
                       id="message" 
                       placeholder="Votre message" 
@@ -166,7 +145,6 @@ const Contact = () => {
                       required 
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
@@ -201,18 +179,20 @@ const Contact = () => {
                         <div className="mt-3">
                           <p className="font-medium">Africa HQ</p>
                           <p>GEFI Solutions SEZ Limited</p>
-                          <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
+                          <p>9th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
+                          <p className="font-medium">Nigeria (Growth Energy Nigeria Limited)</p>
                           <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
+                          <p><strong>Lagos:</strong> 16, Idowu Martins, Victoria Island, Lagos</p>
+                          <p><strong>Enugu:</strong> Manamuz; 68B Chime Avenue, New Haven, Enugu</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Burundi - Growth Energy Solutions Burundi </p>
-                          <p>84 Avenue Ndamukiza , Bujumbura, Burundi</p>
+                          <p className="font-medium">Burundi</p>
+                          <p>Bujumbura: Rue Pierre Ngendandumwe, Bujumbura, Burundi</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Tanzania - Growth Energy Solutions Zanzibar </p>
+                          <p className="font-medium">Tanzania (LifeExpress Office)</p>
                           <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
                         </div>
                         <p className="mt-4">

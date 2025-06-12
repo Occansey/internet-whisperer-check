@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,21 +21,6 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
   const [message, setMessage] = useState("");
   const [cv, setCv] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const saveSubmission = (formData: any) => {
-    const submission = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      ...formData,
-    };
-
-    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-    existingSubmissions.push(submission);
-    localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent('formSubmitted'));
-  };
 
   const getTitle = () => {
     switch (type) {
@@ -71,9 +55,6 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
         cvFileName: cv?.name,
         recipient: "contact@solio-group.com", // Email recipient
       };
-      
-      // Save to localStorage
-      saveSubmission(formData);
       
       // In a real implementation, this would send to your backend API
       // For demo purposes, we'll simulate the API call
@@ -212,4 +193,3 @@ const ContactForm = ({ type, jobTitle, eventTitle, onClose }: ContactFormProps) 
 };
 
 export default ContactForm;
-

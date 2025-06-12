@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * WordPress REST API service for integrating with WordPress as a headless CMS
  */
-const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2';
+const WORDPRESS_API_URL = 'https://api.solio-group.com/wp-json/wp/v2/communiques?_embed';
 const COMMUNIQUES_API_URL = "https://api.solio-group.com/wp-json/wp/v2/communiques?_embed";
 
 // Types for WordPress API responses
@@ -21,19 +21,6 @@ export interface WordPressPost {
     date?: string;
     id?: string;
     tags?: string[];
-    progress?: number;
-    subsidiary?: string;
-    location?: string;
-    pays?: string;
-    filiale?: string;
-    progression?: string;
-    capacite?: string;
-    technologie?: string;
-    stockage?: string;
-    objectifs?: string;
-    annual_co2_reduction?: string;
-    impact?: string;
-    optimisation?: string;
   };
   _embedded?: {
     'wp:featuredmedia'?: {
@@ -130,23 +117,6 @@ const wordpressApi = {
     }
   },
 
-  // New method for fetching projects
-  getProjects: async (params: { 
-    page?: number; 
-    per_page?: number;
-    search?: string;
-  } = {}) => {
-    try {
-      const response = await axios.get(`${WORDPRESS_API_URL}/projets?_embed`, {
-        params,
-      });
-      return response.data as WordPressPost[];
-    } catch (error) {
-      console.error('Error fetching WordPress projects:', error);
-      throw error;
-    }
-  },
-
   getPost: async (identifier: number | string) => {
     try {
       const isNumeric = !isNaN(Number(identifier));
@@ -200,31 +170,6 @@ const wordpressApi = {
       }
     } catch (error) {
       console.error('Error fetching WordPress communique:', error);
-      throw error;
-    }
-  },
-
-  // New method for fetching a single project
-  getProject: async (identifier: number | string) => {
-    try {
-      console.log('Fetching project with identifier:', identifier);
-      
-      const isNumeric = !isNaN(Number(identifier));
-      
-      if (isNumeric) {
-        const response = await axios.get(`${WORDPRESS_API_URL}/projets/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${identifier}&_embed`);
-        
-        if (response.data && response.data.length > 0) {
-          return response.data[0] as WordPressPost;
-        }
-        
-        throw new Error(`Project with identifier "${identifier}" not found`);
-      }
-    } catch (error) {
-      console.error('Error fetching WordPress project:', error);
       throw error;
     }
   },

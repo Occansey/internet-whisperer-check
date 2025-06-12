@@ -1,69 +1,60 @@
+
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface ColoredBadgeProps {
   tag: string;
-  variant?: "default" | "secondary" | "destructive" | "outline";
   className?: string;
 }
 
-const tagColors: Record<string, string> = {
-  // Existing tags with new color palette
-  "solio": "bg-solio-blue text-white",
-  "wordpress": "text-blue-800 border-blue-300" + " " + "bg-[rgb(219,234,254)]",
-  "asking": "text-purple-800 border-purple-300" + " " + "bg-[rgb(233,213,255)]",
-  "growth-energy": "text-green-800 border-green-300" + " " + "bg-[rgb(220,252,231)]",
-  "gem": "text-emerald-800 border-emerald-300" + " " + "bg-[rgb(220,252,231)]",
-  "mfg": "text-orange-800 border-orange-300" + " " + "bg-[rgb(255,237,213)]",
-  "digital": "text-cyan-800 border-cyan-300" + " " + "bg-[rgb(219,234,254)]",
-  "testtag": "text-pink-800 border-pink-300" + " " + "bg-[rgb(252,231,243)]",
-  "africa": "text-yellow-800 border-yellow-300" + " " + "bg-[rgb(236,252,203)]",
-  "expansion": "text-indigo-800 border-indigo-300" + " " + "bg-[rgb(219,234,254)]",
-  "partnership": "text-teal-800 border-teal-300" + " " + "bg-[rgb(220,252,231)]",
-  "solar": "text-amber-800 border-amber-300" + " " + "bg-[rgb(255,237,213)]",
-  "award": "text-red-800 border-red-300" + " " + "bg-[rgb(254,226,226)]",
-  "e-mobility": "text-lime-800 border-lime-300" + " " + "bg-[rgb(236,252,203)]",
-  "innovation": "text-violet-800 border-violet-300" + " " + "bg-[rgb(233,213,255)]",
-};
+const getTagColor = (tag: string): string => {
+  const colors: Record<string, string> = {
+    'asking': 'bg-blue-100 text-blue-800 border-blue-200',
+    'growth-energy': 'bg-green-100 text-green-800 border-green-200',
+    'gem': 'bg-purple-100 text-purple-800 border-purple-200',
+    'mfg': 'bg-orange-100 text-orange-800 border-orange-200',
+    'solio': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    'wordpress': 'bg-gray-100 text-gray-800 border-gray-200',
+    'digital': 'bg-cyan-100 text-cyan-800 border-cyan-200',
+    'africa': 'bg-amber-100 text-amber-800 border-amber-200',
+    'expansion': 'bg-pink-100 text-pink-800 border-pink-200',
+    'partnership': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'solar': 'bg-lime-100 text-lime-800 border-lime-200',
+    'award': 'bg-indigo-100 text-indigo-800 border-indigo-200',
+    'e-mobility': 'bg-violet-100 text-violet-800 border-violet-200',
+    'innovation': 'bg-teal-100 text-teal-800 border-teal-200',
+    'testtag': 'bg-rose-100 text-rose-800 border-rose-200'
+  };
 
-const getRandomColor = () => {
-  const colors = [
-    "text-slate-800 border-slate-300 bg-[rgb(248,250,252)]",
-    "text-gray-800 border-gray-300 bg-[rgb(249,250,251)]",
-    "text-green-800 border-green-300 bg-[rgb(220,252,231)]",
-    "text-lime-800 border-lime-300 bg-[rgb(236,252,203)]",
-    "text-orange-800 border-orange-300 bg-[rgb(255,237,213)]",
-    "text-blue-800 border-blue-300 bg-[rgb(219,234,254)]",
-    "text-purple-800 border-purple-300 bg-[rgb(233,213,255)]",
-    "text-pink-800 border-pink-300 bg-[rgb(252,231,243)]",
-    "text-yellow-800 border-yellow-300 bg-[rgb(254,249,195)]",
-    "text-teal-800 border-teal-300 bg-[rgb(204,251,241)]",
-    "text-cyan-800 border-cyan-300 bg-[rgb(207,250,254)]",
-    "text-indigo-800 border-indigo-300 bg-[rgb(224,231,255)]",
-    "text-red-800 border-red-300 bg-[rgb(254,226,226)]",
+  // Return specific color or generate a consistent color for new tags
+  if (colors[tag]) {
+    return colors[tag];
+  }
+
+  // Generate consistent color for new tags based on tag name
+  const colorOptions = [
+    'bg-red-100 text-red-800 border-red-200',
+    'bg-blue-100 text-blue-800 border-blue-200',
+    'bg-green-100 text-green-800 border-green-200',
+    'bg-yellow-100 text-yellow-800 border-yellow-200',
+    'bg-purple-100 text-purple-800 border-purple-200',
+    'bg-pink-100 text-pink-800 border-pink-200',
+    'bg-indigo-100 text-indigo-800 border-indigo-200',
   ];
-  return colors[Math.floor(Math.random() * colors.length)];
+
+  const index = tag.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colorOptions.length;
+  return colorOptions[index];
 };
 
-const ColoredBadge: React.FC<ColoredBadgeProps> = ({ tag, variant = "outline", className = "" }) => {
-  const lowerTag = tag.toLowerCase();
-  
-  // If the tag has a predefined color, use it
-  if (tagColors[lowerTag]) {
-    return (
-      <Badge className={`${tagColors[lowerTag]} border ${className} text-xs rounded-lg`}>
-        {tag}
-      </Badge>
-    );
-  }
-  
-  // For new tags, assign a random color and store it
-  if (!tagColors[lowerTag]) {
-    tagColors[lowerTag] = getRandomColor();
-  }
+const ColoredBadge: React.FC<ColoredBadgeProps> = ({ tag, className }) => {
+  const colorClass = getTagColor(tag.toLowerCase());
   
   return (
-    <Badge className={`${tagColors[lowerTag]} border ${className} text-xs rounded-lg`}>
+    <Badge 
+      variant="outline" 
+      className={cn("text-xs rounded-lg border", colorClass, className)}
+    >
       {tag}
     </Badge>
   );

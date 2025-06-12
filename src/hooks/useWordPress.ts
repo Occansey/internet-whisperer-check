@@ -81,6 +81,7 @@ export const useWordPressMedia = (id: number) => {
   });
 };
 
+// New hook specifically for communiques
 export const useWordPressCommuniques = (params: {
   page?: number;
   per_page?: number;
@@ -92,6 +93,7 @@ export const useWordPressCommuniques = (params: {
   });
 };
 
+// New hook for fetching a single communique
 export const useWordPressCommunique = (identifier: number | string) => {
   return useQuery({
     queryKey: ['wp-communique', identifier],
@@ -100,26 +102,7 @@ export const useWordPressCommunique = (identifier: number | string) => {
   });
 };
 
-// New hooks for projects
-export const useWordPressProjects = (params: {
-  page?: number;
-  per_page?: number;
-  search?: string;
-} = {}) => {
-  return useQuery({
-    queryKey: ['wp-projects', params],
-    queryFn: () => wordpressApi.getProjects(params),
-  });
-};
-
-export const useWordPressProject = (identifier: number | string) => {
-  return useQuery({
-    queryKey: ['wp-project', identifier],
-    queryFn: () => wordpressApi.getProject(identifier),
-    enabled: !!identifier,
-  });
-};
-
+// Helper to sanitize and render WordPress HTML content safely
 export const renderWordPressContent = (content: string): { __html: string } => {
   return { __html: content };
 };

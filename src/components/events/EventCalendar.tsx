@@ -1,33 +1,34 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, Clock, ExternalLink, CalendarPlus } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parse } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
-import { EventProps } from '@/types/events';
-import { SocialShare } from '@/components/ui/social-share';
-import ColoredBadge from '@/components/ui/colored-badge';
 
-interface EventCalendarProps {
-  events: EventProps[];
-  selectedDate?: Date;
-  onEventClick: (eventId: number) => void;
-  wpEvents?: any[];
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  type: string;
 }
 
-const parseEventDate = (dateStr: string): Date => {
-  // Handle WordPress ACF date format (DD/MM/YYYY)
-  if (dateStr.includes('/')) {
-    const [day, month, year] = dateStr.split('/');
-    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  }
+interface EventCalendarProps {
+  events: Event[];
+  onEventClick: (eventId: number) => void;
+}
+
+const parseDate = (dateStr: string) => {
+  if (!dateStr) return new Date();
   
   // Handle date ranges like "5-7 septembre 2025"
   if (dateStr.includes('-')) {
+    // Just use the start date for display
     dateStr = dateStr.split('-')[0].trim() + ' ' + dateStr.split(' ').slice(1).join(' ');
   }
   
   try {
+    // For formats like "10 juin 2025"
     const parts = dateStr.split(' ');
     
     if (parts.length >= 3) {
@@ -38,279 +39,190 @@ const parseEventDate = (dateStr: string): Date => {
       const months: { [key: string]: number } = {
         'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
         'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11,
+        // Capitalized versions
         'Janvier': 0, 'Février': 1, 'Mars': 2, 'Avril': 3, 'Mai': 4, 'Juin': 5,
         'Juillet': 6, 'Août': 7, 'Septembre': 8, 'Octobre': 9, 'Novembre': 10, 'Décembre': 11
       };
       
-      if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
-        return new Date(year, months[monthName], day);
+      if (isNaN(day) || !(monthName.toLowerCase() in months) || isNaN(year)) {
+        console.error(`Could not parse date: ${dateStr}`);
+        return new Date();
       }
+      
+      return new Date(year, months[monthName], day);
     }
     
+    console.error(`Unknown date format: ${dateStr}`);
     return new Date();
   } catch (error) {
+    console.error(`Error parsing date: ${dateStr}`, error);
     return new Date();
   }
 };
 
-const generateICSFile = (event: any) => {
-  if (!event.date || !event.time) return null;
+const EventCalendar: React.FC<EventCalendarProps> = ({ events, onEventClick }) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   
-  // Parse the date
-  let eventDate: Date;
-  if (event.date.includes('/')) {
-    const [day, month, year] = event.date.split('/');
-    eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  } else {
-    eventDate = new Date(event.date);
-  }
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   
-  // Parse start time
-  const startTimeMatch = event.time.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
-  if (startTimeMatch) {
-    let hours = parseInt(startTimeMatch[1]);
-    const minutes = parseInt(startTimeMatch[2]);
-    const ampm = startTimeMatch[3].toLowerCase();
-    
-    if (ampm === 'pm' && hours !== 12) hours += 12;
-    if (ampm === 'am' && hours === 12) hours = 0;
-    
-    eventDate.setHours(hours, minutes, 0, 0);
-  }
+  // Get all days in current month
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
   
-  // Calculate end time
-  let endDate = new Date(eventDate.getTime() + 60 * 60 * 1000); // Default 1 hour later
+  // Parse events to have Date objects
+  const parsedEvents = events.map(event => {
+    const dateObj = parseDate(event.date);
+    return {
+      ...event,
+      dateObj
+    };
+  });
   
-  if (event.endTime) {
-    const endTimeMatch = event.endTime.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
-    if (endTimeMatch) {
-      let endHours = parseInt(endTimeMatch[1]);
-      const endMinutes = parseInt(endTimeMatch[2]);
-      const endAmpm = endTimeMatch[3].toLowerCase();
-      
-      if (endAmpm === 'pm' && endHours !== 12) endHours += 12;
-      if (endAmpm === 'am' && endHours === 12) endHours = 0;
-      
-      endDate = new Date(eventDate);
-      endDate.setHours(endHours, endMinutes, 0, 0);
-    }
-  }
+  // Get events for the current month
+  const monthEvents = parsedEvents.filter(event => {
+    const eventDate = event.dateObj;
+    return eventDate >= monthStart && eventDate <= monthEnd;
+  });
   
-  // Format dates for ICS (YYYYMMDDTHHMMSSZ)
-  const formatICSDate = (date: Date) => {
-    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-  };
+  // Group events by day
+  const eventsByDay = daysInMonth.map(day => {
+    const dayEvents = monthEvents.filter(event => isSameDay(day, event.dateObj));
+    return {
+      date: day,
+      events: dayEvents
+    };
+  });
   
-  const startTime = formatICSDate(eventDate);
-  const endTime = formatICSDate(endDate);
-  const now = formatICSDate(new Date());
-  
-  const icsContent = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Solio Group//Event Calendar//FR',
-    'BEGIN:VEVENT',
-    `UID:${event.id || 'event'}-${now}@solio-group.com`,
-    `DTSTAMP:${now}`,
-    `DTSTART:${startTime}`,
-    `DTEND:${endTime}`,
-    `SUMMARY:${event.title || 'Événement'}`,
-    `DESCRIPTION:${(event.description || '').replace(/\n/g, '\\n')}`,
-    `LOCATION:${event.location || ''}`,
-    'STATUS:CONFIRMED',
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
-  
-  return icsContent;
-};
-
-const downloadICS = (event: any) => {
-  const icsContent = generateICSFile(event);
-  if (!icsContent) return;
-  
-  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-  const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
-  link.download = `${(event.title || 'evenement').replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(link.href);
-};
-
-const EventCalendar: React.FC<EventCalendarProps> = ({ events, selectedDate, onEventClick, wpEvents = [] }) => {
-  const isSameDay = (dateStr: string, date2: Date) => {
-    const d1 = parseEventDate(dateStr);
-    return d1.toDateString() === date2.toDateString();
-  };
-
-  const selectedDateEvents = selectedDate 
-    ? events.filter(event => {
-        // Use ACF date from WordPress event if available
-        const wpEvent = wpEvents.find(wp => wp.id === event.id);
-        const acfDate = wpEvent?.date || event.date;
-        return isSameDay(acfDate, selectedDate);
-      })
-    : [];
-
-  const getEventTypeColor = (type: string) => {
+  const getEventColor = (type: string) => {
     switch (type) {
-      case "upcoming":
-        return "bg-green-100 text-green-800";
-      case "spotlight":
-        return "bg-yellow-100 text-yellow-800";
+      case 'upcoming':
+        return 'bg-green-500';
+      case 'spotlight':
+        return 'bg-yellow-500';
       default:
-        return "bg-blue-100 text-blue-800";
+        return 'bg-blue-500';
     }
   };
-
-  const getEventTypeLabel = (type: string) => {
-    switch (type) {
-      case "upcoming":
-        return "À venir";
-      case "spotlight":
-        return "Spotlight";
-      default:
-        return "Passé";
-    }
+  
+  const hasEvents = (date: Date) => {
+    return monthEvents.some(event => isSameDay(date, event.dateObj));
   };
-
-  if (!selectedDate) {
-    return (
-      <div className="flex items-center justify-center h-96 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
-        <div className="text-center">
-          <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <p className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-2">
-            Sélectionnez une date
-          </p>
-          <p className="text-gray-400 dark:text-gray-500 text-sm">
-            Cliquez sur une date dans le calendrier pour voir les événements
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (selectedDateEvents.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-96 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
-        <div className="text-center">
-          <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <p className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-2">
-            Aucun événement
-          </p>
-          <p className="text-gray-400 dark:text-gray-500 text-sm">
-            Aucun événement prévu pour le {selectedDate.toLocaleDateString('fr-FR')}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
+  
   return (
-    <div className="space-y-6">
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-gray-900 dark:text-gray-100">
-        <Calendar className="h-5 w-5 text-blue-600" />
-        Événements du {selectedDate.toLocaleDateString('fr-FR')}
-      </h3>
+    <div className="mb-10 max-w-4xl mx-auto">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-lg md:text-xl font-bold text-solio-blue">Calendrier des événements</h2>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={prevMonth}
+            className="h-8 w-8 p-0"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Mois précédent</span>
+          </Button>
+          <h3 className="text-sm md:text-lg font-medium px-2 md:px-4">
+            {format(currentMonth, 'MMMM yyyy', { locale: fr })}
+          </h3>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={nextMonth}
+            className="h-8 w-8 p-0"
+          >
+            <ArrowRight className="h-4 w-4" />
+            <span className="sr-only">Mois suivant</span>
+          </Button>
+        </div>
+      </div>
       
-      <div className="space-y-6">
-        {selectedDateEvents.map((event) => {
-          const wpEvent = wpEvents.find(wp => wp.id === event.id);
-          const enSavoirPlusUrl = wpEvent?.en_savoir_plus;
-          const endTime = wpEvent?.['heure-fin'] || wpEvent?.heure_fin;
-          const tags = wpEvent?.tags || event.tags || [];
+      <Card className="overflow-hidden shadow-sm">
+        <CardContent className="p-0">
+          {/* Calendar grid */}
+          <div className="grid grid-cols-7 text-center font-medium border-b text-xs md:text-sm">
+            {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map(day => (
+              <div key={day} className="py-1 border-r last:border-r-0">
+                {day}
+              </div>
+            ))}
+          </div>
           
-          return (
-            <Card key={event.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-              {event.image && (
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={event.image} 
-                    alt={event.title} 
-                    className={`w-full h-full object-cover ${event.imagePosition || 'object-center'}`}
-                  />
-                </div>
-              )}
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <Badge variant="outline" className={getEventTypeColor(event.type)}>
-                    {getEventTypeLabel(event.type)}
-                  </Badge>
-                  <SocialShare title={event.title} compact={true} />
-                </div>
-                <CardTitle className="text-xl leading-tight text-gray-900 dark:text-gray-100">{event.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center text-gray-600 dark:text-gray-300">
-                    <Calendar className="mr-2 h-4 w-4 text-blue-600" />
-                    <span className="font-medium">{wpEvent?.date || event.date}</span>
+          <div className="grid grid-cols-7">
+            {/* Empty cells for days before the month starts */}
+            {Array.from({ length: monthStart.getDay() }).map((_, i) => (
+              <div key={`empty-start-${i}`} className="h-12 md:h-16 border-r border-b bg-gray-50"></div>
+            ))}
+            
+            {/* Days of the month */}
+            {eventsByDay.map(({ date, events }) => (
+              <div 
+                key={date.toString()} 
+                className={`h-12 md:h-16 border-r border-b last:border-r-0 relative ${
+                  isSameDay(date, new Date()) ? 'bg-blue-50' : ''
+                } ${hasEvents(date) ? 'bg-green-50 hover:bg-green-100 transition-colors cursor-pointer' : ''}`}
+                onClick={() => {
+                  if (events.length === 1) {
+                    window.location.href = `/actualites/evenements/${events[0].id}`;
+                  } else if (events.length > 1) {
+                    // Show all events for this day
+                    console.log(`Multiple events on ${date}:`, events);
+                  }
+                }}
+              >
+                <div className="text-center p-1">
+                  <div className="flex flex-col items-center">
+                    <span className={`inline-flex items-center justify-center w-5 h-5 md:w-6 md:h-6 rounded-full text-xs md:text-sm ${
+                      isSameDay(date, new Date()) 
+                        ? 'bg-solio-blue text-white' 
+                        : hasEvents(date)
+                        ? 'font-medium text-green-700' 
+                        : ''
+                    }`}>
+                      {date.getDate()}
+                    </span>
+                    
+                    {events.length > 0 && (
+                      <div className="mt-0.5 md:mt-1 flex space-x-0.5 md:space-x-1 justify-center">
+                        {events.slice(0, 2).map((event) => (
+                          <div 
+                            key={event.id}
+                            className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${getEventColor(event.type)}`}
+                          />
+                        ))}
+                        {events.length > 2 && (
+                          <span className="text-xs text-gray-500 hidden md:inline">+{events.length - 2}</span>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  {(event.time || wpEvent?.heure) && (
-                    <div className="flex items-center text-gray-600 dark:text-gray-300">
-                      <Clock className="mr-2 h-4 w-4 text-blue-600" />
-                      <span>
-                        {wpEvent?.heure || event.time}
-                        {endTime && endTime !== (wpEvent?.heure || event.time) && ` - ${endTime}`}
-                      </span>
+                </div>
+                
+                {events.length > 0 && (
+                  <div className="absolute bottom-0.5 left-0.5 right-0.5 flex justify-center md:bottom-1 md:left-1 md:right-1">
+                    <div className="text-xs text-green-700 hover:underline cursor-pointer hidden md:block">
+                      {events.length === 1 ? (
+                        <span className="truncate block max-w-[60px] md:max-w-[80px]">
+                          {events[0].title}
+                        </span>
+                      ) : (
+                        <span>{events.length} événements</span>
+                      )}
                     </div>
-                  )}
-                  <div className="flex items-center text-gray-600 dark:text-gray-300">
-                    <MapPin className="mr-2 h-4 w-4 text-blue-600" />
-                    <span>{wpEvent?.lieu || event.location}</span>
-                  </div>
-                </div>
-                
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{event.description}</p>
-                
-                {tags && tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {tags.map((tag: any, index: number) => (
-                      <ColoredBadge key={index} tag={typeof tag === 'string' ? tag : tag.name} />
-                    ))}
                   </div>
                 )}
-                
-                <div className="flex flex-wrap gap-3 pt-4">
-                  <Button size="sm" variant="default" asChild>
-                    <Link to={`/actualites/evenements/${event.id}`} className="text-white dark:text-white">
-                      Consulter
-                    </Link>
-                  </Button>
-                  
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={() => downloadICS({
-                      title: event.title,
-                      date: wpEvent?.date || event.date,
-                      time: wpEvent?.heure || event.time,
-                      endTime: endTime,
-                      description: event.description,
-                      location: wpEvent?.lieu || event.location,
-                      id: event.id
-                    })}
-                  >
-                    <CalendarPlus className="h-3 w-3 mr-1" />
-                    Ajouter au calendrier
-                  </Button>
-                  
-                  {enSavoirPlusUrl && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={enSavoirPlusUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                        En savoir plus
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+              </div>
+            ))}
+            
+            {/* Empty cells for days after the month ends */}
+            {Array.from({ length: 6 - monthEnd.getDay() }).map((_, i) => (
+              <div key={`empty-end-${i}`} className="h-12 md:h-16 border-r border-b bg-gray-50 last:border-r-0"></div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

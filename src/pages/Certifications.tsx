@@ -11,7 +11,7 @@ interface CertificationProps {
   description: string;
   date: string;
   logo: string;
-  category: "energy" | "digital" | "industry" | "quality" | "cloud" | "management";
+  category: "energy" | "digital" | "industry" | "quality";
 }
 
 const certifications: CertificationProps[] = [
@@ -46,32 +46,7 @@ const certifications: CertificationProps[] = [
     date: "Mars 2024",
     logo: "/lovable-uploads/c34d4a55-db59-4ab1-80ad-28d25685bdcf.png",
     category: "industry"
-  },
-  {
-    title: "AWS Certified Solutions Architect - Associate",
-    organization: "Amazon Web Services",
-    description: "Certification qui valide les compétences pour concevoir des architectures cloud évolutives, sécurisées et rentables sur AWS.",
-    date: "Novembre 2023",
-    logo: "/lovable-uploads/142cf028-3e1b-438f-b97e-d6f76c24b0a5.png",
-    category: "cloud"
-  },
-  {
-  title: "Project Management Professional (PMP)",
-  organization: "Project Management Institute (PMI)",
-  description: "Reconnaissance mondiale de nos compétences en gestion de projet, démontrant expertise, leadership et maîtrise des meilleures pratiques.",
-  date: "Mai 2020",
-  logo: "/lovable-uploads/59025817-0801-4171-9599-0f1f1a6ae2e1.png",
-  category: "management"
-  },
-  {
-    title: "Certified Expert in Climate & Renewable Energy Finance",
-    organization: "Frankfurt School of Finance & Management",
-    description: "Certification en finance climat et énergies renouvelables, renforçant notre expertise stratégique pour structurer, financer et piloter des projets durables à fort impact environnemental et économique.",
-    date: "Novembre 2017",
-    logo: "/lovable-uploads/c28bf123-f6da-4e8d-8c27-a47aa3c51b53.png",
-    category: "energy"
   }
-
 ];
 
 const getCategoryColor = (category: string) => {
@@ -84,10 +59,6 @@ const getCategoryColor = (category: string) => {
       return "bg-purple-100 text-purple-800";
     case "quality":
       return "bg-green-100 text-green-800";
-    case "cloud":
-      return "bg-orange-100 text-orange-800";
-    case "management":
-      return "bg-red-100 text-red-800";
     default:
       return "bg-gray-100 text-gray-800";
   }
@@ -103,8 +74,6 @@ const CertificationCard = ({ certification }: { certification: CertificationProp
             {certification.category === "digital" && "Numérique"}
             {certification.category === "industry" && "Industrie"}
             {certification.category === "quality" && "Qualité"}
-            {certification.category === "cloud" && "Cloud"}
-            {certification.category === "management" && "Management"}
           </Badge>
           <div className="flex items-center text-sm text-gray-500">
             <CalendarIcon className="mr-1 h-4 w-4" />
@@ -159,7 +128,7 @@ const Certifications = () => {
                 <ul className="list-disc pl-5 text-gray-700 space-y-2">
                   <li>+14 MW et +20 MWh de projets en cours de développement</li>
                   <li>+18 millions USD déjà sécurisés pour le financement des projets C&I en Afrique</li>
-                  <li>+30 projets déployés sur le continent africain dans 5 pays différents</li>
+                  <li>+30 projets déployés sur le continent</li>
                   <li>37 000 vies transformées par l'accès à l'énergie</li>
                 </ul>
               </div>

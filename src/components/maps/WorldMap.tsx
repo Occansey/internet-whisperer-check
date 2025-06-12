@@ -1,6 +1,6 @@
-
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { MapPin } from 'lucide-react';
 
 interface Location {
   id: string;
@@ -41,22 +41,10 @@ const WorldMap = ({ locations }: WorldMapProps) => {
       style: 'mapbox://styles/mapbox/light-v11',
       center: [0, 20],
       zoom: 1.5,
-      projection: 'globe' as any,
-      interactive: true,
-      doubleClickZoom: true,
-      scrollZoom: true,
-      boxZoom: true,
-      dragRotate: true,
-      dragPan: true,
-      keyboard: true,
-      touchZoomRotate: true
+      projection: 'globe' as any
     });
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // Disable map rotation to prevent jittery movement
-    map.current.dragRotate.disable();
-    map.current.touchZoomRotate.disableRotation();
 
     // Supprimer les anciens marqueurs
     markers.current.forEach(marker => marker.remove());
@@ -77,25 +65,20 @@ const WorldMap = ({ locations }: WorldMapProps) => {
         box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         cursor: pointer;
         transition: all 0.3s ease;
-        position: relative;
-        z-index: 1;
       `;
 
       el.addEventListener('mouseenter', () => {
         el.style.transform = 'scale(1.3)';
-        el.style.zIndex = '10';
       });
 
       el.addEventListener('mouseleave', () => {
         el.style.transform = 'scale(1)';
-        el.style.zIndex = '1';
       });
 
       const popup = new mapboxgl.Popup({
         offset: 25,
         closeButton: true,
-        closeOnClick: false,
-        maxWidth: '300px'
+        closeOnClick: false
       }).setHTML(`
         <div class="p-3">
           <h3 class="flex items-center gap-1 font-bold text-lg text-gray-800 mb-2">
@@ -106,10 +89,7 @@ const WorldMap = ({ locations }: WorldMapProps) => {
         </div>
       `);
 
-      const marker = new mapboxgl.Marker({
-        element: el,
-        anchor: 'center'
-      })
+      const marker = new mapboxgl.Marker(el)
         .setLngLat([location.coordinates.lng, location.coordinates.lat])
         .setPopup(popup)
         .addTo(map.current);
@@ -127,21 +107,6 @@ const WorldMap = ({ locations }: WorldMapProps) => {
         'star-intensity': 0.6
       });
     });
-
-    // Prevent map from moving due to user interaction
-    let userInteracting = false;
-
-    const handleUserInteraction = () => {
-      userInteracting = true;
-      setTimeout(() => {
-        userInteracting = false;
-      }, 5000); // Stop interaction mode after 5 seconds
-    };
-
-    map.current.on('mousedown', handleUserInteraction);
-    map.current.on('touchstart', handleUserInteraction);
-    map.current.on('dragstart', handleUserInteraction);
-    map.current.on('zoomstart', handleUserInteraction);
 
     return () => {
       markers.current.forEach(marker => marker.remove());
