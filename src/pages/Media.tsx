@@ -69,6 +69,9 @@ const Media = () => {
           { src: "/lovable-uploads/156df79e-4df5-4c2d-9be1-9e58e7d00917.png", name: "Executive Portrait 7", type: "image" },
           { src: "/lovable-uploads/de408ee9-d343-4578-bd30-ae9d93b1c647.png", name: "Executive Portrait 8", type: "image" },
           
+          // New executive portrait
+          { src: "/lovable-uploads/8a1b5962-6861-4b24-b3ce-d1922809f130.png", name: "Executive Portrait 9", type: "image" },
+          
           // Additional images that may not have been included
           { src: "/lovable-uploads/006ae8fa-630d-4d55-86e8-c4da3eeddbd7.png", name: "Image Upload 1", type: "image" },
           { src: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png", name: "Image Upload 2", type: "image" },
@@ -202,33 +205,33 @@ const Media = () => {
         <link rel="canonical" href="https://solio-group.com/media" />
       </Helmet>
       
-      <div className="container py-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+      <div className="container py-8 lg:py-12">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2 text-solio-blue">Médiathèque</h1>
-            <p className="text-lg text-gray-600">
+            <h1 className="text-2xl lg:text-3xl font-bold mb-2 text-solio-blue">Médiathèque</h1>
+            <p className="text-base lg:text-lg text-gray-600">
               Tous les médias téléchargés sur le site Solio Group
             </p>
           </div>
           
-          <div className="flex gap-2 mt-4 md:mt-0">
+          <div className="flex gap-2 w-full lg:w-auto">
             <Button 
               variant="outline" 
               size="sm"
               onClick={() => setViewMode("grid")}
-              className={viewMode === "grid" ? "bg-gray-100" : ""}
+              className={`flex-1 lg:flex-none ${viewMode === "grid" ? "bg-gray-100" : ""}`}
             >
               <Grid size={16} className="mr-1" />
-              Grille
+              <span className="hidden sm:inline">Grille</span>
             </Button>
             <Button 
               variant="outline" 
               size="sm"
               onClick={() => setViewMode("large")}
-              className={viewMode === "large" ? "bg-gray-100" : ""}
+              className={`flex-1 lg:flex-none ${viewMode === "large" ? "bg-gray-100" : ""}`}
             >
               <Eye size={16} className="mr-1" />
-              Grand
+              <span className="hidden sm:inline">Grand</span>
             </Button>
           </div>
         </div>
@@ -241,8 +244,8 @@ const Media = () => {
         </Alert>
 
         <Tabs defaultValue="all" onValueChange={(value) => setFilter(value as any)} className="mb-8">
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-            <div className="relative flex-1 w-full md:w-auto">
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+            <div className="relative flex-1 w-full lg:w-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <Input
                 type="text"
@@ -253,17 +256,17 @@ const Media = () => {
               />
             </div>
             
-            <TabsList className="flex flex-wrap">
-              <TabsTrigger value="all" className="data-[state=active]:bg-solio-blue data-[state=active]:text-white">
+            <TabsList className="grid grid-cols-2 lg:flex lg:grid-cols-none w-full lg:w-auto">
+              <TabsTrigger value="all" className="text-xs lg:text-sm data-[state=active]:bg-solio-blue data-[state=active]:text-white">
                 Tous ({media.length})
               </TabsTrigger>
-              <TabsTrigger value="image" className="data-[state=active]:bg-solio-blue data-[state=active]:text-white">
+              <TabsTrigger value="image" className="text-xs lg:text-sm data-[state=active]:bg-solio-blue data-[state=active]:text-white">
                 Images ({media.filter(item => item.type === "image").length})
               </TabsTrigger>
-              <TabsTrigger value="video" className="data-[state=active]:bg-solio-blue data-[state=active]:text-white">
+              <TabsTrigger value="video" className="text-xs lg:text-sm data-[state=active]:bg-solio-blue data-[state=active]:text-white">
                 Vidéos ({media.filter(item => item.type === "video").length})
               </TabsTrigger>
-              <TabsTrigger value="document" className="data-[state=active]:bg-solio-blue data-[state=active]:text-white">
+              <TabsTrigger value="document" className="text-xs lg:text-sm data-[state=active]:bg-solio-blue data-[state=active]:text-white">
                 Documents ({media.filter(item => item.type === "document").length})
               </TabsTrigger>
             </TabsList>
@@ -273,10 +276,13 @@ const Media = () => {
         <Separator className="my-6" />
         
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className={`grid gap-4 ${viewMode === "grid" 
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+            : "grid-cols-1 lg:grid-cols-2"
+          }`}>
             {[...Array(8)].map((_, i) => (
               <div key={i} className="border rounded-lg overflow-hidden bg-white shadow-sm">
-                <Skeleton className="h-48 w-full" />
+                <Skeleton className={`w-full ${viewMode === "grid" ? "h-48" : "h-64"}`} />
                 <div className="p-4">
                   <Skeleton className="h-6 w-3/4 mb-2" />
                   <Skeleton className="h-4 w-full mb-4" />
@@ -289,16 +295,16 @@ const Media = () => {
             ))}
           </div>
         ) : (
-          <div className={viewMode === "grid" 
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" 
-            : "grid grid-cols-1 md:grid-cols-2 gap-6"
-          }>
+          <div className={`grid gap-4 ${viewMode === "grid" 
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+            : "grid-cols-1 lg:grid-cols-2"
+          }`}>
             {filteredMedia.length > 0 ? (
               filteredMedia.map((item, index) => (
                 <Card key={index} className="overflow-hidden transition-all hover:shadow-md">
                   <div 
                     className={`overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer ${
-                      viewMode === "grid" ? "h-48" : "h-64"
+                      viewMode === "grid" ? "h-32 sm:h-48" : "h-48 lg:h-64"
                     }`}
                     onClick={() => openPreview(item)}
                   >
@@ -314,41 +320,41 @@ const Media = () => {
                       />
                     ) : item.type === "video" ? (
                       <div className="text-gray-400 flex flex-col items-center">
-                        <span className="text-4xl mb-2">🎥</span>
-                        <span>Aperçu vidéo</span>
+                        <span className="text-2xl lg:text-4xl mb-2">🎥</span>
+                        <span className="text-sm lg:text-base">Aperçu vidéo</span>
                       </div>
                     ) : (
                       <div className="text-gray-400 flex flex-col items-center">
-                        <span className="text-4xl mb-2">📄</span>
-                        <span>Aperçu document</span>
+                        <span className="text-2xl lg:text-4xl mb-2">📄</span>
+                        <span className="text-sm lg:text-base">Aperçu document</span>
                       </div>
                     )}
                   </div>
                   
-                  <CardContent className="pt-4">
-                    <h3 className="font-medium text-lg mb-1 truncate">{item.name}</h3>
-                    <p className="text-sm text-gray-500 mb-2 truncate">{item.src.split('/').pop()}</p>
+                  <CardContent className="p-3 lg:p-4">
+                    <h3 className="font-medium text-sm lg:text-lg mb-1 truncate">{item.name}</h3>
+                    <p className="text-xs lg:text-sm text-gray-500 mb-2 truncate">{item.src.split('/').pop()}</p>
                   </CardContent>
                   
-                  <CardFooter className="pt-0 pb-4 flex gap-2">
+                  <CardFooter className="p-3 lg:p-4 pt-0 lg:pt-0 flex gap-2">
                     <Button 
                       size="sm"
                       variant="outline"
-                      className="flex-1 flex items-center gap-1"
+                      className="flex-1 lg:flex-none flex items-center gap-1 text-xs lg:text-sm"
                       onClick={() => copyToClipboard(item.src)}
                     >
-                      <Copy size={14} />
-                      <span>Copier</span>
+                      <Copy size={12} />
+                      <span className="hidden sm:inline">Copier</span>
                     </Button>
                     <Button 
                       size="sm"
                       variant="outline"
-                      className="flex-1 flex items-center gap-1"
+                      className="flex-1 lg:flex-none flex items-center gap-1 text-xs lg:text-sm"
                       asChild
                     >
                       <a href={item.src} download target="_blank" rel="noopener noreferrer">
-                        <Download size={14} />
-                        <span>Télécharger</span>
+                        <Download size={12} />
+                        <span className="hidden sm:inline">Télécharger</span>
                       </a>
                     </Button>
                   </CardFooter>
@@ -372,10 +378,10 @@ const Media = () => {
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={closePreview}>
           <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b flex justify-between items-center">
-              <h3 className="font-medium text-lg">{selectedItem.name}</h3>
+              <h3 className="font-medium text-sm lg:text-lg truncate pr-4">{selectedItem.name}</h3>
               <Button variant="ghost" size="sm" onClick={closePreview}>×</Button>
             </div>
-            <div className="h-[60vh] flex items-center justify-center p-4 bg-gray-100">
+            <div className="h-[50vh] lg:h-[60vh] flex items-center justify-center p-4 bg-gray-100">
               {selectedItem.type === "image" ? (
                 <img 
                   src={selectedItem.src} 
@@ -384,7 +390,7 @@ const Media = () => {
                 />
               ) : (
                 <div className="text-center text-gray-500">
-                  <p className="text-3xl mb-2">
+                  <p className="text-2xl lg:text-3xl mb-2">
                     {selectedItem.type === "video" ? "🎥" : "📄"}
                   </p>
                   <p>Aucun aperçu disponible</p>
@@ -392,15 +398,15 @@ const Media = () => {
               )}
             </div>
             <div className="p-4 border-t bg-gray-50">
-              <div className="flex flex-wrap gap-4 items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-500">{selectedItem.src}</p>
+              <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs lg:text-sm text-gray-500 truncate">{selectedItem.src}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full lg:w-auto">
                   <Button
                     size="sm"
                     variant="outline"
-                    className="flex items-center gap-1"
+                    className="flex-1 lg:flex-none flex items-center gap-1"
                     onClick={() => copyToClipboard(selectedItem.src)}
                   >
                     <Copy size={14} />
@@ -409,7 +415,7 @@ const Media = () => {
                   <Button
                     size="sm"
                     variant="default"
-                    className="flex items-center gap-1"
+                    className="flex-1 lg:flex-none flex items-center gap-1"
                     asChild
                   >
                     <a href={selectedItem.src} download target="_blank" rel="noopener noreferrer">

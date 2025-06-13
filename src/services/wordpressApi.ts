@@ -40,6 +40,7 @@ export interface WordPressPost {
       gallery?: any[][];
     };
     galerie?: any[];
+    gallery?: any[];
     video_youtube?: string;
     video_linkedin?: string;
     // Event-specific fields
@@ -120,6 +121,7 @@ const wordpressApi = {
           _embed: 'wp:featuredmedia',
           ...params,
         },
+        timeout: 10000, // 10 second timeout
       });
       return response.data as WordPressPost[];
     } catch (error) {
@@ -137,6 +139,7 @@ const wordpressApi = {
     try {
       const response = await axios.get(COMMUNIQUES_API_URL, {
         params,
+        timeout: 10000,
       });
       return response.data as WordPressPost[];
     } catch (error) {
@@ -154,6 +157,7 @@ const wordpressApi = {
     try {
       const response = await axios.get(`${WORDPRESS_API_URL}/projets?_embed`, {
         params,
+        timeout: 10000,
       });
       return response.data as WordPressPost[];
     } catch (error) {
@@ -169,7 +173,7 @@ const wordpressApi = {
         ? `${WORDPRESS_API_URL}/posts/${identifier}?_embed=wp:featuredmedia` 
         : `${WORDPRESS_API_URL}/posts?slug=${identifier}&_embed=wp:featuredmedia`;
       
-      const response = await axios.get(endpoint);
+      const response = await axios.get(endpoint, { timeout: 10000 });
       return isNumeric ? response.data as WordPressPost : response.data[0] as WordPressPost;
     } catch (error) {
       console.error('Error fetching WordPress post:', error);
@@ -177,7 +181,7 @@ const wordpressApi = {
     }
   },
 
-  // New method specifically for fetching a single communique
+  // Improved method for fetching a single communique with better error handling
   getCommunique: async (identifier: number | string) => {
     try {
       console.log('Fetching communique with identifier:', identifier);
@@ -186,18 +190,32 @@ const wordpressApi = {
       
       if (isNumeric) {
         // Fetch by numeric ID
-        const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        // First try to fetch by slug
-        let response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`);
+        try {
+          const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques/${identifier}?_embed`, { timeout: 10000 });
+          return response.data as WordPressPost;
+        } catch (error: any) {
+          if (error.response?.status === 404) {
+            console.log(`Communique with ID ${identifier} not found, trying other methods...`);
+          } else {
+            throw error;
+          }
+        }
+      }
+      
+      // Try to fetch by slug
+      try {
+        const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`, { timeout: 10000 });
         
         if (response.data && response.data.length > 0) {
           return response.data[0] as WordPressPost;
         }
-        
-        // If not found by slug, try to fetch all posts and match by ACF ID
-        const allPostsResponse = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?_embed&per_page=100`);
+      } catch (error) {
+        console.log(`Error fetching by slug: ${error}`);
+      }
+      
+      // If not found by slug, try to fetch all posts and match by ACF ID
+      try {
+        const allPostsResponse = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?_embed&per_page=100`, { timeout: 15000 });
         
         if (allPostsResponse.data && allPostsResponse.data.length > 0) {
           // Find post by ACF ID (trimmed to handle spaces)
@@ -209,17 +227,20 @@ const wordpressApi = {
             return foundPost as WordPressPost;
           }
         }
-        
-        // If still not found, throw an error
-        throw new Error(`Communique with identifier "${identifier}" not found`);
+      } catch (error) {
+        console.log(`Error fetching all communiques: ${error}`);
       }
+      
+      // If still not found, return null instead of throwing error
+      console.log(`Communique with identifier "${identifier}" not found`);
+      return null;
     } catch (error) {
       console.error('Error fetching WordPress communique:', error);
-      throw error;
+      return null; // Return null instead of throwing
     }
   },
 
-  // New method for fetching a single project
+  // Improved method for fetching a single project with better error handling
   getProject: async (identifier: number | string) => {
     try {
       console.log('Fetching project with identifier:', identifier);
@@ -227,20 +248,35 @@ const wordpressApi = {
       const isNumeric = !isNaN(Number(identifier));
       
       if (isNumeric) {
-        const response = await axios.get(`${WORDPRESS_API_URL}/projets/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${identifier}&_embed`);
+        try {
+          const response = await axios.get(`${WORDPRESS_API_URL}/projets/${identifier}?_embed`, { timeout: 10000 });
+          return response.data as WordPressPost;
+        } catch (error: any) {
+          if (error.response?.status === 404) {
+            console.log(`Project with ID ${identifier} not found, trying other methods...`);
+          } else {
+            throw error;
+          }
+        }
+      }
+      
+      // Try to fetch by slug
+      try {
+        const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${identifier}&_embed`, { timeout: 10000 });
         
         if (response.data && response.data.length > 0) {
           return response.data[0] as WordPressPost;
         }
-        
-        throw new Error(`Project with identifier "${identifier}" not found`);
+      } catch (error) {
+        console.log(`Error fetching project by slug: ${error}`);
       }
+      
+      // Return null instead of throwing error
+      console.log(`Project with identifier "${identifier}" not found`);
+      return null;
     } catch (error) {
       console.error('Error fetching WordPress project:', error);
-      throw error;
+      return null; // Return null instead of throwing
     }
   },
 
@@ -257,6 +293,7 @@ const wordpressApi = {
           _embed: 'wp:featuredmedia',
           ...params,
         },
+        timeout: 10000,
       });
       return response.data as WordPressPage[];
     } catch (error) {
@@ -272,7 +309,7 @@ const wordpressApi = {
         ? `${WORDPRESS_API_URL}/pages/${identifier}?_embed=wp:featuredmedia` 
         : `${WORDPRESS_API_URL}/pages?slug=${identifier}&_embed=wp:featuredmedia`;
       
-      const response = await axios.get(endpoint);
+      const response = await axios.get(endpoint, { timeout: 10000 });
       return isNumeric ? response.data as WordPressPage : response.data[0] as WordPressPage;
     } catch (error) {
       console.error('Error fetching WordPress page:', error);
@@ -289,6 +326,7 @@ const wordpressApi = {
     try {
       const response = await axios.get(`${WORDPRESS_API_URL}/categories`, {
         params,
+        timeout: 10000,
       });
       return response.data as WordPressCategory[];
     } catch (error) {
@@ -306,6 +344,7 @@ const wordpressApi = {
     try {
       const response = await axios.get(`${WORDPRESS_API_URL}/tags`, {
         params,
+        timeout: 10000,
       });
       return response.data as WordPressTag[];
     } catch (error) {
@@ -317,7 +356,7 @@ const wordpressApi = {
   // Media
   getMedia: async (id: number) => {
     try {
-      const response = await axios.get(`${WORDPRESS_API_URL}/media/${id}`);
+      const response = await axios.get(`${WORDPRESS_API_URL}/media/${id}`, { timeout: 10000 });
       return response.data as WordPressMedia;
     } catch (error) {
       console.error('Error fetching WordPress media:', error);
@@ -334,6 +373,7 @@ const wordpressApi = {
     try {
       const response = await axios.get(`${WORDPRESS_API_URL}/evenements?_embed`, {
         params,
+        timeout: 10000,
       });
       return response.data as WordPressPost[];
     } catch (error) {
@@ -347,27 +387,42 @@ const wordpressApi = {
       const isNumeric = !isNaN(Number(identifier));
       
       if (isNumeric) {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements/${identifier}?_embed`);
-        return response.data as WordPressPost;
-      } else {
-        const response = await axios.get(`${WORDPRESS_API_URL}/evenements?slug=${identifier}&_embed`);
+        try {
+          const response = await axios.get(`${WORDPRESS_API_URL}/evenements/${identifier}?_embed`, { timeout: 10000 });
+          return response.data as WordPressPost;
+        } catch (error: any) {
+          if (error.response?.status === 404) {
+            console.log(`Event with ID ${identifier} not found, trying other methods...`);
+          } else {
+            throw error;
+          }
+        }
+      }
+      
+      // Try to fetch by slug
+      try {
+        const response = await axios.get(`${WORDPRESS_API_URL}/evenements?slug=${identifier}&_embed`, { timeout: 10000 });
         
         if (response.data && response.data.length > 0) {
           return response.data[0] as WordPressPost;
         }
-        
-        throw new Error(`Event with identifier "${identifier}" not found`);
+      } catch (error) {
+        console.log(`Error fetching event by slug: ${error}`);
       }
+      
+      // Return null instead of throwing error
+      console.log(`Event with identifier "${identifier}" not found`);
+      return null;
     } catch (error) {
       console.error('Error fetching WordPress event:', error);
-      throw error;
+      return null;
     }
   },
 
   // Check WordPress connection
   checkConnection: async () => {
     try {
-      const response = await axios.get(`${WORDPRESS_API_URL}`);
+      const response = await axios.get(`${WORDPRESS_API_URL}`, { timeout: 5000 });
       return {
         isConnected: true,
         version: response.data?.namespaces?.includes('wp/v2') ? 'v2' : 'unknown',

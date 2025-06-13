@@ -27,6 +27,48 @@ const staticArticles = [
   }
 ];
 
+// Helper function to extract gallery images from WordPress ACF data
+const extractGalleryImages = (wpCommunique: any): string[] => {
+  const images: string[] = [];
+  
+  // Check ACF gallery field
+  if (wpCommunique.acf?.gallery && Array.isArray(wpCommunique.acf.gallery)) {
+    wpCommunique.acf.gallery.forEach((item: any) => {
+      if (typeof item === 'string') {
+        images.push(item);
+      } else if (item?.full_image_url) {
+        images.push(item.full_image_url);
+      } else if (item?.source_url) {
+        images.push(item.source_url);
+      } else if (item?.media_details?.sizes?.large?.source_url) {
+        images.push(item.media_details.sizes.large.source_url);
+      }
+    });
+  }
+  
+  // Check photo_gallery field
+  if (wpCommunique.acf?.photo_gallery?.gallery && Array.isArray(wpCommunique.acf.photo_gallery.gallery)) {
+    wpCommunique.acf.photo_gallery.gallery.forEach((galleryGroup: any) => {
+      if (Array.isArray(galleryGroup)) {
+        galleryGroup.forEach((item: any) => {
+          if (typeof item === 'string') {
+            images.push(item);
+          } else if (item?.full_image_url) {
+            images.push(item.full_image_url);
+          } else if (item?.source_url) {
+            images.push(item.source_url);
+          } else if (item?.media_details?.sizes?.large?.source_url) {
+            images.push(item.media_details.sizes.large.source_url);
+          }
+        });
+      }
+    });
+  }
+  
+  // Remove duplicates and filter out empty values
+  return [...new Set(images)].filter(Boolean);
+};
+
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -76,12 +118,7 @@ const ArticleDetail = () => {
       // If WordPress data is available, use it
       if (wpCommunique && !wpLoading) {
         // Extract gallery from ACF
-        let gallery: any[] = [];
-        if (wpCommunique.acf?.photo_gallery?.galerie?.[0]) {
-          gallery = wpCommunique.acf.photo_gallery.galerie[0];
-        } else if (wpCommunique.acf?.galerie) {
-          gallery = wpCommunique.acf.galerie;
-        }
+        const galleryImages = extractGalleryImages(wpCommunique);
 
         let postDate = '';
         if (wpCommunique.acf?.date) {
@@ -93,9 +130,15 @@ const ArticleDetail = () => {
         const contentImages = extractImagesFromContent(wpCommunique.content.rendered);
         const featuredImage = wpCommunique._embedded?.['wp:featuredmedia']?.[0]?.source_url;
         
-        const allImages = featuredImage 
-          ? [featuredImage, ...contentImages.filter(img => img !== featuredImage)]
-          : contentImages;
+        // Create gallery starting with featured image, then gallery images, then content images
+        const allImages: string[] = [];
+        if (featuredImage) allImages.push(featuredImage);
+        galleryImages.forEach(img => {
+          if (!allImages.includes(img)) allImages.push(img);
+        });
+        contentImages.forEach(img => {
+          if (!allImages.includes(img)) allImages.push(img);
+        });
         
         const transformedArticle = {
           id: wpCommunique.acf?.id?.trim() || wpCommunique.slug || wpCommunique.id.toString(),
@@ -105,7 +148,7 @@ const ArticleDetail = () => {
           image: featuredImage || '/placeholder.svg',
           images: allImages.length > 0 ? allImages : [featuredImage || '/placeholder.svg'],
           tags: wpCommunique.acf?.tags || ['wordpress'],
-          gallery,
+          gallery: galleryImages,
           video_youtube: wpCommunique.acf?.video_youtube,
           video_linkedin: wpCommunique.acf?.video_linkedin,
         };
@@ -117,8 +160,14 @@ const ArticleDetail = () => {
       } 
       // If WordPress fails or no data, try static articles
       else if (wpError || (!wpLoading && !wpCommunique)) {
+        console.log('WordPress communique not found, trying static articles...');
         const found = staticArticles.find(a => a.id === id);
-        setArticle(found || null);
+        if (found) {
+          setArticle(found);
+        } else {
+          console.log('Static article not found either');
+          setArticle(null);
+        }
         setLoading(false);
         
         // Add fade-in delay for smooth transition
@@ -200,21 +249,23 @@ const ArticleDetail = () => {
   return (
     <Layout>
       <article className={`bg-white transition-opacity duration-500 ${contentVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="container py-12">
-          <div className="flex justify-between items-center mb-8">
+        <div className="container py-8 lg:py-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 lg:mb-8 gap-4">
             <Button 
               variant="outline" 
-              className="flex items-center" 
+              className="flex items-center w-full sm:w-auto" 
               onClick={handleBack}
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
-            <SocialShare title={article.title} compact={true} />
+            <div className="w-full sm:w-auto">
+              <SocialShare title={article.title} compact={true} />
+            </div>
           </div>
           
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{article.title}</h1>
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">{article.title}</h1>
             
             <div className="flex items-center text-sm text-gray-500 mb-6">
               <Calendar className="h-4 w-4 mr-2" />
@@ -222,27 +273,25 @@ const ArticleDetail = () => {
             </div>
             
             {/* Gallery Section - prioritized with cover image */}
-            {(article.gallery && article.gallery.length > 0) || article.images?.length > 0 && (
-              <div className="mb-8">
+            {article.images?.length > 0 && (
+              <div className="mb-6 lg:mb-8">
                 <ImageGallery 
-                  images={article.gallery && article.gallery.length > 0 
-                    ? [article.image, ...article.gallery.map((img: any) => img.full_image_url || img.source_url || img.url)]
-                    : article.images
-                  } 
+                  images={article.images}
+                  className="rounded-lg overflow-hidden"
                 />
               </div>
             )}
             
             {/* Video Section */}
             {(article.video_youtube || article.video_linkedin) && (
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold mb-4">Vidéo</h3>
+              <div className="mb-6 lg:mb-8">
+                <h3 className="text-lg lg:text-xl font-semibold mb-4">Vidéo</h3>
                 <VideoEmbed url={article.video_youtube || article.video_linkedin} />
               </div>
             )}
             
             {article.tags && (
-              <div className="mb-8">
+              <div className="mb-6 lg:mb-8">
                 <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag: string, index: number) => (
                     <ColoredBadge key={index} tag={tag} />
@@ -251,7 +300,7 @@ const ArticleDetail = () => {
               </div>
             )}
             
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-sm lg:prose-lg max-w-none">
               {/* Use WordPressContent for HTML content, fallback to plain text */}
               {article.content?.includes('<') ? (
                 <WordPressContent content={article.content} />
@@ -261,7 +310,7 @@ const ArticleDetail = () => {
             </div>
             
             {/* Navigation between articles */}
-            <div className="my-12">
+            <div className="my-8 lg:my-12">
               <ContentNavigation 
                 previousItem={previousItem}
                 nextItem={nextItem}
@@ -269,7 +318,7 @@ const ArticleDetail = () => {
               />
             </div>
             
-            <div className="mt-12 pt-6 border-t">
+            <div className="mt-8 lg:mt-12 pt-6 border-t">
               <SocialShare title={article.title} className="justify-center" />
             </div>
           </div>
