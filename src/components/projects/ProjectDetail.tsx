@@ -24,6 +24,48 @@ const decodeHtmlEntities = (text: string): string => {
   return textarea.value;
 };
 
+// Helper function to extract gallery images from WordPress ACF data
+const extractGalleryImages = (wpProject: any): string[] => {
+  const images: string[] = [];
+  
+  // Check different possible locations for gallery images
+  if (wpProject.acf?.galerie && Array.isArray(wpProject.acf.galerie)) {
+    wpProject.acf.galerie.forEach((item: any) => {
+      if (typeof item === 'string') {
+        images.push(item);
+      } else if (item?.full_image_url) {
+        images.push(item.full_image_url);
+      } else if (item?.source_url) {
+        images.push(item.source_url);
+      } else if (item?.media_details?.sizes?.large?.source_url) {
+        images.push(item.media_details.sizes.large.source_url);
+      }
+    });
+  }
+  
+  // Check photo_gallery field
+  if (wpProject.acf?.photo_gallery?.galerie && Array.isArray(wpProject.acf.photo_gallery.galerie)) {
+    wpProject.acf.photo_gallery.galerie.forEach((galleryGroup: any) => {
+      if (Array.isArray(galleryGroup)) {
+        galleryGroup.forEach((item: any) => {
+          if (typeof item === 'string') {
+            images.push(item);
+          } else if (item?.full_image_url) {
+            images.push(item.full_image_url);
+          } else if (item?.source_url) {
+            images.push(item.source_url);
+          } else if (item?.media_details?.sizes?.large?.source_url) {
+            images.push(item.media_details.sizes.large.source_url);
+          }
+        });
+      }
+    });
+  }
+  
+  // Remove duplicates and filter out empty values
+  return [...new Set(images)].filter(Boolean);
+};
+
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -56,6 +98,9 @@ const ProjectDetail = () => {
     if (id) {
       // If WordPress data is available, use it
       if (wpProject && !wpLoading) {
+        // Extract gallery images from WordPress data
+        const galleryImages = extractGalleryImages(wpProject);
+        
         const transformedProject = {
           id: wpProject.id,
           title: wpProject.title.rendered,
@@ -75,7 +120,7 @@ const ProjectDetail = () => {
             impact: wpProject.acf?.impact,
             optimisation: wpProject.acf?.optimisation,
             // Gallery and video fields
-            galerie: wpProject.acf?.galerie || [],
+            galerie: galleryImages,
             video_youtube: wpProject.acf?.video_youtube,
             video_linkedin: wpProject.acf?.video_linkedin
           }
