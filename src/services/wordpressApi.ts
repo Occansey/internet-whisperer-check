@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 /**
@@ -202,7 +203,7 @@ const wordpressApi = {
         }
       }
       
-      // Try to fetch by slug
+      // Try to fetch by slug first
       try {
         const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${identifier}&_embed`, { timeout: 10000 });
         
@@ -213,15 +214,36 @@ const wordpressApi = {
         console.log(`Error fetching by slug: ${error}`);
       }
       
-      // If not found by slug, try to fetch all posts and match by ACF ID
+      // If not found by slug, try URL-decoded slug
+      try {
+        const decodedIdentifier = decodeURIComponent(identifier);
+        const response = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?slug=${decodedIdentifier}&_embed`, { timeout: 10000 });
+        
+        if (response.data && response.data.length > 0) {
+          return response.data[0] as WordPressPost;
+        }
+      } catch (error) {
+        console.log(`Error fetching by decoded slug: ${error}`);
+      }
+      
+      // If not found by slug, try to fetch all posts and match by ACF ID or title
       try {
         const allPostsResponse = await axios.get(`https://api.solio-group.com/wp-json/wp/v2/communiques?_embed&per_page=100`, { timeout: 15000 });
         
         if (allPostsResponse.data && allPostsResponse.data.length > 0) {
           // Find post by ACF ID (trimmed to handle spaces)
-          const foundPost = allPostsResponse.data.find((post: any) => 
+          let foundPost = allPostsResponse.data.find((post: any) => 
             post.acf?.id?.trim() === identifier
           );
+          
+          // If not found by ACF ID, try to match by title similarity
+          if (!foundPost) {
+            const searchTerm = identifier.toLowerCase().replace(/-/g, ' ');
+            foundPost = allPostsResponse.data.find((post: any) => 
+              post.title.rendered.toLowerCase().includes(searchTerm) ||
+              post.slug.toLowerCase().includes(searchTerm)
+            );
+          }
           
           if (foundPost) {
             return foundPost as WordPressPost;
@@ -260,7 +282,7 @@ const wordpressApi = {
         }
       }
       
-      // Try to fetch by slug
+      // Try to fetch by slug first
       try {
         const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${identifier}&_embed`, { timeout: 10000 });
         
@@ -269,6 +291,38 @@ const wordpressApi = {
         }
       } catch (error) {
         console.log(`Error fetching project by slug: ${error}`);
+      }
+      
+      // Try URL-decoded slug
+      try {
+        const decodedIdentifier = decodeURIComponent(identifier);
+        const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${decodedIdentifier}&_embed`, { timeout: 10000 });
+        
+        if (response.data && response.data.length > 0) {
+          return response.data[0] as WordPressPost;
+        }
+      } catch (error) {
+        console.log(`Error fetching project by decoded slug: ${error}`);
+      }
+      
+      // Try to fetch all projects and match by title or other criteria
+      try {
+        const allProjectsResponse = await axios.get(`${WORDPRESS_API_URL}/projets?_embed&per_page=100`, { timeout: 15000 });
+        
+        if (allProjectsResponse.data && allProjectsResponse.data.length > 0) {
+          const searchTerm = identifier.toLowerCase().replace(/-/g, ' ');
+          const foundProject = allProjectsResponse.data.find((project: any) => 
+            project.title.rendered.toLowerCase().includes(searchTerm) ||
+            project.slug.toLowerCase().includes(searchTerm) ||
+            project.title.rendered.toLowerCase().replace(/[^\w\s]/gi, '').includes(searchTerm.replace(/[^\w\s]/gi, ''))
+          );
+          
+          if (foundProject) {
+            return foundProject as WordPressPost;
+          }
+        }
+      } catch (error) {
+        console.log(`Error fetching all projects: ${error}`);
       }
       
       // Return null instead of throwing error
@@ -408,6 +462,26 @@ const wordpressApi = {
         }
       } catch (error) {
         console.log(`Error fetching event by slug: ${error}`);
+      }
+      
+      // Try URL-decoded slug and title matching
+      try {
+        const decodedIdentifier = decodeURIComponent(identifier);
+        const allEventsResponse = await axios.get(`${WORDPRESS_API_URL}/evenements?_embed&per_page=100`, { timeout: 15000 });
+        
+        if (allEventsResponse.data && allEventsResponse.data.length > 0) {
+          const searchTerm = decodedIdentifier.toLowerCase().replace(/-/g, ' ');
+          const foundEvent = allEventsResponse.data.find((event: any) => 
+            event.title.rendered.toLowerCase().includes(searchTerm) ||
+            event.slug.toLowerCase().includes(searchTerm)
+          );
+          
+          if (foundEvent) {
+            return foundEvent as WordPressPost;
+          }
+        }
+      } catch (error) {
+        console.log(`Error fetching events with title matching: ${error}`);
       }
       
       // Return null instead of throwing error
