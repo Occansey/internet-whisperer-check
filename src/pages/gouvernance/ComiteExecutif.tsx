@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -83,18 +84,18 @@ const ComiteExecutif = () => {
         glowColor="indigo"
       />
       
-      <div className="py-12 bg-gray-50">
+      <div className="py-12 bg-gray-50 dark:bg-gray-900">
         <div className="container">
           {isMobile && (
-            <Card className="mb-8">
+            <Card className="mb-8 dark:bg-gray-800 dark:border-gray-700">
               <CardContent className="p-4">
-                <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
+                <h3 className="text-lg font-medium mb-4 dark:text-white">Membres du COMEX</h3>
                 <nav className="flex flex-col space-y-2">
                   {executives.map((exec) => (
                     <button 
                       key={exec.name}
                       onClick={() => scrollToExecutive(exec.name)}
-                      className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue text-left"
+                      className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-solio-blue dark:text-solio-yellow text-left"
                     >
                       {exec.title}
                     </button>
@@ -110,7 +111,7 @@ const ComiteExecutif = () => {
                 {executives.map((exec, index) => (
                   <div
                     key={exec.name}
-                    className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}
+                    className={`pt-4 ${index > 0 ? "border-t border-gray-200 dark:border-gray-700" : ""}`}
                   >
                     <ExecutiveProfile executive={exec} />
                   </div>
@@ -121,15 +122,15 @@ const ComiteExecutif = () => {
             {!isMobile && (
               <div className="w-full md:w-1/4 mt-8 md:mt-0">
                 <div className="sticky top-24">
-                  <Card>
+                  <Card className="dark:bg-gray-800 dark:border-gray-700">
                     <CardContent className="p-4">
-                      <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
+                      <h3 className="text-lg font-medium mb-4 dark:text-white">Membres du COMEX</h3>
                       <nav className="flex flex-col space-y-2">
                         {executives.map((exec) => (
                           <button 
                             key={exec.name}
                             onClick={() => scrollToExecutive(exec.name)}
-                            className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue text-left"
+                            className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-solio-blue dark:text-solio-yellow text-left"
                           >
                             {exec.title}
                           </button>
@@ -143,8 +144,8 @@ const ComiteExecutif = () => {
           </div>
           
           <div className="mt-12">
-            <h2 className="text-xl font-semibold mb-4">Réunions du COMEX</h2>
-            <p className="text-gray-700">
+            <h2 className="text-xl font-semibold mb-4 dark:text-white">Réunions du COMEX</h2>
+            <p className="text-gray-700 dark:text-gray-300">
               Le COMEX se réunit régulièrement pour orienter les choix stratégiques, harmoniser les projets et garantir la performance globale du groupe.
             </p>
           </div>
