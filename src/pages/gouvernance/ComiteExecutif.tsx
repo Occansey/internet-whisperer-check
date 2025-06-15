@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -51,7 +50,7 @@ const executives: ExecutiveMemberProps[] = [
   }
 ];
 
-const SCROLL_OFFSET = 100; // Increased offset to scroll to top of section
+const SCROLL_OFFSET = 32; // px, adjust if header height differs
 
 const ComiteExecutif = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -66,18 +65,13 @@ const ComiteExecutif = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Scroll to the executive section by using a generated ID for each executive
+  // Scroll to the "Biographie" heading inside the executive profile
   const scrollToExecutive = (name: string) => {
-    const sectionId = `executive-${name.toLowerCase().replace(/\s+/g, '-')}`;
-    const element = document.getElementById(sectionId);
+    const bioId = getExecBioId(name);
+    const element = document.getElementById(bioId);
     if (element) {
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - SCROLL_OFFSET;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      // Use scrollIntoView for robust behavior across devices and sticky headers
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -89,20 +83,20 @@ const ComiteExecutif = () => {
         glowColor="indigo"
       />
       
-      <div className="py-12 bg-gray-50 dark:bg-gray-900">
+      <div className="py-12 bg-gray-50">
         <div className="container">
           {isMobile && (
-            <Card className="mb-8 dark:bg-gray-800 dark:border-gray-700">
+            <Card className="mb-8">
               <CardContent className="p-4">
-                <h3 className="text-lg font-medium mb-4 dark:text-white">Membres du COMEX</h3>
+                <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
                 <nav className="flex flex-col space-y-2">
                   {executives.map((exec) => (
                     <button 
                       key={exec.name}
                       onClick={() => scrollToExecutive(exec.name)}
-                      className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-solio-blue dark:text-solio-yellow text-left"
+                      className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue text-left"
                     >
-                      <span className="text-solio-blue dark:text-solio-yellow">{exec.title}</span>
+                      {exec.title}
                     </button>
                   ))}
                 </nav>
@@ -116,8 +110,7 @@ const ComiteExecutif = () => {
                 {executives.map((exec, index) => (
                   <div
                     key={exec.name}
-                    id={`executive-${exec.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    className={`pt-4 ${index > 0 ? "border-t border-gray-200 dark:border-gray-700" : ""}`}
+                    className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}
                   >
                     <ExecutiveProfile executive={exec} />
                   </div>
@@ -128,17 +121,17 @@ const ComiteExecutif = () => {
             {!isMobile && (
               <div className="w-full md:w-1/4 mt-8 md:mt-0">
                 <div className="sticky top-24">
-                  <Card className="dark:bg-gray-800 dark:border-gray-700">
+                  <Card>
                     <CardContent className="p-4">
-                      <h3 className="text-lg font-medium mb-4 dark:text-white">Membres du COMEX</h3>
+                      <h3 className="text-lg font-medium mb-4">Membres du COMEX</h3>
                       <nav className="flex flex-col space-y-2">
                         {executives.map((exec) => (
                           <button 
                             key={exec.name}
                             onClick={() => scrollToExecutive(exec.name)}
-                            className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
+                            className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors text-solio-blue text-left"
                           >
-                            <span className="text-solio-blue dark:text-solio-yellow">{exec.title}</span>
+                            {exec.title}
                           </button>
                         ))}
                       </nav>
@@ -150,8 +143,8 @@ const ComiteExecutif = () => {
           </div>
           
           <div className="mt-12">
-            <h2 className="text-xl font-semibold mb-4 dark:text-white">Réunions du COMEX</h2>
-            <p className="text-gray-700 dark:text-gray-300">
+            <h2 className="text-xl font-semibold mb-4">Réunions du COMEX</h2>
+            <p className="text-gray-700">
               Le COMEX se réunit régulièrement pour orienter les choix stratégiques, harmoniser les projets et garantir la performance globale du groupe.
             </p>
           </div>

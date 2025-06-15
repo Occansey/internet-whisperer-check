@@ -33,23 +33,39 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
 
   return (
     <>
-      <div className={`${className}`}>
-        {/* Horizontal layout for all images */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {images.map((image, index) => (
-            <div 
-              key={index}
-              className="aspect-video rounded-lg overflow-hidden cursor-pointer" 
-              onClick={() => openModal(index)}
-            >
-              <img 
-                src={image} 
-                alt={`Image ${index + 1}`} 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-          ))}
+      <div className={`grid gap-4 ${className}`}>
+        {/* Main image */}
+        <div className="aspect-video rounded-lg overflow-hidden cursor-pointer" onClick={() => openModal(0)}>
+          <img 
+            src={images[0]} 
+            alt="Image principale" 
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
         </div>
+        
+        {/* Thumbnail grid */}
+        {images.length > 1 && (
+          <div className="grid grid-cols-4 gap-2">
+            {images.slice(1, 5).map((image, index) => (
+              <div 
+                key={index} 
+                className="aspect-square rounded-md overflow-hidden cursor-pointer relative"
+                onClick={() => openModal(index + 1)}
+              >
+                <img 
+                  src={image} 
+                  alt={`Image ${index + 2}`} 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+                {index === 3 && images.length > 5 && (
+                  <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center text-white font-semibold">
+                    +{images.length - 5}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Modal with smaller images */}
