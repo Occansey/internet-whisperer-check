@@ -104,6 +104,8 @@ const getExecId = (name: string) => {
   );
 };
 
+const SCROLL_OFFSET = 32; // px, adjust if header height differs
+
 const ComiteExecutif = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -120,8 +122,12 @@ const ComiteExecutif = () => {
   const scrollToExecutive = (name: string) => {
     const execId = getExecId(name);
     const element = document.getElementById(execId);
+
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: "start" });
+      // Account for sticky navbar/header (adjust SCROLL_OFFSET as needed)
+      const y =
+        element.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
