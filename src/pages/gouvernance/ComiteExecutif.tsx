@@ -46,6 +46,13 @@ const executives: ExecutiveMemberProps[] = [
     title: "Directeur de Mfg Technologies",
     linkedin: "https://linkedin.com/",
     bio: "\nAlain Normand est à la tête de MFG Technologies et se distingue comme un expert des systèmes ERP pour le secteur manufacturier.\n\nDiplômé en administration des affaires de HEC Montréal, il est passionné par la gestion d'entreprise efficace et propose les meilleures pratiques dans les systèmes de fabrication ERP : JobBOSS et Divalto.\n\nAvec plus de 20 ans d'expérience dans la mise en œuvre de systèmes ERP (systèmes manufacturiers) et en tant que comptable, son expertise fait en sorte qu'il se veut un entrepreneur hors-pair.\n\nIl est reconnu comme un allié précieux pour ses clients, travaillant pour eux et avec eux; ils sont toujours servis avec excellence et reçoivent des conseils haut-de-gamme pour améliorer la gestion de leur entreprise à travers ces plateformes.\n\nSon souci d'intégrité, sa grande humanité et son esprit authentique font de lui un Leader inspirant avec qui on souhaite être associé professionnellement – et les employés, collaborateurs de MFG, sont d'autant plus heureux de faire partie de son équipe!"
+  },
+  {
+    photo: "/lovable-uploads/68566164-2a2b-49f5-97ec-a8ab90661ef4.png",
+    name: "Prénom Nom",
+    title: "Titre du poste",
+    linkedin: "#",
+    bio: "\nBiographie à compléter.\n"
   }
 ];
 
