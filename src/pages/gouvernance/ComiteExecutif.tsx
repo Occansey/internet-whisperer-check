@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -92,6 +91,19 @@ const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) =>
   );
 };
 
+// Utility to generate ids for scroll target, based on executive name
+const getExecId = (name: string) => {
+  // Remove accents, spaces, lowercase, etc. for better id stability
+  return (
+    "exec-" +
+    name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "-")
+  );
+};
+
 const ComiteExecutif = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -106,9 +118,10 @@ const ComiteExecutif = () => {
   }, []);
 
   const scrollToExecutive = (name: string) => {
-    const element = document.getElementById(`exec-${name.toLowerCase().split(' ')[1]}`);
+    const execId = getExecId(name);
+    const element = document.getElementById(execId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: "start" });
     }
   };
 
@@ -145,7 +158,12 @@ const ComiteExecutif = () => {
             <div className="w-full md:w-3/4">
               <div className="space-y-16">
                 {executives.map((exec, index) => (
-                  <div key={exec.name} id={`exec-${exec.name.toLowerCase().split(' ')[1]}`} className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}>
+                  <div
+                    // Place the scroll target on the wrapper of the full bio card
+                    key={exec.name}
+                    id={getExecId(exec.name)}
+                    className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}
+                  >
                     <ExecutiveProfile executive={exec} />
                   </div>
                 ))}
