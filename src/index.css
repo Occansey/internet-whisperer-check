@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -109,90 +108,67 @@
   .page-transition {
     @apply animate-fade-in;
   }
-  
-  /* Dark mode text improvements - replace dark colors with lighter ones */
+
+  /* ==== CLEANED UP DARK MODE SECTION ==== */
+  /* Make links white in dark mode, but don't override all text colors */
   .dark a {
     color: rgb(255, 255, 255) !important;
   }
-  
-  .dark .text-gray-600 {
-    color: rgb(209, 213, 219) !important;
-  }
-  
-  .dark .text-gray-700 {
-    color: rgb(229, 231, 235) !important;
-  }
-  
-  /* Replace rgb(30, 41, 59) and rgb(3, 15, 43) with lighter colors */
-  .dark * {
-    color: rgb(229, 231, 235) !important;
-  }
-  
-  .dark [style*="rgb(30, 41, 59)"] {
-    color: rgb(209, 213, 219) !important;
-  }
-  
-  .dark [style*="rgb(3, 15, 43)"] {
-    color: rgb(229, 231, 235) !important;
-  }
-  
-  /* Ensure specific text elements are visible */
+
+  /* Replace dark gray text colors for better readability */
+  .dark .text-gray-600,
+  .dark .text-gray-700,
   .dark .text-slate-600,
   .dark .text-slate-700,
   .dark .text-slate-800 {
     color: rgb(209, 213, 219) !important;
   }
-  
+
+  /* Make specific backgrounds darker instead of generic class overrides */
   .dark .bg-white {
     background-color: rgb(75, 85, 99) !important;
   }
-  
   .dark .bg-gray-50 {
     background-color: rgb(55, 65, 81) !important;
   }
-  
   .dark .bg-gray-100 {
     background-color: rgb(75, 85, 99) !important;
   }
-  
-  /* Event type badges */
+
+  /* Badge backgrounds and text */
   .dark .bg-green-100 {
     background-color: rgba(34, 197, 94, 0.2) !important;
   }
-  
   .dark .text-green-800 {
     color: rgb(134, 239, 172) !important;
   }
-  
   .dark .bg-yellow-100 {
     background-color: rgba(255, 222, 89, 0.2) !important;
   }
-  
   .dark .text-yellow-800 {
     color: rgb(254, 240, 138) !important;
   }
-  
   .dark .bg-blue-100 {
     background-color: rgba(59, 130, 246, 0.2) !important;
   }
-  
   .dark .text-blue-800 {
     color: rgb(147, 197, 253) !important;
   }
-  
-  .dark .bg-gray-100 {
-    background-color: rgba(75, 85, 99, 0.3) !important;
-  }
-  
   .dark .text-gray-800 {
     color: rgb(229, 231, 235) !important;
   }
-  
   .dark .text-gray-500 {
     color: rgb(209, 213, 219) !important;
   }
-  
   .dark .text-gray-400 {
+    color: rgb(229, 231, 235) !important;
+  }
+
+  /* Fix elements that use inline style for text color to Slate (common in WP content) */
+  .dark [style*="rgb(30, 41, 59)"] {
+    color: rgb(209, 213, 219) !important;
+  }
+  .dark [style*="rgb(3, 15, 43)"] {
     color: rgb(229, 231, 235) !important;
   }
   
