@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
+import ExecutiveProfile, { getExecId } from "./ExecutiveProfile";
 
 interface ExecutiveMemberProps {
   photo: string;
@@ -46,73 +47,8 @@ const executives: ExecutiveMemberProps[] = [
     title: "Directeur de Mfg Technologies",
     linkedin: "https://linkedin.com/",
     bio: "\nAlain Normand est à la tête de MFG Technologies et se distingue comme un expert des systèmes ERP pour le secteur manufacturier.\n\nDiplômé en administration des affaires de HEC Montréal, il est passionné par la gestion d'entreprise efficace et propose les meilleures pratiques dans les systèmes de fabrication ERP : JobBOSS et Divalto.\n\nAvec plus de 20 ans d'expérience dans la mise en œuvre de systèmes ERP (systèmes manufacturiers) et en tant que comptable, son expertise fait en sorte qu'il se veut un entrepreneur hors-pair.\n\nIl est reconnu comme un allié précieux pour ses clients, travaillant pour eux et avec eux; ils sont toujours servis avec excellence et reçoivent des conseils haut-de-gamme pour améliorer la gestion de leur entreprise à travers ces plateformes.\n\nSon souci d'intégrité, sa grande humanité et son esprit authentique font de lui un Leader inspirant avec qui on souhaite être associé professionnellement – et les employés, collaborateurs de MFG, sont d'autant plus heureux de faire partie de son équipe!"
-  },
-  {
-    photo: "/lovable-uploads/68566164-2a2b-49f5-97ec-a8ab90661ef4.png",
-    name: "Prénom Nom",
-    title: "Titre du poste",
-    linkedin: "#",
-    bio: "\nBiographie à compléter.\n"
   }
 ];
-
-const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) => {
-  return (
-    <div className="flex flex-col md:flex-row gap-8 items-start">
-      <div className="w-full md:w-1/3">
-        <div
-          className="rounded-lg overflow-hidden shadow-md"
-          id={getExecId(executive.name)}
-        >
-          <img 
-            src={executive.photo} 
-            alt={executive.name} 
-            className="w-full h-auto object-cover object-top"
-          />
-        </div>
-        <div className="mt-4">
-          <h3 className="text-2xl font-bold text-solio-blue">{executive.name}</h3>
-          <p className="text-gray-700">{executive.title}</p>
-          <a 
-            href={executive.linkedin} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="text-solio-blue hover:text-solio-yellow flex items-center transition-colors mt-2"
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" className="mr-1">
-              <path 
-                fill="currentColor" 
-                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-              />
-            </svg>
-            LinkedIn
-          </a>
-        </div>
-      </div>
-      <div className="w-full md:w-2/3">
-        <Card>
-          <CardContent className="prose max-w-none pt-6">
-            <h2 className="text-xl font-semibold mb-4">Biographie</h2>
-            <p className="whitespace-pre-line">{executive.bio}</p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-};
-
-// Utility to generate ids for scroll target, based on executive name
-const getExecId = (name: string) => {
-  // Remove accents, spaces, lowercase, etc. for better id stability
-  return (
-    "exec-" +
-    name
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "-")
-  );
-};
 
 const SCROLL_OFFSET = 32; // px, adjust if header height differs
 
