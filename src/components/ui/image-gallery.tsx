@@ -33,21 +33,23 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
 
   return (
     <>
-      <div className={`space-y-4 ${className}`}>
-        {/* Vertical layout for all images */}
-        {images.map((image, index) => (
-          <div 
-            key={index}
-            className="aspect-video rounded-lg overflow-hidden cursor-pointer" 
-            onClick={() => openModal(index)}
-          >
-            <img 
-              src={image} 
-              alt={`Image ${index + 1}`} 
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        ))}
+      <div className={`${className}`}>
+        {/* Horizontal layout for all images */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {images.map((image, index) => (
+            <div 
+              key={index}
+              className="aspect-video rounded-lg overflow-hidden cursor-pointer" 
+              onClick={() => openModal(index)}
+            >
+              <img 
+                src={image} 
+                alt={`Image ${index + 1}`} 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Modal with smaller images */}

@@ -51,7 +51,7 @@ const executives: ExecutiveMemberProps[] = [
   }
 ];
 
-const SCROLL_OFFSET = 32; // px, adjust if header height differs
+const SCROLL_OFFSET = 100; // Increased offset to scroll to top of section
 
 const ComiteExecutif = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -66,13 +66,18 @@ const ComiteExecutif = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Scroll to the "Biographie" heading inside the executive profile
+  // Scroll to the executive section by using a generated ID for each executive
   const scrollToExecutive = (name: string) => {
-    const bioId = getExecBioId(name);
-    const element = document.getElementById(bioId);
+    const sectionId = `executive-${name.toLowerCase().replace(/\s+/g, '-')}`;
+    const element = document.getElementById(sectionId);
     if (element) {
-      // Use scrollIntoView for robust behavior across devices and sticky headers
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - SCROLL_OFFSET;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
   };
 
@@ -97,7 +102,7 @@ const ComiteExecutif = () => {
                       onClick={() => scrollToExecutive(exec.name)}
                       className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-solio-blue dark:text-solio-yellow text-left"
                     >
-                      {exec.title}
+                      <span className="text-solio-blue dark:text-solio-yellow">{exec.title}</span>
                     </button>
                   ))}
                 </nav>
@@ -111,6 +116,7 @@ const ComiteExecutif = () => {
                 {executives.map((exec, index) => (
                   <div
                     key={exec.name}
+                    id={`executive-${exec.name.toLowerCase().replace(/\s+/g, '-')}`}
                     className={`pt-4 ${index > 0 ? "border-t border-gray-200 dark:border-gray-700" : ""}`}
                   >
                     <ExecutiveProfile executive={exec} />
@@ -130,9 +136,9 @@ const ComiteExecutif = () => {
                           <button 
                             key={exec.name}
                             onClick={() => scrollToExecutive(exec.name)}
-                            className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-solio-blue dark:text-solio-yellow text-left"
+                            className="px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
                           >
-                            {exec.title}
+                            <span className="text-solio-blue dark:text-solio-yellow">{exec.title}</span>
                           </button>
                         ))}
                       </nav>
