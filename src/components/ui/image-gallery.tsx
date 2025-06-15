@@ -71,7 +71,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
       {/* Modal with smaller images */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-2xl max-h-[80vh] w-full">
+          <div className="relative max-w-lg max-h-[60vh] w-full">
             <Button
               variant="ghost"
               size="icon"
