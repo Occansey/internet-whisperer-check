@@ -70,8 +70,8 @@ const ComiteExecutif = () => {
     const bioId = getExecBioId(name);
     const element = document.getElementById(bioId);
     if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      // Use scrollIntoView for robust behavior across devices and sticky headers
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
