@@ -172,7 +172,7 @@ const Contact = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90"
+                    className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90 text-white dark:text-white"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
@@ -186,8 +186,8 @@ const Contact = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Coordonnées</h3>
-                      <address className="not-italic space-y-2 text-gray-700">
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Coordonnées</h3>
+                      <address className="not-italic space-y-2 text-gray-700 dark:text-gray-200">
                         <p className="font-medium">Solio Group</p>
                         <div className="mt-3">
                           <p className="font-medium">France</p>
@@ -222,23 +222,17 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Suivez-nous</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Suivez-nous</h3>
                       <div className="flex space-x-4">
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
+                        <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-solio-blue">
                           LinkedIn
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          Twitter/X
-                        </a>
-                        <a href="#" className="text-gray-700 hover:text-solio-blue">
-                          YouTube
                         </a>
                       </div>
                     </div>
 
                     <div className="pt-4">
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue">Horaires d'ouverture</h3>
-                      <p className="text-gray-700">
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Horaires d'ouverture</h3>
+                      <p className="text-gray-700 dark:text-gray-200">
                         Du lundi au vendredi<br />
                         9h00 - 18h00
                       </p>
