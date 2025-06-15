@@ -2,7 +2,7 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
-import ExecutiveProfile, { getExecId } from "./ExecutiveProfile";
+import ExecutiveProfile, { getExecBioId } from "./ExecutiveProfile";
 
 interface ExecutiveMemberProps {
   photo: string;
@@ -65,11 +65,10 @@ const ComiteExecutif = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Update: No offset on scroll, so the container is aligned to the very top
+  // Scroll to the "Biographie" heading inside the executive profile
   const scrollToExecutive = (name: string) => {
-    const execId = getExecId(name);
-    const element = document.getElementById(execId);
-
+    const bioId = getExecBioId(name);
+    const element = document.getElementById(bioId);
     if (element) {
       const y = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: y, behavior: "smooth" });

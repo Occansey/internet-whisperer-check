@@ -20,14 +20,16 @@ export const getExecId = (name: string) => {
   );
 };
 
+// New function to generate the biography anchor id
+export const getExecBioId = (name: string) => {
+  return getExecId(name) + "-bio";
+};
+
 const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-8 items-start">
+    <div className="flex flex-col md:flex-row gap-8 items-start" id={getExecId(executive.name)}>
       <div className="w-full md:w-1/3">
-        <div
-          className="rounded-lg overflow-hidden shadow-md"
-          id={getExecId(executive.name)}
-        >
+        <div className="rounded-lg overflow-hidden shadow-md">
           <img 
             src={executive.photo} 
             alt={executive.name} 
@@ -56,7 +58,12 @@ const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) =>
       <div className="w-full md:w-2/3">
         <Card>
           <CardContent className="prose max-w-none pt-6">
-            <h2 className="text-xl font-semibold mb-4">Biographie</h2>
+            <h2
+              className="text-xl font-semibold mb-4"
+              id={getExecBioId(executive.name)}
+            >
+              Biographie
+            </h2>
             <p className="whitespace-pre-line">{executive.bio}</p>
           </CardContent>
         </Card>
