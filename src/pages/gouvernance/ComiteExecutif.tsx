@@ -53,7 +53,10 @@ const ExecutiveProfile = ({ executive }: { executive: ExecutiveMemberProps }) =>
   return (
     <div className="flex flex-col md:flex-row gap-8 items-start">
       <div className="w-full md:w-1/3">
-        <div className="rounded-lg overflow-hidden shadow-md">
+        <div
+          className="rounded-lg overflow-hidden shadow-md"
+          id={getExecId(executive.name)}
+        >
           <img 
             src={executive.photo} 
             alt={executive.name} 
@@ -165,9 +168,7 @@ const ComiteExecutif = () => {
               <div className="space-y-16">
                 {executives.map((exec, index) => (
                   <div
-                    // Place the scroll target on the wrapper of the full bio card
                     key={exec.name}
-                    id={getExecId(exec.name)}
                     className={`pt-4 ${index > 0 ? "border-t border-gray-200" : ""}`}
                   >
                     <ExecutiveProfile executive={exec} />
