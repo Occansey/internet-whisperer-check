@@ -65,14 +65,13 @@ const ComiteExecutif = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  // Update: No offset on scroll, so the container is aligned to the very top
   const scrollToExecutive = (name: string) => {
     const execId = getExecId(name);
     const element = document.getElementById(execId);
 
     if (element) {
-      // Account for sticky navbar/header (adjust SCROLL_OFFSET as needed)
-      const y =
-        element.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
+      const y = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
