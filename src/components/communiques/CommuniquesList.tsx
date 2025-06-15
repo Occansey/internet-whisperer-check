@@ -9,6 +9,16 @@ interface CommuniquesListProps {
   selectedTag: string;
 }
 
+// Utility function to shuffle array
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const CommuniquesList: React.FC<CommuniquesListProps> = ({ 
   communiques, 
   searchTerm, 
@@ -51,17 +61,20 @@ const CommuniquesList: React.FC<CommuniquesListProps> = ({
     tags: communique.acf?.tags || []
   }));
 
-  if (transformedCommuniques.length === 0) {
+  // Shuffle the transformed communiques for random display
+  const shuffledCommuniques = shuffleArray(transformedCommuniques);
+
+  if (shuffledCommuniques.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-lg text-gray-500">Aucun article trouvé pour votre recherche.</p>
+        <p className="text-lg text-gray-500 dark:text-gray-400">Aucun article trouvé pour votre recherche.</p>
       </div>
     );
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {transformedCommuniques.map((article) => (
+      {shuffledCommuniques.map((article) => (
         <CommuniqueCard key={article.id} article={article} />
       ))}
     </div>

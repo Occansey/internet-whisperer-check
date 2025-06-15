@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from './button';
 
@@ -30,6 +30,28 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
   const prevImage = () => {
     setSelectedImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isModalOpen) return;
+      
+      switch (event.key) {
+        case 'ArrowLeft':
+          prevImage();
+          break;
+        case 'ArrowRight':
+          nextImage();
+          break;
+        case 'Escape':
+          closeModal();
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
 
   return (
     <>
@@ -68,10 +90,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
         )}
       </div>
 
-      {/* Modal with smaller images */}
+      {/* Modal with scrollable images */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-lg max-h-[60vh] w-full">
+          <div className="relative max-w-4xl max-h-[90vh] w-full h-full">
             <Button
               variant="ghost"
               size="icon"
@@ -103,11 +125,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
               </>
             )}
             
-            <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center overflow-auto">
               <img 
                 src={images[selectedImageIndex]} 
                 alt={`Image ${selectedImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain rounded-lg"
+                style={{ maxHeight: 'calc(90vh - 2rem)' }}
               />
             </div>
             
