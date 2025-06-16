@@ -29,7 +29,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png",
+    photo: "/lovable-uploads/8a1b5962-6861-4b24-b3ce-d1922809f130.png",
     nom: "Alain Normand",
     titre: "Directeur Général - MFG Technologies",
     linkedin: "https://www.linkedin.com/in/alainnormand1/"
