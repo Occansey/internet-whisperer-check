@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { decodeHtmlEntities } from '@/utils/htmlUtils';
@@ -18,7 +17,6 @@ interface WordPressEvent {
     type?: string;
     en_savoir_plus?: string;
     'heure-fin'?: string;
-    heure_fin?: string;
     photo_gallery?: {
       gallery?: any[][];
       galerie?: any[][];
@@ -26,8 +24,6 @@ interface WordPressEvent {
     galerie?: any[];
     video_youtube?: string;
     video_linkedin?: string;
-    replay_youtube?: string;
-    replay_linkedin?: string;
     tags?: Array<{
       term_id: number;
       name: string;
@@ -53,13 +49,10 @@ interface TransformedEvent {
   image: string;
   en_savoir_plus?: string;
   'heure-fin'?: string;
-  heure_fin?: string;
   tags?: string[];
   gallery?: any[];
   video_youtube?: string;
   video_linkedin?: string;
-  replay_youtube?: string;
-  replay_linkedin?: string;
 }
 
 const formatDateToFrench = (dateStr: string): string => {
@@ -123,13 +116,10 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
       image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
       en_savoir_plus: event.acf?.en_savoir_plus || '',
       'heure-fin': event.acf?.['heure-fin'] || '',
-      heure_fin: event.acf?.heure_fin || '',
       tags: event.acf?.tags?.map(tag => tag.name) || [],
       gallery,
       video_youtube: event.acf?.video_youtube,
       video_linkedin: event.acf?.video_linkedin,
-      replay_youtube: event.acf?.replay_youtube,
-      replay_linkedin: event.acf?.replay_linkedin,
     };
     
     console.log('Transformed event:', transformed);

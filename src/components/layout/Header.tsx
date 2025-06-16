@@ -52,39 +52,6 @@ const Header = () => {
     };
   }, []);
 
-  // Initialize Google Translate
-  useEffect(() => {
-    const initializeGoogleTranslate = () => {
-      if (typeof window !== 'undefined' && window.google?.translate?.TranslateElement) {
-        try {
-          // Initialize desktop widget
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'fr',
-            includedLanguages: 'en,fr,es,de,it,pt,ar',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element');
-
-          // Initialize mobile widget
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'fr',
-            includedLanguages: 'en,fr,es,de,it,pt,ar',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element_mobile');
-        } catch (error) {
-          console.log('Google Translate initialization error:', error);
-        }
-      } else {
-        // Retry after a short delay if Google Translate is not loaded yet
-        setTimeout(initializeGoogleTranslate, 500);
-      }
-    };
-
-    const timer = setTimeout(initializeGoogleTranslate, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <header ref={headerRef} className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-200">
         <div className="container mx-auto px-2">
