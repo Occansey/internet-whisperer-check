@@ -43,6 +43,9 @@ export interface WordPressPost {
     gallery?: any[];
     video_youtube?: string;
     video_linkedin?: string;
+    // Replay fields for events
+    replay_youtube?: string;
+    replay_linkedin?: string;
     // Event-specific fields
     lieu?: string;
     heure?: string;
@@ -262,7 +265,7 @@ const wordpressApi = {
       
       // Try to fetch by slug
       try {
-        const response = await axios.get(`${WORDPRESS_API_URL}/projets?slug=${identifier}&_embed`, { timeout: 10000 });
+        const response = await axios.get(`${WORDRESS_API_URL}/projets?slug=${identifier}&_embed`, { timeout: 10000 });
         
         if (response.data && response.data.length > 0) {
           return response.data[0] as WordPressPost;

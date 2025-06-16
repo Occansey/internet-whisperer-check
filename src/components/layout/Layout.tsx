@@ -106,27 +106,6 @@ const Layout = ({ children }: LayoutProps) => {
     }
   }, [pathname]);
 
-  // Initialize Google Translate for mobile element
-  useEffect(() => {
-    const initializeTranslate = () => {
-      if (typeof window !== 'undefined' && window.google?.translate?.TranslateElement) {
-        try {
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'fr',
-            includedLanguages: 'en,fr,es,de,it,pt,ar',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element_mobile');
-        } catch (error) {
-          console.log('Google Translate mobile initialization error:', error);
-        }
-      }
-    };
-
-    const timer = setTimeout(initializeTranslate, 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="flex flex-col min-h-screen relative">
       <style>{globalStyles}</style>

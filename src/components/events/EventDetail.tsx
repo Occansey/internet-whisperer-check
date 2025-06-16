@@ -270,6 +270,10 @@ const EventDetail = () => {
   // Get video URL from WordPress ACF fields
   const videoUrl = wpEvent?.acf?.video_youtube || wpEvent?.video_youtube || wpEvent?.acf?.video_linkedin || wpEvent?.video_linkedin;
 
+  // Get replay URLs from WordPress ACF fields
+  const replayYoutube = wpEvent?.replay_youtube;
+  const replayLinkedin = wpEvent?.replay_linkedin;
+
   return (
     <Layout>
       <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white dark:from-gray-800 dark:to-blue-800">
@@ -391,6 +395,27 @@ const EventDetail = () => {
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Vidéo</h3>
               <VideoEmbed url={videoUrl} />
+            </div>
+          )}
+          
+          {/* Replay Section */}
+          {(replayYoutube || replayLinkedin) && (
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4">Replay</h3>
+              <div className="space-y-4">
+                {replayYoutube && (
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">YouTube</h4>
+                    <VideoEmbed url={replayYoutube} />
+                  </div>
+                )}
+                {replayLinkedin && (
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">LinkedIn</h4>
+                    <VideoEmbed url={replayLinkedin} />
+                  </div>
+                )}
+              </div>
             </div>
           )}
           
