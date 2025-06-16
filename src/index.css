@@ -223,43 +223,82 @@
   }
 }
 
-/* ==== GOOGLE TRANSLATE STYLES ==== */
-/* Clean and functional Google Translate styling */
-.translate-widget .goog-te-gadget {
-  font-family: inherit !important;
-  font-size: 13px !important;
-  color: inherit !important;
-}
-
-.translate-widget .goog-te-combo {
-  background: white !important;
-  border: 1px solid #d1d5db !important;
-  border-radius: 6px !important;
-  padding: 4px 8px !important;
-  font-size: 13px !important;
-  color: #374151 !important;
+/* ==== ENHANCED GOOGLE TRANSLATE DEBUGGING STYLES ==== */
+/* Force all Google Translate elements to be clickable and visible */
+.translate-widget,
+.translate-widget *,
+.goog-te-gadget,
+.goog-te-gadget *,
+.goog-te-combo,
+.goog-te-gadget-simple,
+.goog-te-gadget-simple * {
+  pointer-events: auto !important;
   cursor: pointer !important;
-  min-width: 100px !important;
-  /* Debug mode styling - force visibility */
-  z-index: 9999 !important;
+  z-index: 999999 !important;
   position: relative !important;
 }
 
+/* Enhanced Google Translate Widget Styling */
+.translate-widget .goog-te-combo {
+  font-size: 12px !important;
+  border: 2px solid #059669 !important; /* Green border for debugging */
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  background: #10b981 !important; /* Green background for debugging */
+  color: white !important;
+  cursor: pointer !important;
+  min-width: 80px !important;
+  height: auto !important;
+  line-height: normal !important;
+  pointer-events: auto !important;
+  z-index: 999999 !important;
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 .dark .translate-widget .goog-te-combo {
-  background: #374151 !important;
-  border-color: #6b7280 !important;
-  color: #f3f4f6 !important;
+  background: #065f46 !important;
+  color: #d1fae5 !important;
+  border-color: #10b981 !important;
 }
 
-.translate-widget .goog-te-combo:hover {
-  border-color: #9ca3af !important;
+.translate-widget .goog-te-gadget {
+  font-family: inherit !important;
+  font-size: 12px !important;
+  line-height: normal !important;
+  pointer-events: auto !important;
+  z-index: 999999 !important;
 }
 
-.dark .translate-widget .goog-te-combo:hover {
-  border-color: #9ca3af !important;
+.translate-widget .goog-te-gadget .goog-te-combo {
+  margin: 0 !important;
+  vertical-align: top !important;
+  pointer-events: auto !important;
 }
 
-/* Hide Google branding */
+.goog-te-gadget-simple {
+  background: transparent !important;
+  border: none !important;
+  font-size: 12px !important;
+  pointer-events: auto !important;
+  z-index: 999999 !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value {
+  color: inherit !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  color: inherit !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Hide Google Translate banner and branding */
 .goog-te-banner-frame {
   display: none !important;
 }
@@ -268,28 +307,31 @@
   display: none !important;
 }
 
-/* Prevent top margin on body from Google Translate */
-body {
-  top: 0 !important;
-}
-
-/* Hide the "Powered by" text */
 .goog-te-gadget-simple .goog-te-menu-value:before {
   content: none !important;
 }
 
-/* Ensure dropdown is clickable and visible */
-.goog-te-combo {
-  pointer-events: auto !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+body {
+  top: 0 !important;
 }
 
+.skiptranslate {
+  display: none !important;
+}
+
+/* Force dropdown to be above everything */
+.goog-te-combo {
+  position: relative !important;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+
+/* Fix for dropdown options */
 .goog-te-combo option {
   background: white !important;
   color: #374151 !important;
-  padding: 4px !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
 
 .dark .goog-te-combo option {
@@ -297,17 +339,19 @@ body {
   color: #f3f4f6 !important;
 }
 
-/* Debug mode - make translate elements more visible */
-.translate-widget[style*="border"] .goog-te-combo {
-  border: 3px solid red !important;
-  background: yellow !important;
-  color: black !important;
-  font-weight: bold !important;
+/* Additional debugging styles */
+.translate-widget:hover {
+  background-color: rgba(255, 0, 0, 0.1) !important;
 }
 
-/* Force Google Translate elements to be interactive */
-.goog-te-combo {
-  -webkit-appearance: menulist !important;
-  -moz-appearance: menulist !important;
-  appearance: menulist !important;
+/* Override any potential conflicting styles */
+* [style*="pointer-events: none"] {
+  pointer-events: auto !important;
+}
+
+/* Force click events on the container */
+.translate-widget,
+.translate-widget > * {
+  pointer-events: auto !important;
+  user-select: auto !important;
 }
