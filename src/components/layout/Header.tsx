@@ -54,35 +54,54 @@ const Header = () => {
 
   // Initialize Google Translate
   useEffect(() => {
-    const initializeGoogleTranslate = () => {
-      if (typeof window !== 'undefined' && window.google?.translate?.TranslateElement) {
-        try {
-          // Initialize desktop widget
+    // Set up the global function for Google Translate
+    window.googleTranslateElementInit = function() {
+      if (window.google?.translate?.TranslateElement) {
+        // Clear existing widgets
+        const desktopElement = document.getElementById('google_translate_element');
+        const mobileElement = document.getElementById('google_translate_element_mobile');
+        
+        if (desktopElement) {
+          desktopElement.innerHTML = '';
           new window.google.translate.TranslateElement({
             pageLanguage: 'fr',
             includedLanguages: 'en,fr,es,de,it,pt,ar',
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
           }, 'google_translate_element');
+        }
 
-          // Initialize mobile widget
+        if (mobileElement) {
+          mobileElement.innerHTML = '';
           new window.google.translate.TranslateElement({
             pageLanguage: 'fr',
             includedLanguages: 'en,fr,es,de,it,pt,ar',
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
           }, 'google_translate_element_mobile');
-        } catch (error) {
-          console.log('Google Translate initialization error:', error);
         }
-      } else {
-        // Retry after a short delay if Google Translate is not loaded yet
-        setTimeout(initializeGoogleTranslate, 500);
       }
     };
 
-    const timer = setTimeout(initializeGoogleTranslate, 1000);
-    return () => clearTimeout(timer);
+    // Load Google Translate script if not already loaded
+    if (!document.querySelector('script[src*="translate.google.com"]')) {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.head.appendChild(script);
+    } else if (window.google?.translate?.TranslateElement) {
+      // If script is already loaded, initialize immediately
+      window.googleTranslateElementInit();
+    }
+
+    // Cleanup function
+    return () => {
+      // Clean up the global function
+      if (window.googleTranslateElementInit) {
+        delete window.googleTranslateElementInit;
+      }
+    };
   }, []);
 
   return (
