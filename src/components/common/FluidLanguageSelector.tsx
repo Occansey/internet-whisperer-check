@@ -41,81 +41,142 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
   };
 
   const triggerGoogleTranslate = (langCode: string) => {
-    addDebugLog(`Triggering fluid translation to: ${langCode}`);
+    addDebugLog(`Triggering advanced translation to: ${langCode}`);
     
-    // Method 1: Find and trigger the hidden Google Translate widget
-    const element = document.getElementById(elementId);
-    if (element) {
-      const selects = element.querySelectorAll('select');
-      addDebugLog(`Found ${selects.length} select elements in ${elementId}`);
+    // Method 1: Search for any Google Translate elements using multiple selectors
+    const gtSelectors = [
+      'select[class*="goog-te"]',
+      '.goog-te-combo',
+      '.goog-te-gadget select',
+      '#google_translate_element select',
+      '#google_translate_element_mobile select',
+      '#fluid_translate_element select',
+      '#fluid_translate_element_mobile select'
+    ];
+    
+    let foundSelect = false;
+    
+    gtSelectors.forEach(selector => {
+      const selects = document.querySelectorAll(selector);
+      addDebugLog(`Selector "${selector}" found ${selects.length} elements`);
       
-      selects.forEach((select, index) => {
-        const targetOption = Array.from(select.options).find(option => 
-          option.value === langCode || option.value.includes(langCode)
+      selects.forEach((select: Element, index) => {
+        const selectElement = select as HTMLSelectElement;
+        addDebugLog(`Checking select ${index} with ${selectElement.options.length} options`);
+        
+        // Log all available options for debugging
+        Array.from(selectElement.options).forEach((option, optIndex) => {
+          addDebugLog(`Option ${optIndex}: value="${option.value}", text="${option.text}"`);
+        });
+        
+        const targetOption = Array.from(selectElement.options).find(option => 
+          option.value === langCode || 
+          option.value.includes(`|${langCode}`) ||
+          option.value === `fr|${langCode}` ||
+          option.text.toLowerCase().includes(languages.find(l => l.code === langCode)?.name.toLowerCase() || '')
         );
+        
         if (targetOption) {
-          addDebugLog(`Found target option for ${langCode} in select ${index}, triggering change`);
-          select.value = targetOption.value;
+          addDebugLog(`Found matching option: ${targetOption.value} for ${langCode}`);
+          selectElement.value = targetOption.value;
           
-          // Trigger multiple events to ensure translation
-          const events = ['change', 'input', 'click'];
-          events.forEach(eventType => {
-            const event = new Event(eventType, { bubbles: true });
-            select.dispatchEvent(event);
+          // Trigger multiple events
+          ['change', 'input', 'click', 'mousedown', 'focus', 'blur'].forEach(eventType => {
+            const event = new Event(eventType, { bubbles: true, cancelable: true });
+            selectElement.dispatchEvent(event);
           });
           
-          // Also trigger with mouse events
-          const mouseEvent = new MouseEvent('mousedown', { bubbles: true });
-          select.dispatchEvent(mouseEvent);
-          
-          return;
+          foundSelect = true;
+          addDebugLog(`Successfully triggered events on select for ${langCode}`);
         }
       });
-    } else {
-      addDebugLog(`Element ${elementId} not found`);
-    }
-
-    // Method 2: Look for any Google Translate selects on the page
-    const allSelects = document.querySelectorAll('select');
-    addDebugLog(`Found ${allSelects.length} total select elements on page`);
-    
-    allSelects.forEach((select, index) => {
-      if (select.className.includes('goog-te') || select.closest('.goog-te-gadget')) {
-        const targetOption = Array.from(select.options).find(option => 
-          option.value === langCode || option.value.includes(langCode)
-        );
-        if (targetOption) {
-          addDebugLog(`Found GT select ${index} with target option for ${langCode}`);
-          select.value = targetOption.value;
-          
-          // Trigger change event
-          select.dispatchEvent(new Event('change', { bubbles: true }));
-          
-          // Force focus and blur to trigger translation
-          select.focus();
-          select.blur();
-        }
-      }
     });
 
-    // Method 3: Direct Google Translate API call if available
+    // Method 2: Force show hidden elements temporarily
+    if (!foundSelect) {
+      addDebugLog('No selects found, attempting to reveal hidden elements');
+      
+      const hiddenElements = document.querySelectorAll('[style*="display: none"], [style*="visibility: hidden"], .hidden');
+      hiddenElements.forEach((el: Element) => {
+        const element = el as HTMLElement;
+        const originalStyle = element.style.cssText;
+        element.style.display = 'block';
+        element.style.visibility = 'visible';
+        element.style.opacity = '1';
+        
+        // Look for selects in the now-visible element
+        const selects = element.querySelectorAll('select');
+        addDebugLog(`Found ${selects.length} selects in previously hidden element`);
+        
+        selects.forEach((select: Element) => {
+          const selectElement = select as HTMLSelectElement;
+          const targetOption = Array.from(selectElement.options).find(option => 
+            option.value.includes(langCode)
+          );
+          
+          if (targetOption) {
+            addDebugLog(`Found target in revealed element: ${targetOption.value}`);
+            selectElement.value = targetOption.value;
+            selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+            foundSelect = true;
+          }
+        });
+        
+        // Restore original style after a delay
+        setTimeout(() => {
+          element.style.cssText = originalStyle;
+        }, 100);
+      });
+    }
+
+    // Method 3: Use Google Translate API directly if available
     if (window.google?.translate?.TranslateElement) {
       try {
-        addDebugLog(`Using direct GT API for ${langCode}`);
-        const translateElement = window.google.translate.TranslateElement.getInstance();
-        if (translateElement) {
-          translateElement.showBanner(false);
+        addDebugLog(`Attempting direct Google Translate API call for ${langCode}`);
+        
+        // Try to get the translate element instance
+        const translateFrame = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
+        if (translateFrame && translateFrame.contentDocument) {
+          const frameSelects = translateFrame.contentDocument.querySelectorAll('select');
+          addDebugLog(`Found ${frameSelects.length} selects in translate frame`);
+          
+          frameSelects.forEach((select: Element) => {
+            const selectElement = select as HTMLSelectElement;
+            const targetOption = Array.from(selectElement.options).find(option => 
+              option.value.includes(langCode)
+            );
+            
+            if (targetOption) {
+              addDebugLog(`Found target in frame: ${targetOption.value}`);
+              selectElement.value = targetOption.value;
+              selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+              foundSelect = true;
+            }
+          });
         }
       } catch (error) {
         addDebugLog(`Direct API method failed: ${error}`);
       }
-    } else {
-      addDebugLog('Google Translate API not available');
     }
 
-    // Method 4: Force page language change via URL hash
-    addDebugLog(`Setting URL hash for ${langCode}`);
+    // Method 4: Cookie and URL hash approach
+    addDebugLog(`Setting cookie and hash for ${langCode}`);
+    
+    // Set Google Translate cookie
+    document.cookie = `googtrans=/fr/${langCode}; path=/; domain=${window.location.hostname}`;
+    
+    // Set URL hash
     window.location.hash = `googtrans(fr|${langCode})`;
+    
+    // Method 5: Force reload if nothing else worked
+    if (!foundSelect) {
+      addDebugLog('No translation triggered, attempting page refresh with language');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    } else {
+      addDebugLog('Translation should be active now');
+    }
   };
 
   const initializeTranslate = () => {
@@ -137,15 +198,19 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
           
           addDebugLog(`Fluid Google Translate initialized for ${elementId}`);
           
-          // Hide the widget completely but keep it functional
+          // Keep the widget visible for debugging
           setTimeout(() => {
             const gtElement = document.getElementById(elementId);
             if (gtElement) {
-              gtElement.style.position = 'absolute';
-              gtElement.style.left = '-9999px';
-              gtElement.style.visibility = 'hidden';
-              gtElement.style.opacity = '0';
-              gtElement.style.pointerEvents = 'none';
+              // Make it visible but small for debugging
+              gtElement.style.position = 'fixed';
+              gtElement.style.bottom = '60px';
+              gtElement.style.left = '10px';
+              gtElement.style.background = 'yellow';
+              gtElement.style.padding = '2px';
+              gtElement.style.fontSize = '10px';
+              gtElement.style.zIndex = '9999';
+              gtElement.style.border = '1px solid red';
             }
           }, 1000);
           
@@ -164,10 +229,8 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
     setCurrentLanguage(langCode);
     setIsDropdownOpen(false);
     
-    // Trigger translation without page reload
-    setTimeout(() => {
-      triggerGoogleTranslate(langCode);
-    }, 100);
+    // Trigger translation without delay
+    triggerGoogleTranslate(langCode);
   };
 
   const toggleDropdown = () => {
@@ -282,31 +345,35 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
         </div>
       )}
 
-      {/* Hidden Google Translate Widget */}
+      {/* Visible Google Translate Widget for debugging */}
       <div 
         id={elementId} 
-        className="hidden-translate-widget"
-        style={{ display: 'none' }}
+        className="debug-translate-widget"
       />
 
-      {/* Debug info - only show if debugging is enabled */}
+      {/* Debug info - enhanced debug panel */}
       {isDebugging && (
-        <div className="fixed bottom-4 left-4 bg-blue-500 text-white p-2 rounded text-xs max-w-xs z-50">
-          <div><strong>🔵 FLUID DEBUG MODE</strong></div>
+        <div className="fixed bottom-4 left-4 bg-blue-600 text-white p-3 rounded-lg text-xs max-w-sm z-50 shadow-lg">
+          <div className="flex justify-between items-center mb-2">
+            <strong>🔵 FLUID DEBUG MODE</strong>
+            <button 
+              onClick={() => setIsDebugging(false)}
+              className="bg-blue-800 px-2 py-1 rounded text-xs hover:bg-blue-700"
+            >
+              Hide
+            </button>
+          </div>
           <div>Current: {currentLang.name}</div>
           <div>Dropdown: {isDropdownOpen ? 'Open' : 'Closed'}</div>
           <div>Element: {elementId}</div>
-          <div className="mt-2 max-h-20 overflow-y-auto">
-            {debugLogs.slice(-3).map((log, index) => (
-              <div key={index} className="text-xs">{log}</div>
+          <div>GT Available: {window.google?.translate ? 'Yes' : 'No'}</div>
+          <div>Total Selects: {document.querySelectorAll('select').length}</div>
+          <div className="mt-2 max-h-32 overflow-y-auto border-t border-blue-500 pt-2">
+            <div className="text-blue-200 font-semibold">Recent Logs:</div>
+            {debugLogs.slice(-5).map((log, index) => (
+              <div key={index} className="text-xs text-blue-100 mb-1">{log}</div>
             ))}
           </div>
-          <button 
-            onClick={() => setIsDebugging(false)}
-            className="mt-1 bg-blue-700 px-2 py-1 rounded text-xs"
-          >
-            Hide Debug
-          </button>
         </div>
       )}
     </div>
