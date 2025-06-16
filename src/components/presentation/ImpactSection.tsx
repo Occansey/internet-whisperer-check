@@ -1,7 +1,12 @@
 
 import { StatCard } from "@/components/ui/stat-card";
+import { useEffect } from "react";
 
 const ImpactSection = () => {
+  useEffect(() => {
+    console.log("ImpactSection mounted, stats should be visible");
+  }, []);
+
   return (
     <section id="impact" className="py-20 bg-gray-50">
       <div className="container">
@@ -22,6 +27,11 @@ const ImpactSection = () => {
             value={5}
             label="Pays africains couverts"
             prefix=""
+          />
+          <StatCard 
+            value={15}
+            label="Millions USD mobilisés"
+            prefix="+"
           />
         </div>
       </div>

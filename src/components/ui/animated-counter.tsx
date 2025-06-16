@@ -22,69 +22,81 @@ export const AnimatedCounter = ({
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const countRef = useRef<HTMLSpanElement>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const frameRef = useRef<number | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const animate = (timestamp: number) => {
-      if (!startTimeRef.current) {
-        startTimeRef.current = timestamp;
-      }
-
-      const progress = timestamp - startTimeRef.current;
-      const percentage = Math.min(progress / duration, 1);
-      
-      // Use easing function for smoother animation
-      const easeOutCubic = 1 - Math.pow(1 - percentage, 3);
-      const currentCount = Math.floor(easeOutCubic * end);
-      setCount(currentCount);
-
-      if (percentage < 1) {
-        frameRef.current = requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-        setHasAnimated(true);
-      }
-    };
+    const element = countRef.current;
+    if (!element || hasAnimated) return;
 
     const startAnimation = () => {
-      if (!hasAnimated && !frameRef.current) {
-        startTimeRef.current = null;
-        frameRef.current = requestAnimationFrame(animate);
-      }
+      if (hasAnimated) return;
+      
+      console.log(`Starting animation for counter: ${end}`);
+      setHasAnimated(true);
+      
+      const startTime = Date.now();
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        const currentCount = Math.floor(easeOutCubic * end);
+        
+        setCount(currentCount);
+        
+        if (progress < 1) {
+          animationFrameRef.current = requestAnimationFrame(animate);
+        } else {
+          setCount(end);
+          console.log(`Animation completed for counter: ${end}`);
+        }
+      };
+      
+      animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    // Use Intersection Observer for better performance
-    if (countRef.current && !hasAnimated) {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              startAnimation();
-              // Disconnect observer after animation starts
-              if (observerRef.current) {
-                observerRef.current.disconnect();
-              }
+    // Create intersection observer with more aggressive settings
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log(`Counter ${end} intersection ratio:`, entry.intersectionRatio);
+          if (entry.intersectionRatio > 0 && !hasAnimated) {
+            // Add a small delay to ensure DOM is stable
+            setTimeout(startAnimation, 100);
+            // Disconnect observer after triggering
+            if (observerRef.current) {
+              observerRef.current.disconnect();
             }
-          });
-        },
-        {
-          threshold: 0.1,
-          rootMargin: '50px'
-        }
-      );
+          }
+        });
+      },
+      {
+        threshold: [0, 0.1, 0.5],
+        rootMargin: '100px 0px'
+      }
+    );
 
-      observerRef.current.observe(countRef.current);
-    }
+    observerRef.current.observe(element);
+
+    // Fallback: trigger animation after 2 seconds if intersection observer fails
+    const fallbackTimer = setTimeout(() => {
+      if (!hasAnimated) {
+        console.log(`Fallback animation triggered for counter: ${end}`);
+        startAnimation();
+      }
+    }, 2000);
 
     return () => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      clearTimeout(fallbackTimer);
     };
   }, [end, duration, hasAnimated]);
 
