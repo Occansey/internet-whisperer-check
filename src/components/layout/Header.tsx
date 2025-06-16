@@ -1,9 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
-import GoogleTranslate from '@/components/translate/GoogleTranslate';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useGoogleTranslate, languages } from '@/components/translate/GoogleTranslate';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +22,7 @@ const Header = () => {
   });
   const location = useLocation();
   const headerRef = useRef<HTMLElement>(null);
+  const { currentLanguage, translatePage } = useGoogleTranslate();
 
   const toggleDropdown = (dropdown: keyof typeof dropdowns) => {
     setDropdowns(prev => ({
@@ -187,7 +194,27 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <GoogleTranslate />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                    <Globe className="h-4 w-4" />
+                    <span className="text-lg">{currentLanguage.flag}</span>
+                    <span className="hidden md:inline">{currentLanguage.name}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  {languages.map((language) => (
+                    <DropdownMenuItem
+                      key={language.code}
+                      onClick={() => translatePage(language.code)}
+                      className="flex items-center gap-3 cursor-pointer"
+                    >
+                      <span className="text-lg">{language.flag}</span>
+                      <span>{language.name}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <ThemeToggle />
               <Link 
                 to="/contact"
@@ -205,7 +232,26 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
-            <GoogleTranslate />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                  <Globe className="h-4 w-4" />
+                  <span className="text-lg">{currentLanguage.flag}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.code}
+                    onClick={() => translatePage(language.code)}
+                    className="flex items-center gap-3 cursor-pointer"
+                  >
+                    <span className="text-lg">{language.flag}</span>
+                    <span>{language.name}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <ThemeToggle />
             <Button
               variant="ghost"

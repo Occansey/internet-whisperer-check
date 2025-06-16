@@ -1,13 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { Globe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 interface Language {
   code: string;
@@ -15,7 +7,7 @@ interface Language {
   flag: string;
 }
 
-const languages: Language[] = [
+export const languages: Language[] = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
@@ -36,7 +28,7 @@ declare global {
   }
 }
 
-const GoogleTranslate: React.FC = () => {
+export const useGoogleTranslate = () => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]);
   const [isTranslateReady, setIsTranslateReady] = useState(false);
 
@@ -88,29 +80,17 @@ const GoogleTranslate: React.FC = () => {
     }
   };
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="flex items-center gap-2">
-          <Globe className="h-4 w-4" />
-          <span className="text-lg">{currentLanguage.flag}</span>
-          <span className="hidden md:inline">{currentLanguage.name}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        {languages.map((language) => (
-          <DropdownMenuItem
-            key={language.code}
-            onClick={() => translatePage(language.code)}
-            className="flex items-center gap-3 cursor-pointer"
-          >
-            <span className="text-lg">{language.flag}</span>
-            <span>{language.name}</span>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
+  return {
+    currentLanguage,
+    translatePage,
+    isTranslateReady,
+    languages
+  };
+};
+
+// Empty component for backward compatibility
+const GoogleTranslate: React.FC = () => {
+  return null;
 };
 
 export default GoogleTranslate;
