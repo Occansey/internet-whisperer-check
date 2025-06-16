@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -86,13 +87,32 @@ const Evenements = () => {
   // Fetch WordPress events
   const { data: wordpressEvents, isLoading, error } = useWordPressEvents();
   
+  // Detect current language from Google Translate cookie or URL
+  const getCurrentLanguage = () => {
+    // Check Google Translate cookie
+    const gtCookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
+    if (gtCookie) {
+      const lang = gtCookie.split('=')[1]?.split('/')[2];
+      if (lang) return lang;
+    }
+    
+    // Check URL hash
+    const hash = window.location.hash;
+    if (hash.includes('googtrans(')) {
+      const match = hash.match(/googtrans\([^|]+\|([^)]+)\)/);
+      if (match) return match[1];
+    }
+    
+    return 'fr'; // default
+  };
+  
   const handleEventClick = (eventId: number) => {
     console.log(`Event clicked: ${eventId}`);
     // Navigate to event detail page or open modal
   };
 
   if (isLoading) {
-    return <ScreenLoader message="Chargement des événements..." />;
+    return <ScreenLoader message="Chargement des événements..." language={getCurrentLanguage()} />;
   }
 
   // Use WordPress events if available, otherwise fallback to static events
