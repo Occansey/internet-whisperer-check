@@ -18,6 +18,8 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
   const scriptLoaded = useRef(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('fr');
+  const [isDebugging, setIsDebugging] = useState(true);
+  const [debugLogs, setDebugLogs] = useState<string[]>([]);
 
   const languages = [
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -33,19 +35,26 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
     { code: 'ru', name: 'Русский', flag: '🇷🇺' }
   ];
 
+  const addDebugLog = (message: string) => {
+    console.log(`🔵 FLUID DEBUG: ${message}`);
+    setDebugLogs(prev => [...prev.slice(-10), `${new Date().toLocaleTimeString()}: ${message}`]);
+  };
+
   const triggerGoogleTranslate = (langCode: string) => {
-    console.log(`🔄 Triggering fluid translation to: ${langCode}`);
+    addDebugLog(`Triggering fluid translation to: ${langCode}`);
     
     // Method 1: Find and trigger the hidden Google Translate widget
     const element = document.getElementById(elementId);
     if (element) {
       const selects = element.querySelectorAll('select');
-      selects.forEach((select) => {
+      addDebugLog(`Found ${selects.length} select elements in ${elementId}`);
+      
+      selects.forEach((select, index) => {
         const targetOption = Array.from(select.options).find(option => 
           option.value === langCode || option.value.includes(langCode)
         );
         if (targetOption) {
-          console.log(`✅ Found target option for ${langCode}, triggering change`);
+          addDebugLog(`Found target option for ${langCode} in select ${index}, triggering change`);
           select.value = targetOption.value;
           
           // Trigger multiple events to ensure translation
@@ -62,17 +71,21 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
           return;
         }
       });
+    } else {
+      addDebugLog(`Element ${elementId} not found`);
     }
 
     // Method 2: Look for any Google Translate selects on the page
     const allSelects = document.querySelectorAll('select');
-    allSelects.forEach((select) => {
+    addDebugLog(`Found ${allSelects.length} total select elements on page`);
+    
+    allSelects.forEach((select, index) => {
       if (select.className.includes('goog-te') || select.closest('.goog-te-gadget')) {
         const targetOption = Array.from(select.options).find(option => 
           option.value === langCode || option.value.includes(langCode)
         );
         if (targetOption) {
-          console.log(`✅ Found GT select with target option for ${langCode}`);
+          addDebugLog(`Found GT select ${index} with target option for ${langCode}`);
           select.value = targetOption.value;
           
           // Trigger change event
@@ -88,20 +101,25 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
     // Method 3: Direct Google Translate API call if available
     if (window.google?.translate?.TranslateElement) {
       try {
-        // Try to get the translate instance and call translate method
+        addDebugLog(`Using direct GT API for ${langCode}`);
         const translateElement = window.google.translate.TranslateElement.getInstance();
         if (translateElement) {
-          console.log(`🎯 Using direct GT API for ${langCode}`);
           translateElement.showBanner(false);
         }
       } catch (error) {
-        console.log('⚠️ Direct API method not available:', error);
+        addDebugLog(`Direct API method failed: ${error}`);
       }
+    } else {
+      addDebugLog('Google Translate API not available');
     }
+
+    // Method 4: Force page language change via URL hash
+    addDebugLog(`Setting URL hash for ${langCode}`);
+    window.location.hash = `googtrans(fr|${langCode})`;
   };
 
   const initializeTranslate = () => {
-    console.log(`🔄 Initializing Fluid Translate for ${elementId}`);
+    addDebugLog(`Initializing Fluid Translate for ${elementId}`);
     
     if (window.google?.translate?.TranslateElement) {
       const element = document.getElementById(elementId);
@@ -117,7 +135,7 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
             multilanguagePage: true
           }, elementId);
           
-          console.log(`✅ Fluid Google Translate initialized for ${elementId}`);
+          addDebugLog(`Fluid Google Translate initialized for ${elementId}`);
           
           // Hide the widget completely but keep it functional
           setTimeout(() => {
@@ -132,16 +150,17 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
           }, 1000);
           
         } catch (error) {
-          console.error(`❌ Error initializing Fluid Translate for ${elementId}:`, error);
+          addDebugLog(`Error initializing Fluid Translate: ${error}`);
         }
       }
     } else {
+      addDebugLog('Google Translate API not ready, retrying...');
       setTimeout(initializeTranslate, 500);
     }
   };
 
   const handleLanguageSelect = (langCode: string) => {
-    console.log('🌍 Fluid language selected:', langCode);
+    addDebugLog(`Fluid language selected: ${langCode}`);
     setCurrentLanguage(langCode);
     setIsDropdownOpen(false);
     
@@ -178,7 +197,7 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
 
       const existingScript = document.querySelector('script[src*="translate.google.com"]');
       if (existingScript) {
-        console.log('📜 Using existing Google Translate script for fluid selector');
+        addDebugLog('Using existing Google Translate script for fluid selector');
         scriptLoaded.current = true;
         
         const checkAndInit = () => {
@@ -192,17 +211,17 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
         return;
       }
 
-      console.log('📜 Loading Google Translate script for fluid selector');
+      addDebugLog('Loading Google Translate script for fluid selector');
       
       window.googleTranslateElementInit = () => {
-        console.log('📜 Google Translate script loaded for fluid selector');
+        addDebugLog('Google Translate script loaded for fluid selector');
         initializeTranslate();
       };
 
       const script = document.createElement("script");
       script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
-      script.onerror = () => console.error('❌ Failed to load Google Translate script');
+      script.onerror = () => addDebugLog('Failed to load Google Translate script');
       
       document.head.appendChild(script);
       scriptLoaded.current = true;
@@ -269,6 +288,27 @@ const FluidLanguageSelector = ({ elementId, isMobile = false }: FluidLanguageSel
         className="hidden-translate-widget"
         style={{ display: 'none' }}
       />
+
+      {/* Debug info - only show if debugging is enabled */}
+      {isDebugging && (
+        <div className="fixed bottom-4 left-4 bg-blue-500 text-white p-2 rounded text-xs max-w-xs z-50">
+          <div><strong>🔵 FLUID DEBUG MODE</strong></div>
+          <div>Current: {currentLang.name}</div>
+          <div>Dropdown: {isDropdownOpen ? 'Open' : 'Closed'}</div>
+          <div>Element: {elementId}</div>
+          <div className="mt-2 max-h-20 overflow-y-auto">
+            {debugLogs.slice(-3).map((log, index) => (
+              <div key={index} className="text-xs">{log}</div>
+            ))}
+          </div>
+          <button 
+            onClick={() => setIsDebugging(false)}
+            className="mt-1 bg-blue-700 px-2 py-1 rounded text-xs"
+          >
+            Hide Debug
+          </button>
+        </div>
+      )}
     </div>
   );
 };
