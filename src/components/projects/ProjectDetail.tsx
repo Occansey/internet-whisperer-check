@@ -303,19 +303,19 @@ const ProjectDetail = () => {
             <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow">
               <h2 className="text-2xl font-bold mb-4 text-solio-blue">Description du projet</h2>
               
-              {/* Project Gallery */}
-              {project.wpData?.galerie && project.wpData.galerie.length > 0 && (
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4">Galerie du projet</h3>
-                  <ImageGallery images={project.wpData.galerie} />
-                </div>
-              )}
-              
-              {/* Project Video */}
+              {/* Project Video  --- Désormais affichée en premier */}
               {(project.wpData?.video_youtube || project.wpData?.video_linkedin) && (
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold mb-4">Vidéo du projet</h3>
                   <VideoEmbed url={project.wpData.video_youtube || project.wpData.video_linkedin} />
+                </div>
+              )}
+              
+              {/* Project Gallery  --- Maintenant après la vidéo */}
+              {project.wpData?.galerie && project.wpData.galerie.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4">Galerie du projet</h3>
+                  <ImageGallery images={project.wpData.galerie} />
                 </div>
               )}
               
