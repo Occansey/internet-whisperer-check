@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -110,43 +109,19 @@
     @apply animate-fade-in;
   }
 
-  /* ==== ENHANCED DARK MODE SECTION ==== */
+  /* ==== CLEANED UP DARK MODE SECTION ==== */
   /* Make links white in dark mode, but don't override all text colors */
   .dark a {
     color: rgb(255, 255, 255) !important;
   }
 
-  /* Enhanced text color fixes for better readability */
+  /* Replace dark gray text colors for better readability */
   .dark .text-gray-600,
   .dark .text-gray-700,
   .dark .text-slate-600,
   .dark .text-slate-700,
   .dark .text-slate-800 {
     color: rgb(209, 213, 219) !important;
-  }
-
-  /* Improved title and header visibility */
-  .dark h1,
-  .dark h2,
-  .dark h3,
-  .dark h4,
-  .dark h5,
-  .dark h6 {
-    color: rgb(255, 255, 255) !important;
-  }
-
-  /* WordPress content styling */
-  .dark .wordpress-content {
-    color: rgb(209, 213, 219) !important;
-  }
-
-  .dark .wordpress-content h1,
-  .dark .wordpress-content h2,
-  .dark .wordpress-content h3,
-  .dark .wordpress-content h4,
-  .dark .wordpress-content h5,
-  .dark .wordpress-content h6 {
-    color: rgb(255, 255, 255) !important;
   }
 
   /* Make specific backgrounds darker instead of generic class overrides */
@@ -195,21 +170,6 @@
   }
   .dark [style*="rgb(3, 15, 43)"] {
     color: rgb(229, 231, 235) !important;
-  }
-
-  /* Line clamp utilities */
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
   
   @keyframes fadeIn {

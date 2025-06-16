@@ -68,17 +68,17 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
         )}
       </div>
 
-      {/* Modal with smaller images */}
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-lg max-h-[60vh] w-full">
+          <div className="relative max-w-4xl max-h-full">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-2 right-2 text-white hover:bg-white/20 z-10"
+              className="absolute top-4 right-4 text-white hover:bg-white/20 z-10"
               onClick={closeModal}
             >
-              <X className="h-5 w-5" />
+              <X className="h-6 w-6" />
             </Button>
             
             {images.length > 1 && (
@@ -86,30 +86,28 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className = '' }) =
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
                   onClick={prevImage}
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-8 w-8" />
                 </Button>
                 
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
                   onClick={nextImage}
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-8 w-8" />
                 </Button>
               </>
             )}
             
-            <div className="w-full h-full flex items-center justify-center">
-              <img 
-                src={images[selectedImageIndex]} 
-                alt={`Image ${selectedImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain rounded-lg"
-              />
-            </div>
+            <img 
+              src={images[selectedImageIndex]} 
+              alt={`Image ${selectedImageIndex + 1}`}
+              className="max-w-full max-h-full object-contain"
+            />
             
             {images.length > 1 && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">

@@ -14,21 +14,6 @@ const CommuniquesList: React.FC<CommuniquesListProps> = ({
   searchTerm, 
   selectedTag 
 }) => {
-  // Helper function to format date properly
-  const formatDate = (wpPost: WordPressPost): string => {
-    // First try ACF date
-    if (wpPost.acf?.date) {
-      return wpPost.acf.date;
-    }
-    
-    // Fallback to WordPress post date
-    if (wpPost.date) {
-      return wpPost.date.split('T')[0];
-    }
-    
-    return '';
-  };
-
   // Filter communiques based on search term and selected tag
   const filteredCommuniques = communiques.filter(communique => {
     const matchesSearch = searchTerm === '' || 
@@ -45,7 +30,7 @@ const CommuniquesList: React.FC<CommuniquesListProps> = ({
   const transformedCommuniques = filteredCommuniques.map(communique => ({
     id: communique.acf?.id?.trim() || communique.slug || communique.id.toString(),
     title: communique.title.rendered,
-    date: formatDate(communique),
+    date: communique.acf?.date || communique.date.split('T')[0],
     description: communique.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '',
     image: communique._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
     tags: communique.acf?.tags || []
