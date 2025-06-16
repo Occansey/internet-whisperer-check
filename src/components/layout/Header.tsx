@@ -55,10 +55,9 @@ const Header = () => {
 
   // Initialize Google Translate
   useEffect(() => {
-    // Set up the global function for Google Translate
-    window.googleTranslateElementInit = function() {
+    const initializeGoogleTranslate = () => {
       if (window.google?.translate?.TranslateElement) {
-        // Clear existing widgets
+        // Clear existing widgets first
         const desktopElement = document.getElementById('google_translate_element');
         const mobileElement = document.getElementById('google_translate_element_mobile');
         
@@ -84,25 +83,20 @@ const Header = () => {
       }
     };
 
-    // Load Google Translate script if not already loaded
-    if (!document.querySelector('script[src*="translate.google.com"]')) {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-      script.async = true;
-      document.head.appendChild(script);
-    } else if (window.google?.translate?.TranslateElement) {
-      // If script is already loaded, initialize immediately
-      window.googleTranslateElementInit();
+    // Check if Google Translate is already loaded
+    if (window.google?.translate?.TranslateElement) {
+      initializeGoogleTranslate();
+    } else {
+      // Wait for the script to load and then initialize
+      const checkGoogleTranslate = () => {
+        if (window.google?.translate?.TranslateElement) {
+          initializeGoogleTranslate();
+        } else {
+          setTimeout(checkGoogleTranslate, 100);
+        }
+      };
+      checkGoogleTranslate();
     }
-
-    // Cleanup function
-    return () => {
-      // Clean up the global function by setting it to undefined instead of deleting
-      if (window.googleTranslateElementInit) {
-        window.googleTranslateElementInit = undefined;
-      }
-    };
   }, []);
 
   return (
