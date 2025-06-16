@@ -222,3 +222,8 @@
     to { opacity: 0; }
   }
 }
+#google_translate_element * {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10000 !important;
+}
