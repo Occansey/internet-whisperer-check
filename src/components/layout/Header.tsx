@@ -1,9 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
+import GoogleTranslate from '@/components/translate/GoogleTranslate';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -187,6 +187,7 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              <GoogleTranslate />
               <ThemeToggle />
               <Link 
                 to="/contact"
@@ -204,6 +205,7 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
+            <GoogleTranslate />
             <ThemeToggle />
             <Button
               variant="ghost"

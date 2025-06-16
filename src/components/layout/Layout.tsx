@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
 
-// Add global CSS styles for specific buttons and animations
+// Add global CSS styles for specific buttons, animations, and Google Translate customization
 const globalStyles = `
   /* Style for the "Nos engagements RH" button on Culture page */
   .culture-page .engagements-button {
@@ -35,6 +35,60 @@ const globalStyles = `
   /* Add more specific transitions for the Media page */
   .media-page main {
     animation-duration: 0.7s;
+  }
+
+  /* Google Translate Customization */
+  #google_translate_element {
+    display: none !important;
+  }
+  
+  .goog-te-banner-frame {
+    display: none !important;
+  }
+  
+  .goog-te-menu-value {
+    padding: 3px !important;
+  }
+  
+  .goog-te-gadget-simple {
+    background-color: transparent !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    font-size: 10pt !important;
+    line-height: 20px !important;
+    display: inline-block !important;
+    cursor: pointer !important;
+    zoom: 1 !important;
+  }
+  
+  .goog-te-gadget-simple .goog-te-menu-value {
+    font-size: 12px !important;
+    color: #666 !important;
+    text-decoration: none !important;
+  }
+  
+  .goog-te-gadget-simple .goog-te-menu-value:hover {
+    text-decoration: none !important;
+  }
+  
+  .goog-te-gadget-simple .goog-te-menu-value span {
+    color: blue !important;
+  }
+  
+  .goog-te-menu-frame {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Hide Google Translate top frame */
+  .goog-te-ftab {
+    display: none !important;
+  }
+  
+  body {
+    top: 0 !important;
   }
 `;
 
