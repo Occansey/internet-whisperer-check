@@ -3,9 +3,10 @@ import React from 'react';
 
 interface ScreenLoaderProps {
   message?: string;
+  flag?: string;
 }
 
-const ScreenLoader: React.FC<ScreenLoaderProps> = ({ message = "Chargement..." }) => {
+const ScreenLoader: React.FC<ScreenLoaderProps> = ({ message = "Chargement...", flag }) => {
   return (
     <div className="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex items-center justify-center">
       <div className="text-center">
@@ -16,6 +17,11 @@ const ScreenLoader: React.FC<ScreenLoaderProps> = ({ message = "Chargement..." }
             className="w-24 h-24 mx-auto animate-pulse"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-solio-blue via-solio-yellow to-solio-blue bg-[length:200%_100%] animate-[shimmer_2s_ease-in-out_infinite] rounded-full opacity-30"></div>
+          {flag && (
+            <div className="absolute -bottom-2 -right-2 text-2xl animate-bounce">
+              {flag}
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-center space-x-2">
           <div className="w-3 h-3 bg-solio-blue rounded-full animate-bounce [animation-delay:-0.3s]"></div>
