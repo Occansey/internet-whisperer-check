@@ -20,21 +20,13 @@ export const AnimatedCounter = ({
   decimal = 0
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const countRef = useRef<HTMLSpanElement>(null);
   const startTimeRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const isInViewport = (element: HTMLElement): boolean => {
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      );
-    };
-
     const animate = (timestamp: number) => {
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
@@ -43,39 +35,69 @@ export const AnimatedCounter = ({
       const progress = timestamp - startTimeRef.current;
       const percentage = Math.min(progress / duration, 1);
       
-      const currentCount = Math.floor(percentage * end);
+      // Use easing function for smoother animation
+      const easeOutCubic = 1 - Math.pow(1 - percentage, 3);
+      const currentCount = Math.floor(easeOutCubic * end);
       setCount(currentCount);
 
       if (percentage < 1) {
         frameRef.current = requestAnimationFrame(animate);
       } else {
         setCount(end);
+        setHasAnimated(true);
       }
     };
 
-    const handleScroll = () => {
-      if (countRef.current && isInViewport(countRef.current) && !frameRef.current) {
+    const startAnimation = () => {
+      if (!hasAnimated && !frameRef.current) {
+        startTimeRef.current = null;
         frameRef.current = requestAnimationFrame(animate);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on mount
+    // Use Intersection Observer for better performance
+    if (countRef.current && !hasAnimated) {
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startAnimation();
+              // Disconnect observer after animation starts
+              if (observerRef.current) {
+                observerRef.current.disconnect();
+              }
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '50px'
+        }
+      );
+
+      observerRef.current.observe(countRef.current);
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
       }
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
     };
-  }, [end, duration]);
+  }, [end, duration, hasAnimated]);
 
   const formattedCount = decimal > 0
     ? count.toFixed(decimal)
-    : count.toString();
+    : count.toLocaleString();
 
   return (
-    <span ref={countRef} className={cn("font-bold", className)}>
+    <span 
+      ref={countRef} 
+      className={cn("font-bold tabular-nums", className)}
+      suppressHydrationWarning
+    >
       {prefix}{formattedCount}{suffix}
     </span>
   );
