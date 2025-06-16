@@ -25,10 +25,11 @@ export const AnimatedCounter = ({
   const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Start animation immediately when component mounts and becomes visible
+    // Start animation after component is fully mounted and stable
     const startAnimation = () => {
-      if (hasStarted || !countRef.current) return;
+      if (hasStarted || !countRef.current || !end) return;
       
+      console.log(`Starting animation for value: ${end}`);
       setHasStarted(true);
       const startTime = Date.now();
       
@@ -53,13 +54,13 @@ export const AnimatedCounter = ({
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    // Use a simple timeout to start animation after component is mounted
-    // This avoids intersection observer issues with Google Translate
+    // Wait longer to ensure component is fully stable
+    // This gives time for props to be passed down correctly
     const timer = setTimeout(() => {
-      if (countRef.current) {
+      if (countRef.current && end > 0) {
         startAnimation();
       }
-    }, 100);
+    }, 500);
 
     return () => {
       clearTimeout(timer);
