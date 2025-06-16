@@ -1,11 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import GoogleTranslate from '@/components/common/GoogleTranslate';
-import FluidLanguageSelector from '@/components/common/FluidLanguageSelector';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -189,7 +187,6 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <FluidLanguageSelector elementId="fluid_translate_element" />
               <GoogleTranslate elementId="google_translate_element" />
               <ThemeToggle />
               <Link 
@@ -208,7 +205,6 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
-            <FluidLanguageSelector elementId="fluid_translate_element_mobile" isMobile />
             <GoogleTranslate elementId="google_translate_element_mobile" isMobile />
             <ThemeToggle />
             <Button

@@ -17,6 +17,7 @@ interface GoogleTranslateProps {
 const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scriptLoaded = useRef(false);
+  const [isDebugging, setIsDebugging] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('fr');
 
@@ -245,6 +246,21 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
         className="translate-widget hidden"
         style={{ display: 'none' }}
       />
+
+      {/* Debug info - only show if debugging is enabled */}
+      {isDebugging && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white p-2 rounded text-xs max-w-xs z-50">
+          <div><strong>DEBUG MODE</strong></div>
+          <div>Current: {currentLang.name}</div>
+          <div>Dropdown: {isDropdownOpen ? 'Open' : 'Closed'}</div>
+          <button 
+            onClick={() => setIsDebugging(false)}
+            className="mt-1 bg-red-700 px-2 py-1 rounded text-xs"
+          >
+            Hide Debug
+          </button>
+        </div>
+      )}
     </div>
   );
 };
