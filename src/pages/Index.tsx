@@ -1,182 +1,78 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solio Group | Transition énergétique et transformation digitale</title>
-    <meta name="description" content="Solio Group - Un groupe multidisciplinaire dédié à l'accompagnement des entreprises dans leurs projets de transition énergétique et transformation digitale." />
-    <meta name="author" content="Solio Group" />
-    <meta name="keywords" content="solio, transition énergétique, transformation digitale, projets solaires, afrique, europe, amérique du nord" />
 
-    <!-- SEO meta tags -->
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="language" content="French" />
-    <meta name="geo.region" content="FR" />
-    <meta name="geo.country" content="France" />
-    <meta name="distribution" content="global" />
-    <meta name="rating" content="general" />
+import Layout from "@/components/layout/Layout";
+import Hero from "@/components/home/Hero";
+import MissionVisionSection from "@/components/home/MissionVisionSection";
+import ActivitesSection from "@/components/home/ActivitesSection";
+import FilialesSection from "@/components/home/FilialesSection";
+import { Helmet } from "react-helmet-async";
+import SEOStructuredData from "@/components/seo/SEOStructuredData";
 
-    <link rel="icon" href="/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png" type="image/png">
-    <link rel="apple-touch-icon" href="/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://solio-group.com/" />
-    <meta property="og:title" content="Solio Group | Transition énergétique et transformation digitale" />
-    <meta property="og:description" content="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale." />
-    <meta property="og:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Solio Group" />
-    <meta property="og:locale" content="fr_FR" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@solio_group" />
-    <meta name="twitter:title" content="Solio Group | Transition énergétique et transformation digitale" />
-    <meta name="twitter:description" content="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale." />
-    <meta name="twitter:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://solio-group.com/" />
-
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://api.solio-group.com" />
-    <link rel="preconnect" href="https://www.youtube.com" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-
-    <!-- Structured data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Solio Group",
-        "url": "https://solio-group.com",
-        "logo": "https://solio-group.com/lovable-uploads/8e8c75ad-cfde-4c2f-9783-b70c112a201e.png",
-        "description": "Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale.",
-        "foundingDate": "2019",
-        "numberOfEmployees": "50-100",
-        "industry": "Transition énergétique et transformation digitale",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "4 Rue De Longchamp",
-          "addressLocality": "Paris",
-          "postalCode": "75016",
-          "addressCountry": "FR"
-        },
-        "contactPoint": [{
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "email": "contact@solio-group.com",
-          "availableLanguage": ["French", "English"]
-        }],
-        "sameAs": [
-          "https://www.linkedin.com/company/solio-group",
-          "https://twitter.com/soliogroup"
-        ],
-        "areaServed": [
-          {"@type": "Country", "name": "France"},
-          {"@type": "Country", "name": "Canada"},
-          {"@type": "Country", "name": "Kenya"}
-        ],
-        "makesOffer": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Transition énergétique",
-              "description": "Solutions d'infrastructure énergétique décarbonée"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Transformation digitale",
-              "description": "Modernisation des systèmes d'information et automatisation"
-            }
+const Index = () => {
+  return (
+    <Layout>
+      <Helmet>
+        <title>Solio Group | Transition énergétique et transformation digitale</title>
+        <meta name="description" content="Solio Group accompagne les entreprises dans leur transition énergétique et transformation digitale avec des solutions durables en Afrique, Europe et Amérique du Nord." />
+        <meta name="keywords" content="transition énergétique, transformation digitale, énergie solaire, digitalisation, Afrique, développement durable, solutions durables, décarbonation, mobilité électrique" />
+        <link rel="canonical" href="https://solio-group.com/" />
+        
+        {/* Enhanced Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://solio-group.com/" />
+        <meta property="og:title" content="Solio Group | Leader en transition énergétique et digitale" />
+        <meta property="og:description" content="15M$ d'investissements, 30+ projets solaires, 37000 vies transformées. Découvrez comment Solio Group révolutionne l'énergie et le digital." />
+        <meta property="og:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="Solio Group" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@solio_group" />
+        <meta name="twitter:title" content="Solio Group | Solutions énergétiques et digitales innovantes" />
+        <meta name="twitter:description" content="Découvrez nos solutions pour la transition énergétique et la transformation digitale des entreprises et industries." />
+        <meta name="twitter:image" content="https://solio-group.com/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" />
+        
+        {/* Additional SEO tags */}
+        <meta name="geo.placename" content="Paris, France" />
+        <meta name="geo.position" content="48.8566;2.3522" />
+        <meta name="ICBM" content="48.8566, 2.3522" />
+      </Helmet>
+      
+      {/* Structured data using the component */}
+      <SEOStructuredData 
+        type="webpage" 
+        data={{
+          "name": "Accueil - Solio Group",
+          "description": "Page d'accueil de Solio Group, leader en transition énergétique et transformation digitale",
+          "url": "https://solio-group.com/",
+          "datePublished": "2025-05-23",
+          "dateModified": "2025-05-23",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Solio Group",
+            "description": "Groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale"
           }
-        ]
-      }
-    </script>
+        }}
+      />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Solio Group",
-        "url": "https://solio-group.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://solio-group.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
+      <Hero />
+      
+      <div className="py-12 bg-white">
+        <div className="container">
+          <header>
+            <h1 className="text-3xl font-bold mb-6 text-solio-blue">Présentation du Groupe Solio</h1>
+            <p className="text-lg text-gray-700 max-w-4xl">
+              Solio Group est un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale. Nous concevons et mettons en œuvre des solutions durables, adaptées aux besoins opérationnels de nos clients, en alliant expertise technologique, engagement sociétal et performance économique.
+            </p>
+          </header>
+        </div>
+      </div>
+      
+      <MissionVisionSection />
+      <ActivitesSection />
+      <FilialesSection />
+    </Layout>
+  );
+};
 
-    <style>
-      /* GTranslate Styling */
-      #gtranslate_container {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 9999;
-      }
-      #gtranslate_container select {
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        background: #fff;
-        cursor: pointer;
-      }
-
-      /* Hide Google bar */
-      .goog-te-banner-frame.skiptranslate,
-      body > .skiptranslate {
-        display: none !important;
-      }
-      body {
-        top: 0px !important;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div id="gtranslate_container">
-      <select onchange="doGTranslate(this);">
-        <option value="">🌐 Language</option>
-        <option value="fr|en">🇬🇧 English</option>
-        <option value="fr|fr">🇫🇷 Français</option>
-      </select>
-    </div>
-
-    <div id="root"></div>
-
-    <!-- GTranslate Script -->
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'fr',
-          includedLanguages: 'en,fr',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-      }
-
-      function doGTranslate(langPair) {
-        if (langPair === '') return;
-        const lang = langPair.split('|')[1];
-        const combo = document.querySelector('.goog-te-combo');
-        if (combo) {
-          combo.value = lang;
-          combo.dispatchEvent(new Event('change'));
-        }
-      }
-    </script>
-
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+export default Index;
