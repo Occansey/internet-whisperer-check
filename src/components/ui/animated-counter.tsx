@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimatedCounterProps {
@@ -20,20 +20,13 @@ export const AnimatedCounter = ({
   decimal = 0
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const countRef = useRef<HTMLSpanElement>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
-    const element = countRef.current;
-    if (!element || hasAnimated) return;
-
-    const startAnimation = () => {
-      if (hasAnimated) return;
-      
-      console.log(`Starting animation for counter: ${end}`);
-      setHasAnimated(true);
+    // Start animation immediately when component mounts
+    if (!hasStarted && end > 0) {
+      setHasStarted(true);
+      console.log(`Starting counter animation for: ${end}`);
       
       const startTime = Date.now();
       
@@ -48,57 +41,19 @@ export const AnimatedCounter = ({
         setCount(currentCount);
         
         if (progress < 1) {
-          animationFrameRef.current = requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
         } else {
           setCount(end);
-          console.log(`Animation completed for counter: ${end}`);
+          console.log(`Counter animation completed for: ${end}`);
         }
       };
       
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    // Create intersection observer with more aggressive settings
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          console.log(`Counter ${end} intersection ratio:`, entry.intersectionRatio);
-          if (entry.intersectionRatio > 0 && !hasAnimated) {
-            // Add a small delay to ensure DOM is stable
-            setTimeout(startAnimation, 100);
-            // Disconnect observer after triggering
-            if (observerRef.current) {
-              observerRef.current.disconnect();
-            }
-          }
-        });
-      },
-      {
-        threshold: [0, 0.1, 0.5],
-        rootMargin: '100px 0px'
-      }
-    );
-
-    observerRef.current.observe(element);
-
-    // Fallback: trigger animation after 2 seconds if intersection observer fails
-    const fallbackTimer = setTimeout(() => {
-      if (!hasAnimated) {
-        console.log(`Fallback animation triggered for counter: ${end}`);
-        startAnimation();
-      }
-    }, 2000);
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      clearTimeout(fallbackTimer);
-    };
-  }, [end, duration, hasAnimated]);
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        requestAnimationFrame(animate);
+      }, 500);
+    }
+  }, [end, duration, hasStarted]);
 
   const formattedCount = decimal > 0
     ? count.toFixed(decimal)
@@ -106,7 +61,6 @@ export const AnimatedCounter = ({
 
   return (
     <span 
-      ref={countRef} 
       className={cn("font-bold tabular-nums", className)}
       suppressHydrationWarning
     >
