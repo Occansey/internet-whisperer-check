@@ -69,8 +69,8 @@ const GoogleTranslate: React.FC = () => {
 
       // Force translation to selected language
       setTimeout(() => {
-        const iframe = document.querySelector('iframe.goog-te-menu-frame');
-        if (iframe) {
+        const iframe = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
+        if (iframe && iframe.contentDocument) {
           const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
           const langLink = iframeDoc?.querySelector(`a[data-value="${langCode}"]`);
           if (langLink) {
