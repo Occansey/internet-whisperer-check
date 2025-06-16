@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimatedCounterProps {
@@ -20,50 +20,62 @@ export const AnimatedCounter = ({
   decimal = 0
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
+  const countRef = useRef<HTMLSpanElement>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Start animation immediately when component mounts
-    if (!hasStarted && end > 0) {
-      setHasStarted(true);
-      console.log(`Starting counter animation for: ${end}`);
+    const isInViewport = (element: HTMLElement): boolean => {
+      const rect = element.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    };
+
+    const animate = (timestamp: number) => {
+      if (!startTimeRef.current) {
+        startTimeRef.current = timestamp;
+      }
+
+      const progress = timestamp - startTimeRef.current;
+      const percentage = Math.min(progress / duration, 1);
       
-      const startTime = Date.now();
-      
-      const animate = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Easing function for smooth animation
-        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-        const currentCount = Math.floor(easeOutCubic * end);
-        
-        setCount(currentCount);
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          setCount(end);
-          console.log(`Counter animation completed for: ${end}`);
-        }
-      };
-      
-      // Small delay to ensure DOM is ready
-      setTimeout(() => {
-        requestAnimationFrame(animate);
-      }, 500);
-    }
-  }, [end, duration, hasStarted]);
+      const currentCount = Math.floor(percentage * end);
+      setCount(currentCount);
+
+      if (percentage < 1) {
+        frameRef.current = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    const handleScroll = () => {
+      if (countRef.current && isInViewport(countRef.current) && !frameRef.current) {
+        frameRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check on mount
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, [end, duration]);
 
   const formattedCount = decimal > 0
     ? count.toFixed(decimal)
-    : count.toLocaleString();
+    : count.toString();
 
   return (
-    <span 
-      className={cn("font-bold tabular-nums", className)}
-      suppressHydrationWarning
-    >
+    <span ref={countRef} className={cn("font-bold", className)}>
       {prefix}{formattedCount}{suffix}
     </span>
   );

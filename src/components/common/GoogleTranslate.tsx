@@ -1,6 +1,6 @@
+
 import { useEffect, useRef, useState } from "react";
 import { Globe, ChevronDown } from "lucide-react";
-import ScreenLoader from "@/components/ui/screen-loader";
 
 declare global {
   interface Window {
@@ -17,9 +17,9 @@ interface GoogleTranslateProps {
 const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scriptLoaded = useRef(false);
+  const [isDebugging, setIsDebugging] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('fr');
-  const [isTranslating, setIsTranslating] = useState(false);
 
   const languages = [
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -38,7 +38,6 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
   const forceLanguageChange = (langCode: string) => {
     console.log(`🔄 FORCING language change to: ${langCode}`);
     setCurrentLanguage(langCode);
-    setIsTranslating(true);
     
     // Method 1: Try to find and trigger the Google Translate select directly
     const element = document.getElementById(elementId);
@@ -53,7 +52,6 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
           select.value = langCode;
           select.dispatchEvent(new Event('change', { bubbles: true }));
           console.log(`✅ Successfully triggered change on select ${index}`);
-          setTimeout(() => setIsTranslating(false), 2000);
           return;
         }
       });
@@ -72,7 +70,6 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
           select.dispatchEvent(new Event('change', { bubbles: true }));
           select.dispatchEvent(new Event('input', { bubbles: true }));
           console.log(`✅ Successfully triggered change on GT select ${index}`);
-          setTimeout(() => setIsTranslating(false), 2000);
         }
       }
     });
@@ -202,63 +199,69 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
   const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
 
   return (
-    <>
-      {isTranslating && (
-        <ScreenLoader 
-          message="Changement de langue..." 
-          flag={currentLang.flag}
-        />
-      )}
-      
-      <div className="relative flex items-center" ref={containerRef}>
-        {/* Clickable Globe Button */}
-        <button
-          onClick={toggleDropdown}
-          className="flex items-center space-x-1 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          aria-label="Changer de langue"
-        >
-          <Globe className={`${isMobile ? 'h-4 w-4' : 'h-4 w-4'} text-gray-600 dark:text-gray-400`} />
-          {!isMobile && (
-            <>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {currentLang.flag}
-              </span>
-              <ChevronDown className={`h-3 w-3 text-gray-600 dark:text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
-            </>
-          )}
-        </button>
-
-        {/* Language Dropdown */}
-        {isDropdownOpen && (
-          <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-            <div className="py-1" role="menu" aria-orientation="vertical">
-              {languages.map((language) => (
-                <button
-                  key={language.code}
-                  onClick={() => handleLanguageSelect(language.code)}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center space-x-2 ${
-                    currentLanguage === language.code 
-                      ? 'bg-solio-blue/10 text-solio-blue dark:bg-solio-yellow/10 dark:text-solio-yellow' 
-                      : 'text-gray-700 dark:text-gray-300'
-                  }`}
-                  role="menuitem"
-                >
-                  <span>{language.flag}</span>
-                  <span>{language.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+    <div className="relative flex items-center" ref={containerRef}>
+      {/* Clickable Globe Button */}
+      <button
+        onClick={toggleDropdown}
+        className="flex items-center space-x-1 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        aria-label="Changer de langue"
+      >
+        <Globe className={`${isMobile ? 'h-4 w-4' : 'h-4 w-4'} text-gray-600 dark:text-gray-400`} />
+        {!isMobile && (
+          <>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {currentLang.flag}
+            </span>
+            <ChevronDown className={`h-3 w-3 text-gray-600 dark:text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          </>
         )}
+      </button>
 
-        {/* Hidden Google Translate Widget */}
-        <div 
-          id={elementId} 
-          className="translate-widget hidden"
-          style={{ display: 'none' }}
-        />
-      </div>
-    </>
+      {/* Language Dropdown */}
+      {isDropdownOpen && (
+        <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+          <div className="py-1" role="menu" aria-orientation="vertical">
+            {languages.map((language) => (
+              <button
+                key={language.code}
+                onClick={() => handleLanguageSelect(language.code)}
+                className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center space-x-2 ${
+                  currentLanguage === language.code 
+                    ? 'bg-solio-blue/10 text-solio-blue dark:bg-solio-yellow/10 dark:text-solio-yellow' 
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}
+                role="menuitem"
+              >
+                <span>{language.flag}</span>
+                <span>{language.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Hidden Google Translate Widget */}
+      <div 
+        id={elementId} 
+        className="translate-widget hidden"
+        style={{ display: 'none' }}
+      />
+
+      {/* Debug info - only show if debugging is enabled */}
+      {isDebugging && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white p-2 rounded text-xs max-w-xs z-50">
+          <div><strong>DEBUG MODE</strong></div>
+          <div>Current: {currentLang.name}</div>
+          <div>Dropdown: {isDropdownOpen ? 'Open' : 'Closed'}</div>
+          <button 
+            onClick={() => setIsDebugging(false)}
+            className="mt-1 bg-red-700 px-2 py-1 rounded text-xs"
+          >
+            Hide Debug
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
