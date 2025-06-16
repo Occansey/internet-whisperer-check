@@ -222,8 +222,93 @@
     to { opacity: 0; }
   }
 }
-#google_translate_element * {
+
+/* Google Translate Widget Enhanced Styling */
+.translate-widget * {
   pointer-events: auto !important;
   cursor: pointer !important;
   z-index: 10000 !important;
+}
+
+.translate-widget .goog-te-combo {
+  font-size: 12px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  background: white !important;
+  color: #374151 !important;
+  cursor: pointer !important;
+  min-width: 80px !important;
+  height: auto !important;
+  line-height: normal !important;
+}
+
+.dark .translate-widget .goog-te-combo {
+  background: #374151 !important;
+  color: #f3f4f6 !important;
+  border-color: #4b5563 !important;
+}
+
+.translate-widget .goog-te-gadget {
+  font-family: inherit !important;
+  font-size: 12px !important;
+  line-height: normal !important;
+}
+
+.translate-widget .goog-te-gadget .goog-te-combo {
+  margin: 0 !important;
+  vertical-align: top !important;
+}
+
+.goog-te-gadget-simple {
+  background: transparent !important;
+  border: none !important;
+  font-size: 12px !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value {
+  color: inherit !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  color: inherit !important;
+}
+
+/* Hide Google Translate banner and branding */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value:before {
+  content: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+/* Ensure Google Translate dropdown is visible and clickable */
+.goog-te-combo {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+}
+
+/* Fix for dropdown options */
+.goog-te-combo option {
+  background: white !important;
+  color: #374151 !important;
+}
+
+.dark .goog-te-combo option {
+  background: #374151 !important;
+  color: #f3f4f6 !important;
 }

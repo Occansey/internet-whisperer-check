@@ -1,9 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
+import GoogleTranslate from '@/components/common/GoogleTranslate';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,52 +51,6 @@ const Header = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
-
-  // Initialize Google Translate
-  useEffect(() => {
-    const initializeGoogleTranslate = () => {
-      if (window.google?.translate?.TranslateElement) {
-        // Clear existing widgets first
-        const desktopElement = document.getElementById('google_translate_element');
-        const mobileElement = document.getElementById('google_translate_element_mobile');
-        
-        if (desktopElement) {
-          desktopElement.innerHTML = '';
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'fr',
-            includedLanguages: 'en,fr,es,de,it,pt,ar',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element');
-        }
-
-        if (mobileElement) {
-          mobileElement.innerHTML = '';
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'fr',
-            includedLanguages: 'en,fr,es,de,it,pt,ar',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          }, 'google_translate_element_mobile');
-        }
-      }
-    };
-
-    // Check if Google Translate is already loaded
-    if (window.google?.translate?.TranslateElement) {
-      initializeGoogleTranslate();
-    } else {
-      // Wait for the script to load and then initialize
-      const checkGoogleTranslate = () => {
-        if (window.google?.translate?.TranslateElement) {
-          initializeGoogleTranslate();
-        } else {
-          setTimeout(checkGoogleTranslate, 100);
-        }
-      };
-      checkGoogleTranslate();
-    }
   }, []);
 
   return (
@@ -233,12 +187,7 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              {/* Google Translate Widget */}
-              <div className="flex items-center">
-                <Globe className="h-4 w-4 mr-2 text-gray-600 dark:text-gray-400" />
-                <div id="google_translate_element" className="translate-widget"></div>
-              </div>
-              
+              <GoogleTranslate elementId="google_translate_element" />
               <ThemeToggle />
               <Link 
                 to="/contact"
@@ -256,10 +205,7 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
-            <div className="flex items-center">
-              <Globe className="h-4 w-4 mr-1 text-gray-600 dark:text-gray-400" />
-              <div id="google_translate_element_mobile" className="translate-widget-mobile"></div>
-            </div>
+            <GoogleTranslate elementId="google_translate_element_mobile" isMobile />
             <ThemeToggle />
             <Button
               variant="ghost"
