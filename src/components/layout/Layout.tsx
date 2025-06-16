@@ -88,6 +88,31 @@ const globalStyles = `
     display: none !important;
   }
   
+  /* Hide Google Translate banner toolbar completely */
+  .VIpgJd-ZVi9od-ORHb-OEVmcd {
+    display: none !important;
+  }
+  
+  /* Hide all Google Translate banner elements */
+  iframe.goog-te-banner-frame {
+    display: none !important;
+  }
+  
+  /* Hide the entire Google Translate banner */
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+  
+  /* Additional selector to hide the banner */
+  body > .skiptranslate > iframe {
+    display: none !important;
+  }
+  
+  /* Hide any Google Translate banner content */
+  .skiptranslate {
+    display: none !important;
+  }
+  
   body {
     top: 0 !important;
   }
