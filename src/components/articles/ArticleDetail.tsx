@@ -27,21 +27,6 @@ const staticArticles = [
   }
 ];
 
-// Enhanced function to always pick the largest image available in gallery items
-const getLargestImageUrl = (item: any): string | null => {
-  if (typeof item === 'string') {
-    return item;
-  }
-  if (item?.full_image_url) return item.full_image_url;
-  if (item?.media_details?.sizes?.full?.source_url) return item.media_details.sizes.full.source_url;
-  if (item?.source_url) return item.source_url;
-  if (item?.media_details?.sizes?.large?.source_url) return item.media_details.sizes.large.source_url;
-  if (item?.media_details?.sizes?.medium_large?.source_url) return item.media_details.sizes.medium_large.source_url;
-  if (item?.media_details?.sizes?.medium?.source_url) return item.media_details.sizes.medium.source_url;
-  if (item?.media_details?.sizes?.thumbnail?.source_url) return item.media_details.sizes.thumbnail.source_url;
-  return null;
-};
-
 // Helper function to extract gallery images from WordPress ACF data
 const extractGalleryImages = (wpCommunique: any): string[] => {
   const images: string[] = [];
@@ -49,8 +34,15 @@ const extractGalleryImages = (wpCommunique: any): string[] => {
   // Check ACF gallery field
   if (wpCommunique.acf?.gallery && Array.isArray(wpCommunique.acf.gallery)) {
     wpCommunique.acf.gallery.forEach((item: any) => {
-      const url = getLargestImageUrl(item);
-      if (url) images.push(url);
+      if (typeof item === 'string') {
+        images.push(item);
+      } else if (item?.full_image_url) {
+        images.push(item.full_image_url);
+      } else if (item?.source_url) {
+        images.push(item.source_url);
+      } else if (item?.media_details?.sizes?.large?.source_url) {
+        images.push(item.media_details.sizes.large.source_url);
+      }
     });
   }
   
@@ -59,8 +51,15 @@ const extractGalleryImages = (wpCommunique: any): string[] => {
     wpCommunique.acf.photo_gallery.gallery.forEach((galleryGroup: any) => {
       if (Array.isArray(galleryGroup)) {
         galleryGroup.forEach((item: any) => {
-          const url = getLargestImageUrl(item);
-          if (url) images.push(url);
+          if (typeof item === 'string') {
+            images.push(item);
+          } else if (item?.full_image_url) {
+            images.push(item.full_image_url);
+          } else if (item?.source_url) {
+            images.push(item.source_url);
+          } else if (item?.media_details?.sizes?.large?.source_url) {
+            images.push(item.media_details.sizes.large.source_url);
+          }
         });
       }
     });

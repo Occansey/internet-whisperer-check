@@ -22,37 +22,12 @@ const CommuniqueCard: React.FC<CommuniqueCardProps> = ({ article }) => {
   const [isNavigating, setIsNavigating] = useState(false);
 
   const formatFrenchDate = (dateStr: string): string => {
-    if (!dateStr || dateStr === 'Invalid Date') {
-      return 'Date non disponible';
-    }
-
     const months = [
       'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
       'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
     ];
     
-    // Handle DD/MM/YYYY format
-    if (dateStr.includes('/')) {
-      const parts = dateStr.split('/');
-      if (parts.length === 3) {
-        const [day, month, year] = parts;
-        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        
-        if (isNaN(date.getTime())) {
-          return 'Date non disponible';
-        }
-        
-        return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-      }
-    }
-    
-    // Handle ISO format or other standard formats
     const date = new Date(dateStr);
-    
-    if (isNaN(date.getTime())) {
-      return 'Date non disponible';
-    }
-    
     const day = date.getDate();
     const month = months[date.getMonth()];
     const year = date.getFullYear();

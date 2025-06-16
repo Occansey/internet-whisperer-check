@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,19 +10,19 @@ const MissionVision = () => {
       title: "Accélérer la transition énergétique",
       description: "Favoriser la réduction des émissions de carbone en déployant des solutions énergétiques renouvelables et en accompagnant les entreprises dans leur transition.",
       icon: <Globe className="h-8 w-8 text-solio-blue" />,
-      color: "bg-green-50 dark:bg-green-900"
+      color: "bg-green-50"
     },
     {
       title: "Soutenir la transformation digitale",
       description: "Accompagner les organisations dans leur métamorphose numérique pour optimiser leurs opérations et créer de nouveaux modèles d'affaires.",
       icon: <BarChart className="h-8 w-8 text-solio-blue" />,
-      color: "bg-blue-50 dark:bg-blue-900"
+      color: "bg-blue-50"
     },
     {
       title: "Construire un écosystème durable",
       description: "Développer des partenariats stratégiques et des solutions intégrées qui génèrent de la valeur à long terme pour l'ensemble des parties prenantes.",
       icon: <Trophy className="h-8 w-8 text-solio-blue" />,
-      color: "bg-yellow-50 dark:bg-yellow-900"
+      color: "bg-yellow-50"
     }
   ];
 
@@ -33,7 +34,7 @@ const MissionVision = () => {
         glowColor="green"
       />
 
-      <div className="py-16 bg-white dark:bg-gray-950">
+      <div className="py-16 bg-white">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
@@ -79,11 +80,11 @@ const MissionVision = () => {
               {objectives.map((objective, index) => (
                 <Card key={index} className={`border-none shadow-md ${objective.color}`}>
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-white dark:bg-gray-800 shadow-sm mx-auto mb-4">
+                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-white shadow-sm mx-auto mb-4">
                       {objective.icon}
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 text-center dark:text-white">{objective.title}</h3>
-                    <p className="text-gray-700 text-center dark:text-gray-200">{objective.description}</p>
+                    <h3 className="text-xl font-semibold mb-3 text-center">{objective.title}</h3>
+                    <p className="text-gray-700 text-center">{objective.description}</p>
                   </CardContent>
                 </Card>
               ))}
