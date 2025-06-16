@@ -19,6 +19,28 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
   const scriptLoaded = useRef(false);
   const [isDebugging, setIsDebugging] = useState(true);
   const [initAttempts, setInitAttempts] = useState(0);
+  const [widgetStructure, setWidgetStructure] = useState<string>('');
+
+  const debugWidgetStructure = (element: HTMLElement) => {
+    console.log('🔍 Full widget HTML structure:', element.innerHTML);
+    
+    // Look for all possible Google Translate elements
+    const allSelects = element.querySelectorAll('select');
+    const allSpans = element.querySelectorAll('span');
+    const allDivs = element.querySelectorAll('div');
+    
+    console.log('🔍 Found selects:', allSelects.length, allSelects);
+    console.log('🔍 Found spans:', allSpans.length, allSpans);
+    console.log('🔍 Found divs:', allDivs.length, allDivs);
+    
+    // Check for any clickable elements
+    const clickableElements = element.querySelectorAll('[onclick], [role="button"], [role="listbox"], .goog-te-menu-value');
+    console.log('🔍 Found clickable elements:', clickableElements.length, clickableElements);
+    
+    setWidgetStructure(element.innerHTML);
+    
+    return { allSelects, allSpans, allDivs, clickableElements };
+  };
 
   const initializeTranslate = () => {
     console.log(`🔄 Attempting to initialize Google Translate for ${elementId} (attempt ${initAttempts + 1})`);
@@ -35,34 +57,76 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
             pageLanguage: 'fr',
             includedLanguages: 'en,fr,es,de,it,pt,ar',
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
+            autoDisplay: false,
+            multilanguagePage: true
           }, elementId);
           
           console.log(`✅ Google Translate initialized successfully for ${elementId}`);
           
-          // Add click debugging after a delay
+          // Enhanced debugging after initialization
           setTimeout(() => {
+            console.log('🔍 Starting enhanced widget debugging...');
+            const { allSelects, clickableElements } = debugWidgetStructure(element);
+            
+            // Try to find the actual dropdown
             const widget = element.querySelector('.goog-te-combo') as HTMLSelectElement;
-            if (widget) {
-              console.log(`🎯 Widget found:`, widget);
-              console.log(`🎯 Widget styles:`, window.getComputedStyle(widget));
-              console.log(`🎯 Widget pointer-events:`, window.getComputedStyle(widget).pointerEvents);
-              console.log(`🎯 Widget z-index:`, window.getComputedStyle(widget).zIndex);
-              
-              // Force click handler
-              widget.addEventListener('click', (e) => {
-                console.log('🖱️ Direct click detected on widget!', e);
+            const menuValue = element.querySelector('.goog-te-menu-value') as HTMLElement;
+            const gadget = element.querySelector('.goog-te-gadget-simple') as HTMLElement;
+            
+            console.log('🎯 Traditional widget (.goog-te-combo):', widget);
+            console.log('🎯 Menu value (.goog-te-menu-value):', menuValue);
+            console.log('🎯 Gadget (.goog-te-gadget-simple):', gadget);
+            
+            // If we found a select element, make it work
+            if (allSelects.length > 0) {
+              console.log('✅ Found select element(s), setting up click handlers');
+              allSelects.forEach((select, index) => {
+                console.log(`🎯 Select ${index}:`, select);
+                select.style.border = '2px solid red';
+                select.style.background = 'yellow';
+                select.style.pointerEvents = 'auto';
+                select.style.cursor = 'pointer';
+                select.style.zIndex = '999999';
+                select.style.position = 'relative';
+                
+                select.addEventListener('change', (e) => {
+                  console.log('🌍 Language changed via select!', e.target);
+                  console.log('🌍 Selected value:', (e.target as HTMLSelectElement).value);
+                });
+                
+                select.addEventListener('click', (e) => {
+                  console.log('🖱️ Select clicked!', e.target);
+                });
               });
-              
-              // Test if widget is actually clickable
-              widget.style.border = '2px solid red';
-              widget.style.background = 'yellow';
-              widget.style.pointerEvents = 'auto';
-              widget.style.cursor = 'pointer';
-              widget.style.zIndex = '999999';
-            } else {
-              console.log('❌ Widget not found in DOM');
             }
+            
+            // Also try with menu value approach
+            if (menuValue) {
+              console.log('✅ Found menu value, setting up click handler');
+              menuValue.style.border = '2px solid blue';
+              menuValue.style.background = 'lightblue';
+              menuValue.style.cursor = 'pointer';
+              
+              menuValue.addEventListener('click', (e) => {
+                console.log('🖱️ Menu value clicked!', e.target);
+                // Try to trigger the dropdown
+                const event = new MouseEvent('mousedown', { bubbles: true });
+                menuValue.dispatchEvent(event);
+              });
+            }
+            
+            // Set up a mutation observer to catch dynamic changes
+            const observer = new MutationObserver((mutations) => {
+              mutations.forEach((mutation) => {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                  console.log('🔄 DOM mutation detected, re-scanning for widgets');
+                  setTimeout(() => debugWidgetStructure(element), 100);
+                }
+              });
+            });
+            
+            observer.observe(element, { childList: true, subtree: true });
+            
           }, 1000);
           
         } catch (error) {
@@ -79,15 +143,26 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
     }
   };
 
-  // Alternative approach: Manual language selector
+  // Manual language selector as fallback
   const handleManualLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = event.target.value;
     console.log('🌍 Manual language change to:', lang);
     
-    // Try to trigger Google Translate programmatically
-    if (window.google?.translate) {
-      // This is a simplified approach - in production you'd need more complex logic
-      console.log('Attempting to change language to:', lang);
+    // Try to find and trigger the actual Google Translate dropdown
+    const element = document.getElementById(elementId);
+    if (element) {
+      const select = element.querySelector('select') as HTMLSelectElement;
+      if (select) {
+        console.log('🎯 Found Google Translate select, setting value:', lang);
+        select.value = lang;
+        
+        // Trigger change event
+        const changeEvent = new Event('change', { bubbles: true });
+        select.dispatchEvent(changeEvent);
+        
+        // Also try click
+        select.click();
+      }
     }
   };
 
@@ -144,16 +219,26 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
   const handleContainerClick = (event: React.MouseEvent) => {
     console.log('🖱️ Container clicked!', event);
     
-    // Try to find and click the actual Google Translate select
-    const widget = document.querySelector(`#${elementId} .goog-te-combo`) as HTMLSelectElement;
-    if (widget) {
-      console.log('🎯 Found widget, attempting to focus and click');
-      widget.focus();
-      widget.click();
+    const element = document.getElementById(elementId);
+    if (element) {
+      // Try multiple approaches to find and interact with the widget
+      const select = element.querySelector('select') as HTMLSelectElement;
+      const menuValue = element.querySelector('.goog-te-menu-value') as HTMLElement;
+      const gadget = element.querySelector('.goog-te-gadget-simple') as HTMLElement;
       
-      // Also try to trigger change event
-      const changeEvent = new Event('change', { bubbles: true });
-      widget.dispatchEvent(changeEvent);
+      if (select) {
+        console.log('🎯 Found select, attempting to focus and click');
+        select.focus();
+        select.click();
+      } else if (menuValue) {
+        console.log('🎯 Found menu value, attempting to click');
+        menuValue.click();
+      } else if (gadget) {
+        console.log('🎯 Found gadget, attempting to click');
+        gadget.click();
+      } else {
+        console.log('❌ No interactive elements found');
+      }
     }
   };
 
@@ -161,8 +246,17 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
     <div className="flex items-center space-x-2">
       {/* Debug info */}
       {isDebugging && (
-        <div className="text-xs text-red-500">
-          Debug: {initAttempts} attempts
+        <div className="text-xs text-red-500 max-w-xs">
+          <div>Attempts: {initAttempts}</div>
+          <div>Element: {elementId}</div>
+          {widgetStructure && (
+            <details className="mt-1">
+              <summary className="cursor-pointer">Widget HTML</summary>
+              <div className="text-xs bg-gray-100 p-1 rounded mt-1 max-h-20 overflow-auto">
+                {widgetStructure.substring(0, 200)}...
+              </div>
+            </details>
+          )}
         </div>
       )}
       
@@ -173,8 +267,9 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
         onClick={handleContainerClick}
         style={{ 
           minWidth: isMobile ? '60px' : '80px',
-          border: isDebugging ? '1px dashed blue' : 'none',
-          background: isDebugging ? 'rgba(0,0,255,0.1)' : 'transparent'
+          border: isDebugging ? '2px dashed blue' : 'none',
+          background: isDebugging ? 'rgba(0,0,255,0.1)' : 'transparent',
+          padding: '4px'
         }}
       >
         <Globe className={`${isMobile ? 'h-4 w-4 mr-1' : 'h-4 w-4 mr-2'} text-gray-600 dark:text-gray-400`} />
@@ -185,35 +280,40 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
             cursor: 'pointer',
             pointerEvents: 'auto',
             zIndex: 10000,
-            border: isDebugging ? '1px solid red' : 'none'
+            border: isDebugging ? '2px solid red' : 'none',
+            minHeight: '20px',
+            minWidth: '60px'
           }}
         />
       </div>
       
-      {/* Fallback manual selector for debugging */}
+      {/* Enhanced fallback manual selector */}
       {isDebugging && (
-        <select 
-          onChange={handleManualLanguageChange}
-          className="text-xs border rounded px-1 py-1"
-          style={{ fontSize: '10px' }}
-        >
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="de">DE</option>
-          <option value="it">IT</option>
-          <option value="pt">PT</option>
-          <option value="ar">AR</option>
-        </select>
+        <div className="flex flex-col space-y-1">
+          <select 
+            onChange={handleManualLanguageChange}
+            className="text-xs border rounded px-1 py-1"
+            style={{ fontSize: '10px' }}
+            title="Manual language selector (fallback)"
+          >
+            <option value="">Select Language</option>
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="ar">العربية</option>
+          </select>
+          
+          <button 
+            onClick={() => setIsDebugging(!isDebugging)}
+            className="text-xs bg-gray-200 px-1 rounded"
+          >
+            {isDebugging ? 'Hide Debug' : 'Show Debug'}
+          </button>
+        </div>
       )}
-      
-      {/* Toggle debug mode */}
-      <button 
-        onClick={() => setIsDebugging(!isDebugging)}
-        className="text-xs bg-gray-200 px-1 rounded"
-      >
-        {isDebugging ? 'Hide Debug' : 'Debug'}
-      </button>
     </div>
   );
 };
