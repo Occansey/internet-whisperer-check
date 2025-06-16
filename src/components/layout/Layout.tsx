@@ -108,17 +108,22 @@ const Layout = ({ children }: LayoutProps) => {
 
   // Initialize Google Translate for mobile element
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (window.google && window.google.translate) {
-        new window.google.translate.TranslateElement({
-          pageLanguage: 'fr',
-          includedLanguages: 'en,fr,es,de,it,pt,ar',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
-        }, 'google_translate_element_mobile');
+    const initializeTranslate = () => {
+      if (typeof window !== 'undefined' && window.google?.translate?.TranslateElement) {
+        try {
+          new window.google.translate.TranslateElement({
+            pageLanguage: 'fr',
+            includedLanguages: 'en,fr,es,de,it,pt,ar',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element_mobile');
+        } catch (error) {
+          console.log('Google Translate mobile initialization error:', error);
+        }
       }
-    }, 1000);
+    };
 
+    const timer = setTimeout(initializeTranslate, 1500);
     return () => clearTimeout(timer);
   }, []);
 
