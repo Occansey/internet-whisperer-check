@@ -63,7 +63,7 @@ const Header = () => {
     items: data.items,
     isOpen: dropdowns[key as keyof typeof dropdowns],
     onToggle: () => toggleDropdown(key as keyof typeof dropdowns),
-    titleLink: data.titleLink
+    titleLink: 'titleLink' in data ? data.titleLink : undefined
   }));
 
   return (
