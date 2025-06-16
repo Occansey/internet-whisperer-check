@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
@@ -97,9 +98,9 @@ const Header = () => {
 
     // Cleanup function
     return () => {
-      // Clean up the global function
+      // Clean up the global function by setting it to undefined instead of deleting
       if (window.googleTranslateElementInit) {
-        delete window.googleTranslateElementInit;
+        window.googleTranslateElementInit = undefined;
       }
     };
   }, []);
