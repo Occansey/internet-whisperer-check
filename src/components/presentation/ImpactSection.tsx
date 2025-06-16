@@ -28,11 +28,6 @@ const ImpactSection = () => {
             label="Pays africains couverts"
             prefix=""
           />
-          <StatCard 
-            value={15}
-            label="Millions USD mobilisés"
-            prefix="+"
-          />
         </div>
       </div>
     </section>
