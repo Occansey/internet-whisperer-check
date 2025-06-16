@@ -36,6 +36,51 @@ const globalStyles = `
   .media-page main {
     animation-duration: 0.7s;
   }
+
+  /* Google Translate Widget Styling */
+  .translate-widget, .translate-widget-mobile {
+    font-size: 12px;
+  }
+
+  .translate-widget .goog-te-combo,
+  .translate-widget-mobile .goog-te-combo {
+    font-size: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: white;
+    color: #374151;
+  }
+
+  .dark .translate-widget .goog-te-combo,
+  .dark .translate-widget-mobile .goog-te-combo {
+    background: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+  }
+
+  .translate-widget .goog-te-gadget,
+  .translate-widget-mobile .goog-te-gadget {
+    font-family: inherit;
+  }
+
+  .translate-widget .goog-te-gadget .goog-te-combo,
+  .translate-widget-mobile .goog-te-gadget .goog-te-combo {
+    margin: 0;
+  }
+
+  /* Hide Google Translate banner */
+  .goog-te-banner-frame {
+    display: none !important;
+  }
+
+  body {
+    top: 0 !important;
+  }
+
+  .skiptranslate {
+    display: none;
+  }
 `;
 
 interface LayoutProps {

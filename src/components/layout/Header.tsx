@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 
@@ -51,6 +50,39 @@ const Header = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  // Initialize Google Translate
+  useEffect(() => {
+    const initializeGoogleTranslate = () => {
+      if (typeof window !== 'undefined' && window.google?.translate?.TranslateElement) {
+        try {
+          // Initialize desktop widget
+          new window.google.translate.TranslateElement({
+            pageLanguage: 'fr',
+            includedLanguages: 'en,fr,es,de,it,pt,ar',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element');
+
+          // Initialize mobile widget
+          new window.google.translate.TranslateElement({
+            pageLanguage: 'fr',
+            includedLanguages: 'en,fr,es,de,it,pt,ar',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          }, 'google_translate_element_mobile');
+        } catch (error) {
+          console.log('Google Translate initialization error:', error);
+        }
+      } else {
+        // Retry after a short delay if Google Translate is not loaded yet
+        setTimeout(initializeGoogleTranslate, 500);
+      }
+    };
+
+    const timer = setTimeout(initializeGoogleTranslate, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -187,6 +219,12 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              {/* Google Translate Widget */}
+              <div className="flex items-center">
+                <Globe className="h-4 w-4 mr-2 text-gray-600 dark:text-gray-400" />
+                <div id="google_translate_element" className="translate-widget"></div>
+              </div>
+              
               <ThemeToggle />
               <Link 
                 to="/contact"
@@ -204,6 +242,10 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
+            <div className="flex items-center">
+              <Globe className="h-4 w-4 mr-1 text-gray-600 dark:text-gray-400" />
+              <div id="google_translate_element_mobile" className="translate-widget-mobile"></div>
+            </div>
             <ThemeToggle />
             <Button
               variant="ghost"

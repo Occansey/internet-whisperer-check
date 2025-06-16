@@ -42,7 +42,7 @@ const FilialesSection = () => {
   return (
     <section className="py-16">
       <div className="container">
-        <h2 className="text-3xl font-bold text-center mb-4">Nos Filiales</h2>
+        <h2 className="text-3xl font-bold text-center mb-4 dark:text-white">Nos Filiales</h2>
         <p className="text-center text-gray-600 dark:text-gray-200 mb-12 max-w-3xl mx-auto">
           Des expertises complémentaires pour répondre à tous vos besoins en matière de transformation énergétique et digitale.
         </p>
@@ -54,7 +54,7 @@ const FilialesSection = () => {
                 <div className={`w-16 h-16 ${filiale.iconBg} rounded-full flex items-center justify-center text-3xl mb-4`}>
                   {filiale.icon}
                 </div>
-                <CardTitle className="text-xl dark:text-white">{filiale.name}</CardTitle>
+                <CardTitle className="text-xl dark:text-solio-yellow">{filiale.name}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-gray-700 dark:text-gray-100">
@@ -75,4 +75,3 @@ const FilialesSection = () => {
 };
 
 export default FilialesSection;
-

@@ -20,6 +20,16 @@ interface RelatedContentProps {
   allItemsPath: string;
 }
 
+// Utility function to shuffle and get random items
+const getRandomItems = <T,>(array: T[], count: number): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, count);
+};
+
 const RelatedContent: React.FC<RelatedContentProps> = ({
   items,
   title,
@@ -27,13 +37,13 @@ const RelatedContent: React.FC<RelatedContentProps> = ({
   basePath,
   allItemsPath
 }) => {
-  const displayItems = items.slice(0, 2);
+  const displayItems = getRandomItems(items, 2);
 
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12 bg-gray-50 dark:bg-gray-900">
       <div className="container">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-4">{title}</h2>
+          <h2 className="text-2xl font-bold mb-4 dark:text-white">{title}</h2>
           <Button asChild>
             <Link to={allItemsPath}>{linkText}</Link>
           </Button>
@@ -55,18 +65,18 @@ const RelatedContent: React.FC<RelatedContentProps> = ({
                 <CardTitle className="line-clamp-2">
                   <Link 
                     to={`${basePath}/${item.id}`}
-                    className="hover:text-solio-blue transition-colors"
+                    className="hover:text-solio-blue transition-colors dark:text-white dark:hover:text-solio-blue"
                   >
                     {item.title}
                   </Link>
                 </CardTitle>
                 {item.date && (
-                  <CardDescription>{item.date}</CardDescription>
+                  <CardDescription className="dark:text-gray-400">{item.date}</CardDescription>
                 )}
               </CardHeader>
               {item.excerpt && (
                 <CardContent>
-                  <p className="line-clamp-3 text-gray-600">{item.excerpt}</p>
+                  <p className="line-clamp-3 text-gray-600 dark:text-gray-300">{item.excerpt}</p>
                 </CardContent>
               )}
             </Card>

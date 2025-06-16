@@ -13,7 +13,7 @@ const WordPressContent: React.FC<WordPressContentProps> = ({ content, className 
   
   return (
     <div 
-      className={`wordpress-content ${className}`}
+      className={`wordpress-content dark:text-gray-200 ${className}`}
       dangerouslySetInnerHTML={renderWordPressContent(decodedContent)}
     />
   );

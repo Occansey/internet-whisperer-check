@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 /**
@@ -43,6 +44,9 @@ export interface WordPressPost {
     gallery?: any[];
     video_youtube?: string;
     video_linkedin?: string;
+    // Replay fields for events
+    replay_youtube?: string;
+    replay_linkedin?: string;
     // Event-specific fields
     lieu?: string;
     heure?: string;
