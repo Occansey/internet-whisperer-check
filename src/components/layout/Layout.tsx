@@ -2,6 +2,7 @@
 import { ReactNode, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import GoogleTranslate from "@/components/translate/GoogleTranslate";
 import { useLocation } from "react-router-dom";
 
 // Add global CSS styles for specific buttons, animations, and Google Translate customization
@@ -118,6 +119,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen relative">
       <style>{globalStyles}</style>
+      <GoogleTranslate />
       <Header />
       <main className="flex-1 page-transition">
         {children}

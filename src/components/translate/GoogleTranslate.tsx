@@ -33,51 +33,73 @@ export const useGoogleTranslate = () => {
   const [isTranslateReady, setIsTranslateReady] = useState(false);
 
   useEffect(() => {
-    // Check if Google Translate is ready
-    const checkTranslateReady = () => {
+    const initializeGoogleTranslate = () => {
       if (window.google && window.google.translate) {
+        console.log('Google Translate is ready');
+        
+        // Initialize the translate element
+        new window.google.translate.TranslateElement({
+          pageLanguage: 'fr',
+          includedLanguages: 'en,es,de,it,pt,ar,zh,ja,ko,ru',
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+        
         setIsTranslateReady(true);
       } else {
-        setTimeout(checkTranslateReady, 100);
+        console.log('Waiting for Google Translate to load...');
+        setTimeout(initializeGoogleTranslate, 100);
       }
     };
-    checkTranslateReady();
+
+    initializeGoogleTranslate();
   }, []);
 
   const translatePage = (langCode: string) => {
-    if (!isTranslateReady) return;
+    console.log('Attempting to translate to:', langCode);
+    
+    if (!isTranslateReady) {
+      console.log('Google Translate not ready yet');
+      return;
+    }
 
     const selectedLang = languages.find(lang => lang.code === langCode) || languages[0];
     setCurrentLanguage(selectedLang);
 
-    // Force translation by directly manipulating Google Translate
-    if (window.google && window.google.translate) {
-      const translateElement = window.google.translate.TranslateElement({
-        pageLanguage: 'fr',
-        includedLanguages: 'en,es,de,it,pt,ar,zh,ja,ko,ru',
-        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
+    // Method 1: Try using the select dropdown
+    const selectElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    if (selectElement) {
+      console.log('Found select element, changing value to:', langCode);
+      selectElement.value = langCode;
+      selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+      return;
+    }
 
-      // Force translation to selected language
-      setTimeout(() => {
-        const iframe = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
-        if (iframe && iframe.contentDocument) {
-          const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-          const langLink = iframeDoc?.querySelector(`a[data-value="${langCode}"]`);
-          if (langLink) {
-            (langLink as HTMLElement).click();
-          }
-        } else {
-          // Alternative method: use the select dropdown if available
-          const selectElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-          if (selectElement) {
-            selectElement.value = langCode;
-            selectElement.dispatchEvent(new Event('change'));
+    // Method 2: Try clicking on iframe menu items
+    setTimeout(() => {
+      const iframe = document.querySelector('.goog-te-menu-frame:last-child') as HTMLIFrameElement;
+      if (iframe && iframe.contentDocument) {
+        console.log('Found iframe, looking for language link');
+        const langLinks = iframe.contentDocument.querySelectorAll('a.goog-te-menu2-item');
+        for (let i = 0; i < langLinks.length; i++) {
+          const link = langLinks[i] as HTMLElement;
+          if (link.textContent && link.textContent.includes(selectedLang.name)) {
+            console.log('Clicking on language link:', link.textContent);
+            link.click();
+            return;
           }
         }
-      }, 500);
-    }
+      }
+    }, 500);
+
+    // Method 3: Direct API call if available
+    setTimeout(() => {
+      if (window.google && window.google.translate && window.google.translate.TranslateService) {
+        console.log('Using TranslateService API');
+        const service = new window.google.translate.TranslateService();
+        service.translatePage(langCode, 'fr');
+      }
+    }, 1000);
   };
 
   return {
@@ -90,7 +112,9 @@ export const useGoogleTranslate = () => {
 
 // Empty component for backward compatibility
 const GoogleTranslate: React.FC = () => {
-  return null;
+  return (
+    <div id="google_translate_element" style={{ display: 'none' }}></div>
+  );
 };
 
 export default GoogleTranslate;
