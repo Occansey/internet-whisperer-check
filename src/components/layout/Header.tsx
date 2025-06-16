@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 
@@ -186,12 +187,6 @@ const Header = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              {/* Google Translate Widget */}
-              <div className="flex items-center">
-                <Globe className="h-4 w-4 mr-2 text-gray-600 dark:text-gray-400" />
-                <div id="google_translate_element" className="translate-widget"></div>
-              </div>
-              
               <ThemeToggle />
               <Link 
                 to="/contact"
@@ -209,10 +204,6 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2">
-            <div className="flex items-center">
-              <Globe className="h-4 w-4 mr-1 text-gray-600 dark:text-gray-400" />
-              <div id="google_translate_element_mobile" className="translate-widget-mobile"></div>
-            </div>
             <ThemeToggle />
             <Button
               variant="ghost"

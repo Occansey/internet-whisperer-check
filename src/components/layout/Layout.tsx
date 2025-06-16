@@ -36,51 +36,6 @@ const globalStyles = `
   .media-page main {
     animation-duration: 0.7s;
   }
-
-  /* Google Translate Widget Styling */
-  .translate-widget, .translate-widget-mobile {
-    font-size: 12px;
-  }
-
-  .translate-widget .goog-te-combo,
-  .translate-widget-mobile .goog-te-combo {
-    font-size: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    padding: 2px 4px;
-    background: white;
-    color: #374151;
-  }
-
-  .dark .translate-widget .goog-te-combo,
-  .dark .translate-widget-mobile .goog-te-combo {
-    background: #374151;
-    color: #f3f4f6;
-    border-color: #4b5563;
-  }
-
-  .translate-widget .goog-te-gadget,
-  .translate-widget-mobile .goog-te-gadget {
-    font-family: inherit;
-  }
-
-  .translate-widget .goog-te-gadget .goog-te-combo,
-  .translate-widget-mobile .goog-te-gadget .goog-te-combo {
-    margin: 0;
-  }
-
-  /* Hide Google Translate banner */
-  .goog-te-banner-frame {
-    display: none !important;
-  }
-
-  body {
-    top: 0 !important;
-  }
-
-  .skiptranslate {
-    display: none;
-  }
 `;
 
 interface LayoutProps {
@@ -105,22 +60,6 @@ const Layout = ({ children }: LayoutProps) => {
       document.body.classList.add('media-page');
     }
   }, [pathname]);
-
-  // Initialize Google Translate for mobile element
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (window.google && window.google.translate) {
-        new window.google.translate.TranslateElement({
-          pageLanguage: 'fr',
-          includedLanguages: 'en,fr,es,de,it,pt,ar',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
-        }, 'google_translate_element_mobile');
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="flex flex-col min-h-screen relative">
