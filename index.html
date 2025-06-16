@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -47,19 +46,6 @@
     <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
-    <!-- Google Translate -->
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'fr',
-          includedLanguages: 'en,fr,es,de,it,pt,ar',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
-        }, 'google_translate_element');
-      }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
     <!-- Structured data for organization -->
     <script type="application/ld+json">
       {
@@ -92,18 +78,9 @@
           "https://twitter.com/soliogroup"
         ],
         "areaServed": [
-          {
-            "@type": "Country",
-            "name": "France"
-          },
-          {
-            "@type": "Country", 
-            "name": "Canada"
-          },
-          {
-            "@type": "Country",
-            "name": "Kenya"
-          }
+          { "@type": "Country", "name": "France" },
+          { "@type": "Country", "name": "Canada" },
+          { "@type": "Country", "name": "Kenya" }
         ],
         "makesOffer": [
           {
@@ -140,11 +117,35 @@
         }
       }
     </script>
+
+    <style>
+      #google_translate_element {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 9999;
+      }
+    </style>
   </head>
 
   <body>
+    <!-- GTranslate selector -->
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'fr',
+          includedLanguages: 'fr,en',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- App root -->
     <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+
+    <!-- Main scripts -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
