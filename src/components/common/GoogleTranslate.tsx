@@ -18,6 +18,7 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
   const containerRef = useRef<HTMLDivElement>(null);
   const scriptLoaded = useRef(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [debugMode] = useState(true); // Enable debug mode
 
   const initializeTranslate = () => {
     console.log(`🔄 Initializing Google Translate for ${elementId}`);
@@ -39,6 +40,38 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
           
           console.log(`✅ Google Translate initialized for ${elementId}`);
           setIsInitialized(true);
+          
+          // Debug: Monitor language changes
+          setTimeout(() => {
+            const combo = element.querySelector('.goog-te-combo') as HTMLSelectElement;
+            if (combo) {
+              console.log('🎯 Found dropdown, adding change listener');
+              combo.addEventListener('change', (e) => {
+                const target = e.target as HTMLSelectElement;
+                console.log('🌍 Language changed to:', target.value);
+                console.log('🌍 Selected option:', target.options[target.selectedIndex]?.text);
+                
+                // Check if translation is happening
+                setTimeout(() => {
+                  const bodyClass = document.body.className;
+                  console.log('📄 Body classes after change:', bodyClass);
+                  
+                  const translatedElements = document.querySelectorAll('.goog-trans-control-enabled');
+                  console.log('🔍 Translated elements found:', translatedElements.length);
+                }, 1000);
+              });
+              
+              // Make dropdown more visible in debug mode
+              if (debugMode) {
+                combo.style.border = '3px solid red !important';
+                combo.style.backgroundColor = 'yellow !important';
+                combo.style.fontSize = '16px !important';
+                combo.style.padding = '8px !important';
+              }
+            } else {
+              console.log('❌ Dropdown not found in element');
+            }
+          }, 1500);
           
           // Add the notranslate class to prevent translation of UI elements
           setTimeout(() => {
@@ -110,7 +143,13 @@ const GoogleTranslate = ({ elementId, isMobile = false }: GoogleTranslateProps) 
         <div 
           id={elementId} 
           className="translate-widget notranslate"
+          style={debugMode ? { border: '2px dashed blue', padding: '4px' } : {}}
         />
+        {debugMode && (
+          <div className="ml-2 text-xs text-red-500">
+            {isInitialized ? '✅ Ready' : '⏳ Loading...'}
+          </div>
+        )}
       </div>
     </div>
   );
