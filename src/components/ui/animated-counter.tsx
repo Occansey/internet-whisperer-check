@@ -20,59 +20,58 @@ export const AnimatedCounter = ({
   decimal = 0
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const countRef = useRef<HTMLSpanElement>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const frameRef = useRef<number | null>(null);
+  const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const isInViewport = (element: HTMLElement): boolean => {
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      );
-    };
-
-    const animate = (timestamp: number) => {
-      if (!startTimeRef.current) {
-        startTimeRef.current = timestamp;
-      }
-
-      const progress = timestamp - startTimeRef.current;
-      const percentage = Math.min(progress / duration, 1);
+    // Start animation immediately when component mounts and becomes visible
+    const startAnimation = () => {
+      if (hasStarted || !countRef.current) return;
       
-      const currentCount = Math.floor(percentage * end);
-      setCount(currentCount);
-
-      if (percentage < 1) {
-        frameRef.current = requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-      }
+      setHasStarted(true);
+      const startTime = Date.now();
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Use easeOutCubic for smooth animation
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        const currentCount = Math.floor(easeOutCubic * end);
+        
+        setCount(currentCount);
+        
+        if (progress < 1) {
+          animationRef.current = requestAnimationFrame(animate);
+        } else {
+          setCount(end);
+          animationRef.current = null;
+        }
+      };
+      
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    const handleScroll = () => {
-      if (countRef.current && isInViewport(countRef.current) && !frameRef.current) {
-        frameRef.current = requestAnimationFrame(animate);
+    // Use a simple timeout to start animation after component is mounted
+    // This avoids intersection observer issues with Google Translate
+    const timer = setTimeout(() => {
+      if (countRef.current) {
+        startAnimation();
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on mount
+    }, 100);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
+      clearTimeout(timer);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [end, duration]);
+  }, [end, duration, hasStarted]);
 
   const formattedCount = decimal > 0
     ? count.toFixed(decimal)
-    : count.toString();
+    : count.toLocaleString();
 
   return (
     <span ref={countRef} className={cn("font-bold", className)}>
