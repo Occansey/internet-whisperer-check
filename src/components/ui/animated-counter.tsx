@@ -78,23 +78,102 @@ export const AnimatedCounter = ({
         frameRef.current = null;
       }
       
-      // Start animation after a delay
-      setTimeout(startAnimation, 200);
+      // Start animation after a delay to ensure DOM is updated
+      setTimeout(startAnimation, 300);
+    };
+
+    const handleLanguageChange = () => {
+      // Reset and restart animation on language change
+      console.log('🔄 [AnimatedCounter] Language change detected, resetting animation');
+      setHasAnimated(false);
+      setCount(0);
+      startTimeRef.current = null;
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+      
+      // Wait longer for translation to complete and then restart
+      setTimeout(() => {
+        if (countRef.current && isInViewport(countRef.current)) {
+          startAnimation();
+        }
+      }, 1000);
     };
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("translation-complete", handleTranslationComplete);
+    window.addEventListener("languageChanged", handleLanguageChange);
     
-    // Initial check on mount
-    setTimeout(handleScroll, 100);
+    // Also listen for hash changes (Google Translate uses hashes)
+    window.addEventListener("hashchange", handleLanguageChange);
+    
+    // Listen for page visibility changes (when translation updates the page)
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        setTimeout(handleLanguageChange, 500);
+      }
+    });
+    
+    // Initial check on mount with a delay
+    setTimeout(handleScroll, 200);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("translation-complete", handleTranslationComplete);
+      window.removeEventListener("languageChanged", handleLanguageChange);
+      window.removeEventListener("hashchange", handleLanguageChange);
+      document.removeEventListener("visibilitychange", handleLanguageChange);
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
       }
     };
+  }, [end, duration, hasAnimated]);
+
+  // Force re-animation when the component is visible and translation changes
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (countRef.current && !hasAnimated) {
+        setTimeout(() => {
+          if (countRef.current && isInViewport(countRef.current)) {
+            setHasAnimated(false);
+            setCount(0);
+            startTimeRef.current = null;
+            if (frameRef.current) {
+              cancelAnimationFrame(frameRef.current);
+              frameRef.current = null;
+            }
+            setTimeout(() => {
+              frameRef.current = requestAnimationFrame((timestamp) => {
+                if (!startTimeRef.current) {
+                  startTimeRef.current = timestamp;
+                }
+                const progress = timestamp - startTimeRef.current;
+                const percentage = Math.min(progress / duration, 1);
+                const currentCount = Math.floor(percentage * end);
+                setCount(currentCount);
+                if (percentage < 1) {
+                  frameRef.current = requestAnimationFrame(arguments.callee);
+                } else {
+                  setCount(end);
+                  setHasAnimated(true);
+                }
+              });
+            }, 100);
+          }
+        }, 500);
+      }
+    });
+
+    if (countRef.current) {
+      observer.observe(countRef.current, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
+
+    return () => observer.disconnect();
   }, [end, duration, hasAnimated]);
 
   const formattedCount = decimal > 0
@@ -106,4 +185,14 @@ export const AnimatedCounter = ({
       {prefix}{formattedCount}{suffix}
     </span>
   );
+
+  function isInViewport(element: HTMLElement): boolean {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 };
