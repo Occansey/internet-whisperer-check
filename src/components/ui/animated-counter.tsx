@@ -25,6 +25,7 @@ export const AnimatedCounter = ({
   const startTimeRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
   const observerRef = useRef<MutationObserver | null>(null);
+  const fallbackTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const isInViewport = (element: HTMLElement): boolean => {
     const rect = element.getBoundingClientRect();
@@ -52,6 +53,7 @@ export const AnimatedCounter = ({
     } else {
       setCount(end);
       setHasAnimated(true);
+      console.log('✅ [AnimatedCounter] Animation completed, final value:', end);
     }
   };
 
@@ -64,11 +66,15 @@ export const AnimatedCounter = ({
       cancelAnimationFrame(frameRef.current);
       frameRef.current = null;
     }
+    if (fallbackTimerRef.current) {
+      clearTimeout(fallbackTimerRef.current);
+      fallbackTimerRef.current = null;
+    }
   };
 
   const startAnimation = () => {
     if (countRef.current && isInViewport(countRef.current) && !frameRef.current && !hasAnimated) {
-      console.log('✅ [AnimatedCounter] Starting animation');
+      console.log('✅ [AnimatedCounter] Starting animation for value:', end);
       setTimeout(() => {
         frameRef.current = requestAnimationFrame(animate);
       }, 300);
@@ -82,7 +88,7 @@ export const AnimatedCounter = ({
       if (countRef.current && isInViewport(countRef.current)) {
         startAnimation();
       }
-    }, 500);
+    }, 1200); // Increased delay for Google Translate to finish
   };
 
   useEffect(() => {
@@ -94,57 +100,64 @@ export const AnimatedCounter = ({
 
     const handleTranslationComplete = () => {
       console.log('📍 [AnimatedCounter] Translation complete detected');
-      forceRestartAnimation();
+      setTimeout(forceRestartAnimation, 800);
     };
 
     const handleLanguageChange = () => {
       console.log('🌍 [AnimatedCounter] Language change detected');
-      setTimeout(forceRestartAnimation, 1000);
+      setTimeout(forceRestartAnimation, 1500);
     };
 
-    // Set up comprehensive mutation observer to detect Google Translate changes
+    // Enhanced mutation observer to detect Google Translate changes
     const setupMutationObserver = () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
 
       observerRef.current = new MutationObserver((mutations) => {
-        let shouldRestart = false;
+        let translationDetected = false;
 
         mutations.forEach((mutation) => {
-          // Check for Google Translate specific changes
           if (mutation.type === 'attributes') {
             const target = mutation.target as HTMLElement;
-            if (target.lang || target.className.includes('goog-te') || target.className.includes('translated')) {
-              shouldRestart = true;
+            
+            // Detect Google Translate attributes
+            if (target.lang || 
+                target.className?.includes('goog-te') || 
+                target.className?.includes('translated') ||
+                target.className?.includes('VIpgJd')) {
+              translationDetected = true;
+              console.log('🔍 [AnimatedCounter] Google Translate attribute change detected');
             }
           }
           
-          // Check for added/removed nodes that might be Google Translate elements
           if (mutation.type === 'childList') {
             mutation.addedNodes.forEach((node) => {
               if (node.nodeType === Node.ELEMENT_NODE) {
                 const element = node as HTMLElement;
-                if (element.className?.includes('goog-te') || element.id?.includes('goog-gt')) {
-                  shouldRestart = true;
+                if (element.className?.includes('goog-te') || 
+                    element.id?.includes('goog-gt') ||
+                    element.className?.includes('VIpgJd')) {
+                  translationDetected = true;
+                  console.log('🔍 [AnimatedCounter] Google Translate element added');
                 }
               }
             });
           }
         });
 
-        if (shouldRestart && hasAnimated) {
-          console.log('👁️ [AnimatedCounter] Google Translate DOM change detected');
-          setTimeout(forceRestartAnimation, 800);
+        if (translationDetected && hasAnimated) {
+          console.log('👁️ [AnimatedCounter] Google Translate DOM change detected, restarting in 1.5s');
+          setTimeout(forceRestartAnimation, 1500);
         }
       });
 
-      // Observe the entire document for Google Translate changes
+      // Observe the entire document with comprehensive options
       observerRef.current.observe(document.body, {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['lang', 'class', 'style']
+        attributeFilter: ['lang', 'class', 'style', 'translate']
       });
     };
 
@@ -156,7 +169,8 @@ export const AnimatedCounter = ({
     
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
-        setTimeout(handleLanguageChange, 800);
+        console.log('👀 [AnimatedCounter] Page visible again, checking animation');
+        setTimeout(handleLanguageChange, 1000);
       }
     });
 
@@ -166,13 +180,22 @@ export const AnimatedCounter = ({
     // Initial animation start
     setTimeout(handleScroll, 300);
 
-    // Fallback: Force restart after 3 seconds if counters are still at 0
-    const fallbackTimer = setTimeout(() => {
+    // Enhanced fallback timer
+    fallbackTimerRef.current = setTimeout(() => {
       if (count === 0 && !hasAnimated && countRef.current && isInViewport(countRef.current)) {
-        console.log('⏰ [AnimatedCounter] Fallback restart triggered');
+        console.log('⏰ [AnimatedCounter] Fallback restart triggered after 4s');
         forceRestartAnimation();
       }
-    }, 3000);
+    }, 4000);
+
+    // Additional fallback for persistent issues
+    const persistentFallback = setTimeout(() => {
+      if (count === 0 && countRef.current && isInViewport(countRef.current)) {
+        console.log('🆘 [AnimatedCounter] Persistent fallback triggered after 8s');
+        resetAnimation();
+        setTimeout(startAnimation, 500);
+      }
+    }, 8000);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -189,7 +212,11 @@ export const AnimatedCounter = ({
         observerRef.current.disconnect();
       }
       
-      clearTimeout(fallbackTimer);
+      if (fallbackTimerRef.current) {
+        clearTimeout(fallbackTimerRef.current);
+      }
+      
+      clearTimeout(persistentFallback);
     };
   }, [end, duration, hasAnimated, count]);
 
@@ -203,8 +230,9 @@ export const AnimatedCounter = ({
       className={cn("font-bold notranslate", className)}
       translate="no"
       data-translate="no"
+      data-notranslate="true"
     >
-      <span className="notranslate" translate="no">
+      <span className="notranslate" translate="no" data-notranslate="true">
         {prefix}{formattedCount}{suffix}
       </span>
     </span>
