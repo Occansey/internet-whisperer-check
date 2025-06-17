@@ -38,12 +38,58 @@ const globalStyles = `
     animation-duration: 0.7s;
   }
 
-  /* Google Translate Customization */
+  /* Google Translate Customization - Hide all Google elements */
   #google_translate_element {
     display: none !important;
   }
   
   .goog-te-banner-frame {
+    display: none !important;
+  }
+  
+  .goog-te-ftab {
+    display: none !important;
+  }
+  
+  /* Hide the entire Google Translate toolbar/banner */
+  .VIpgJd-ZVi9od-l4eHX-hSRGPd,
+  .VIpgJd-ZVi9od-ORHb-KE6vqe,
+  .VIpgJd-ZVi9od-ORHb-bN97Pc,
+  .VIpgJd-ZVi9od-LgbsSe,
+  .VIpgJd-ZVi9od-xl07Ob-lTBxed,
+  .VIpgJd-ZVi9od-TvD9Pc-hSRGPd,
+  iframe[src*="translate.google.com"],
+  iframe[src*="translate.googleapis.com"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+  
+  /* Hide any table elements that contain Google Translate content */
+  tbody:has(.VIpgJd-ZVi9od-l4eHX-hSRGPd),
+  table:has(.VIpgJd-ZVi9od-l4eHX-hSRGPd),
+  tr:has(.VIpgJd-ZVi9od-l4eHX-hSRGPd) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+  }
+  
+  /* Ensure the body doesn't get pushed down */
+  body {
+    top: 0 !important;
+    position: static !important;
+  }
+  
+  /* Hide any element with Google branding images */
+  img[src*="googlelogo"],
+  img[src*="gstatic.com"],
+  img[src*="translate.googleapis.com"] {
     display: none !important;
   }
   
@@ -81,15 +127,6 @@ const globalStyles = `
   .goog-te-menu-frame {
     max-height: 400px !important;
     overflow-y: auto !important;
-  }
-  
-  /* Hide Google Translate top frame */
-  .goog-te-ftab {
-    display: none !important;
-  }
-  
-  body {
-    top: 0 !important;
   }
 `;
 

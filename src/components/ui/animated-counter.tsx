@@ -20,6 +20,7 @@ export const AnimatedCounter = ({
   decimal = 0
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const countRef = useRef<HTMLSpanElement>(null);
   const startTimeRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
@@ -50,25 +51,51 @@ export const AnimatedCounter = ({
         frameRef.current = requestAnimationFrame(animate);
       } else {
         setCount(end);
+        setHasAnimated(true);
+      }
+    };
+
+    const startAnimation = () => {
+      if (countRef.current && isInViewport(countRef.current) && !frameRef.current && !hasAnimated) {
+        // Add a small delay to ensure translation is complete
+        setTimeout(() => {
+          frameRef.current = requestAnimationFrame(animate);
+        }, 500);
       }
     };
 
     const handleScroll = () => {
-      if (countRef.current && isInViewport(countRef.current) && !frameRef.current) {
-        frameRef.current = requestAnimationFrame(animate);
+      startAnimation();
+    };
+
+    const handleTranslationComplete = () => {
+      // Reset animation state when translation completes
+      setHasAnimated(false);
+      setCount(0);
+      startTimeRef.current = null;
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
       }
+      
+      // Start animation after a delay
+      setTimeout(startAnimation, 200);
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on mount
+    window.addEventListener("translation-complete", handleTranslationComplete);
+    
+    // Initial check on mount
+    setTimeout(handleScroll, 100);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("translation-complete", handleTranslationComplete);
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
       }
     };
-  }, [end, duration]);
+  }, [end, duration, hasAnimated]);
 
   const formattedCount = decimal > 0
     ? count.toFixed(decimal)

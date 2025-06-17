@@ -10,15 +10,6 @@ interface Language {
 export const languages: Language[] = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어', flag: '🇰🇷' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ];
 
 declare global {
@@ -45,7 +36,7 @@ export const useGoogleTranslate = () => {
           // Initialize the translate element
           const translateElement = new window.google.translate.TranslateElement({
             pageLanguage: 'fr',
-            includedLanguages: 'en,es,de,it,pt,ar,zh,ja,ko,ru',
+            includedLanguages: 'en',
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
           }, 'google_translate_element');
@@ -105,6 +96,12 @@ export const useGoogleTranslate = () => {
       const changeEvent = new Event('change', { bubbles: true });
       selectElement.dispatchEvent(changeEvent);
       console.log('✅ [DEBUG] Dispatched change event on select');
+      
+      // Trigger counter animation after translation
+      setTimeout(() => {
+        const event = new CustomEvent('translation-complete');
+        window.dispatchEvent(event);
+      }, 1000);
       return;
     }
 
@@ -126,6 +123,12 @@ export const useGoogleTranslate = () => {
           if (link.textContent && link.textContent.includes(selectedLang.name)) {
             console.log('✅ [DEBUG] Found matching language link, clicking...');
             link.click();
+            
+            // Trigger counter animation after translation
+            setTimeout(() => {
+              const event = new CustomEvent('translation-complete');
+              window.dispatchEvent(event);
+            }, 1000);
             return;
           }
         }
@@ -143,6 +146,12 @@ export const useGoogleTranslate = () => {
         const service = new window.google.translate.TranslateService();
         service.translatePage(langCode, 'fr');
         console.log('✅ [DEBUG] Called TranslateService.translatePage');
+        
+        // Trigger counter animation after translation
+        setTimeout(() => {
+          const event = new CustomEvent('translation-complete');
+          window.dispatchEvent(event);
+        }, 1000);
       } else {
         console.log('❌ [DEBUG] TranslateService not available');
         console.log('🔍 [DEBUG] Available methods on google.translate:', 
