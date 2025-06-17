@@ -25,17 +25,17 @@ export const AnimatedCounter = ({
   const startTimeRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const isInViewport = (element: HTMLElement): boolean => {
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      );
-    };
+  const isInViewport = (element: HTMLElement): boolean => {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  };
 
+  useEffect(() => {
     const animate = (timestamp: number) => {
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
@@ -57,7 +57,6 @@ export const AnimatedCounter = ({
 
     const startAnimation = () => {
       if (countRef.current && isInViewport(countRef.current) && !frameRef.current && !hasAnimated) {
-        // Add a small delay to ensure translation is complete
         setTimeout(() => {
           frameRef.current = requestAnimationFrame(animate);
         }, 500);
@@ -69,7 +68,6 @@ export const AnimatedCounter = ({
     };
 
     const handleTranslationComplete = () => {
-      // Reset animation state when translation completes
       setHasAnimated(false);
       setCount(0);
       startTimeRef.current = null;
@@ -78,12 +76,10 @@ export const AnimatedCounter = ({
         frameRef.current = null;
       }
       
-      // Start animation after a delay to ensure DOM is updated
       setTimeout(startAnimation, 300);
     };
 
     const handleLanguageChange = () => {
-      // Reset and restart animation on language change
       console.log('🔄 [AnimatedCounter] Language change detected, resetting animation');
       setHasAnimated(false);
       setCount(0);
@@ -93,7 +89,6 @@ export const AnimatedCounter = ({
         frameRef.current = null;
       }
       
-      // Wait longer for translation to complete and then restart
       setTimeout(() => {
         if (countRef.current && isInViewport(countRef.current)) {
           startAnimation();
@@ -104,18 +99,14 @@ export const AnimatedCounter = ({
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("translation-complete", handleTranslationComplete);
     window.addEventListener("languageChanged", handleLanguageChange);
-    
-    // Also listen for hash changes (Google Translate uses hashes)
     window.addEventListener("hashchange", handleLanguageChange);
     
-    // Listen for page visibility changes (when translation updates the page)
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
         setTimeout(handleLanguageChange, 500);
       }
     });
     
-    // Initial check on mount with a delay
     setTimeout(handleScroll, 200);
 
     return () => {
@@ -144,7 +135,7 @@ export const AnimatedCounter = ({
               frameRef.current = null;
             }
             setTimeout(() => {
-              frameRef.current = requestAnimationFrame((timestamp) => {
+              const animateRecursive = (timestamp: number) => {
                 if (!startTimeRef.current) {
                   startTimeRef.current = timestamp;
                 }
@@ -153,12 +144,13 @@ export const AnimatedCounter = ({
                 const currentCount = Math.floor(percentage * end);
                 setCount(currentCount);
                 if (percentage < 1) {
-                  frameRef.current = requestAnimationFrame(arguments.callee);
+                  frameRef.current = requestAnimationFrame(animateRecursive);
                 } else {
                   setCount(end);
                   setHasAnimated(true);
                 }
-              });
+              };
+              frameRef.current = requestAnimationFrame(animateRecursive);
             }, 100);
           }
         }, 500);
@@ -185,14 +177,4 @@ export const AnimatedCounter = ({
       {prefix}{formattedCount}{suffix}
     </span>
   );
-
-  function isInViewport(element: HTMLElement): boolean {
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
 };
