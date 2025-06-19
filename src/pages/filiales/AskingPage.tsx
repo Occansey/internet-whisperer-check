@@ -35,9 +35,9 @@ const AskingPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            <StatCard value={15} suffix="+" label="clients" delay={0} />
-            <StatCard value={45} suffix="+" label="projets en développement" delay={200} />
-            <StatCard value={20} suffix="+" label="collaborateurs" delay={400} />
+            <StatCard value={15} suffix="+" label="clients" />
+            <StatCard value={45} suffix="+" label="projets en développement" />
+            <StatCard value={20} suffix="+" label="collaborateurs" />
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 
 import { Card, CardContent } from "./card";
+import { AnimatedCounter } from "./animated-counter";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
@@ -9,7 +10,6 @@ interface StatCardProps {
   suffix?: string;
   decimal?: number;
   className?: string;
-  delay?: number;
 }
 
 export function StatCard({
@@ -18,26 +18,18 @@ export function StatCard({
   prefix = "",
   suffix = "",
   decimal = 0,
-  className,
-  delay = 0
+  className
 }: StatCardProps) {
-  const formattedValue = decimal > 0 ? value.toFixed(decimal) : value.toString();
-  
   return (
-    <Card 
-      className={cn("border-none shadow-md bg-white text-center animate-fade-in", className)}
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <Card className={cn("border-none shadow-md bg-white text-center", className)}>
       <CardContent className="pt-6">
-        <div 
-          className="text-3xl md:text-4xl font-bold mb-2 text-solio-blue notranslate animate-scale-in" 
-          translate="no"
-          data-notranslate="true"
-          style={{ animationDelay: `${delay + 200}ms` }}
-        >
-          <span className="notranslate" translate="no" data-notranslate="true">
-            {prefix}{formattedValue}{suffix}
-          </span>
+        <div className="text-3xl md:text-4xl font-bold mb-2 text-solio-blue">
+          <AnimatedCounter
+            end={value}
+            prefix={prefix}
+            suffix={suffix}
+            decimal={decimal}
+          />
         </div>
         <p className="text-gray-600">{label}</p>
       </CardContent>
