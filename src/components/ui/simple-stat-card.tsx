@@ -2,27 +2,23 @@
 import { Card, CardContent } from "./card";
 import { cn } from "@/lib/utils";
 
-interface StatCardProps {
+interface SimpleStatCardProps {
   value: number;
   label: string;
   prefix?: string;
   suffix?: string;
-  decimal?: number;
   className?: string;
   delay?: number;
 }
 
-export function StatCard({
+export function SimpleStatCard({
   value,
   label,
   prefix = "",
   suffix = "",
-  decimal = 0,
   className,
   delay = 0
-}: StatCardProps) {
-  const formattedValue = decimal > 0 ? value.toFixed(decimal) : value.toString();
-  
+}: SimpleStatCardProps) {
   return (
     <Card 
       className={cn("border-none shadow-md bg-white text-center animate-fade-in", className)}
@@ -36,7 +32,7 @@ export function StatCard({
           style={{ animationDelay: `${delay + 200}ms` }}
         >
           <span className="notranslate" translate="no" data-notranslate="true">
-            {prefix}{formattedValue}{suffix}
+            {prefix}{value}{suffix}
           </span>
         </div>
         <p className="text-gray-600">{label}</p>
