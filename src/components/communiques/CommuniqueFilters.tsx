@@ -82,8 +82,8 @@ const CommuniqueFilters: React.FC<CommuniqueFiltersProps> = ({
             Solio
           </Button>
           <Button 
-            variant={selectedTag === "Africa" ? "default" : "outline"}
-            onClick={() => onTagChange("Africa")}
+            variant={selectedTag === "africa" ? "default" : "outline"}
+            onClick={() => onTagChange("africa")}
             className="rounded-lg text-xs sm:text-sm"
             size="sm"
           >
