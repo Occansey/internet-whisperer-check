@@ -115,7 +115,7 @@ const ProjectDetail = () => {
             capacite: wpProject.acf?.capacite,
             technologie: wpProject.acf?.technologie,
             stockage: wpProject.acf?.stockage,
-            objectifs: wpProject.acf?.objectifs?.replace(/(\r\n|\n|\r)/g, '<br>'),
+            objectifs: wpProject.acf?.objectifs,
             annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
             impact: wpProject.acf?.impact,
             optimisation: wpProject.acf?.optimisation,
