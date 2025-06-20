@@ -25,7 +25,7 @@ const Footer = () => {
                 </li>
                 <li className="flex flex-col">
                   <span className="font-medium text-white">Amérique du Nord HQ</span>
-                  <span>Montréal, QC H2Y 1T9, 368 R. Notre Dame O</span>
+                  <span>Montréal, QC H2Y 1T9, 368 R. Notre Dame Ouest</span>
                 </li>
                 <li className="flex flex-col">
                   <span className="font-medium text-white">Africa HQ</span>
