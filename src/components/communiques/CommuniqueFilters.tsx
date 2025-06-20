@@ -66,8 +66,8 @@ const CommuniqueFilters: React.FC<CommuniqueFiltersProps> = ({
             GEM
           </Button>
           <Button 
-            variant={selectedTag === "mfg" ? "default" : "outline"}
-            onClick={() => onTagChange("mfg")}
+            variant={selectedTag === "mfg technologies" ? "default" : "outline"}
+            onClick={() => onTagChange("mfg technologies")}
             className="rounded-lg text-xs sm:text-sm"
             size="sm"
           >
