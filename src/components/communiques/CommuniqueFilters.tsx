@@ -66,8 +66,8 @@ const CommuniqueFilters: React.FC<CommuniqueFiltersProps> = ({
             GEM
           </Button>
           <Button 
-            variant={selectedTag === "mfg technologies" ? "default" : "outline"}
-            onClick={() => onTagChange("mfg technologies")}
+            variant={selectedTag === "mfg" ? "default" : "outline"}
+            onClick={() => onTagChange("mfg")}
             className="rounded-lg text-xs sm:text-sm"
             size="sm"
           >
@@ -80,6 +80,14 @@ const CommuniqueFilters: React.FC<CommuniqueFiltersProps> = ({
             size="sm"
           >
             Solio
+          </Button>
+          <Button 
+            variant={selectedTag === "Africa" ? "default" : "outline"}
+            onClick={() => onTagChange("Africa")}
+            className="rounded-lg text-xs sm:text-sm"
+            size="sm"
+          >
+            Africa
           </Button>
         </div>
       </div>
