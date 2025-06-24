@@ -69,7 +69,7 @@ const engagements: { [key: string]: EngagementProps[] } = {
     },
     {
       title: "Sensibilisation",
-      description: "Formation des managers et des équipes à la diversité et à l'inclusion.",
+      description: "Formation des dirigeants et des équipes à la diversité et à l'inclusion.",
       icon: "🧩"
     },
     {
