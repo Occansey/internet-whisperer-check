@@ -35,7 +35,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://www.linkedin.com/in/alainnormand1/"
   },
     {
-    photo: "/lovable-uploads/aec6ae4e-7fc4-4651-af1d-d5f2787dd0a3.png",
+    photo: "/lovable-uploads/28216485-597e-46fc-bc4d-703d6671169c.png",
     nom: "Laure Duhorane",
     titre: "Directrice Général - Asking",
     linkedin: "https://ca.linkedin.com/in/laure-duhorane?trk=public_post_feed-actor-name"
