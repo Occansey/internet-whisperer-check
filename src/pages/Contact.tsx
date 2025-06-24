@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import { ContactForm } from "@/components/forms/ContactForm";
+import ContactForm from "@/components/forms/ContactForm";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const Contact = () => {
