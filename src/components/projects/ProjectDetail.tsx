@@ -101,11 +101,22 @@ const ProjectDetail = () => {
         // Extract gallery images from WordPress data
         const galleryImages = extractGalleryImages(wpProject);
         
+        // Get featured image with fallback logic
+        let featuredImage = '/placeholder.svg';
+        if (wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+          featuredImage = wpProject._embedded['wp:featuredmedia'][0].source_url;
+        } else if (wpProject.featured_media && wpProject._embedded?.['wp:featuredmedia']?.[0]) {
+          featuredImage = wpProject._embedded['wp:featuredmedia'][0].source_url;
+        } else if (galleryImages.length > 0) {
+          // Use first gallery image as fallback
+          featuredImage = galleryImages[0];
+        }
+        
         const transformedProject = {
           id: wpProject.id,
           title: wpProject.title.rendered,
           description: wpProject.content.rendered,
-          image: wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg',
+          image: featuredImage,
           progress: wpProject.acf?.progression ? parseInt(wpProject.acf.progression) : 0,
           subsidiary: mapSubsidiaryFromWordPress(wpProject.acf?.filiale || ''),
           location: wpProject.acf?.pays || "Non spécifié",
@@ -273,6 +284,12 @@ const ProjectDetail = () => {
                 src={project.image} 
                 alt={decodeHtmlEntities(project.title)}
                 className="w-full h-auto"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.src !== '/placeholder.svg') {
+                    target.src = '/placeholder.svg';
+                  }
+                }}
               />
             </div>
           </div>
@@ -324,11 +341,14 @@ const ProjectDetail = () => {
                   <>
                     <WordPressContent content={project.description} />
                     
-                    {/* WordPress-specific content */}
+                    {/* WordPress-specific content with bulleted list for Objectifs */}
                     {project.wpData?.objectifs && (
                       <>
                         <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
-                        <div dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.objectifs) }} />
+                        <div 
+                          className="wordpress-objectifs [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-2 [&_li]:mb-2"
+                          dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.objectifs) }} 
+                        />
                       </>
                     )}
                     
