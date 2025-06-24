@@ -206,7 +206,7 @@ const Contact = () => {
                           <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
                         </div>
                         <div className="mt-3">
-                          <p>Abuja: 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
+                          <p className="font-medium">Abuja: 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
                           <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
                         </div>
                         <div className="mt-3">
