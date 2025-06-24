@@ -29,7 +29,7 @@ const directeurs: DirecteurProps[] = [
     linkedin: "https://fr.linkedin.com/in/john-okoro-ugiagbe"
   },
   {
-    photo: "/lovable-uploads/8a1b5962-6861-4b24-b3ce-d1922809f130.png",
+    photo: "/lovable-uploads/d7789205-fcec-4153-ac30-a3bbf56f33fe.png",
     nom: "Alain Normand",
     titre: "Directeur Général - MFG Technologies",
     linkedin: "https://www.linkedin.com/in/alainnormand1/"
@@ -44,7 +44,7 @@ const directeurs: DirecteurProps[] = [
     photo: "/lovable-uploads/de408ee9-d343-4578-bd30-ae9d93b1c647.png",
     nom: "Patrick Charlet",
     titre: "Directeur des Opérations – MFG Technologies",
-    linkedin: "https://linkedin.com/"
+    linkedin: "https://www.linkedin.com/in/patrick-charlet-10aa1565/"
   }
 ];
 
