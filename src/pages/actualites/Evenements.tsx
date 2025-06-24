@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
@@ -77,6 +78,26 @@ const determineEventType = (event: EventProps, wpEvent?: any): EventType => {
   return eventDate >= today ? "à venir" : "passé";
 };
 
+const hasEventType = (event: EventProps, wpEvent: any, targetType: EventType): boolean => {
+  // Check if the event has multiple types/tags
+  const eventTypes = wpEvent?.tags || [];
+  
+  // If it's a spotlight event, it can also have other types
+  if (targetType === "spotlight" && event.type === "spotlight") return true;
+  if (targetType === "spotlight" && eventTypes.includes("spotlight")) return true;
+  
+  // Check for date-based types
+  const eventDate = parseEventDate(wpEvent?.date || event.date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  eventDate.setHours(0, 0, 0, 0);
+  
+  if (targetType === "à venir" && eventDate >= today) return true;
+  if (targetType === "passé" && eventDate < today) return true;
+  
+  return false;
+};
+
 const Evenements = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"cards" | "calendar">("cards");
@@ -122,7 +143,10 @@ const Evenements = () => {
     }
 
     if (typeFilter !== "all") {
-      filtered = filtered.filter(event => event.type === typeFilter);
+      filtered = filtered.filter(event => {
+        const wpEvent = wordpressEvents?.find(wp => wp.id === event.id);
+        return hasEventType(event, wpEvent, typeFilter);
+      });
     }
     
     return filtered;
@@ -131,9 +155,18 @@ const Evenements = () => {
   const getEventCounts = () => {
     return {
       all: eventsSource.length,
-      "à venir": eventsSource.filter(e => e.type === "à venir").length,
-      "passé": eventsSource.filter(e => e.type === "passé").length,
-      spotlight: eventsSource.filter(e => e.type === "spotlight").length
+      "à venir": eventsSource.filter(event => {
+        const wpEvent = wordpressEvents?.find(wp => wp.id === event.id);
+        return hasEventType(event, wpEvent, "à venir");
+      }).length,
+      "passé": eventsSource.filter(event => {
+        const wpEvent = wordpressEvents?.find(wp => wp.id === event.id);
+        return hasEventType(event, wpEvent, "passé");
+      }).length,
+      spotlight: eventsSource.filter(event => {
+        const wpEvent = wordpressEvents?.find(wp => wp.id === event.id);
+        return hasEventType(event, wpEvent, "spotlight");
+      }).length
     };
   };
 

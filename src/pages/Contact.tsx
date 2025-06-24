@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { Linkedin } from "lucide-react";
 
 const Contact = () => {
   const [nom, setNom] = useState("");
@@ -205,7 +207,7 @@ const Contact = () => {
                         </div>
                         <div className="mt-3">
                           <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
-                          <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
+                          <p>Abuja: 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
                         </div>
                         <div className="mt-3">
                           <p className="font-medium">Burundi - Growth Energy Solutions Burundi </p>
@@ -224,7 +226,8 @@ const Contact = () => {
                     <div>
                       <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Suivez-nous</h3>
                       <div className="flex space-x-4">
-                        <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-solio-blue">
+                        <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-solio-blue flex items-center">
+                          <Linkedin className="w-5 h-5 mr-1" />
                           LinkedIn
                         </a>
                       </div>
