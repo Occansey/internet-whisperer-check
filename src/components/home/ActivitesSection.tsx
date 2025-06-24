@@ -44,8 +44,11 @@ const ActivitesSection = () => {
         </div>
         
         <div className="flex justify-center mt-8">
-          <Button asChild variant="outline" className="text-solio-blue hover:text-white hover:bg-solio-blue">
-            <Link to="/activites">En savoir plus</Link>
+          <Button asChild className="bg-white text-solio-blue border border-solio-blue hover:bg-solio-blue hover:text-white">
+            <Link to="/activites">
+              <span>Nous contacter</span>
+              <span className="ml-2">✉</span>
+            </Link>
           </Button>
         </div>
       </div>
