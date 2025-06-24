@@ -131,6 +131,12 @@ const Media = () => {
           
           // Nouvelle image ajoutée
           { src: "/lovable-uploads/a4a20e5a-f634-422c-85f3-5a7ad5fc70cc.png", name: "Fumba Town Aerial View", type: "image" },
+          
+          // Previously uploaded image
+          { src: "/lovable-uploads/b2166923-4d02-4c9a-96fc-302c6d1b4fd2.png", name: "Culture Image", type: "image" },
+          
+          // New professional portrait
+          { src: "/lovable-uploads/28216485-597e-46fc-bc4d-703d6671169c.png", name: "Professional Portrait", type: "image" },
         ];
         
         setMedia(mediaItems);
