@@ -66,6 +66,37 @@ const extractGalleryImages = (wpProject: any): string[] => {
   return [...new Set(images)].filter(Boolean);
 };
 
+// Improved function to get featured image with multiple fallbacks
+const getFeaturedImage = (wpProject: any, galleryImages: string[]): string => {
+  // First priority: featured media from _embedded
+  if (wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return wpProject._embedded['wp:featuredmedia'][0].source_url;
+  }
+  
+  // Second priority: medium_large size for better quality
+  if (wpProject._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.medium_large?.source_url) {
+    return wpProject._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url;
+  }
+  
+  // Third priority: large size
+  if (wpProject._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.large?.source_url) {
+    return wpProject._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url;
+  }
+  
+  // Fourth priority: ACF featured image
+  if (wpProject.acf?.featured_image?.source_url) {
+    return wpProject.acf.featured_image.source_url;
+  }
+  
+  // Fifth priority: first gallery image
+  if (galleryImages.length > 0) {
+    return galleryImages[0];
+  }
+  
+  // Final fallback
+  return '/placeholder.svg';
+};
+
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -101,16 +132,8 @@ const ProjectDetail = () => {
         // Extract gallery images from WordPress data
         const galleryImages = extractGalleryImages(wpProject);
         
-        // Get featured image with fallback logic
-        let featuredImage = '/placeholder.svg';
-        if (wpProject._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
-          featuredImage = wpProject._embedded['wp:featuredmedia'][0].source_url;
-        } else if (wpProject.featured_media && wpProject._embedded?.['wp:featuredmedia']?.[0]) {
-          featuredImage = wpProject._embedded['wp:featuredmedia'][0].source_url;
-        } else if (galleryImages.length > 0) {
-          // Use first gallery image as fallback
-          featuredImage = galleryImages[0];
-        }
+        // Get featured image with improved fallback logic
+        const featuredImage = getFeaturedImage(wpProject, galleryImages);
         
         const transformedProject = {
           id: wpProject.id,
@@ -341,12 +364,12 @@ const ProjectDetail = () => {
                   <>
                     <WordPressContent content={project.description} />
                     
-                    {/* WordPress-specific content with bulleted list for Objectifs */}
+                    {/* WordPress-specific content with proper bulleted list for Objectifs */}
                     {project.wpData?.objectifs && (
                       <>
                         <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
                         <div 
-                          className="wordpress-objectifs [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-2 [&_li]:mb-2"
+                          className="wordpress-objectifs prose max-w-none [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:mb-2 [&_p]:mb-4"
                           dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.objectifs) }} 
                         />
                       </>
