@@ -53,7 +53,7 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow">
               <h2 className="text-2xl font-bold mb-6 text-solio-blue">Envoyez-nous un message</h2>
-              <ContactForm />
+              <ContactForm type="contact" />
             </div>
             
             {/* Office Information */}
