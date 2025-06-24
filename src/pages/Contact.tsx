@@ -1,140 +1,245 @@
-
-import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import ContactForm from "@/components/forms/ContactForm";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
-  const [activeOffice, setActiveOffice] = useState(0);
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [sujet, setSujet] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const offices = [
-    {
-      city: "Burundi",
-      address: "Boulevard de l'Uprona, Rohero I, Bujumbura",
-      phone: "+257 22 24 13 03",
-      email: "info.burundi@solio-group.com",
-      hours: "Lun - Ven: 8h00 - 17h00"
-    },
-    {
-      city: "Abuja",
-      address: "Plot 1348, Tiamiyu Savage Street, Victoria Island, Lagos",
-      phone: "+234 803 123 4567",
-      email: "info.nigeria@solio-group.com",
-      hours: "Lun - Ven: 9h00 - 18h00"
-    },
-    {
-      city: "Canada",
-      address: "1000 Rue de la Gauchetière O, Montréal, QC H3B 0A2",
-      phone: "+1 514 123 4567",
-      email: "info.canada@solio-group.com",
-      hours: "Lun - Ven: 9h00 - 17h00"
-    },
-    {
-      city: "France",
-      address: "15 Rue de la Paix, 75001 Paris",
-      phone: "+33 1 23 45 67 89",
-      email: "info.france@solio-group.com",
-      hours: "Lun - Ven: 9h00 - 18h00"
+  const saveSubmission = (formData: any) => {
+    const submission = {
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      ...formData,
+    };
+
+    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+    existingSubmissions.push(submission);
+    localStorage.setItem('formSubmissions', JSON.stringify(existingSubmissions));
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('formSubmitted'));
+  };
+
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Prepare data for email submission
+      const formData = {
+        name: `${prenom} ${nom}`, // Combine first and last name
+        email,
+        phone: telephone,
+        message: `Sujet: ${sujet}\n\nMessage: ${message}`, // Include subject in message
+        formType: "contact",
+        recipient: "contact@solio-group.com",
+        hasCv: false,
+      };
+      
+      // Save to localStorage
+      saveSubmission(formData);
+      
+      // In a real implementation, this would send to your backend API
+      console.log("Form data to be sent to contact@solio-group.com:", formData);
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Message envoyé",
+        description: "Votre message a été envoyé à contact@solio-group.com. Nous reviendrons vers vous dans les plus brefs délais.",
+      });
+      
+      // Reset form
+      setNom("");
+      setPrenom("");
+      setEmail("");
+      setTelephone("");
+      setSujet("");
+      setMessage("");
+      
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  ];
+  };
 
   return (
     <Layout>
-      <HeroBanner 
-        title="Contactez-nous"
-        description="Nous sommes présents dans plusieurs pays pour mieux vous servir. N'hésitez pas à nous contacter pour discuter de vos projets."
-        glowColor="green"
+      <HeroBanner
+        title="Contact"
+        description="Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? N'hésitez pas à nous contacter, nous vous répondrons rapidement."
+        glowColor="orange"
       />
       
-      <div className="py-12 bg-gray-50">
+      <div className="py-12 bg-gray-50 dark:bg-gray-900">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white p-8 rounded-lg shadow">
-              <h2 className="text-2xl font-bold mb-6 text-solio-blue">Envoyez-nous un message</h2>
-              <ContactForm type="contact" />
-            </div>
-            
-            {/* Office Information */}
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-solio-blue">Nos bureaux</h2>
-              
-              {/* Office Selection Buttons */}
-              <div className="grid grid-cols-2 gap-2">
-                {offices.map((office, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveOffice(index)}
-                    className={`p-3 rounded-lg border text-sm font-medium transition-all ${
-                      activeOffice === index
-                        ? "bg-solio-blue text-white border-solio-blue"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-solio-blue"
-                    }`}
+          <div className="grid md:grid-cols-5 gap-8">
+            <Card className="md:col-span-3 border-none shadow-md">
+              <CardContent className="pt-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label htmlFor="nom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Nom</label>
+                      <Input 
+                        id="nom" 
+                        placeholder="Votre nom" 
+                        required 
+                        value={nom}
+                        onChange={(e) => setNom(e.target.value)}
+                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="prenom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Prénom</label>
+                      <Input 
+                        id="prenom" 
+                        placeholder="Votre prénom" 
+                        required 
+                        value={prenom}
+                        onChange={(e) => setPrenom(e.target.value)}
+                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-sm font-medium text-gray-900 dark:text-gray-100">Email</label>
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="votre.email@exemple.com" 
+                        required 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="telephone" className="text-sm font-medium text-gray-900 dark:text-gray-100">Téléphone</label>
+                      <Input 
+                        id="telephone" 
+                        placeholder="Votre numéro de téléphone" 
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="sujet" className="text-sm font-medium text-gray-900 dark:text-gray-100">Sujet</label>
+                    <Input 
+                      id="sujet" 
+                      placeholder="Sujet de votre message" 
+                      required 
+                      value={sujet}
+                      onChange={(e) => setSujet(e.target.value)}
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium text-gray-900 dark:text-gray-100">Message</label>
+                    <Textarea 
+                      id="message" 
+                      placeholder="Votre message" 
+                      rows={6} 
+                      required 
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90 text-white dark:text-white"
+                    disabled={isSubmitting}
                   >
-                    {office.city}
-                  </button>
-                ))}
-              </div>
-              
-              {/* Active Office Details */}
-              <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-xl font-semibold mb-4 text-solio-blue">
-                  {offices[activeOffice].city}
-                </h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start space-x-3">
-                    <MapPin className="h-5 w-5 text-solio-blue mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">{offices[activeOffice].address}</p>
+                    {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <div className="md:col-span-2">
+              <Card className="border-none shadow-md h-full">
+                <CardContent className="pt-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Coordonnées</h3>
+                      <address className="not-italic space-y-2 text-gray-700 dark:text-gray-200">
+                        <p className="font-medium">Solio Group</p>
+                        <div className="mt-3">
+                          <p className="font-medium">France</p>
+                          <p>4 Rue De Longchamp, 75016, Paris</p>
+                          <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Canada</p>
+                          <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Africa HQ</p>
+                          <p>GEFI Solutions SEZ Limited</p>
+                          <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
+                          <p><strong>Abuja:</strong> 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Burundi - Growth Energy Solutions Burundi </p>
+                          <p>84 Avenue Ndamukiza , Bujumbura, Burundi</p>
+                        </div>
+                        <div className="mt-3">
+                          <p className="font-medium">Tanzania - Growth Energy Solutions Zanzibar </p>
+                          <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
+                        </div>
+                        <p className="mt-4">
+                          <strong>Email:</strong> contact@solio-group.com
+                        </p>
+                      </address>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Suivez-nous</h3>
+                      <div className="flex space-x-4">
+                        <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-solio-blue">
+                          LinkedIn
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="pt-4">
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Horaires d'ouverture</h3>
+                      <p className="text-gray-700 dark:text-gray-200">
+                        Du lundi au vendredi<br />
+                        9h00 - 18h00
+                      </p>
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-solio-blue flex-shrink-0" />
-                    <a 
-                      href={`tel:${offices[activeOffice].phone}`}
-                      className="text-gray-700 hover:text-solio-blue transition-colors"
-                    >
-                      {offices[activeOffice].phone}
-                    </a>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-solio-blue flex-shrink-0" />
-                    <a 
-                      href={`mailto:${offices[activeOffice].email}`}
-                      className="text-gray-700 hover:text-solio-blue transition-colors"
-                    >
-                      {offices[activeOffice].email}
-                    </a>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Clock className="h-5 w-5 text-solio-blue flex-shrink-0" />
-                    <p className="text-gray-700">{offices[activeOffice].hours}</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Quick Contact Info */}
-              <div className="bg-gradient-to-r from-solio-blue to-blue-600 text-white p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-3">Contact rapide</h3>
-                <p className="mb-2">
-                  <strong>Siège social:</strong> Burundi
-                </p>
-                <p className="mb-2">
-                  <strong>Email général:</strong>{" "}
-                  <a href="mailto:contact@solio-group.com" className="underline">
-                    contact@solio-group.com
-                  </a>
-                </p>
-                <p>
-                  <strong>Urgences:</strong>{" "}
-                  <a href="tel:+25722241303" className="underline">
-                    +257 22 24 13 03
-                  </a>
-                </p>
-              </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
