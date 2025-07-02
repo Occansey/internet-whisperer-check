@@ -4,127 +4,13 @@ import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 interface EngagementProps {
   title: string;
   description: string;
   icon: string;
 }
-
-const engagements: { [key: string]: EngagementProps[] } = {
-  "developpement": [
-    {
-      title: "Formation continue",
-      description: "Chaque collaborateur bénéficie d'un budget formation annuel et d'un plan de développement personnalisé.",
-      icon: "📚"
-    },
-    {
-      title: "Mobilité interne",
-      description: "Nous favorisons la mobilité interne entre services et filiales pour enrichir les parcours professionnels.",
-      icon: "🚀"
-    },
-    {
-      title: "Coaching & Mentoring",
-      description: "Un programme de coaching et de mentoring pour accélérer le développement des talents.",
-      icon: "🧠"
-    },
-    {
-      title: "Partage de connaissances",
-      description: "Ateliers réguliers de partage de connaissances et retours d'expérience entre collaborateurs.",
-      icon: "🔄"
-    }
-  ],
-  "bienetre": [
-    {
-      title: "Équilibre vie pro/perso",
-      description: "Télétravail flexible, horaires aménageables et respect du droit à la déconnexion.",
-      icon: "⚖️"
-    },
-    {
-      title: "Espaces de travail conviviaux",
-      description: "Des bureaux conçus pour favoriser à la fois la concentration et la collaboration.",
-      icon: "🏢"
-    },
-    {
-      title: "Programme bien-être",
-      description: "Accès à des services de soutien psychologique, cours de yoga et activités sportives.",
-      icon: "🧘"
-    },
-    {
-      title: "Événements d'équipe",
-      description: "Événements réguliers pour renforcer la cohésion d'équipe et célébrer nos réussites.",
-      icon: "🎉"
-    }
-  ],
-  "diversite": [
-    {
-      title: "Recrutement inclusif",
-      description: "Processus de recrutement conçu pour éliminer les biais et favoriser la diversité des profils.",
-      icon: "🤝"
-    },
-    {
-      title: "Équité salariale",
-      description: "Analyse régulière des rémunérations pour garantir l'équité entre tous les collaborateurs.",
-      icon: "💰"
-    },
-    {
-      title: "Sensibilisation",
-      description: "Formation des dirigeants et des équipes à la diversité et à l'inclusion.",
-      icon: "🧩"
-    },
-    {
-      title: "Accessibilité",
-      description: "Adaptation des postes de travail et de nos espaces pour les personnes en situation de handicap.",
-      icon: "♿"
-    }
-  ],
-  "engagement": [
-    {
-      title: "Projets à impact",
-      description: "Participation à des projets innovants contribuant à la transition énergétique et numérique.",
-      icon: "💡"
-    },
-    {
-      title: "RSE & Durabilité",
-      description: "Engagement concret pour réduire notre empreinte environnementale dans nos activités quotidiennes.",
-      icon: "🌱"
-    },
-    {
-      title: "Mécénat de compétences",
-      description: "Possibilité de consacrer du temps à des projets associatifs sur le temps de travail.",
-      icon: "🤲"
-    },
-    {
-      title: "Innovation participative",
-      description: "Programme d'intrapreneuriat permettant aux collaborateurs de développer leurs idées innovantes.",
-      icon: "🔍"
-    }
-  ]
-};
-
-const temoignages = [
-  {
-    name: "Sophie M.",
-    role: "Ingénieure Développement Solar",
-    testimonial: "Ce qui me plaît chez Solio Group, c'est l'équilibre parfait entre autonomie et accompagnement. J'ai pu développer de nouvelles compétences tout en travaillant sur des projets à fort impact en Afrique.",
-    filiale: "Growth Energy",
-    photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
-  },
-  {
-    name: "Marc L.",
-    role: "Consultant ERP",
-    testimonial: "Après 15 ans dans l'industrie, j'ai rejoint MFG Technologies pour transmettre mon expertise. L'entreprise m'a permis de me former aux dernières technologies tout en valorisant mon expérience passée.",
-    filiale: "MFG Technologies",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
-  },
-  {
-    name: "Maxwell O.",
-    role: "Developpeur IT",
-    testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre une formation de pointe et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
-    filiale: "Asking",
-    photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
-  }
-];
 
 const EngagementCard = ({ engagement }: { engagement: EngagementProps }) => {
   return (
@@ -167,6 +53,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
 };
 
 const EngagementsRH = () => {
+  const { t } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -180,11 +67,126 @@ const EngagementsRH = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  const engagements: { [key: string]: EngagementProps[] } = {
+    "developpement": [
+      {
+        title: "Formation continue",
+        description: "Chaque collaborateur bénéficie d'un budget formation annuel et d'un plan de développement personnalisé.",
+        icon: "📚"
+      },
+      {
+        title: "Mobilité interne",
+        description: "Nous favorisons la mobilité interne entre services et filiales pour enrichir les parcours professionnels.",
+        icon: "🚀"
+      },
+      {
+        title: "Coaching & Mentoring",
+        description: "Un programme de coaching et de mentoring pour accélérer le développement des talents.",
+        icon: "🧠"
+      },
+      {
+        title: "Partage de connaissances",
+        description: "Ateliers réguliers de partage de connaissances et retours d'expérience entre collaborateurs.",
+        icon: "🔄"
+      }
+    ],
+    "bienetre": [
+      {
+        title: "Équilibre vie pro/perso",
+        description: "Télétravail flexible, horaires aménageables et respect du droit à la déconnexion.",
+        icon: "⚖️"
+      },
+      {
+        title: "Espaces de travail conviviaux",
+        description: "Des bureaux conçus pour favoriser à la fois la concentration et la collaboration.",
+        icon: "🏢"
+      },
+      {
+        title: "Programme bien-être",
+        description: "Accès à des services de soutien psychologique, cours de yoga et activités sportives.",
+        icon: "🧘"
+      },
+      {
+        title: "Événements d'équipe",
+        description: "Événements réguliers pour renforcer la cohésion d'équipe et célébrer nos réussites.",
+        icon: "🎉"
+      }
+    ],
+    "diversite": [
+      {
+        title: "Recrutement inclusif",
+        description: "Processus de recrutement conçu pour éliminer les biais et favoriser la diversité des profils.",
+        icon: "🤝"
+      },
+      {
+        title: "Équité salariale",
+        description: "Analyse régulière des rémunérations pour garantir l'équité entre tous les collaborateurs.",
+        icon: "💰"
+      },
+      {
+        title: "Sensibilisation",
+        description: "Formation des dirigeants et des équipes à la diversité et à l'inclusion.",
+        icon: "🧩"
+      },
+      {
+        title: "Accessibilité",
+        description: "Adaptation des postes de travail et de nos espaces pour les personnes en situation de handicap.",
+        icon: "♿"
+      }
+    ],
+    "engagement": [
+      {
+        title: "Projets à impact",
+        description: "Participation à des projets innovants contribuant à la transition énergétique et numérique.",
+        icon: "💡"
+      },
+      {
+        title: "RSE & Durabilité",
+        description: "Engagement concret pour réduire notre empreinte environnementale dans nos activités quotidiennes.",
+        icon: "🌱"
+      },
+      {
+        title: "Mécénat de compétences",
+        description: "Possibilité de consacrer du temps à des projets associatifs sur le temps de travail.",
+        icon: "🤲"
+      },
+      {
+        title: "Innovation participative",
+        description: "Programme d'intrapreneuriat permettant aux collaborateurs de développer leurs idées innovantes.",
+        icon: "🔍"
+      }
+    ]
+  };
+
+  const temoignages = [
+    {
+      name: "Sophie M.",
+      role: "Ingénieure Développement Solar",
+      testimonial: "Ce qui me plaît chez Solio Group, c'est l'équilibre parfait entre autonomie et accompagnement. J'ai pu développer de nouvelles compétences tout en travaillant sur des projets à fort impact en Afrique.",
+      filiale: "Growth Energy",
+      photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
+    },
+    {
+      name: "Marc L.",
+      role: "Consultant ERP",
+      testimonial: "Après 15 ans dans l'industrie, j'ai rejoint MFG Technologies pour transmettre mon expertise. L'entreprise m'a permis de me former aux dernières technologies tout en valorisant mon expérience passée.",
+      filiale: "MFG Technologies",
+      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+    },
+    {
+      name: "Maxwell O.",
+      role: "Developpeur IT",
+      testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre une formation de pointe et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
+      filiale: "Asking",
+      photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
+    }
+  ];
+
   return (
     <Layout>
       <HeroBanner 
-        title="Nos Engagements RH"
-        description="Chez Solio Group, nous croyons que notre réussite repose sur l'épanouissement de nos collaborateurs. Découvrez nos engagements pour créer un environnement de travail stimulant, inclusif et humain."
+        title={t('hr.commitments.title')}
+        description={t('hr.commitments.description')}
         glowColor="red"
       />
       
@@ -218,7 +220,7 @@ const EngagementsRH = () => {
           </Tabs>
           
           <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-8 text-center">Ce que disent nos collaborateurs</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">{t('hr.testimonials.title')}</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {temoignages.map((temoignage, index) => (
                 <TestimonialCard key={index} testimonial={temoignage} />
@@ -227,23 +229,23 @@ const EngagementsRH = () => {
           </div>
           
           <div className="mt-16 text-center">
-            <h2 className="text-2xl font-bold mb-4">Notre approche RH en chiffres</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('hr.stats.title')}</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">45%</div>
-                <p className="text-gray-600 mt-2">De femmes dans nos équipes</p>
+                <p className="text-gray-600 mt-2">{t('hr.stats.women')}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">14</div>
-                <p className="text-gray-600 mt-2">Nationalités représentées</p>
+                <p className="text-gray-600 mt-2">{t('hr.stats.nationalities')}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">6</div>
-                <p className="text-gray-600 mt-2">Villes</p>
+                <p className="text-gray-600 mt-2">{t('hr.stats.cities')}</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="text-4xl font-bold text-solio-blue">5</div>
-                <p className="text-gray-600 mt-2">Pays</p>
+                <p className="text-gray-600 mt-2">{t('hr.stats.countries')}</p>
               </div>
             </div>
           </div>
