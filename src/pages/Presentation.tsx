@@ -8,8 +8,11 @@ import { StatCard } from "@/components/ui/stat-card";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Presentation = () => {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     // Add smooth scrolling effect to the page
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -82,17 +85,17 @@ const Presentation = () => {
       </Helmet>
 
       <HeroBanner 
-        title="Présentation du Groupe Solio"
-        description="Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale."
+        title={t('presentation.hero.title')}
+        description={t('presentation.hero.subtitle')}
         glowColor="blue"
       >
         <div className="flex flex-col items-center space-y-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400 rounded-lg">
-              <Link to="/nos-filiales">Découvrir nos filiales</Link>
+              <Link to="/nos-filiales">{t('presentation.discover.button')}</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-solio-blue bg-solio-blue text-white hover:bg-white hover:text-solio-blue rounded-lg">
-              <Link to="/contact">Nous contacter</Link>
+              <Link to="/contact">{t('presentation.contact.button')}</Link>
             </Button>
           </div>
           <div 
@@ -109,7 +112,7 @@ const Presentation = () => {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6 text-solio-blue">Notre histoire</h2>
+              <h2 className="text-3xl font-bold mb-6 text-solio-blue">{t('presentation.history.title')}</h2>
               <p className="text-gray-700 mb-4">
                 Solio Group est l'évolution naturelle de Growth Supply, une entreprise fondée en 2019 avec une mission ambitieuse : accélérer la transition énergétique en Afrique et accompagner la transformation numérique des organisations. En 2025, ce changement d'identité marque une nouvelle étape dans notre développement, reflétant notre vision élargie et notre engagement renforcé à proposer des solutions durables et technologiques pour un avenir meilleur.
               </p>
@@ -140,7 +143,7 @@ const Presentation = () => {
       {/* Notre impact en chiffres */}
       <section id="impact" className="py-20 bg-gray-50">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">Notre impact en chiffres</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">{t('presentation.impact.title')}</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatCard 
@@ -165,9 +168,9 @@ const Presentation = () => {
       {/* Pourquoi Solio? */}
       <section id="pourquoi" className="py-20 bg-white">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Pourquoi Solio?</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">{t('presentation.why.title')}</h2>
           <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Notre nom reflète notre vision et notre mission, combinant l'énergie solaire et la technologie numérique.
+            {t('presentation.why.subtitle')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

@@ -169,17 +169,17 @@ const Culture = () => {
       />
 
       <HeroBanner 
-        title="Notre culture d'entreprise"
-        description="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable."
+        title={t('culture.hero.title')}
+        description={t('culture.hero.subtitle')}
         glowColor="pink"
       />
 
       {/* Piliers de notre culture */}
       <section className="py-20 bg-white">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Les piliers de notre culture</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">{t('culture.pillars.title')}</h2>
           <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Notre culture d'entreprise repose sur quatre piliers fondamentaux qui guident nos actions et nos décisions au quotidien.
+            {t('culture.pillars.subtitle')}
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -309,13 +309,13 @@ const Culture = () => {
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-solio-blue to-blue-900 text-white">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-6">Rejoignez notre équipe</h2>
+          <h2 className="text-3xl font-bold mb-6">{t('culture.join.title')}</h2>
           <p className="text-lg mb-8 max-w-3xl mx-auto text-gray-100">
-            Venez contribuer à notre culture et participez à des projets innovants qui façonnent l'avenir énergétique et numérique.
+            {t('culture.join.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-              <Link to="/carrieres/rejoignez-nous">Voir nos opportunités</Link>
+              <Link to="/carrieres/rejoignez-nous">{t('culture.join.opportunities')}</Link>
             </Button>
             <Button asChild size="lg" className="bg-solio-blue text-white hover:bg-solio-blue/90 border-white">
               <Link to="/carrieres/engagements-rh">{t('culture.hr.button')}</Link>

@@ -10,8 +10,8 @@ const Activites = () => {
   return (
     <Layout>
       <HeroBanner
-        title="Nos domaines d'activité"
-        description="Découvrez comment Solio Group accompagne ses clients dans leur transformation énergétique et digitale."
+        title={t('activities.hero.title')}
+        description={t('activities.hero.subtitle')}
         glowColor="blue"
       />
 
@@ -20,7 +20,7 @@ const Activites = () => {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6 text-solio-blue">Demandez un audit gratuit</h2>
+              <h2 className="text-3xl font-bold mb-6 text-solio-blue">{t('activities.audit.title')}</h2>
               <p className="text-gray-700 mb-4">
                 Nos experts réalisent un audit complet de votre situation actuelle et vous proposent des solutions sur mesure pour optimiser votre performance énergétique et digitale.
               </p>
@@ -56,9 +56,9 @@ const Activites = () => {
       {/* Nos domaines d'expertise */}
       <section className="py-20 bg-gray-50">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Nos domaines d'expertise</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">{t('activities.expertise.title')}</h2>
           <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Nous intervenons sur l'ensemble de la chaîne de valeur de la transformation énergétique et digitale, de la conception à la mise en œuvre.
+            {t('activities.expertise.subtitle')}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -100,9 +100,9 @@ const Activites = () => {
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-solio-blue to-blue-900 text-white">
         <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-6">Prêt à passer à l'action ?</h2>
+          <h2 className="text-3xl font-bold mb-6">{t('activities.cta.title')}</h2>
           <p className="text-lg mb-8 max-w-3xl mx-auto text-gray-100">
-            Contactez-nous dès maintenant pour discuter de vos projets et bénéficier de notre expertise.
+            {t('activities.cta.subtitle')}
           </p>
           <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
             <Link to="/contact">Contactez-nous</Link>

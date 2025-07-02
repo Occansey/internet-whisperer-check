@@ -1,9 +1,13 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, BarChart, Globe } from "lucide-react";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const MissionVision = () => {
+  const { t } = useTranslation();
+  
   const objectives = [
     {
       title: "Accélérer la transition énergétique",
@@ -28,8 +32,8 @@ const MissionVision = () => {
   return (
     <Layout>
       <HeroBanner
-        title="Notre Mission & Vision"
-        description="Une vision claire guidée par des valeurs fortes pour répondre aux défis de la transition énergétique et digitale."
+        title={t('mission.hero.title')}
+        description={t('mission.hero.subtitle')}
         glowColor="green"
       />
 
@@ -37,7 +41,7 @@ const MissionVision = () => {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
-              <h2 className="text-2xl font-semibold mb-4 text-solio-blue">Notre Mission</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-solio-blue">{t('mission.our.mission')}</h2>
               <p className="text-gray-700 mb-6">
                 Accompagner les entreprises et les industries dans leurs projets de transition énergétique et de transformation digitale, en concevant et en déployant des solutions durables et adaptées à leurs besoins opérationnels.
               </p>
@@ -63,7 +67,7 @@ const MissionVision = () => {
               />
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="text-2xl font-semibold mb-4 text-solio-blue">Notre Vision</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-solio-blue">{t('mission.our.vision')}</h2>
               <p className="text-gray-700 mb-6">
                 Devenir un acteur de référence dans la mise en œuvre de solutions énergétiques et numériques durables, reconnues pour leur impact positif sur les entreprises, les communautés et l'environnement.
               </p>
@@ -74,7 +78,7 @@ const MissionVision = () => {
           </div>
 
           <div className="mb-20">
-            <h2 className="text-2xl font-semibold mb-8 text-center text-solio-blue">Nos Objectifs</h2>
+            <h2 className="text-2xl font-semibold mb-8 text-center text-solio-blue">{t('mission.objectives.title')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {objectives.map((objective, index) => (
                 <Card key={index} className={`border-none shadow-md ${objective.color}`}>
@@ -91,7 +95,7 @@ const MissionVision = () => {
           </div>
 
           <div className="bg-gray-50 rounded-lg p-8 shadow-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-solio-blue">Nos Valeurs</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-solio-blue">{t('mission.values.title')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="p-4">
                 <h3 className="text-xl font-medium mb-2 text-solio-blue">Innovation</h3>

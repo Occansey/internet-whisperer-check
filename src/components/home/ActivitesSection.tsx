@@ -2,8 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const ActivitesSection = () => {
+  const { t } = useTranslation();
+  
   return (
     <section className="py-16 bg-gray-50">
       <div className="container">
@@ -46,7 +49,7 @@ const ActivitesSection = () => {
         <div className="flex justify-center mt-8">
           <Button asChild className="bg-white text-solio-blue border border-solio-blue hover:bg-solio-blue hover:text-white">
             <Link to="/activites">
-              <span>Nous contacter</span>
+              <span>{t('common.contact')}</span>
               <span className="ml-2">✉</span>
             </Link>
           </Button>
