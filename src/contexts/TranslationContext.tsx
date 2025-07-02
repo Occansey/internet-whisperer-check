@@ -82,6 +82,15 @@ const translations = {
     'home.stats.projects': 'Projets réalisés',
     'home.stats.countries': 'Pays d\'intervention',
     'home.stats.employees': 'Collaborateurs',
+    
+    // Home Mission section
+    'home.mission.mission.subtitle': 'Notre engagement pour une transition durable',
+    'home.mission.mission.text1': 'Chez Solio Group, nous croyons que l\'avenir énergétique de notre planète dépend de notre capacité à innover et à collaborer.',
+    'home.mission.mission.text2': 'Nos solutions s\'adaptent aux besoins spécifiques de chaque client, créant un impact mesurable et durable.',
+    'home.mission.tab1': 'Mission',
+    'home.mission.tab2': 'Vision', 
+    'home.mission.tab3': 'Objectifs',
+    'home.mission.mission.title': 'Notre Mission',
 
     // Mission Vision
     'mission.hero.title': 'Notre Mission & Vision',
@@ -425,6 +434,15 @@ const translations = {
     'home.stats.projects': 'Completed projects',
     'home.stats.countries': 'Countries of operation',
     'home.stats.employees': 'Employees',
+    
+    // Home Mission section
+    'home.mission.mission.subtitle': 'Our commitment to sustainable transition',
+    'home.mission.mission.text1': 'At Solio Group, we believe that the energy future of our planet depends on our ability to innovate and collaborate.',
+    'home.mission.mission.text2': 'Our solutions adapt to the specific needs of each client, creating measurable and sustainable impact.',
+    'home.mission.tab1': 'Mission',
+    'home.mission.tab2': 'Vision', 
+    'home.mission.tab3': 'Objectives',
+    'home.mission.mission.title': 'Our Mission',
 
     // Mission Vision
     'mission.hero.title': 'Our Mission & Vision',
