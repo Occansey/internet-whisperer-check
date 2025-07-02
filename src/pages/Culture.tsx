@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Link } from "react-router-dom";
@@ -8,140 +9,141 @@ import { Helmet } from "react-helmet-async";
 import SEOStructuredData from "@/components/seo/SEOStructuredData";
 import { useTranslation } from "@/contexts/TranslationContext";
 
-const culturePillars = [
-  {
-    title: "L'humain au centre",
-    description: "Chez Solio Group, nous plaçons l'humain au cœur de notre modèle d'entreprise. Notre réussite dépend du bien-être, de l'engagement et du développement de nos collaborateurs.",
-    points: [
-      "Attention au bien-être et à l'épanouissement professionnel",
-      "Équilibre entre vie professionnelle et personnelle",
-      "Écoute active et communication transparente",
-      "Reconnaissance et célébration des succès"
-    ]
-  },
-  {
-    title: "Innovation collaborative",
-    description: "Nous encourageons une culture d'innovation où chaque voix compte. Nous favorisons les idées nouvelles et l'expérimentation collective pour résoudre les défis complexes.",
-    points: [
-      "Environnement propice à la créativité",
-      "Échanges interdisciplinaires fréquents",
-      "Droit à l'erreur et apprentissage continu",
-      "Approche design thinking centrée sur l'utilisateur"
-    ]
-  },
-  {
-    title: "Excellence opérationnelle",
-    description: "Nous visons l'excellence dans tout ce que nous entreprenons, avec une attention méticuleuse aux détails et un engagement envers la qualité à tous les niveaux.",
-    points: [
-      "Processus rigoureux mais adaptables",
-      "Amélioration continue de nos méthodes",
-      "Mesure régulière de notre performance",
-      "Formation et développement des compétences"
-    ]
-  },
-  {
-    title: "Impact durable",
-    description: "Nous souhaitons avoir un impact positif et durable sur l'environnement, les communautés et l'économie dans les régions où nous opérons.",
-    points: [
-      "Réflexion systématique sur l'impact environnemental",
-      "Engagement auprès des communautés locales",
-      "Développement de compétences sur le long terme",
-      "Modèles économiques favorisant l'inclusion et la durabilité"
-    ]
-  }
-];
-
-const principesLieu = [
-  {
-    title: "Espaces flexibles",
-    description: "Nos bureaux sont conçus pour s'adapter à différents modes de travail : concentration, collaboration, créativité et détente.",
-    icon: "🏢"
-  },
-  {
-    title: "Aménagements conviviaux",
-    description: "Nous créons des espaces chaleureux et accueillants favorisant les échanges spontanés et le bien-être.",
-    icon: "🪴"
-  },
-  {
-    title: "Outils collaboratifs",
-    description: "Nous utilisons les meilleures technologies pour faciliter le travail d'équipe, que ce soit en présentiel ou à distance.",
-    icon: "💻"
-  },
-  {
-    title: "Ouverture sur l'extérieur",
-    description: "Nos espaces sont conçus pour accueillir partenaires, clients et communautés lors d'événements et d'ateliers.",
-    icon: "🔓"
-  }
-];
-
-const principesFacon = [
-  {
-    title: "Autonomie responsable",
-    description: "Nous offrons à nos collaborateurs la liberté d'organiser leur travail, avec une responsabilité partagée sur les résultats.",
-    icon: "🚀"
-  },
-  {
-    title: "Flexibilité",
-    description: "Nous proposons des horaires flexibles et la possibilité de télétravailler pour permettre à chacun de trouver son équilibre.",
-    icon: "⏰"
-  },
-  {
-    title: "Développement continu",
-    description: "Nous encourageons l'apprentissage permanent à travers formations, mentorat et projets transverses.",
-    icon: "📚"
-  },
-  {
-    title: "Intelligence collective",
-    description: "Nous favorisons la collaboration et la co-construction des solutions à travers des rituels d'équipe efficaces.",
-    icon: "🧩"
-  }
-];
-
-const principesCroissance = [
-  {
-    title: "Croissance intentionnelle",
-    description: "Nous visons une croissance maîtrisée qui préserve notre culture et nos valeurs tout en augmentant notre impact.",
-    icon: "📈"
-  },
-  {
-    title: "Diversité & inclusion",
-    description: "Nous construisons des équipes diverses, représentatives des marchés et communautés que nous servons.",
-    icon: "🌈"
-  },
-  {
-    title: "Leadership partagé",
-    description: "Nous développons les compétences de leadership à tous les niveaux de l'organisation.",
-    icon: "👥"
-  },
-  {
-    title: "Engagement social",
-    description: "Nous soutenons activement des initiatives sociales et environnementales alignées avec notre mission.",
-    icon: "🌱"
-  }
-];
-
 const Culture = () => {
   const { t } = useTranslation();
+
+  const culturePillars = [
+    {
+      title: t('culture.pillar1.title'),
+      description: t('culture.pillar1.description'),
+      points: [
+        t('culture.pillar1.point1'),
+        t('culture.pillar1.point2'),
+        t('culture.pillar1.point3'),
+        t('culture.pillar1.point4')
+      ]
+    },
+    {
+      title: t('culture.pillar2.title'),
+      description: t('culture.pillar2.description'),
+      points: [
+        t('culture.pillar2.point1'),
+        t('culture.pillar2.point2'),
+        t('culture.pillar2.point3'),
+        t('culture.pillar2.point4')
+      ]
+    },
+    {
+      title: t('culture.pillar3.title'),
+      description: t('culture.pillar3.description'),
+      points: [
+        t('culture.pillar3.point1'),
+        t('culture.pillar3.point2'),
+        t('culture.pillar3.point3'),
+        t('culture.pillar3.point4')
+      ]
+    },
+    {
+      title: t('culture.pillar4.title'),
+      description: t('culture.pillar4.description'),
+      points: [
+        t('culture.pillar4.point1'),
+        t('culture.pillar4.point2'),
+        t('culture.pillar4.point3'),
+        t('culture.pillar4.point4')
+      ]
+    }
+  ];
+
+  const principesLieu = [
+    {
+      title: "Espaces flexibles",
+      description: "Nos bureaux sont conçus pour s'adapter à différents modes de travail : concentration, collaboration, créativité et détente.",
+      icon: "🏢"
+    },
+    {
+      title: "Aménagements conviviaux",
+      description: "Nous créons des espaces chaleureux et accueillants favorisant les échanges spontanés et le bien-être.",
+      icon: "🪴"
+    },
+    {
+      title: "Outils collaboratifs",
+      description: "Nous utilisons les meilleures technologies pour faciliter le travail d'équipe, que ce soit en présentiel ou à distance.",
+      icon: "💻"
+    },
+    {
+      title: "Ouverture sur l'extérieur",
+      description: "Nos espaces sont conçus pour accueillir partenaires, clients et communautés lors d'événements et d'ateliers.",
+      icon: "🔓"
+    }
+  ];
+
+  const principesFacon = [
+    {
+      title: "Autonomie responsable",
+      description: "Nous offrons à nos collaborateurs la liberté d'organiser leur travail, avec une responsabilité partagée sur les résultats.",
+      icon: "🚀"
+    },
+    {
+      title: "Flexibilité",
+      description: "Nous proposons des horaires flexibles et la possibilité de télétravailler pour permettre à chacun de trouver son équilibre.",
+      icon: "⏰"
+    },
+    {
+      title: "Développement continu",
+      description: "Nous encourageons l'apprentissage permanent à travers formations, mentorat et projets transverses.",
+      icon: "📚"
+    },
+    {
+      title: "Intelligence collective",
+      description: "Nous favorisons la collaboration et la co-construction des solutions à travers des rituels d'équipe efficaces.",
+      icon: "🧩"
+    }
+  ];
+
+  const principesCroissance = [
+    {
+      title: "Croissance intentionnelle",
+      description: "Nous visons une croissance maîtrisée qui préserve notre culture et nos valeurs tout en augmentant notre impact.",
+      icon: "📈"
+    },
+    {
+      title: "Diversité & inclusion",
+      description: "Nous construisons des équipes diverses, représentatives des marchés et communautés que nous servons.",
+      icon: "🌈"
+    },
+    {
+      title: "Leadership partagé",
+      description: "Nous développons les compétences de leadership à tous les niveaux de l'organisation.",
+      icon: "👥"
+    },
+    {
+      title: "Engagement social",
+      description: "Nous soutenons activement des initiatives sociales et environnementales alignées avec notre mission.",
+      icon: "🌱"
+    }
+  ];
+
   return (
     <Layout>
       <Helmet>
-        <title>Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable</title>
-        <meta name="description" content="Découvrez la culture d'entreprise de Solio Group : l'humain au centre, innovation collaborative, excellence opérationnelle et impact durable. Rejoignez notre équipe multiculturelle." />
+        <title>{t('culture.title')}</title>
+        <meta name="description" content={t('culture.description')} />
         <meta name="keywords" content="culture entreprise, Solio Group, valeurs, innovation, impact durable, diversité inclusion, ressources humaines, emploi" />
         <link rel="canonical" href="https://solio-group.com/culture" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://solio-group.com/culture" />
-        <meta property="og:title" content="Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable" />
-        <meta property="og:description" content="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable chez Solio Group." />
+        <meta property="og:title" content={t('culture.title')} />
+        <meta property="og:description" content={t('culture.hero.subtitle')} />
         <meta property="og:image" content="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://solio-group.com/culture" />
-        <meta name="twitter:title" content="Culture d'entreprise Solio Group | Valeurs, Innovation et Impact Durable" />
-        <meta name="twitter:description" content="L'humain au cœur de notre développement — une culture d'innovation, de collaboration et d'impact durable chez Solio Group." />
+        <meta name="twitter:title" content={t('culture.title')} />
+        <meta name="twitter:description" content={t('culture.hero.subtitle')} />
         <meta name="twitter:image" content="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" />
       </Helmet>
 
@@ -205,16 +207,16 @@ const Culture = () => {
       {/* Nos principes */}
       <section className="py-20 bg-gray-50">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">Nos principes de travail</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center text-solio-blue">{t('culture.principles.title')}</h2>
           <p className="text-center text-gray-700 mb-12 max-w-3xl mx-auto">
-            Chez Solio Group, nous avons défini des principes clairs pour créer un environnement de travail épanouissant et performant.
+            {t('culture.principles.subtitle')}
           </p>
           
           <Tabs defaultValue="lieu" className="w-full">
             <TabsList className="grid grid-cols-3 max-w-md mx-auto mb-12">
-              <TabsTrigger value="lieu">Où</TabsTrigger>
-              <TabsTrigger value="facon">Comment</TabsTrigger>
-              <TabsTrigger value="croissance">Évolution</TabsTrigger>
+              <TabsTrigger value="lieu">{t('culture.principles.where')}</TabsTrigger>
+              <TabsTrigger value="facon">{t('culture.principles.how')}</TabsTrigger>
+              <TabsTrigger value="croissance">{t('culture.principles.evolution')}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="lieu">
@@ -273,32 +275,24 @@ const Culture = () => {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6 text-solio-blue">Diversité & Inclusion</h2>
+              <h2 className="text-3xl font-bold mb-6 text-solio-blue">{t('culture.diversity.title')}</h2>
               <p className="text-gray-700 mb-4">
-                Chez Solio Group, nous croyons fermement que la diversité renforce notre innovation et notre compréhension des marchés que nous servons. Nous travaillons activement à créer un environnement inclusif où chacun se sent valorisé et respecté.
+                {t('culture.diversity.text1')}
               </p>
               <p className="text-gray-700 mb-4">
-                Nos engagements concrets:
+                {t('culture.diversity.text2')}
               </p>
               <ul className="list-disc pl-5 text-gray-700 mb-6">
-                <li className="mb-2">
-                  Processus de recrutement objectifs et transparents
-                </li>
-                <li className="mb-2">
-                  Programmes de sensibilisation et de formation à la diversité
-                </li>
-                <li className="mb-2">
-                  Groupes d'affinité et réseaux internes
-                </li>
-                <li>
-                  Objectifs mesurables en matière de diversité et d'inclusion
-                </li>
+                <li className="mb-2">{t('culture.diversity.point1')}</li>
+                <li className="mb-2">{t('culture.diversity.point2')}</li>
+                <li className="mb-2">{t('culture.diversity.point3')}</li>
+                <li>{t('culture.diversity.point4')}</li>
               </ul>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
                 src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" 
-                alt="Diversité et inclusion" 
+                alt={t('culture.diversity.title')} 
                 className="w-full h-auto"
               />
             </div>

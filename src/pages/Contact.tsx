@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Linkedin } from "lucide-react";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +45,7 @@ const Contact = () => {
         name: `${prenom} ${nom}`, // Combine first and last name
         email,
         phone: telephone,
-        message: `Sujet: ${sujet}\n\nMessage: ${message}`, // Include subject in message
+        message: `${t('contact.form.subject')}: ${sujet}\n\n${t('contact.form.message')}: ${message}`, // Include subject in message
         formType: "contact",
         recipient: "contact@solio-group.com",
         hasCv: false,
@@ -59,8 +61,8 @@ const Contact = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
-        title: "Message envoyé",
-        description: "Votre message a été envoyé à contact@solio-group.com. Nous reviendrons vers vous dans les plus brefs délais.",
+        title: t('contact.form.success.title'),
+        description: t('contact.form.success.description')
       });
       
       // Reset form
@@ -74,8 +76,8 @@ const Contact = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+        title: t('contact.form.error.title'),
+        description: t('contact.form.error.description'),
         variant: "destructive",
       });
     } finally {
@@ -86,8 +88,8 @@ const Contact = () => {
   return (
     <Layout>
       <HeroBanner
-        title="Contact"
-        description="Vous avez une question, un projet, une demande de partenariat ou une candidature spontanée ? N'hésitez pas à nous contacter, nous vous répondrons rapidement."
+        title={t('contact.title')}
+        description={t('contact.description')}
         glowColor="orange"
       />
       
@@ -99,10 +101,10 @@ const Contact = () => {
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="nom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Nom</label>
+                      <label htmlFor="nom" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.name')}</label>
                       <Input 
                         id="nom" 
-                        placeholder="Votre nom" 
+                        placeholder={t('contact.form.name')}
                         required 
                         value={nom}
                         onChange={(e) => setNom(e.target.value)}
@@ -110,10 +112,10 @@ const Contact = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="prenom" className="text-sm font-medium text-gray-900 dark:text-gray-100">Prénom</label>
+                      <label htmlFor="prenom" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.firstname')}</label>
                       <Input 
                         id="prenom" 
-                        placeholder="Votre prénom" 
+                        placeholder={t('contact.form.firstname')}
                         required 
                         value={prenom}
                         onChange={(e) => setPrenom(e.target.value)}
@@ -124,11 +126,11 @@ const Contact = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-900 dark:text-gray-100">Email</label>
+                      <label htmlFor="email" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.email')}</label>
                       <Input 
                         id="email" 
                         type="email" 
-                        placeholder="votre.email@exemple.com" 
+                        placeholder={t('contact.form.email')}
                         required 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -136,10 +138,10 @@ const Contact = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="telephone" className="text-sm font-medium text-gray-900 dark:text-gray-100">Téléphone</label>
+                      <label htmlFor="telephone" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.phone')}</label>
                       <Input 
                         id="telephone" 
-                        placeholder="Votre numéro de téléphone" 
+                        placeholder={t('contact.form.phone')}
                         value={telephone}
                         onChange={(e) => setTelephone(e.target.value)}
                         className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
@@ -148,10 +150,10 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="sujet" className="text-sm font-medium text-gray-900 dark:text-gray-100">Sujet</label>
+                    <label htmlFor="sujet" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.subject')}</label>
                     <Input 
                       id="sujet" 
-                      placeholder="Sujet de votre message" 
+                      placeholder={t('contact.form.subject')}
                       required 
                       value={sujet}
                       onChange={(e) => setSujet(e.target.value)}
@@ -160,10 +162,10 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-900 dark:text-gray-100">Message</label>
+                    <label htmlFor="message" className="text-sm font-medium text-gray-900 dark:text-gray-100">{t('contact.form.message')}</label>
                     <Textarea 
                       id="message" 
-                      placeholder="Votre message" 
+                      placeholder={t('contact.form.message')}
                       rows={6} 
                       required 
                       value={message}
@@ -177,7 +179,7 @@ const Contact = () => {
                     className="w-full md:w-auto bg-solio-blue hover:bg-solio-blue/90 text-white dark:text-white"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                    {isSubmitting ? t('contact.form.sending') : t('contact.form.send')}
                   </Button>
                 </form>
               </CardContent>
@@ -188,34 +190,33 @@ const Contact = () => {
                 <CardContent className="pt-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Coordonnées</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">{t('contact.coordinates.title')}</h3>
                       <address className="not-italic space-y-2 text-gray-700 dark:text-gray-200">
                         <p className="font-medium">Solio Group</p>
                         <div className="mt-3">
-                          <p className="font-medium">France</p>
+                          <p className="font-medium">{t('contact.coordinates.france')}</p>
                           <p>4 Rue De Longchamp, 75016, Paris</p>
                           <p>211 Chem. de la Madrague-Ville, 13015 Marseille</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Canada</p>
+                          <p className="font-medium">{t('contact.coordinates.canada')}</p>
                           <p>368 R. Notre Dame O, Montréal, QC H2Y 1T9</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Africa HQ</p>
+                          <p className="font-medium">{t('contact.coordinates.africa')}</p>
                           <p>GEFI Solutions SEZ Limited</p>
                           <p>4th Floor, North Tower, Two Rivers Finance and Innovation Center, Nairobi, Kenya</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Nigeria - Growth Energy Solutions Nigeria </p>
+                          <p className="font-medium">{t('contact.coordinates.nigeria')}</p>
                           <p >Abuja: 9, A-Avenue, Citec Estate, Mbora District, Abuja</p>
-
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Burundi - Growth Energy Solutions Burundi </p>
+                          <p className="font-medium">{t('contact.coordinates.burundi')}</p>
                           <p>84 Avenue Ndamukiza , Bujumbura, Burundi</p>
                         </div>
                         <div className="mt-3">
-                          <p className="font-medium">Tanzania - Growth Energy Solutions Zanzibar </p>
+                          <p className="font-medium">{t('contact.coordinates.tanzania')}</p>
                           <p>Zanzibar - Tanzania: Fumba Town, Main Entrance, Urban West P.O. Box 3564, Zanzibar</p>
                         </div>
                         <p className="mt-4">
@@ -225,7 +226,7 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Suivez-nous</h3>
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">{t('contact.follow.title')}</h3>
                       <div className="flex space-x-4">
                         <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-solio-blue flex items-center">
                           <Linkedin className="w-5 h-5 mr-1" />
@@ -235,10 +236,9 @@ const Contact = () => {
                     </div>
 
                     <div className="pt-4">
-                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">Horaires d'ouverture</h3>
-                      <p className="text-gray-700 dark:text-gray-200">
-                        Du lundi au vendredi<br />
-                        9h00 - 18h00
+                      <h3 className="text-lg font-semibold mb-2 text-solio-blue dark:text-solio-yellow">{t('contact.hours.title')}</h3>
+                      <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line">
+                        {t('contact.hours.text')}
                       </p>
                     </div>
                   </div>
