@@ -86,10 +86,17 @@ const getTranslations = () => ({
     'contact.form.message': 'Message',
     'contact.form.send': 'Envoyer',
 
-    // Footer
-    'footer.copyright': '© 2024 Solio Group. Tous droits réservés.',
-    'footer.privacy': 'Politique de confidentialité',
-    'footer.terms': 'Conditions d\'utilisation',
+    // Presentation page
+    'presentation.title': 'Présentation du Groupe',
+    'presentation.subtitle': 'Découvrez Solio Group',
+    
+    // Mission & Vision
+    'mission.title': 'Mission & Vision',
+    'mission.subtitle': 'Notre raison d\'être et notre vision d\'avenir',
+    
+    // Executive Committee
+    'executive.title': 'Comité Exécutif',
+    'executive.subtitle': 'L\'équipe dirigeante de Solio Group',
   },
   en: {
     // Navigation
@@ -138,6 +145,18 @@ const getTranslations = () => ({
     'contact.form.subject': 'Subject',
     'contact.form.message': 'Message',
     'contact.form.send': 'Send',
+
+    // Presentation page  
+    'presentation.title': 'Group Presentation',
+    'presentation.subtitle': 'Discover Solio Group',
+    
+    // Mission & Vision
+    'mission.title': 'Mission & Vision', 
+    'mission.subtitle': 'Our purpose and vision for the future',
+    
+    // Executive Committee
+    'executive.title': 'Executive Committee',
+    'executive.subtitle': 'Solio Group\'s leadership team',
 
     // Footer
     'footer.copyright': '© 2024 Solio Group. All rights reserved.',
