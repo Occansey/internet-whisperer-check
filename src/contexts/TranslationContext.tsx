@@ -114,8 +114,8 @@ const translations = {
     'presentation.why.sol.description': 'Le soleil, source d\'énergie renouvelable et symbole de notre engagement pour l\'avenir énergétique.',
     'presentation.why.io.title': 'IO',
     'presentation.why.io.description': 'Input/Output - Les flux de données et d\'énergie que nous optimisons pour nos clients.',
-    'presentation.why.quote': '"Ensemble, nous construisons un avenir énergétique durable et connecté."',
-    'presentation.why.quote.author': 'Équipe Solio Group',
+    'presentation.why.quote': '"Solio Group incarne une vision audacieuse : un avenir durable et connecté, où l\'innovation est moteur de changement. Ce nouveau nom reflète l\'expansion de notre offre, alliant énergie solaire et solutions numériques pour répondre aux défis énergétiques de l\'Afrique tout en ouvrant notre marché à l\'Amérique du Nord."',
+    'presentation.why.quote.author': 'Evrard Havyarimana, Président de Solio Group',
 
     // Mission Vision
     'mission.hero.title': 'Notre Mission & Vision',
@@ -515,8 +515,8 @@ const translations = {
     'presentation.why.sol.description': 'The sun, source of renewable energy and symbol of our commitment to the energy future.',
     'presentation.why.io.title': 'IO',
     'presentation.why.io.description': 'Input/Output - The data and energy flows we optimize for our clients.',
-    'presentation.why.quote': '"Together, we build a sustainable and connected energy future."',
-    'presentation.why.quote.author': 'Solio Group Team',
+    'presentation.why.quote': '"Solio Group embodies a bold vision: a sustainable and connected future, where innovation drives change. This new name reflects the expansion of our offering, combining solar energy and digital solutions to address Africa\'s energy challenges while opening our market to North America."',
+    'presentation.why.quote.author': 'Evrard Havyarimana, President of Solio Group',
 
     // Mission Vision
     'mission.hero.title': 'Our Mission & Vision',
