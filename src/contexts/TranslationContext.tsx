@@ -142,6 +142,16 @@ const translations = {
     'vision.goal3.text': 'Investir 15% de notre CA en R&D et innovation',
     'vision.goal4.title': 'Impact Social',
     'vision.goal4.text': 'Créer 1000 emplois directs et indirects d\'ici 2030',
+    
+    // Home Mission Vision tabs
+    'home.mission.vision.title': 'Notre Vision',
+    'home.mission.vision.subtitle': 'Notre ambition pour l\'avenir',
+    'home.mission.vision.text1': 'Devenir le partenaire de référence en Europe et en Afrique pour la transition énergétique et la transformation digitale.',
+    'home.mission.vision.text2': 'Créer de la valeur durable pour nos clients, nos collaborateurs et la société dans son ensemble.',
+    'home.mission.objectifs.title': 'Nos Objectifs 2030',
+    'home.mission.objectifs.subtitle': 'Des objectifs ambitieux et mesurables',
+    'home.mission.objectifs.text1': 'Devenir leader européen en solutions énergétiques durables et accompagner le développement énergétique africain.',
+    'home.mission.objectifs.text2': 'Investir massivement en R&D et créer 1000 emplois directs et indirects d\'ici 2030.',
 
     // Contact
     'contact.title': 'Contactez-nous',
@@ -533,6 +543,17 @@ const translations = {
     'vision.goal3.text': 'Invest 15% of our revenue in R&D and innovation',
     'vision.goal4.title': 'Social Impact',
     'vision.goal4.text': 'Create 1000 direct and indirect jobs by 2030',
+    
+    // Home Mission Vision tabs
+    'home.mission.title': 'Our Mission & Vision',
+    'home.mission.vision.title': 'Our Vision',
+    'home.mission.vision.subtitle': 'Our ambition for the future',
+    'home.mission.vision.text1': 'Become the reference partner in Europe and Africa for energy transition and digital transformation.',
+    'home.mission.vision.text2': 'Create sustainable value for our clients, employees, and society as a whole.',
+    'home.mission.objectives.title': 'Our 2030 Objectives',
+    'home.mission.objectives.subtitle': 'Ambitious and measurable goals',
+    'home.mission.objectives.text1': 'Become the European leader in sustainable energy solutions and support African energy development.',
+    'home.mission.objectives.text2': 'Invest massively in R&D and create 1000 direct and indirect jobs by 2030.',
 
     // Contact
     'contact.title': 'Contact us',
