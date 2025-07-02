@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 interface FilialeProps {
   id: string;
@@ -56,11 +57,12 @@ const filiales: FilialeProps[] = [
 ];
 
 const NosFiliales = () => {
+  const { t } = useTranslation();
   return (
     <Layout>
       <HeroBanner 
-        title="Nos Filiales"
-        description="Découvrez l'ensemble de nos filiales spécialisées dans la transition énergétique et la transformation digitale."
+        title={t('subsidiaries.title')}
+        description={t('subsidiaries.description')}
         glowColor="green"
       />
       
@@ -99,7 +101,7 @@ const NosFiliales = () => {
                 <CardFooter>
                   <Button asChild variant="solio" className="w-full">
                     <Link to={filiale.url} className="flex items-center justify-center">
-                      En savoir plus
+                      {t('subsidiaries.learnMore')}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -109,24 +111,24 @@ const NosFiliales = () => {
           </div>
           
           <div className="mt-20">
-            <h2 className="text-2xl font-bold mb-6 text-center text-solio-blue">Pourquoi choisir le Groupe Solio ?</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center text-solio-blue">{t('subsidiaries.why.title')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-xl font-bold mb-3 text-solio-blue">Expertise multidisciplinaire</h3>
+                <h3 className="text-xl font-bold mb-3 text-solio-blue">{t('subsidiaries.expertise.title')}</h3>
                 <p className="text-gray-600">
-                  Nos filiales complémentaires nous permettent d'offrir des solutions complètes, de l'énergie solaire à la transformation digitale, en passant par la mobilité électrique.
+                  {t('subsidiaries.expertise.description')}
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-xl font-bold mb-3 text-solio-blue">Présence internationale</h3>
+                <h3 className="text-xl font-bold mb-3 text-solio-blue">{t('subsidiaries.international.title')}</h3>
                 <p className="text-gray-600">
-                  Avec une présence dans 6 villes et 5 pays, nous sommes en mesure d'accompagner nos clients à l'échelle internationale, avec une connaissance approfondie des marchés locaux.
+                  {t('subsidiaries.international.description')}
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-xl font-bold mb-3 text-solio-blue">Impact durable</h3>
+                <h3 className="text-xl font-bold mb-3 text-solio-blue">{t('subsidiaries.impact.title')}</h3>
                 <p className="text-gray-600">
-                  Nous avons déjà transformé plus de 37 000 vies grâce à l'accès à l'énergie et continuons à développer des projets à fort impact environnemental et social.
+                  {t('subsidiaries.impact.description')}
                 </p>
               </div>
             </div>

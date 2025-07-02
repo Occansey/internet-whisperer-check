@@ -22,20 +22,20 @@ const Activites = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-solio-blue">{t('activities.audit.title')}</h2>
               <p className="text-gray-700 mb-4">
-                Nos experts réalisent un audit complet de votre situation actuelle et vous proposent des solutions sur mesure pour optimiser votre performance énergétique et digitale.
+                {t('activities.audit.description')}
               </p>
               <ul className="list-disc pl-5 text-gray-700 mb-6">
                 <li className="mb-2">
-                  Analyse de vos besoins et de vos objectifs
+                  {t('activities.audit.point1')}
                 </li>
                 <li className="mb-2">
-                  Identification des axes d'amélioration
+                  {t('activities.audit.point2')}
                 </li>
                 <li className="mb-2">
-                  Recommandations personnalisées
+                  {t('activities.audit.point3')}
                 </li>
                 <li>
-                  Plan d'action concret
+                  {t('activities.audit.point4')}
                 </li>
               </ul>
               <Button asChild variant="activites" size="lg">
@@ -64,33 +64,33 @@ const Activites = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Domaine 1 */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-solio-blue">Énergie solaire</h3>
+              <h3 className="text-xl font-bold mb-4 text-solio-blue">{t('activities.solar.title')}</h3>
               <p className="text-gray-700">
-                Développement de centrales solaires, solutions d'autoconsommation, stockage d'énergie, etc.
+                {t('activities.solar.description')}
               </p>
             </div>
 
             {/* Domaine 2 */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-solio-blue">Mobilité électrique</h3>
+              <h3 className="text-xl font-bold mb-4 text-solio-blue">{t('activities.mobility.title')}</h3>
               <p className="text-gray-700">
-                Bornes de recharge, flottes de véhicules électriques, solutions de gestion de l'énergie, etc.
+                {t('activities.mobility.description')}
               </p>
             </div>
 
             {/* Domaine 3 */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-solio-blue">Transformation digitale</h3>
+              <h3 className="text-xl font-bold mb-4 text-solio-blue">{t('activities.digital.title')}</h3>
               <p className="text-gray-700">
-                Conseil, développement d'applications, intégration de solutions, gestion de données, etc.
+                {t('activities.digital.description')}
               </p>
             </div>
 
             {/* Domaine 4 */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4 text-solio-blue">Financement de projets</h3>
+              <h3 className="text-xl font-bold mb-4 text-solio-blue">{t('activities.financing.title')}</h3>
               <p className="text-gray-700">
-                Ingénierie financière, recherche de financements, structuration de projets, etc.
+                {t('activities.financing.description')}
               </p>
             </div>
           </div>
@@ -105,7 +105,7 @@ const Activites = () => {
             {t('activities.cta.subtitle')}
           </p>
           <Button asChild size="lg" className="bg-solio-yellow text-solio-blue hover:bg-yellow-400">
-            <Link to="/contact">Contactez-nous</Link>
+            <Link to="/contact">{t('common.contact')}</Link>
           </Button>
         </div>
       </section>

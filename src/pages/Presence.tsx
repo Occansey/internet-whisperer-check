@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Building, Globe } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import WorldMap from "@/components/maps/WorldMap";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Presence = () => {
+  const { t } = useTranslation();
   const locations = [
     {
       id: 'paris',
@@ -84,15 +86,15 @@ const Presence = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Notre Présence Internationale | Solio Group</title>
-        <meta name="description" content="Découvrez la présence internationale de Solio Group avec nos bureaux en Europe, Afrique et Amérique du Nord pour accompagner vos projets énergétiques et digitaux." />
+        <title>{t('presence.title')}</title>
+        <meta name="description" content={t('presence.description')} />
         <meta name="keywords" content="présence internationale, bureaux Solio Group, Afrique, Europe, Canada, énergie solaire, transformation digitale" />
         <link rel="canonical" href="https://solio-group.com/presence" />
       </Helmet>
 
       <HeroBanner
-        title="Notre Présence Mondiale"
-        description="Un réseau international d'excellence pour vos projets de transition énergétique"
+        title={t('presence.hero.title')}
+        description={t('presence.hero.subtitle')}
         glowColor="blue"
       />
 
@@ -101,11 +103,11 @@ const Presence = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
               <Globe className="w-4 h-4" />
-              Présence Mondiale
+              {t('presence.global')}
             </div>
-            <h2 className="text-4xl font-bold text-solio-blue mb-4">Nos Bureaux Internationaux</h2>
+            <h2 className="text-4xl font-bold text-solio-blue mb-4">{t('presence.international.title')}</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-12">
-              Implantés sur 3 continents pour vous accompagner au plus près de vos besoins
+              {t('presence.international.subtitle')}
             </p>
             
             {/* World Map Image */}
@@ -146,7 +148,7 @@ const Presence = () => {
 
       <section className="py-20 bg-white">
         <div className="container max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">Nos Bureaux par Région</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-solio-blue">{t('presence.regions.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* France */}
             <Card className="border-l-4 border-l-blue-500 hover:shadow-xl group transition-all duration-300">

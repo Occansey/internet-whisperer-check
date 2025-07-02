@@ -6,27 +6,30 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, ExternalLink, CheckCircle } from "lucide-react";
 import SubsidiaryNavigation from '@/components/ui/subsidiary-navigation';
-
-const processSteps = [
-  {
-    title: "Évaluation des besoins",
-    description: "Analyse détaillée des besoins énergétique de votre organisation"
-  },
-  {
-    title: "Conception technique",
-    description: "Élaboration d'une solution sur mesure adaptée à vos contraintes"
-  },
-  {
-    title: "Déploiement",
-    description: "Réalisation clé en mains des centrales solaires et de batteries (BESS) y compris l'ingénierie, approvisionnement et installation avec leur systèmes de gestion de l'énergie et de suivi à distance."
-  },
-  {
-    title: "Opération et maintenance",
-    description: "Suivi et maintenance préventive et corrective des installations et gestion des actifs (Asset Management) afin d'assurer la bonne performance, les indicateurs d'ESG ainsi que le rendement financier de l'investissement."
-  }
-];
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const GrowthEnergyPage = () => {
+  const { t } = useTranslation();
+  
+  const processSteps = [
+    {
+      title: t('growth.process.step1.title'),
+      description: t('growth.process.step1.description')
+    },
+    {
+      title: t('growth.process.step2.title'),
+      description: t('growth.process.step2.description')
+    },
+    {
+      title: t('growth.process.step3.title'),
+      description: t('growth.process.step3.description')
+    },
+    {
+      title: t('growth.process.step4.title'),
+      description: t('growth.process.step4.description')
+    }
+  ];
+
   return (
     <Layout>
       <section className="py-16 bg-gradient-to-r from-yellow-50 to-white">
@@ -37,12 +40,11 @@ const GrowthEnergyPage = () => {
                 <img src="/lovable-uploads/6ae660c2-d5e5-4f50-bad4-b52418a0d06b.png" alt="Growth Energy" className="h-40 mr-4" />
               </div>
               <p className="text-lg mb-6 text-gray-700">
-                Growth Energy accélère la transition vers l'énergie solaire en Afrique de l'Est et de l'Ouest, au service des entreprises et des collectivités.
-                Nous soutenons des projets commerciaux, industriels et immobiliers, concrétisant ainsi les ambitions énergétiques : nous concevons, finançons et fournissons des solutions fiables et durables à fort impact.
+                {t('growth.description')}
               </p>
               <Button asChild className="bg-solio-blue hover:bg-solio-blue/90">
                 <Link to="https://growth-energy.fr/" target="_blank" rel="noopener noreferrer">
-                  En savoir plus
+                  {t('common.learnMore')}
                 </Link>
               </Button>
             </div>
@@ -58,17 +60,17 @@ const GrowthEnergyPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
-            <StatCard value={5} suffix="+" label="partenaires stratégiques" />
-            <StatCard value={115} label="MWP en cours de déploiement en Afrique" />
-            <StatCard value={24} suffix="+" label="clients satisfaits" />
-            <StatCard value={100} suffix="k+" label="tonnes d'objectif réduction de CO2" />
+            <StatCard value={5} suffix="+" label={t('growth.partners')} />
+            <StatCard value={115} label={t('growth.deployment')} />
+            <StatCard value={24} suffix="+" label={t('growth.clients')} />
+            <StatCard value={100} suffix="k+" label={t('growth.co2')} />
           </div>
         </div>
       </section>
 
       <section className="py-16 bg-white">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-8 text-center text-solio-blue">Notre processus</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center text-solio-blue">{t('growth.process.title')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {processSteps.map((step, index) => (
@@ -90,17 +92,17 @@ const GrowthEnergyPage = () => {
 
       <section className="py-16 bg-gray-50">
         <div className="container">
-          <h2 className="text-3xl font-bold mb-8 text-center text-solio-blue">Actualités</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center text-solio-blue">{t('growth.news.title')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center text-sm text-gray-500 mb-3">
-                  <Calendar className="h-4 w-4 mr-1" /> Mai 2025
+                  <Calendar className="h-4 w-4 mr-1" /> {t('growth.news.date')}
                 </div>
-                <h3 className="text-xl font-bold mb-2">John Okoro invité à Energy Talks</h3>
+                <h3 className="text-xl font-bold mb-2">{t('growth.news.event.title')}</h3>
                 <p className="text-gray-600 mb-4">
-                  Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks.
+                  {t('growth.news.event.description')}
                 </p>
                 <Button 
                   variant="outline" 
@@ -108,7 +110,7 @@ const GrowthEnergyPage = () => {
                   asChild
                 >
                   <Link to="/actualites/evenements/3">
-                    <ExternalLink className="w-4 h-4" /> En savoir plus
+                    <ExternalLink className="w-4 h-4" /> {t('common.learnMore')}
                   </Link>
                 </Button>
               </CardContent>
@@ -119,19 +121,19 @@ const GrowthEnergyPage = () => {
                 <div className="flex items-center text-sm text-gray-500 mb-3">
                   <MapPin className="h-4 w-4 mr-1" /> Nairobi, Kenya
                 </div>
-                <h3 className="text-xl font-bold mb-2">Ouverture du nouveau siège à Nairobi</h3>
+                <h3 className="text-xl font-bold mb-2">{t('growth.news.nairobi.title')}</h3>
                 <p className="text-gray-600 mb-4">
-                  Growth Energy a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.
+                  {t('growth.news.nairobi.description')}
                 </p>
                 <div className="flex items-center text-green-600 text-sm">
-                  <CheckCircle className="h-4 w-4 mr-1" /> Inauguration officielle en septembre 2024
+                  <CheckCircle className="h-4 w-4 mr-1" /> {t('growth.news.nairobi.inauguration')}
                 </div>
               </CardContent>
             </Card>
           </div>
           
           <div className="mt-10">
-            <h2 className="text-2xl font-bold mb-6 text-solio-blue">Projet phare : Fumba Town</h2>
+            <h2 className="text-2xl font-bold mb-6 text-solio-blue">{t('growth.fumba.title')}</h2>
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-1">
                 <img 
@@ -142,11 +144,11 @@ const GrowthEnergyPage = () => {
               </div>
               <div className="flex-1">
                 <p className="text-gray-700">
-                  À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l'ensemble de la communauté de Zanzibar.
+                  {t('growth.fumba.description')}
                 </p>
                 <div className="mt-4">
                   <Button variant="solio" asChild>
-                    <Link to="/actualites/projets/4732">Découvrir le projet</Link>
+                    <Link to="/actualites/projets/4732">{t('growth.fumba.discover')}</Link>
                   </Button>
                 </div>
               </div>

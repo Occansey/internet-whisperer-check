@@ -282,6 +282,72 @@ const getTranslations = () => ({
     'executive.title': 'Comité Exécutif',
     'executive.subtitle': 'L\'équipe dirigeante de Solio Group',
 
+    // Presence page
+    'presence.title': 'Notre Présence Internationale | Solio Group',
+    'presence.description': 'Découvrez la présence internationale de Solio Group avec nos bureaux en Europe, Afrique et Amérique du Nord pour accompagner vos projets énergétiques et digitaux.',
+    'presence.hero.title': 'Notre Présence Mondiale',
+    'presence.hero.subtitle': 'Un réseau international d\'excellence pour vos projets de transition énergétique',
+    'presence.global': 'Présence Mondiale',
+    'presence.international.title': 'Nos Bureaux Internationaux',
+    'presence.international.subtitle': 'Implantés sur 3 continents pour vous accompagner au plus près de vos besoins',
+    'presence.regions.title': 'Nos Bureaux par Région',
+
+    // Subsidiaries pages
+    'subsidiaries.title': 'Nos Filiales',
+    'subsidiaries.description': 'Découvrez l\'ensemble de nos filiales spécialisées dans la transition énergétique et la transformation digitale.',
+    'subsidiaries.learnMore': 'En savoir plus',
+    'subsidiaries.discover': 'Découvrir',
+    'subsidiaries.why.title': 'Pourquoi choisir le Groupe Solio ?',
+    'subsidiaries.expertise.title': 'Expertise multidisciplinaire',
+    'subsidiaries.expertise.description': 'Nos filiales complémentaires nous permettent d\'offrir des solutions complètes, de l\'énergie solaire à la transformation digitale, en passant par la mobilité électrique.',
+    'subsidiaries.international.title': 'Présence internationale',
+    'subsidiaries.international.description': 'Avec une présence dans 6 villes et 5 pays, nous sommes en mesure d\'accompagner nos clients à l\'échelle internationale, avec une connaissance approfondie des marchés locaux.',
+    'subsidiaries.impact.title': 'Impact durable',
+    'subsidiaries.impact.description': 'Nous avons déjà transformé plus de 37 000 vies grâce à l\'accès à l\'énergie et continuons à développer des projets à fort impact environnemental et social.',
+
+    // Growth Energy
+    'growth.description': 'Growth Energy accélère la transition vers l\'énergie solaire en Afrique de l\'Est et de l\'Ouest, au service des entreprises et des collectivités. Nous soutenons des projets commerciaux, industriels et immobiliers, concrétisant ainsi les ambitions énergétiques : nous concevons, finançons et fournissons des solutions fiables et durables à fort impact.',
+    'growth.partners': 'partenaires stratégiques',
+    'growth.deployment': 'MWP en cours de déploiement en Afrique',
+    'growth.clients': 'clients satisfaits',
+    'growth.co2': 'tonnes d\'objectif réduction de CO2',
+    'growth.process.title': 'Notre processus',
+    'growth.process.step1.title': 'Évaluation des besoins',
+    'growth.process.step1.description': 'Analyse détaillée des besoins énergétique de votre organisation',
+    'growth.process.step2.title': 'Conception technique',
+    'growth.process.step2.description': 'Élaboration d\'une solution sur mesure adaptée à vos contraintes',
+    'growth.process.step3.title': 'Déploiement',
+    'growth.process.step3.description': 'Réalisation clé en mains des centrales solaires et de batteries (BESS) y compris l\'ingénierie, approvisionnement et installation avec leur systèmes de gestion de l\'énergie et de suivi à distance.',
+    'growth.process.step4.title': 'Opération et maintenance',
+    'growth.process.step4.description': 'Suivi et maintenance préventive et corrective des installations et gestion des actifs (Asset Management) afin d\'assurer la bonne performance, les indicateurs d\'ESG ainsi que le rendement financier de l\'investissement.',
+    'growth.news.title': 'Actualités',
+    'growth.news.date': 'Mai 2025',
+    'growth.news.event.title': 'John Okoro invité à Energy Talks',
+    'growth.news.event.description': 'Notre directeur John Okoro a été invité à partager sa vision de la mobilité électrique en Afrique lors de la conférence Energy Talks.',
+    'growth.news.nairobi.title': 'Ouverture du nouveau siège à Nairobi',
+    'growth.news.nairobi.description': 'Growth Energy a inauguré son nouveau siège africain à Nairobi, renforçant sa présence sur le continent et sa capacité à déployer des solutions de mobilité électrique adaptées aux besoins locaux.',
+    'growth.news.nairobi.inauguration': 'Inauguration officielle en septembre 2024',
+    'growth.fumba.title': 'Projet phare : Fumba Town',
+    'growth.fumba.description': 'À Fumba Town, Zanzibar, nous prenons des mesures audacieuses pour créer une communauté 100% indépendante énergétiquement. Cette transformation est alimentée par une énergie propre et renouvelable, et nous sommes fiers d\'ouvrir la voie grâce à notre collaboration avec CPS Africa, un leader du développement urbain durable. Ensemble, nous construisons un modèle de vie respectueux de l\'environnement qui profitera non seulement à Fumba Town, mais aura également un impact durable sur l\'ensemble de la communauté de Zanzibar.',
+    'growth.fumba.discover': 'Découvrir le projet',
+
+    // Asking
+    'asking.description': 'Des données à l\'impact : experts en marketing numérique, BI, Salesforce, SAP et science des données, nous libérons la puissance des données pour booster vos performances.',
+    'asking.clients': 'clients',
+    'asking.projects': 'projets en développement',
+    'asking.collaborators': 'collaborateurs',
+
+    // MFG
+    'mfg.description': 'Innovation Digitale pour l\'Industrie : Spécialistes du développement logiciel, du cloud et des infrastructures IT, nous accompagnons les acteurs industriels et manufacturiers dans leur transformation technologique.',
+    'mfg.experience': 'années d\'expérience',
+    'mfg.companies': 'entreprises servies',
+    'mfg.projects': 'projets réalisés',
+
+    // GEM
+    'gem.description': 'Pionniers dans le domaine de la mobilité électrique, nous pilotons notre transformation technologique grâce à des solutions logicielles de pointe, des infrastructures cloud innovantes et des systèmes IT robustes — offrant une mobilité plus intelligente et plus durable pour tous.',
+    'gem.station': 'station de recharge d\'Afrique de l\'Est en développement au Burundi',
+    'gem.capacity': 'Capacité de recharge disponible',
+
     // Footer
     'footer.copyright': '© 2024 Solio Group. Tous droits réservés.',
     'footer.privacy': 'Politique de confidentialité',
@@ -529,6 +595,72 @@ const getTranslations = () => ({
     // Executive Committee
     'executive.title': 'Executive Committee',
     'executive.subtitle': 'Solio Group\'s leadership team',
+
+    // Presence page
+    'presence.title': 'Our International Presence | Solio Group',
+    'presence.description': 'Discover Solio Group\'s international presence with our offices in Europe, Africa and North America to support your energy and digital projects.',
+    'presence.hero.title': 'Our Global Presence',
+    'presence.hero.subtitle': 'An international network of excellence for your energy transition projects',
+    'presence.global': 'Global Presence',
+    'presence.international.title': 'Our International Offices',
+    'presence.international.subtitle': 'Located on 3 continents to support you closest to your needs',
+    'presence.regions.title': 'Our Offices by Region',
+
+    // Subsidiaries pages
+    'subsidiaries.title': 'Our Subsidiaries',
+    'subsidiaries.description': 'Discover all our subsidiaries specialized in energy transition and digital transformation.',
+    'subsidiaries.learnMore': 'Learn more',
+    'subsidiaries.discover': 'Discover',
+    'subsidiaries.why.title': 'Why choose Solio Group?',
+    'subsidiaries.expertise.title': 'Multidisciplinary expertise',
+    'subsidiaries.expertise.description': 'Our complementary subsidiaries allow us to offer complete solutions, from solar energy to digital transformation, including electric mobility.',
+    'subsidiaries.international.title': 'International presence',
+    'subsidiaries.international.description': 'With a presence in 6 cities and 5 countries, we are able to support our clients internationally, with deep knowledge of local markets.',
+    'subsidiaries.impact.title': 'Sustainable impact',
+    'subsidiaries.impact.description': 'We have already transformed more than 37,000 lives through access to energy and continue to develop projects with strong environmental and social impact.',
+
+    // Growth Energy
+    'growth.description': 'Growth Energy accelerates the transition to solar energy in East and West Africa, serving businesses and communities. We support commercial, industrial and real estate projects, thus realizing energy ambitions: we design, finance and provide reliable and sustainable solutions with strong impact.',
+    'growth.partners': 'strategic partners',
+    'growth.deployment': 'MWP under deployment in Africa',
+    'growth.clients': 'satisfied clients',
+    'growth.co2': 'tons of CO2 reduction target',
+    'growth.process.title': 'Our process',
+    'growth.process.step1.title': 'Needs assessment',
+    'growth.process.step1.description': 'Detailed analysis of your organization\'s energy needs',
+    'growth.process.step2.title': 'Technical design',
+    'growth.process.step2.description': 'Development of a customized solution adapted to your constraints',
+    'growth.process.step3.title': 'Deployment',
+    'growth.process.step3.description': 'Turnkey realization of solar plants and batteries (BESS) including engineering, procurement and installation with their energy management and remote monitoring systems.',
+    'growth.process.step4.title': 'Operation and maintenance',
+    'growth.process.step4.description': 'Monitoring and preventive and corrective maintenance of installations and asset management to ensure good performance, ESG indicators as well as the financial return on investment.',
+    'growth.news.title': 'News',
+    'growth.news.date': 'May 2025',
+    'growth.news.event.title': 'John Okoro invited to Energy Talks',
+    'growth.news.event.description': 'Our director John Okoro was invited to share his vision of electric mobility in Africa at the Energy Talks conference.',
+    'growth.news.nairobi.title': 'Opening of the new headquarters in Nairobi',
+    'growth.news.nairobi.description': 'Growth Energy inaugurated its new African headquarters in Nairobi, strengthening its presence on the continent and its capacity to deploy electric mobility solutions adapted to local needs.',
+    'growth.news.nairobi.inauguration': 'Official inauguration in September 2024',
+    'growth.fumba.title': 'Flagship project: Fumba Town',
+    'growth.fumba.description': 'At Fumba Town, Zanzibar, we are taking bold steps to create a 100% energy independent community. This transformation is powered by clean and renewable energy, and we are proud to lead the way through our collaboration with CPS Africa, a leader in sustainable urban development. Together, we are building an environmentally friendly living model that will benefit not only Fumba Town, but will also have a lasting impact on the entire Zanzibar community.',
+    'growth.fumba.discover': 'Discover the project',
+
+    // Asking
+    'asking.description': 'From data to impact: experts in digital marketing, BI, Salesforce, SAP and data science, we unleash the power of data to boost your performance.',
+    'asking.clients': 'clients',
+    'asking.projects': 'projects in development',
+    'asking.collaborators': 'collaborators',
+
+    // MFG
+    'mfg.description': 'Digital Innovation for Industry: Specialists in software development, cloud and IT infrastructure, we support industrial and manufacturing players in their technological transformation.',
+    'mfg.experience': 'years of experience',
+    'mfg.companies': 'companies served',
+    'mfg.projects': 'projects completed',
+
+    // GEM
+    'gem.description': 'Pioneers in the field of electric mobility, we drive our technological transformation through cutting-edge software solutions, innovative cloud infrastructures and robust IT systems — offering smarter and more sustainable mobility for all.',
+    'gem.station': 'East African charging station under development in Burundi',
+    'gem.capacity': 'Available charging capacity',
 
     // Footer
     'footer.copyright': '© 2024 Solio Group. All rights reserved.',
