@@ -54,15 +54,23 @@ const translations = {
     'nav.home': 'Accueil',
     'nav.about': 'À propos',  
     'nav.presentation': 'Présentation',
+    'nav.mission': 'Mission & Vision',
+    'nav.certifications': 'Certifications',
+    'nav.culture': 'Culture',
     'nav.activities': 'Nos activités',
     'nav.subsidiaries': 'Nos filiales',
     'nav.governance': 'Gouvernance',
+    'nav.direction': 'Direction',
+    'nav.executive': 'Comité Exécutif',
     'nav.news': 'Actualités',
+    'nav.communiques': 'Communiqués',
+    'nav.events': 'Événements',
+    'nav.projects': 'Projets',
     'nav.careers': 'Carrières',
+    'nav.hr': 'Engagements RH',
+    'nav.join': 'Rejoignez-nous',
     'nav.contact': 'Contact',
     'nav.media': 'Médias',
-    'nav.projects': 'Projets',
-    'nav.events': 'Événements',
     'nav.releases': 'Communiqués',
 
     // Home page
@@ -279,12 +287,34 @@ const translations = {
     'footer.followUs.linkedin': 'Suivre Solio Group sur LinkedIn',
     'footer.copyright': 'Tous droits réservés.',
 
+    // Home page translations
+    'home.title': 'Solio Group - Leader en Transition Énergétique et Digitale',
+    'home.description': 'Solio Group accompagne les entreprises dans leur transition énergétique et leur transformation digitale à travers des solutions innovantes et durables.',
+    'home.presentation.title': 'Accélérons ensemble la transition énergétique et digitale',
+    'home.presentation.description': 'Solio Group est un groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale. Nous accompagnons les entreprises dans leur évolution vers un avenir plus durable et technologique.',
+
     // Governance - Executive Committee
     'governance.comex.title': 'Comité Exécutif (COMEX)',
     'governance.comex.description': 'Le COMEX assure la direction stratégique et l\'alignement des activités entre les filiales. Il est composé des directeurs de chaque filiale ainsi que de la direction financière du groupe.',
     'governance.comex.members': 'Membres du COMEX',
     'governance.comex.meetings.title': 'Réunions du COMEX',
     'governance.comex.meetings.description': 'Le COMEX se réunit régulièrement pour orienter les choix stratégiques, harmoniser les projets et garantir la performance globale du groupe.',
+    
+    // Executive profiles
+    'executives.evrard.title': 'Président du Groupe et du COMEX',
+    'executives.evrard.bio': 'Evrard Havyarimana est le Président de Solio Group, un groupe engagé dans la transition énergétique et la transformation numérique.\n\n Diplômé d\'un Master en Finance des Entreprises à l\'IAE Bordeaux IV – Université de Bordeaux, il débute sa carrière dans les secteurs bancaire et du conseil, avant de se consacrer à l\'entrepreneuriat avec la volonté d\'apporter des solutions concrètes aux défis énergétiques et technologiques des marchés émergents.\n\n En 2019, il fonde à Paris Growth Supply, une entreprise dédiée à l\'accompagnement de la croissance des entreprises.\n En 2025, cette entreprise devient Solio Group, pour refléter une ambition élargie et structurée autour de deux axes majeurs : la transition énergétique et la transformation digitale.\n En 2022, il co-fonde Growth Energy, une filiale spécialisée dans le développement, le financement et le déploiement de centrales solaires pour le secteur industriel et commercial, avec une attention particulière portée aux marchés africains.\n En 2023, il fonde Asking en France et au Canada, une entreprise technologique dédiée à l\'exploitation intelligente des données pour renforcer la performance et la résilience des entreprises.\n En 2024, Solio Group (ex Growth Supply) accélère son expansion externe en rachetant MFG Technologies, intégrateur montréalais de solutions CRM et ERP fort de 20 ans d\'expertise.\n\n À travers Solio Group et ses filiales, Evrard Havyarimana pilote une stratégie de croissance responsable, fondée sur l\'impact mesurable, l\'innovation technologique et la création de valeur durable sur les trois continents où le groupe est actif.',
+    
+    'executives.john.title': 'Directeur de Growth Energy',
+    'executives.john.bio': 'John Okoro est à la tête de Growth Energy avec une expertise confirmée dans le secteur de l\'énergie propre et de la décarbonation de l\'industrie à l\'international, et notamment en Afrique.\n\n Titulaire d\'un diplôme d\'ingénieur en chimie à Covenant University et d\'un master en gestion de projet à Skema Business School à Paris, John est passionné par la transition énergétique durable en Afrique et est parmi les experts les plus recherchés du monde sur les sujets de développement des énergies renouvelables en Afrique.\n\n John est également titulaire du diplôme professionnel de gestion de projet (PMP), et membre de l\'institut de gestion de projet (PMI) siégé aux États-Unis.\n Fort de plus de dix ans d\'expérience dans plus de 20 pays d\'Afrique subsaharienne et plus de 30 pays à travers le monde, il a dirigé des projets d\'énergies renouvelables avec des entreprises comme Vergnet SA et le Groupe CMR.\n En décembre 2022, il quitte ses fonctions à CMR Group en tant que Directeur Commercial de la division solaire pour se consacrer pleinement à l\'entrepreneuriat en tant que co-fondateur de Growth Energy, et continuer des projets passionnants de transition énergétique à travers le continent africain.\n\n Il a co-fondé en 2016 Friends of Nigeria à Paris, une association à but non lucratif, qui est devenue le plus grand réseau d\'affaires du Nigéria en Europe dirigé par la diaspora, avec des équipes dans 4 pays d\'Europe et propriétaire du forum annuel d\'investissement au Nigéria, le plus reconnu d\'Europe.',
+    
+    'executives.laure.title': 'Directrice de Asking',
+    'executives.laure.bio': 'Laure Duhorane est à la tête d\'Asking et est experte en communication et transformation digitale. Elle accompagne les entreprises dans leur évolution stratégique et digitale.\n\nDiplômée d\'un Master en Management et Communication d\'Entreprise de l\'EFAP Paris, son expertise en gestion et innovation lui permet d\'aider les organisations à optimiser leur impact et à s\'adapter aux défis du numérique.\n\nDepuis 2024, elle a rejoint la direction de MFG Technologies dans le cadre d\'une acquisition. Elle y dirige des initiatives de transformation numérique, de recrutement et de développement commercial, aidant les organisations à rationaliser leurs processus et à atteindre la croissance.\n\nElle est également membre du comité exécutif de Solio Group, où elle fait avancer sa vision de stimuler la croissance socio-économique à travers les industries et les communautés africaines par la transition vers l\'énergie renouvelable et durable.\n\nPassionnée par le développement durable, elle allie vision stratégique et expérience pratique pour créer des changements significatifs et favoriser la croissance à long terme des organisations.',
+    
+    'executives.isabelle.title': 'Directrice administratif et financier',
+    'executives.isabelle.bio': 'Isabelle Mauboussin occupe le poste de responsable administrative et financière de Solio Group.\n\nDiplômée d\'un DESS en Comptabilité et Finance de l\'Université Paris-Dauphine, elle a travaillé plus de 30 ans en cabinet d\'expertise comptable.\n\nCes expériences lui ont appris à analyser les états financiers de différentes structures, à les accompagner dans leurs projets de développement et à travailler en confiance dans le respect des normes comptables et fiscales.\n\nReconnue pour sa rigueur et son professionnalisme, elle aime relever de nouveaux défis et trouver des solutions innovantes pour stimuler la croissance et la performance des entreprises.\n\nSon objectif est de contribuer activement à la réussite de chaque projet, d\'optimiser les processus administratifs et comptables pour en faire un outil de gestion au service du pilotage de la stratégie de Solio Group.',
+    
+    'executives.alain.title': 'Directeur de Mfg Technologies',
+    'executives.alain.bio': 'Alain Normand est à la tête de MFG Technologies et se distingue comme un expert des systèmes ERP pour le secteur manufacturier.\n\nDiplômé en administration des affaires de HEC Montréal, il est passionné par la gestion d\'entreprise efficace et propose les meilleures pratiques dans les systèmes de fabrication ERP : JobBOSS et Divalto.\n\nAvec plus de 20 ans d\'expérience dans la mise en œuvre de systèmes ERP (systèmes manufacturiers) et en tant que comptable, son expertise fait en sorte qu\'il se veut un entrepreneur hors-pair.\n\nIl est reconnu comme un allié précieux pour ses clients, travaillant pour eux et avec eux; ils sont toujours servis avec excellence et reçoivent des conseils haut-de-gamme pour améliorer la gestion de leur entreprise à travers ces plateformes.\n\nSon souci d\'intégrité, sa grande humanité et son esprit authentique font de lui un Leader inspirant avec qui on souhaite être associé professionnellement – et les employés, collaborateurs de MFG, sont d\'autant plus heureux de faire partie de son équipe!',
 
     // Governance - Direction
     'governance.direction.title': 'Direction du Groupe',
@@ -359,18 +389,32 @@ const translations = {
 
     // Navigation
     'nav.home': 'Home',
-    'nav.about': 'About',
+    'nav.about': 'About',  
     'nav.presentation': 'Presentation',
+    'nav.mission': 'Mission & Vision',
+    'nav.certifications': 'Certifications',
+    'nav.culture': 'Culture',
     'nav.activities': 'Our activities',
     'nav.subsidiaries': 'Our subsidiaries',
     'nav.governance': 'Governance',
+    'nav.direction': 'Management',
+    'nav.executive': 'Executive Committee',
     'nav.news': 'News',
+    'nav.communiques': 'Press releases',
+    'nav.events': 'Events',
+    'nav.projects': 'Projects',
     'nav.careers': 'Careers',
+    'nav.hr': 'HR Commitments',
+    'nav.join': 'Join us',
     'nav.contact': 'Contact',
     'nav.media': 'Media',
-    'nav.projects': 'Projects',
-    'nav.events': 'Events',
     'nav.releases': 'Press releases',
+
+    // Home page translations
+    'home.title': 'Solio Group - Leader in Energy and Digital Transition',
+    'home.description': 'Solio Group supports companies in their energy transition and digital transformation through innovative and sustainable solutions.',
+    'home.presentation.title': 'Accelerating the energy and digital transition together',
+    'home.presentation.description': 'Solio Group is a multidisciplinary group specialized in energy transition and digital transformation. We support companies in their evolution towards a more sustainable and technological future.',
 
     // Home page
     'home.hero.title': 'Accelerating the energy and digital transition together',
@@ -592,6 +636,22 @@ const translations = {
     'governance.comex.members': 'COMEX Members',
     'governance.comex.meetings.title': 'COMEX Meetings',
     'governance.comex.meetings.description': 'The COMEX meets regularly to guide strategic choices, harmonize projects, and ensure the group\'s overall performance.',
+    
+    // Executive profiles
+    'executives.evrard.title': 'President of the Group and COMEX',
+    'executives.evrard.bio': 'Evrard Havyarimana is the President of Solio Group, a group engaged in energy transition and digital transformation.\n\n A graduate with a Master\'s in Corporate Finance from IAE Bordeaux IV - University of Bordeaux, he began his career in the banking and consulting sectors before dedicating himself to entrepreneurship with the desire to provide concrete solutions to the energy and technological challenges of emerging markets.\n\n In 2019, he founded Growth Supply in Paris, a company dedicated to supporting business growth.\n In 2025, this company becomes Solio Group, to reflect an expanded ambition structured around two major axes: energy transition and digital transformation.\n In 2022, he co-founded Growth Energy, a subsidiary specialized in the development, financing and deployment of solar power plants for the industrial and commercial sector, with particular attention paid to African markets.\n In 2023, he founded Asking in France and Canada, a technology company dedicated to the intelligent exploitation of data to strengthen the performance and resilience of companies.\n In 2024, Solio Group (formerly Growth Supply) accelerated its external expansion by acquiring MFG Technologies, a Montreal integrator of CRM and ERP solutions with 20 years of expertise.\n\n Through Solio Group and its subsidiaries, Evrard Havyarimana pilots a responsible growth strategy, based on measurable impact, technological innovation and the creation of sustainable value on the three continents where the group is active.',
+    
+    'executives.john.title': 'Director of Growth Energy',
+    'executives.john.bio': 'John Okoro heads Growth Energy with confirmed expertise in the clean energy sector and industrial decarbonization internationally, particularly in Africa.\n\n Holder of a chemical engineering degree from Covenant University and a project management master\'s from Skema Business School in Paris, John is passionate about sustainable energy transition in Africa and is among the world\'s most sought-after experts on renewable energy development topics in Africa.\n\n John also holds the professional project management diploma (PMP), and is a member of the Project Management Institute (PMI) based in the United States.\n With more than ten years of experience in more than 20 sub-Saharan African countries and more than 30 countries worldwide, he has led renewable energy projects with companies like Vergnet SA and CMR Group.\n In December 2022, he left his position at CMR Group as Commercial Director of the solar division to focus fully on entrepreneurship as co-founder of Growth Energy, and continue exciting energy transition projects across the African continent.\n\n He co-founded Friends of Nigeria in Paris in 2016, a non-profit association, which has become the largest Nigeria business network in Europe led by the diaspora, with teams in 4 European countries and owner of the annual Nigeria investment forum, the most recognized in Europe.',
+    
+    'executives.laure.title': 'Director of Asking',
+    'executives.laure.bio': 'Laure Duhorane heads Asking and is an expert in communication and digital transformation. She supports companies in their strategic and digital evolution.\n\nA graduate with a Master\'s in Management and Corporate Communication from EFAP Paris, her expertise in management and innovation allows her to help organizations optimize their impact and adapt to digital challenges.\n\nSince 2024, she has joined the management of MFG Technologies as part of an acquisition. She leads digital transformation, recruitment and commercial development initiatives, helping organizations streamline their processes and achieve growth.\n\nShe is also a member of the executive committee of Solio Group, where she advances her vision of stimulating socio-economic growth across African industries and communities through the transition to renewable and sustainable energy.\n\nPassionate about sustainable development, she combines strategic vision and practical experience to create significant changes and foster long-term organizational growth.',
+    
+    'executives.isabelle.title': 'Administrative and Financial Director',
+    'executives.isabelle.bio': 'Isabelle Mauboussin holds the position of administrative and financial manager of Solio Group.\n\nA graduate with a DESS in Accounting and Finance from Paris-Dauphine University, she has worked for more than 30 years in accounting firms.\n\nThese experiences have taught her to analyze the financial statements of different structures, to accompany them in their development projects and to work with confidence in compliance with accounting and tax standards.\n\nRecognized for her rigor and professionalism, she enjoys taking on new challenges and finding innovative solutions to stimulate business growth and performance.\n\nHer objective is to actively contribute to the success of each project, to optimize administrative and accounting processes to make them a management tool serving the strategic direction of Solio Group.',
+    
+    'executives.alain.title': 'Director of Mfg Technologies',
+    'executives.alain.bio': 'Alain Normand heads MFG Technologies and stands out as an expert in ERP systems for the manufacturing sector.\n\nA graduate in business administration from HEC Montreal, he is passionate about efficient business management and offers best practices in ERP manufacturing systems: JobBOSS and Divalto.\n\nWith more than 20 years of experience in implementing ERP systems (manufacturing systems) and as an accountant, his expertise makes him an outstanding entrepreneur.\n\nHe is recognized as a valuable ally for his clients, working for them and with them; they are always served with excellence and receive high-end advice to improve the management of their business through these platforms.\n\nHis concern for integrity, his great humanity and his authentic spirit make him an inspiring Leader with whom one wishes to be professionally associated - and the employees, collaborators of MFG, are all the happier to be part of his team!',
 
     // Governance - Direction
     'governance.direction.title': 'Group Management',
