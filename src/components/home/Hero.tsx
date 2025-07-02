@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Hero = () => {
   const playerRef = useRef<HTMLDivElement>(null);
   const playerInstanceRef = useRef<any>(null);
   const isMobile = useIsMobile();
   const [hasRefreshed, setHasRefreshed] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Check if this is the first visit to homepage
@@ -126,7 +128,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl mb-12 text-gray-100 max-w-3xl leading-relaxed">
-            Solutions durables pour un avenir plus sobre, plus digitalisé et plus résilient
+            {t('home.hero.subtitle')}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 mb-12">
@@ -138,7 +140,7 @@ const Hero = () => {
             </Button>
             <Button asChild size="lg" variant="outline" className="border-2 border-solio-blue text-white bg-solio-blue hover:bg-white hover:text-solio-blue backdrop-blur-sm font-semibold px-8 py-4 rounded-lg transition-all duration-300">
               <Link to="/contact" className="flex items-center gap-2">
-                Nous contacter
+                {t('home.contact.button')}
                 <span className="text-lg">✉</span>
               </Link>
             </Button>

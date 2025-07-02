@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Helmet } from "react-helmet-async";
 import SEOStructuredData from "@/components/seo/SEOStructuredData";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const culturePillars = [
   {
@@ -120,6 +121,7 @@ const principesCroissance = [
 ];
 
 const Culture = () => {
+  const { t } = useTranslation();
   return (
     <Layout>
       <Helmet>
@@ -316,7 +318,7 @@ const Culture = () => {
               <Link to="/carrieres/rejoignez-nous">Voir nos opportunités</Link>
             </Button>
             <Button asChild size="lg" className="bg-solio-blue text-white hover:bg-solio-blue/90 border-white">
-              <Link to="/carrieres/engagements-rh">Nos engagements RH</Link>
+              <Link to="/carrieres/engagements-rh">{t('culture.hr.button')}</Link>
             </Button>
           </div>
         </div>

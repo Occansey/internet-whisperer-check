@@ -3,8 +3,10 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Activites = () => {
+  const { t } = useTranslation();
   return (
     <Layout>
       <HeroBanner
@@ -37,7 +39,7 @@ const Activites = () => {
                 </li>
               </ul>
               <Button asChild variant="activites" size="lg">
-                <Link to="/contact">Demander un audit</Link>
+                <Link to="/contact">{t('activities.audit.button')}</Link>
               </Button>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
