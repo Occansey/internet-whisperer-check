@@ -45,15 +45,15 @@ const Index = () => {
       <SEOStructuredData 
         type="webpage" 
         data={{
-          "name": t('home.seo.name'),
-          "description": t('home.seo.description'),
+          "name": "Accueil - Solio Group",
+          "description": "Page d'accueil de Solio Group, leader en transition énergétique et transformation digitale",
           "url": "https://solio-group.com/",
           "datePublished": "2025-05-23",
           "dateModified": "2025-05-23",
           "mainEntity": {
             "@type": "Organization",
             "name": "Solio Group",
-            "description": t('home.seo.organizationDescription')
+            "description": "Groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale"
           }
         }}
       />
