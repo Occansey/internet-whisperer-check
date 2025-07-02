@@ -17,6 +17,19 @@ const translations = {
     'home.seo.description': 'Page d\'accueil de Solio Group, leader en transition énergétique et transformation digitale',
     'home.seo.organizationDescription': 'Groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale',
 
+    // Detail pages
+    'projects.detail.title': 'Détail du Projet',
+    'projects.detail.description': 'Découvrez les détails de ce projet',
+    'projects.detail.loading': 'Chargement du projet...',
+    
+    'events.detail.title': 'Détail de l\'Événement',
+    'events.detail.description': 'Découvrez les détails de cet événement',
+    'events.detail.loading': 'Chargement de l\'événement...',
+    
+    'communiques.detail.title': 'Détail du Communiqué',
+    'communiques.detail.description': 'Découvrez les détails de ce communiqué',
+    'communiques.detail.loading': 'Chargement du communiqué...',
+
     // Common translations
     'common.contact': 'Nous contacter',
     'common.learnMore': 'En savoir plus',
@@ -83,7 +96,6 @@ const translations = {
     'home.contact.button': 'Nous contacter',
     'home.presentation.title': 'Notre Groupe',
     'home.presentation.description': 'Solio Group est un groupe multidisciplinaire spécialisé dans la transition énergétique et la transformation digitale. Nous accompagnons les entreprises et collectivités dans leur évolution vers un avenir plus durable et plus connecté.',
-
   },
   en: {
     // Home page SEO and titles
@@ -92,6 +104,19 @@ const translations = {
     'home.seo.name': 'Home - Solio Group',
     'home.seo.description': 'Solio Group homepage, leader in energy transition and digital transformation',
     'home.seo.organizationDescription': 'Multidisciplinary group specialized in energy transition and digital transformation',
+
+    // Detail pages
+    'projects.detail.title': 'Project Details',
+    'projects.detail.description': 'Discover the details of this project',
+    'projects.detail.loading': 'Loading project...',
+    
+    'events.detail.title': 'Event Details',
+    'events.detail.description': 'Discover the details of this event',
+    'events.detail.loading': 'Loading event...',
+    
+    'communiques.detail.title': 'Press Release Details',
+    'communiques.detail.description': 'Discover the details of this press release',
+    'communiques.detail.loading': 'Loading press release...',
 
     // Common translations
     'common.contact': 'Contact us',
