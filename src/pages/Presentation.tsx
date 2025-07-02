@@ -114,24 +114,24 @@ const Presentation = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-solio-blue">{t('presentation.history.title')}</h2>
               <p className="text-gray-700 mb-4">
-                Solio Group est l'évolution naturelle de Growth Supply, une entreprise fondée en 2019 avec une mission ambitieuse : accélérer la transition énergétique en Afrique et accompagner la transformation numérique des organisations. En 2025, ce changement d'identité marque une nouvelle étape dans notre développement, reflétant notre vision élargie et notre engagement renforcé à proposer des solutions durables et technologiques pour un avenir meilleur.
+                {t('presentation.history.intro')}
               </p>
               <p className="text-gray-700 mb-4">
-                Notre expertise s'articule autour de deux axes stratégiques complémentaires :
+                {t('presentation.history.expertise')}
               </p>
               <ul className="list-disc pl-5 text-gray-700 mb-6">
                 <li className="mb-2">
-                  <span className="font-semibold">Transition énergétique</span> : Nous avons mobilisé plus de 15 millions USD d'investissements et lancé une trentaine de projets solaires dans cinq pays africains, fournissant une énergie propre et fiable à des milliers de foyers et d'entreprises.
+                  <span className="font-semibold">{t('presentation.history.energy')}</span>{t('presentation.history.energy.desc')}
                 </li>
                 <li>
-                  <span className="font-semibold">Transformation digitale</span> : L'acquisition de MFG Technologies au Canada et la création de notre filiale Asking, spécialisée dans la visualisation et l'analyse de données, ont élargi notre présence en Amérique du Nord et en Europe, ouvrant de nouvelles perspectives de croissance.
+                  <span className="font-semibold">{t('presentation.history.digital')}</span>{t('presentation.history.digital.desc')}
                 </li>
               </ul>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
                 src="/lovable-uploads/6f19c446-1872-4db9-8f36-6b1663578fa7.png" 
-                alt="Histoire de Solio Group" 
+                alt={t('presentation.history.title')} 
                 className="w-full h-auto"
                 loading="lazy"
               />
@@ -148,17 +148,17 @@ const Presentation = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatCard 
               value={37000}
-              label="Vies transformées par l'accès à l'énergie"
+              label={t('presentation.impact.lives')}
               prefix=""
             />
             <StatCard 
               value={30}
-              label="Projets solaires déployés"
+              label={t('presentation.impact.projects')}
               prefix="+"
             />
             <StatCard 
               value={5}
-              label="Pays africains couverts"
+              label={t('presentation.impact.countries')}
               prefix=""
             />
           </div>
@@ -182,7 +182,7 @@ const Presentation = () => {
                     Sol
                   </h3>
                   <p className="text-gray-700">
-                    Le Soleil, source d'énergie propre et symbole de transformation vers un avenir durable.
+                    {t('presentation.why.sol.description')}
                   </p>
                 </CardContent>
               </Card>
@@ -191,20 +191,20 @@ const Presentation = () => {
                 <CardContent className="pt-6">
                   <h3 className="text-2xl font-bold mb-2 flex items-center">
                     <span className="text-4xl mr-3">🚀</span>
-                    Io
+                    {t('presentation.why.io.title')}
                   </h3>
                   <p className="text-gray-700">
-                    Le numérique au cœur de notre mission, pour une transformation digitale réussie.
+                    {t('presentation.why.io.description')}
                   </p>
                 </CardContent>
               </Card>
               
               <div className="mt-8 p-6 bg-gray-100 rounded-lg border-l-4 border-solio-blue italic">
                 <p className="text-gray-700">
-                  "Solio Group incarne une vision audacieuse : un avenir durable et connecté, où l'innovation est moteur de changement. Ce nouveau nom reflète l'expansion de notre offre, alliant énergie solaire et solutions numériques pour répondre aux défis énergétiques de l'Afrique tout en ouvrant notre marché à l'Amérique du Nord."
+                  {t('presentation.why.quote')}
                 </p>
                 <footer className="mt-4 text-right text-sm text-gray-600">
-                  — Evrard Havyarimana, Président de Solio Group
+                  {t('presentation.why.quote.author')}
                 </footer>
               </div>
             </div>
