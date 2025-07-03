@@ -68,13 +68,13 @@ const EngagementsRH = () => {
   }, []);
 
   const engagements: { [key: string]: EngagementProps[] } = {
-    "developpement": t('hr.engagements.development') as unknown as EngagementProps[],
-    "bienetre": t('hr.engagements.wellbeing') as unknown as EngagementProps[],
-    "diversite": t('hr.engagements.diversity') as unknown as EngagementProps[],
-    "engagement": t('hr.engagements.engagement') as unknown as EngagementProps[]
+    "developpement": t('hr.engagements.development') as EngagementProps[],
+    "bienetre": t('hr.engagements.wellbeing') as EngagementProps[],
+    "diversite": t('hr.engagements.diversity') as EngagementProps[],
+    "engagement": t('hr.engagements.engagement') as EngagementProps[]
   };
 
-  const temoignages = t('hr.testimonials.items') as unknown as any[];
+  const temoignages = t('hr.testimonials.items') as any[];
 
   return (
     <Layout>
