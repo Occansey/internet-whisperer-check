@@ -68,13 +68,119 @@ const EngagementsRH = () => {
   }, []);
 
   const engagements: { [key: string]: EngagementProps[] } = {
-    "developpement": (t('hr.engagements.development') as unknown) as EngagementProps[],
-    "bienetre": (t('hr.engagements.wellbeing') as unknown) as EngagementProps[],
-    "diversite": (t('hr.engagements.diversity') as unknown) as EngagementProps[],
-    "engagement": (t('hr.engagements.engagement') as unknown) as EngagementProps[]
+    "developpement": [
+      {
+        title: t('hr.engagements.development.0.title'),
+        description: t('hr.engagements.development.0.description'),
+        icon: "📚"
+      },
+      {
+        title: t('hr.engagements.development.1.title'),
+        description: t('hr.engagements.development.1.description'),
+        icon: "🚀"
+      },
+      {
+        title: t('hr.engagements.development.2.title'),
+        description: t('hr.engagements.development.2.description'),
+        icon: "🧠"
+      },
+      {
+        title: t('hr.engagements.development.3.title'),
+        description: t('hr.engagements.development.3.description'),
+        icon: "🔄"
+      }
+    ],
+    "bienetre": [
+      {
+        title: t('hr.engagements.wellbeing.0.title'),
+        description: t('hr.engagements.wellbeing.0.description'),
+        icon: "⚖️"
+      },
+      {
+        title: t('hr.engagements.wellbeing.1.title'),
+        description: t('hr.engagements.wellbeing.1.description'),
+        icon: "🏢"
+      },
+      {
+        title: t('hr.engagements.wellbeing.2.title'),
+        description: t('hr.engagements.wellbeing.2.description'),
+        icon: "🧘"
+      },
+      {
+        title: t('hr.engagements.wellbeing.3.title'),
+        description: t('hr.engagements.wellbeing.3.description'),
+        icon: "🎉"
+      }
+    ],
+    "diversite": [
+      {
+        title: t('hr.engagements.diversity.0.title'),
+        description: t('hr.engagements.diversity.0.description'),
+        icon: "🤝"
+      },
+      {
+        title: t('hr.engagements.diversity.1.title'),
+        description: t('hr.engagements.diversity.1.description'),
+        icon: "💰"
+      },
+      {
+        title: t('hr.engagements.diversity.2.title'),
+        description: t('hr.engagements.diversity.2.description'),
+        icon: "🧩"
+      },
+      {
+        title: t('hr.engagements.diversity.3.title'),
+        description: t('hr.engagements.diversity.3.description'),
+        icon: "♿"
+      }
+    ],
+    "engagement": [
+      {
+        title: t('hr.engagements.engagement.0.title'),
+        description: t('hr.engagements.engagement.0.description'),
+        icon: "💡"
+      },
+      {
+        title: t('hr.engagements.engagement.1.title'),
+        description: t('hr.engagements.engagement.1.description'),
+        icon: "🌱"
+      },
+      {
+        title: t('hr.engagements.engagement.2.title'),
+        description: t('hr.engagements.engagement.2.description'),
+        icon: "🤲"
+      },
+      {
+        title: t('hr.engagements.engagement.3.title'),
+        description: t('hr.engagements.engagement.3.description'),
+        icon: "🔍"
+      }
+    ]
   };
 
-  const temoignages = (t('hr.testimonials.items') as unknown) as any[];
+  const temoignages = [
+    {
+      name: t('hr.testimonials.items.0.name'),
+      role: t('hr.testimonials.items.0.role'),
+      testimonial: t('hr.testimonials.items.0.testimonial'),
+      filiale: t('hr.testimonials.items.0.filiale'),
+      photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
+    },
+    {
+      name: t('hr.testimonials.items.1.name'),
+      role: t('hr.testimonials.items.1.role'),
+      testimonial: t('hr.testimonials.items.1.testimonial'),
+      filiale: t('hr.testimonials.items.1.filiale'),
+      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+    },
+    {
+      name: t('hr.testimonials.items.2.name'),
+      role: t('hr.testimonials.items.2.role'),
+      testimonial: t('hr.testimonials.items.2.testimonial'),
+      filiale: t('hr.testimonials.items.2.filiale'),
+      photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
+    }
+  ];
 
   return (
     <Layout>
