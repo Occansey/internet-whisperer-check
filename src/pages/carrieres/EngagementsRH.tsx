@@ -53,7 +53,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
 };
 
 const EngagementsRH = () => {
-  const { t } = useTranslation();
+  const { t, tObject } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -68,13 +68,13 @@ const EngagementsRH = () => {
   }, []);
 
   const engagements: { [key: string]: EngagementProps[] } = {
-    "developpement": t('hr.engagements.development') as EngagementProps[],
-    "bienetre": t('hr.engagements.wellbeing') as EngagementProps[],
-    "diversite": t('hr.engagements.diversity') as EngagementProps[],
-    "engagement": t('hr.engagements.engagement') as EngagementProps[]
+    "developpement": tObject('hr.engagements.development') as EngagementProps[],
+    "bienetre": tObject('hr.engagements.wellbeing') as EngagementProps[],
+    "diversite": tObject('hr.engagements.diversity') as EngagementProps[],
+    "engagement": tObject('hr.engagements.engagement') as EngagementProps[]
   };
 
-  const temoignages = t('hr.testimonials.items') as any[];
+  const temoignages = tObject('hr.testimonials.items') as any[];
 
   return (
     <Layout>

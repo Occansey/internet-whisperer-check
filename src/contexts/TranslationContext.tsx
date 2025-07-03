@@ -5,7 +5,8 @@ export type Language = 'fr' | 'en';
 interface TranslationContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => any;
+  t: (key: string) => string;
+  tObject: (key: string) => any;
 }
 
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
@@ -1124,7 +1125,11 @@ interface TranslationProviderProps {
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('fr');
 
-  const t = (key: string): any => {
+  const t = (key: string): string => {
+    return translations[language][key] || key;
+  };
+
+  const tObject = (key: string): any => {
     const keys = key.split('.');
     let value: any = translations[language];
     
@@ -1140,7 +1145,7 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({ childr
   };
 
   return (
-    <TranslationContext.Provider value={{ language, setLanguage, t }}>
+    <TranslationContext.Provider value={{ language, setLanguage, t, tObject }}>
       {children}
     </TranslationContext.Provider>
   );
