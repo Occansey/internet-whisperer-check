@@ -10,7 +10,7 @@ const ActivitesSection = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container">
-        <h2 className="text-3xl font-bold text-center mb-12">Nos domaines d'activité</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">{t('home.activities.title')}</h2>
         
         <div className="grid md:grid-cols-2 gap-8">
           <Card className="border-none shadow-lg">
@@ -19,12 +19,12 @@ const ActivitesSection = () => {
                 <span className="bg-primary/10 text-primary p-2 rounded-full mr-3">
                   ⚡️
                 </span>
-                Transition énergétique
+                {t('home.activities.energy.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700">
-                Nous développons, concevons, finançons et exploitons des solutions d'infrastructure énergétique décarbonée, en particulier dans le solaire photovoltaïque et les systèmes de stockage pour les secteurs industriels et commerciaux.
+                {t('home.activities.energy.description')}
               </p>
             </CardContent>
           </Card>
@@ -35,12 +35,12 @@ const ActivitesSection = () => {
                 <span className="bg-primary/10 text-primary p-2 rounded-full mr-3">
                   💻
                 </span>
-                Transformation digitale
+                {t('home.activities.digital.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700">
-                Nous accompagnons les entreprises dans la modernisation de leurs systèmes d'information, l'automatisation de leurs processus et l'intégration de solutions numériques intelligentes pour améliorer leur compétitivité.
+                {t('home.activities.digital.description')}
               </p>
             </CardContent>
           </Card>
@@ -49,8 +49,8 @@ const ActivitesSection = () => {
         <div className="flex justify-center mt-8">
           <Button asChild className="bg-white text-solio-blue border border-solio-blue hover:bg-solio-blue hover:text-white">
             <Link to="/activites">
-              <span>{t('common.contact')}</span>
-              <span className="ml-2">✉</span>
+              <span>{t('common.learnMore')}</span>
+              <span className="ml-2">→</span>
             </Link>
           </Button>
         </div>
