@@ -57,6 +57,79 @@ const translations = {
       },
       copyright: "Tous droits réservés."
     },
+    presentation: {
+      hero: {
+        title: "Présentation du Groupe Solio",
+        subtitle: "Un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale."
+      },
+      discover: {
+        button: "Découvrir nos filiales"
+      },
+      contact: {
+        button: "Nous contacter"
+      },
+      history: {
+        title: "Notre histoire",
+        intro: "Créé en 2019, Solio Group est un groupe multidisciplinaire dédié à l'accompagnement des entreprises et industriels dans leurs projets de transformation énergétique et digitale.",
+        expertise: "Notre expertise s'articule autour de deux axes principaux :",
+        energy: "Transition énergétique : ",
+        energy_desc: "Solutions photovoltaïques, éoliennes et de stockage d'énergie",
+        digital: "Transformation digitale : ",
+        digital_desc: "Conseil en stratégie, technologies avancées et mobilité électrique"
+      },
+      impact: {
+        title: "Notre impact en chiffres",
+        lives: "vies impactées",
+        projects: "projets réalisés",
+        countries: "pays d'intervention"
+      },
+      why: {
+        title: "Pourquoi Solio ?",
+        subtitle: "Notre nom reflète notre mission et nos valeurs",
+        sol: {
+          description: "Représente le soleil, source d'énergie renouvelable et symbole de durabilité. C'est notre engagement vers un avenir énergétique propre."
+        },
+        io: {
+          title: "IO",
+          description: "Évoque l'innovation et la technologie, représentant notre approche moderne et digitale des solutions énergétiques."
+        },
+        quote: "\"Solio Group : là où l'énergie du soleil rencontre l'innovation technologique pour créer un avenir durable.\"",
+        quote_author: "— Vision Solio Group"
+      }
+    },
+    governance: {
+      comex: {
+        title: "Comité Exécutif",
+        description: "Découvrez les membres du comité exécutif qui dirigent Solio Group vers l'excellence.",
+        members: "Membres du comité",
+        meetings: {
+          title: "Réunions du comité",
+          description: "Le comité exécutif se réunit mensuellement pour définir la stratégie du groupe et superviser les opérations de toutes les filiales."
+        }
+      }
+    },
+    executives: {
+      evrard: {
+        title: "Président Directeur Général",
+        bio: "Evrard Havyarimana est le fondateur et Président Directeur Général de Solio Group. Fort de plus de 15 ans d'expérience dans le secteur énergétique, il a dirigé la création et le développement du groupe depuis 2019. Diplômé en ingénierie électrique et titulaire d'un MBA en gestion d'entreprise, Evrard a une vision stratégique claire pour l'avenir énergétique durable. Sous sa direction, Solio Group est devenu un acteur majeur de la transition énergétique en Afrique, en Europe et en Amérique du Nord."
+      },
+      john: {
+        title: "Directeur Général Adjoint",
+        bio: "John Okoro est Directeur Général Adjoint de Solio Group et apporte une expertise technique approfondie au comité exécutif. Ingénieur en énergie renouvelable avec plus de 12 ans d'expérience, il supervise les opérations techniques du groupe et le développement de nouvelles technologies. John est responsable de la coordination entre les différentes filiales et de l'implémentation des standards de qualité à travers l'organisation."
+      },
+      laure: {
+        title: "Directrice des Opérations",
+        bio: "Laure Duhorane occupe le poste de Directrice des Opérations chez Solio Group. Forte de son expérience en gestion de projets complexes et en optimisation des processus, elle supervise l'ensemble des activités opérationnelles du groupe. Diplômée en management et spécialisée en amélioration continue, Laure assure la coordination entre les équipes et l'efficacité des opérations à l'échelle internationale."
+      },
+      isabelle: {
+        title: "Directrice Administrative et Financière",
+        bio: "Isabelle Mauboussin est la Directrice Administrative et Financière de Solio Group. Elle supervise toutes les activités financières, comptables et administratives du groupe. Avec plus de 10 ans d'expérience en finance d'entreprise et en gestion administrative, Isabelle assure la solidité financière du groupe et optimise les processus administratifs pour soutenir la croissance de l'organisation."
+      },
+      alain: {
+        title: "Directeur Technique",
+        bio: "Alain Normand est le Directeur Technique de Solio Group, responsable de la supervision technique de tous les projets du groupe. Ingénieur expérimenté avec une expertise particulière dans les systèmes énergétiques et les technologies vertes, il assure la qualité technique des solutions développées par les filiales et supervise l'innovation technologique au sein du groupe."
+      }
+    },
     home: {
       hero: {
         title: "Bienvenue chez Solio Group",
@@ -294,6 +367,79 @@ const translations = {
         linkedin: "Follow us on LinkedIn"
       },
       copyright: "All rights reserved."
+    },
+    presentation: {
+      hero: {
+        title: "Solio Group Presentation",
+        subtitle: "A multidisciplinary group dedicated to supporting companies and industries in their energy and digital transformation projects."
+      },
+      discover: {
+        button: "Discover our subsidiaries"
+      },
+      contact: {
+        button: "Contact us"
+      },
+      history: {
+        title: "Our history",
+        intro: "Created in 2019, Solio Group is a multidisciplinary group dedicated to supporting companies and industries in their energy and digital transformation projects.",
+        expertise: "Our expertise is structured around two main areas:",
+        energy: "Energy transition: ",
+        energy_desc: "Photovoltaic, wind and energy storage solutions",
+        digital: "Digital transformation: ",
+        digital_desc: "Strategy consulting, advanced technologies and electric mobility"
+      },
+      impact: {
+        title: "Our impact in numbers",
+        lives: "lives impacted",
+        projects: "completed projects",
+        countries: "countries of operation"
+      },
+      why: {
+        title: "Why Solio?",
+        subtitle: "Our name reflects our mission and values",
+        sol: {
+          description: "Represents the sun, source of renewable energy and symbol of sustainability. It's our commitment to a clean energy future."
+        },
+        io: {
+          title: "IO",
+          description: "Evokes innovation and technology, representing our modern and digital approach to energy solutions."
+        },
+        quote: "\"Solio Group: where the energy of the sun meets technological innovation to create a sustainable future.\"",
+        quote_author: "— Solio Group Vision"
+      }
+    },
+    governance: {
+      comex: {
+        title: "Executive Committee",
+        description: "Meet the executive committee members who lead Solio Group towards excellence.",
+        members: "Committee members",
+        meetings: {
+          title: "Committee meetings",
+          description: "The executive committee meets monthly to define the group's strategy and oversee the operations of all subsidiaries.."
+        }
+      }
+    },
+    executives: {
+      evrard: {
+        title: "Chief Executive Officer",
+        bio: "Evrard Havyarimana is the founder and Chief Executive Officer of Solio Group. With over 15 years of experience in the energy sector, he has led the creation and development of the group since 2019. Graduated in electrical engineering and holding an MBA in business management, Evrard has a clear strategic vision for the sustainable energy future. Under his leadership, Solio Group has become a major player in the energy transition in Africa, Europe and North America."
+      },
+      john: {
+        title: "Deputy General Manager",
+        bio: "John Okoro is Deputy General Manager of Solio Group and brings deep technical expertise to the executive committee. A renewable energy engineer with over 12 years of experience, he oversees the group's technical operations and the development of new technologies. John is responsible for coordination between the different subsidiaries and the implementation of quality standards throughout the organization."
+      },
+      laure: {
+        title: "Operations Director",
+        bio: "Laure Duhorane holds the position of Operations Director at Solio Group. With her experience in managing complex projects and process optimization, she oversees all operational activities of the group. Graduated in management and specialized in continuous improvement, Laure ensures coordination between teams and operational efficiency on an international scale."
+      },
+      isabelle: {
+        title: "Chief Administrative and Financial Officer",
+        bio: "Isabelle Mauboussin is the Chief Administrative and Financial Officer of Solio Group. She supervises all financial, accounting and administrative activities of the group. With over 10 years of experience in corporate finance and administrative management, Isabelle ensures the financial strength of the group and optimizes administrative processes to support the organization's growth."
+      },
+      alain: {
+        title: "Technical Director",
+        bio: "Alain Normand is the Technical Director of Solio Group, responsible for the technical supervision of all group projects. An experienced engineer with particular expertise in energy systems and green technologies, he ensures the technical quality of solutions developed by subsidiaries and supervises technological innovation within the group."
+      }
     },
     home: {
       hero: {
