@@ -68,119 +68,13 @@ const EngagementsRH = () => {
   }, []);
 
   const engagements: { [key: string]: EngagementProps[] } = {
-    "developpement": [
-      {
-        title: "Formation continue",
-        description: "Chaque collaborateur bénéficie d'un budget formation annuel et d'un plan de développement personnalisé.",
-        icon: "📚"
-      },
-      {
-        title: "Mobilité interne",
-        description: "Nous favorisons la mobilité interne entre services et filiales pour enrichir les parcours professionnels.",
-        icon: "🚀"
-      },
-      {
-        title: "Coaching & Mentoring",
-        description: "Un programme de coaching et de mentoring pour accélérer le développement des talents.",
-        icon: "🧠"
-      },
-      {
-        title: "Partage de connaissances",
-        description: "Ateliers réguliers de partage de connaissances et retours d'expérience entre collaborateurs.",
-        icon: "🔄"
-      }
-    ],
-    "bienetre": [
-      {
-        title: "Équilibre vie pro/perso",
-        description: "Télétravail flexible, horaires aménageables et respect du droit à la déconnexion.",
-        icon: "⚖️"
-      },
-      {
-        title: "Espaces de travail conviviaux",
-        description: "Des bureaux conçus pour favoriser à la fois la concentration et la collaboration.",
-        icon: "🏢"
-      },
-      {
-        title: "Programme bien-être",
-        description: "Accès à des services de soutien psychologique, cours de yoga et activités sportives.",
-        icon: "🧘"
-      },
-      {
-        title: "Événements d'équipe",
-        description: "Événements réguliers pour renforcer la cohésion d'équipe et célébrer nos réussites.",
-        icon: "🎉"
-      }
-    ],
-    "diversite": [
-      {
-        title: "Recrutement inclusif",
-        description: "Processus de recrutement conçu pour éliminer les biais et favoriser la diversité des profils.",
-        icon: "🤝"
-      },
-      {
-        title: "Équité salariale",
-        description: "Analyse régulière des rémunérations pour garantir l'équité entre tous les collaborateurs.",
-        icon: "💰"
-      },
-      {
-        title: "Sensibilisation",
-        description: "Formation des dirigeants et des équipes à la diversité et à l'inclusion.",
-        icon: "🧩"
-      },
-      {
-        title: "Accessibilité",
-        description: "Adaptation des postes de travail et de nos espaces pour les personnes en situation de handicap.",
-        icon: "♿"
-      }
-    ],
-    "engagement": [
-      {
-        title: "Projets à impact",
-        description: "Participation à des projets innovants contribuant à la transition énergétique et numérique.",
-        icon: "💡"
-      },
-      {
-        title: "RSE & Durabilité",
-        description: "Engagement concret pour réduire notre empreinte environnementale dans nos activités quotidiennes.",
-        icon: "🌱"
-      },
-      {
-        title: "Mécénat de compétences",
-        description: "Possibilité de consacrer du temps à des projets associatifs sur le temps de travail.",
-        icon: "🤲"
-      },
-      {
-        title: "Innovation participative",
-        description: "Programme d'intrapreneuriat permettant aux collaborateurs de développer leurs idées innovantes.",
-        icon: "🔍"
-      }
-    ]
+    "developpement": (t('hr.engagements.development') as unknown) as EngagementProps[],
+    "bienetre": (t('hr.engagements.wellbeing') as unknown) as EngagementProps[],
+    "diversite": (t('hr.engagements.diversity') as unknown) as EngagementProps[],
+    "engagement": (t('hr.engagements.engagement') as unknown) as EngagementProps[]
   };
 
-  const temoignages = [
-    {
-      name: "Sophie M.",
-      role: "Ingénieure Développement Solar",
-      testimonial: "Ce qui me plaît chez Solio Group, c'est l'équilibre parfait entre autonomie et accompagnement. J'ai pu développer de nouvelles compétences tout en travaillant sur des projets à fort impact en Afrique.",
-      filiale: "Growth Energy",
-      photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
-    },
-    {
-      name: "Marc L.",
-      role: "Consultant ERP",
-      testimonial: "Après 15 ans dans l'industrie, j'ai rejoint MFG Technologies pour transmettre mon expertise. L'entreprise m'a permis de me former aux dernières technologies tout en valorisant mon expérience passée.",
-      filiale: "MFG Technologies",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
-    },
-    {
-      name: "Maxwell O.",
-      role: "Developpeur IT",
-      testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre une formation de pointe et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
-      filiale: "Asking",
-      photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
-    }
-  ];
+  const temoignages = (t('hr.testimonials.items') as unknown) as any[];
 
   return (
     <Layout>
@@ -195,16 +89,16 @@ const EngagementsRH = () => {
           <Tabs defaultValue="developpement" className="w-full">
             <TabsList className={`grid ${isMobile ? "grid-cols-2 gap-1 mb-4" : "grid-cols-4 mb-8"}`}>
               <TabsTrigger value="developpement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Développement
+                {t('hr.tabs.development')}
               </TabsTrigger>
               <TabsTrigger value="bienetre" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Bien-être
+                {t('hr.tabs.wellbeing')}
               </TabsTrigger>
               <TabsTrigger value="diversite" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Diversité
+                {t('hr.tabs.diversity')}
               </TabsTrigger>
               <TabsTrigger value="engagement" className={`text-xs md:text-sm ${isMobile ? "text-solio-blue" : ""}`}>
-                Engagement
+                {t('hr.tabs.engagement')}
               </TabsTrigger>
             </TabsList>
             

@@ -436,8 +436,127 @@ const translations = {
         title: "Nos Engagements RH",
         description: "Découvrez notre vision des ressources humaines et nos engagements pour créer un environnement de travail épanouissant."
       },
+      tabs: {
+        development: "Développement",
+        wellbeing: "Bien-être",
+        diversity: "Diversité",
+        engagement: "Engagement"
+      },
+      engagements: {
+        development: [
+          {
+            title: "Formation continue",
+            description: "Chaque collaborateur bénéficie d'un budget formation annuel et d'un plan de développement personnalisé.",
+            icon: "📚"
+          },
+          {
+            title: "Mobilité interne",
+            description: "Nous favorisons la mobilité interne entre services et filiales pour enrichir les parcours professionnels.",
+            icon: "🚀"
+          },
+          {
+            title: "Coaching & Mentoring",
+            description: "Un programme de coaching et de mentoring pour accélérer le développement des talents.",
+            icon: "🧠"
+          },
+          {
+            title: "Partage de connaissances",
+            description: "Ateliers réguliers de partage de connaissances et retours d'expérience entre collaborateurs.",
+            icon: "🔄"
+          }
+        ],
+        wellbeing: [
+          {
+            title: "Équilibre vie pro/perso",
+            description: "Télétravail flexible, horaires aménageables et respect du droit à la déconnexion.",
+            icon: "⚖️"
+          },
+          {
+            title: "Espaces de travail conviviaux",
+            description: "Des bureaux conçus pour favoriser à la fois la concentration et la collaboration.",
+            icon: "🏢"
+          },
+          {
+            title: "Programme bien-être",
+            description: "Accès à des services de soutien psychologique, cours de yoga et activités sportives.",
+            icon: "🧘"
+          },
+          {
+            title: "Événements d'équipe",
+            description: "Événements réguliers pour renforcer la cohésion d'équipe et célébrer nos réussites.",
+            icon: "🎉"
+          }
+        ],
+        diversity: [
+          {
+            title: "Recrutement inclusif",
+            description: "Processus de recrutement conçu pour éliminer les biais et favoriser la diversité des profils.",
+            icon: "🤝"
+          },
+          {
+            title: "Équité salariale",
+            description: "Analyse régulière des rémunérations pour garantir l'équité entre tous les collaborateurs.",
+            icon: "💰"
+          },
+          {
+            title: "Sensibilisation",
+            description: "Formation des dirigeants et des équipes à la diversité et à l'inclusion.",
+            icon: "🧩"
+          },
+          {
+            title: "Accessibilité",
+            description: "Adaptation des postes de travail et de nos espaces pour les personnes en situation de handicap.",
+            icon: "♿"
+          }
+        ],
+        engagement: [
+          {
+            title: "Projets à impact",
+            description: "Participation à des projets innovants contribuant à la transition énergétique et numérique.",
+            icon: "💡"
+          },
+          {
+            title: "RSE & Durabilité",
+            description: "Engagement concret pour réduire notre empreinte environnementale dans nos activités quotidiennes.",
+            icon: "🌱"
+          },
+          {
+            title: "Mécénat de compétences",
+            description: "Possibilité de consacrer du temps à des projets associatifs sur le temps de travail.",
+            icon: "🤲"
+          },
+          {
+            title: "Innovation participative",
+            description: "Programme d'intrapreneuriat permettant aux collaborateurs de développer leurs idées innovantes.",
+            icon: "🔍"
+          }
+        ]
+      },
       testimonials: {
-        title: "Témoignages de nos Collaborateurs"
+        title: "Témoignages de nos Collaborateurs",
+        items: [
+          {
+            name: "Sophie M.",
+            role: "Ingénieure Développement Solar",
+            testimonial: "Ce qui me plaît chez Solio Group, c'est l'équilibre parfait entre autonomie et accompagnement. J'ai pu développer de nouvelles compétences tout en travaillant sur des projets à fort impact en Afrique.",
+            filiale: "Growth Energy",
+            photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
+          },
+          {
+            name: "Marc L.",
+            role: "Consultant ERP",
+            testimonial: "Après 15 ans dans l'industrie, j'ai rejoint MFG Technologies pour transmettre mon expertise. L'entreprise m'a permis de me former aux dernières technologies tout en valorisant mon expérience passée.",
+            filiale: "MFG Technologies",
+            photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+          },
+          {
+            name: "Maxwell O.",
+            role: "Developpeur IT",
+            testimonial: "La culture d'apprentissage continu chez Asking est incroyable. En un an, j'ai pu suivre une formation de pointe et travailler sur des projets variés qui m'ont fait grandir professionnellement.",
+            filiale: "Asking",
+            photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
+          }
+        ]
       },
       stats: {
         title: "Nos Chiffres Clés",
@@ -865,8 +984,127 @@ const translations = {
         title: "Our HR Commitments",
         description: "Discover our human resources vision and our commitments to creating a fulfilling work environment."
       },
+      tabs: {
+        development: "Development",
+        wellbeing: "Well-being",
+        diversity: "Diversity",
+        engagement: "Engagement"
+      },
+      engagements: {
+        development: [
+          {
+            title: "Continuous Training",
+            description: "Each employee benefits from an annual training budget and a personalized development plan.",
+            icon: "📚"
+          },
+          {
+            title: "Internal Mobility",
+            description: "We promote internal mobility between departments and subsidiaries to enrich career paths.",
+            icon: "🚀"
+          },
+          {
+            title: "Coaching & Mentoring",
+            description: "A coaching and mentoring program to accelerate talent development.",
+            icon: "🧠"
+          },
+          {
+            title: "Knowledge Sharing",
+            description: "Regular knowledge sharing workshops and experience feedback between colleagues.",
+            icon: "🔄"
+          }
+        ],
+        wellbeing: [
+          {
+            title: "Work-life Balance",
+            description: "Flexible remote work, adaptable schedules and respect for the right to disconnect.",
+            icon: "⚖️"
+          },
+          {
+            title: "Friendly Workspaces",
+            description: "Offices designed to promote both concentration and collaboration.",
+            icon: "🏢"
+          },
+          {
+            title: "Wellness Program",
+            description: "Access to psychological support services, yoga classes and sports activities.",
+            icon: "🧘"
+          },
+          {
+            title: "Team Events",
+            description: "Regular events to strengthen team cohesion and celebrate our successes.",
+            icon: "🎉"
+          }
+        ],
+        diversity: [
+          {
+            title: "Inclusive Recruitment",
+            description: "Recruitment process designed to eliminate bias and promote diversity of profiles.",
+            icon: "🤝"
+          },
+          {
+            title: "Pay Equity",
+            description: "Regular analysis of compensation to ensure equity among all employees.",
+            icon: "💰"
+          },
+          {
+            title: "Awareness",
+            description: "Training for leaders and teams on diversity and inclusion.",
+            icon: "🧩"
+          },
+          {
+            title: "Accessibility",
+            description: "Adaptation of workstations and our spaces for people with disabilities.",
+            icon: "♿"
+          }
+        ],
+        engagement: [
+          {
+            title: "Impact Projects",
+            description: "Participation in innovative projects contributing to energy and digital transition.",
+            icon: "💡"
+          },
+          {
+            title: "CSR & Sustainability",
+            description: "Concrete commitment to reduce our environmental footprint in our daily activities.",
+            icon: "🌱"
+          },
+          {
+            title: "Skills-based Volunteering",
+            description: "Opportunity to dedicate time to charitable projects during work hours.",
+            icon: "🤲"
+          },
+          {
+            title: "Participatory Innovation",
+            description: "Intrapreneurship program allowing employees to develop their innovative ideas.",
+            icon: "🔍"
+          }
+        ]
+      },
       testimonials: {
-        title: "Employee Testimonials"
+        title: "Employee Testimonials",
+        items: [
+          {
+            name: "Sophie M.",
+            role: "Solar Development Engineer",
+            testimonial: "What I like about Solio Group is the perfect balance between autonomy and support. I was able to develop new skills while working on high-impact projects in Africa.",
+            filiale: "Growth Energy",
+            photo: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&h=400&fit=crop"
+          },
+          {
+            name: "Marc L.",
+            role: "ERP Consultant",
+            testimonial: "After 15 years in the industry, I joined MFG Technologies to share my expertise. The company allowed me to train on the latest technologies while valuing my past experience.",
+            filiale: "MFG Technologies",
+            photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+          },
+          {
+            name: "Maxwell O.",
+            role: "IT Developer",
+            testimonial: "The continuous learning culture at Asking is incredible. In one year, I was able to follow cutting-edge training and work on varied projects that made me grow professionally.",
+            filiale: "Asking",
+            photo: "/lovable-uploads/00783e95-6140-48c0-b392-d1a69cf7c477.png"
+          }
+        ]
       },
       stats: {
         title: "Our Key Figures",
