@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type Language = 'fr' | 'en';
@@ -277,6 +276,61 @@ const translations = {
     'hr.stats.nationalities': 'nationalités',
     'hr.stats.cities': 'villes',
     'hr.stats.countries': 'pays',
+    
+    // Subsidiaries
+    'subsidiaries.title': 'Nos Filiales',
+    'subsidiaries.description': 'Découvrez l\'ensemble de nos filiales spécialisées dans la transition énergétique et la transformation digitale.',
+    'subsidiaries.learnMore': 'En savoir plus',
+    'subsidiaries.why.title': 'Pourquoi Nos Filiales ?',
+    'subsidiaries.expertise.title': 'Expertise Spécialisée',
+    'subsidiaries.expertise.description': 'Chaque filiale développe une expertise pointue dans son domaine pour offrir des solutions de haute qualité.',
+    'subsidiaries.international.title': 'Présence Internationale',
+    'subsidiaries.international.description': 'Nos filiales nous permettent d\'avoir une présence forte en Afrique et en Amérique du Nord.',
+    'subsidiaries.impact.title': 'Impact Durable',
+    'subsidiaries.impact.description': 'Ensemble, nos filiales contribuent à un impact positif sur l\'environnement et la société.',
+
+    // Growth Energy
+    'growth.description': 'Growth Energy est une entreprise spécialisée dans la transition énergétique qui aide les entreprises et les particuliers à réduire leur empreinte carbone et leurs coûts énergétiques. Nous avons trois activités complémentaires : l\'électrification des zones rurales, l\'installation de centrales solaires pour les industriels et les entreprises, et la mobilité électrique.',
+    'growth.partners': 'Partenaires',
+    'growth.deployment': 'Déploiements',
+    'growth.clients': 'Clients',
+    'growth.co2': 'tonnes CO2 évitées',
+    'growth.process.title': 'Notre Processus',
+    'growth.process.step1.title': 'Analyse',
+    'growth.process.step1.description': 'Étude approfondie de vos besoins énergétiques',
+    'growth.process.step2.title': 'Conception',
+    'growth.process.step2.description': 'Développement de solutions sur mesure',
+    'growth.process.step3.title': 'Installation',
+    'growth.process.step3.description': 'Mise en œuvre professionnelle des équipements',
+    'growth.process.step4.title': 'Suivi',
+    'growth.process.step4.description': 'Maintenance et optimisation continue',
+    'growth.news.title': 'Actualités Growth Energy',
+    'growth.news.date': '15 Novembre 2024',
+    'growth.news.event.title': 'Participation à l\'Africa Energy Forum',
+    'growth.news.event.description': 'Growth Energy présente ses dernières innovations en matière d\'électrification rurale lors du plus grand salon énergétique africain.',
+    'growth.news.nairobi.title': 'Nouvelle installation à Nairobi',
+    'growth.news.nairobi.description': 'Mise en service d\'une centrale solaire de 500kW pour alimenter un complexe industriel.',
+    'growth.news.nairobi.inauguration': 'Inauguré avec succès',
+    'growth.fumba.title': 'Projet Fumba Town',
+    'growth.fumba.description': 'Growth Energy a réalisé l\'électrification complète de Fumba Town en Tanzanie, un projet d\'envergure qui alimente plus de 2000 foyers grâce à l\'énergie solaire.',
+    'growth.fumba.discover': 'Découvrir le projet',
+
+    // Asking
+    'asking.description': 'Asking est une entreprise spécialisée dans la visualisation et l\'analyse de données. Nous accompagnons les entreprises dans l\'exploitation stratégique de leurs données pour une prise de décision éclairée et un pilotage optimisé de leur activité.',
+    'asking.clients': 'Clients satisfaits',
+    'asking.projects': 'Projets réalisés',
+    'asking.collaborators': 'Collaborateurs',
+
+    // MFG Technologies
+    'mfg.description': 'MFG Technologies est un intégrateur de solutions ERP spécialisé dans les logiciels Divalto et JobBOSS. Nous accompagnons les entreprises manufacturières dans l\'optimisation de leurs processus métiers grâce à des solutions de gestion adaptées.',
+    'mfg.experience': 'Ans d\'expérience',
+    'mfg.companies': 'Entreprises accompagnées',
+    'mfg.projects': 'Projets d\'intégration',
+
+    // GEM E-Mobility
+    'gem.description': 'GEM E-Mobility est une entreprise spécialisée dans les solutions de mobilité électrique. Nous concevons et déployons des infrastructures de recharge pour véhicules électriques adaptées aux besoins spécifiques des entreprises et collectivités.',
+    'gem.station': 'Station de démonstration',
+    'gem.capacity': 'Capacité de recharge',
   },
   en: {
     // Navigation
