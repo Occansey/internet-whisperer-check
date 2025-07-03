@@ -57,69 +57,69 @@ const Culture = () => {
 
   const principesLieu = [
     {
-      title: "Espaces flexibles",
-      description: "Nos bureaux sont conçus pour s'adapter à différents modes de travail : concentration, collaboration, créativité et détente.",
+      title: t('culture.principles.where.flexible'),
+      description: t('culture.principles.where.flexible.desc'),
       icon: "🏢"
     },
     {
-      title: "Aménagements conviviaux",
-      description: "Nous créons des espaces chaleureux et accueillants favorisant les échanges spontanés et le bien-être.",
+      title: t('culture.principles.where.friendly'),
+      description: t('culture.principles.where.friendly.desc'),
       icon: "🪴"
     },
     {
-      title: "Outils collaboratifs",
-      description: "Nous utilisons les meilleures technologies pour faciliter le travail d'équipe, que ce soit en présentiel ou à distance.",
+      title: t('culture.principles.where.tools'),
+      description: t('culture.principles.where.tools.desc'),
       icon: "💻"
     },
     {
-      title: "Ouverture sur l'extérieur",
-      description: "Nos espaces sont conçus pour accueillir partenaires, clients et communautés lors d'événements et d'ateliers.",
+      title: t('culture.principles.where.open'),
+      description: t('culture.principles.where.open.desc'),
       icon: "🔓"
     }
   ];
 
   const principesFacon = [
     {
-      title: "Autonomie responsable",
-      description: "Nous offrons à nos collaborateurs la liberté d'organiser leur travail, avec une responsabilité partagée sur les résultats.",
+      title: t('culture.principles.how.autonomy'),
+      description: t('culture.principles.how.autonomy.desc'),
       icon: "🚀"
     },
     {
-      title: "Flexibilité",
-      description: "Nous proposons des horaires flexibles et la possibilité de télétravailler pour permettre à chacun de trouver son équilibre.",
+      title: t('culture.principles.how.flexibility'),
+      description: t('culture.principles.how.flexibility.desc'),
       icon: "⏰"
     },
     {
-      title: "Développement continu",
-      description: "Nous encourageons l'apprentissage permanent à travers formations, mentorat et projets transverses.",
+      title: t('culture.principles.how.development'),
+      description: t('culture.principles.how.development.desc'),
       icon: "📚"
     },
     {
-      title: "Intelligence collective",
-      description: "Nous favorisons la collaboration et la co-construction des solutions à travers des rituels d'équipe efficaces.",
+      title: t('culture.principles.how.intelligence'),
+      description: t('culture.principles.how.intelligence.desc'),
       icon: "🧩"
     }
   ];
 
   const principesCroissance = [
     {
-      title: "Croissance intentionnelle",
-      description: "Nous visons une croissance maîtrisée qui préserve notre culture et nos valeurs tout en augmentant notre impact.",
+      title: t('culture.principles.evolution.growth'),
+      description: t('culture.principles.evolution.growth.desc'),
       icon: "📈"
     },
     {
-      title: "Diversité & inclusion",
-      description: "Nous construisons des équipes diverses, représentatives des marchés et communautés que nous servons.",
+      title: t('culture.principles.evolution.diversity'),
+      description: t('culture.principles.evolution.diversity.desc'),
       icon: "🌈"
     },
     {
-      title: "Leadership partagé",
-      description: "Nous développons les compétences de leadership à tous les niveaux de l'organisation.",
+      title: t('culture.principles.evolution.leadership'),
+      description: t('culture.principles.evolution.leadership.desc'),
       icon: "👥"
     },
     {
-      title: "Engagement social",
-      description: "Nous soutenons activement des initiatives sociales et environnementales alignées avec notre mission.",
+      title: t('culture.principles.evolution.engagement'),
+      description: t('culture.principles.evolution.engagement.desc'),
       icon: "🌱"
     }
   ];
