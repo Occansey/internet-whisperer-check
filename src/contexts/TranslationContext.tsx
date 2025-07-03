@@ -413,6 +413,23 @@ const translations = {
     'contact.follow.title': 'Suivez-nous',
     'contact.hours.title': 'Horaires d\'ouverture',
     'contact.hours.text': 'Lundi - Vendredi : 9h00 - 18h00\nWeek-end : Fermé',
+
+    presence: {
+      title: "Notre Présence Internationale | Solio Group",
+      description: "Découvrez la présence mondiale de Solio Group avec nos bureaux en France, Canada, et Afrique. Une portée internationale pour l'énergie solaire et la transformation digitale.",
+      hero: {
+        title: "Notre Présence Internationale",
+        subtitle: "Un réseau mondial au service de la transition énergétique et de la transformation digitale"
+      },
+      global: "Présence Mondiale",
+      international: {
+        title: "Nos Bureaux dans le Monde",
+        subtitle: "Solio Group s'appuie sur un réseau international pour accompagner ses clients dans leur transition énergétique et leur transformation digitale."
+      },
+      regions: {
+        title: "Nos Régions d'Implantation"
+      }
+    }
   },
   en: {
     // Navigation
@@ -808,6 +825,23 @@ const translations = {
     'contact.follow.title': 'Follow us',
     'contact.hours.title': 'Opening hours',
     'contact.hours.text': 'Monday - Friday: 9:00 AM - 6:00 PM\nWeekend: Closed',
+
+    presence: {
+      title: "Our International Presence | Solio Group",
+      description: "Discover the global presence of Solio Group with our offices in France, Canada, and Africa. An international reach for solar energy and digital transformation.",
+      hero: {
+        title: "Our International Presence",
+        subtitle: "A global network serving the energy transition and digital transformation"
+      },
+      global: "Global Presence",
+      international: {
+        title: "Our Offices Worldwide",
+        subtitle: "Solio Group relies on an international network to support its clients in their energy transition and digital transformation."
+      },
+      regions: {
+        title: "Our Regional Locations"
+      }
+    }
   }
 };
 
