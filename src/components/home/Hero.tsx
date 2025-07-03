@@ -115,15 +115,7 @@ const Hero = () => {
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-gray-100 to-solio-yellow bg-clip-text text-transparent">
-              Transformons ensemble
-            </span>
-            <br />
-            <span className="text-white">
-              les défis énergétiques
-            </span>
-            <br />
-            <span className="text-solio-yellow">
-              et numériques
+              {t('home.hero.title')}
             </span>
           </h1>
           
