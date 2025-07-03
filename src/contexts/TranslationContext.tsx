@@ -382,6 +382,10 @@ const translations = {
     // HR Commitments
     'hr.commitments.title': 'Nos Engagements RH',
     'hr.commitments.description': 'Découvrez nos engagements en matière de ressources humaines pour créer un environnement de travail épanouissant et inclusif.',
+    'hr.tabs.development': 'Développement',
+    'hr.tabs.wellbeing': 'Bien-être',
+    'hr.tabs.diversity': 'Diversité',
+    'hr.tabs.engagement': 'Engagement',
     'hr.testimonials.title': 'Témoignages de nos collaborateurs',
     'hr.stats.title': 'Nos chiffres clés',
     'hr.stats.women': 'de femmes',
@@ -930,6 +934,10 @@ const translations = {
     // HR Commitments
     'hr.commitments.title': 'Our HR Commitments',
     'hr.commitments.description': 'Discover our human resources commitments to create a fulfilling and inclusive work environment.',
+    'hr.tabs.development': 'Development',
+    'hr.tabs.wellbeing': 'Well-being',
+    'hr.tabs.diversity': 'Diversity',
+    'hr.tabs.engagement': 'Engagement',
     'hr.testimonials.title': 'Testimonials from our employees',
     'hr.stats.title': 'Our key figures',
     'hr.stats.women': 'women',
