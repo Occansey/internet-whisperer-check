@@ -1126,7 +1126,18 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({ childr
   const [language, setLanguage] = useState<Language>('fr');
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    const keys = key.split('.');
+    let value: any = translations[language];
+    
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        return key; // Return the key if translation not found
+      }
+    }
+    
+    return typeof value === 'string' ? value : key;
   };
 
   const tObject = (key: string): any => {

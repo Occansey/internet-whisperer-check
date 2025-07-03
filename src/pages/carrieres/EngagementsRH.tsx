@@ -67,9 +67,6 @@ const EngagementsRH = () => {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Debug: Check what tObject returns
-  console.log('Development engagements:', tObject('hr.engagements.development'));
-  console.log('Testimonials:', tObject('hr.testimonials.items'));
 
   const engagements: { [key: string]: EngagementProps[] } = {
     "developpement": tObject('hr.engagements.development') as EngagementProps[],
