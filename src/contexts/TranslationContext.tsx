@@ -429,6 +429,23 @@ const translations = {
       regions: {
         title: "Nos Régions d'Implantation"
       }
+    },
+
+    hr: {
+      commitments: {
+        title: "Nos Engagements RH",
+        description: "Découvrez notre vision des ressources humaines et nos engagements pour créer un environnement de travail épanouissant."
+      },
+      testimonials: {
+        title: "Témoignages de nos Collaborateurs"
+      },
+      stats: {
+        title: "Nos Chiffres Clés",
+        women: "de femmes",
+        nationalities: "nationalités",
+        cities: "villes",
+        countries: "pays"
+      }
     }
   },
   en: {
@@ -840,6 +857,23 @@ const translations = {
       },
       regions: {
         title: "Our Regional Locations"
+      }
+    },
+
+    hr: {
+      commitments: {
+        title: "Our HR Commitments",
+        description: "Discover our human resources vision and our commitments to creating a fulfilling work environment."
+      },
+      testimonials: {
+        title: "Employee Testimonials"
+      },
+      stats: {
+        title: "Our Key Figures",
+        women: "women",
+        nationalities: "nationalities",
+        cities: "cities",
+        countries: "countries"
       }
     }
   }
