@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Toggle } from '@/components/ui/toggle';
-import { useTranslation } from '@/contexts/TranslationContext';
+import { useTranslation, Language } from '@/contexts/TranslationContext';
 
 export const LanguageSwitcher: React.FC = () => {
   const { language, setLanguage } = useTranslation();
