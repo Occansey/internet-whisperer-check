@@ -66,10 +66,27 @@ const extractGalleryImages = (wpProject: any): string[] => {
   return [...new Set(images)].filter(Boolean);
 };
 
-// Slug mapping for WordPress projects
+// Function to convert line breaks to HTML
+const convertLineBreaksToHtml = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/\r\n/g, '<br>')
+    .replace(/\n/g, '<br>')
+    .replace(/\r/g, '<br>');
+};
+
+// Comprehensive slug mapping for WordPress projects
 const slugMapping: Record<string, string> = {
   'kira-station-de-recharge-solaire': 'kira',
-  // Add more mappings as needed
+  'station-solaire-burundi': 'kira',
+  'station-recharge-gem': 'kira',
+  'centrale-solaire-growth': 'centrale-solaire-600kw',
+  'projet-solar-farm': 'centrale-solaire-600kw',
+  'installation-erp-mfg': 'installation-erp-divalto',
+  'systeme-erp-mfg': 'installation-erp-divalto',
+  'plateforme-analytics-asking': 'plateforme-analytics',
+  'dashboard-asking': 'plateforme-analytics',
+  // Add more mappings as projects are added to WordPress
 };
 
 const ProjectDetail = () => {
@@ -372,7 +389,7 @@ const ProjectDetail = () => {
                         <h3 className="text-xl font-semibold mt-6 mb-3">Objectifs</h3>
                         <div 
                           className="wordpress-objectifs [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-2 [&_li]:mb-2"
-                          dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.objectifs) }} 
+                          dangerouslySetInnerHTML={{ __html: convertLineBreaksToHtml(decodeHtmlEntities(project.wpData.objectifs)) }} 
                         />
                       </>
                     )}
@@ -479,7 +496,10 @@ const ProjectDetail = () => {
                     {project.wpData.technologie && (
                       <div>
                         <h3 className="font-semibold mb-2">Technologie</h3>
-                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.technologie)}</p>
+                        <div 
+                          className="text-gray-700 [&_br]:mb-2"
+                          dangerouslySetInnerHTML={{ __html: convertLineBreaksToHtml(decodeHtmlEntities(project.wpData.technologie)) }}
+                        />
                       </div>
                     )}
                     {project.wpData.capacite && project.wpData.capacite !== "N/A" && (
@@ -497,7 +517,10 @@ const ProjectDetail = () => {
                     {project.wpData.optimisation && project.wpData.optimisation !== "N/A" && (
                       <div>
                         <h3 className="font-semibold mb-2">Optimisation</h3>
-                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.optimisation)}</p>
+                        <div 
+                          className="text-gray-700 [&_br]:mb-2"
+                          dangerouslySetInnerHTML={{ __html: convertLineBreaksToHtml(decodeHtmlEntities(project.wpData.optimisation)) }}
+                        />
                       </div>
                     )}
                   </>
@@ -554,22 +577,6 @@ const ProjectDetail = () => {
                       </>
                     )}
                     
-                    {project.subsidiary === "gem" && (
-                      <>
-                        <div>
-                          <h3 className="font-semibold mb-2">Type de borne</h3>
-                          <p className="text-gray-700">Borne de recharge rapide DC 50kW</p>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2">Alimentation</h3>
-                          <p className="text-gray-700">Panneaux solaires 20kWc avec stockage 30kWh</p>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2">Connectivité</h3>
-                          <p className="text-gray-700">4G avec système de gestion à distance</p>
-                        </div>
-                      </>
-                    )}
                   </>
                 )}
                 
