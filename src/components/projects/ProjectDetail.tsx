@@ -130,6 +130,11 @@ const ProjectDetail = () => {
             annual_co2_reduction: wpProject.acf?.annual_co2_reduction,
             impact: wpProject.acf?.impact,
             optimisation: wpProject.acf?.optimisation,
+            // Technical details for charging stations
+            type_borne: wpProject.acf?.['type_borne'],
+            alimentation: wpProject.acf?.['alimentation'],
+            connectivite: wpProject.acf?.['connectivite'],
+            caracteristiques: wpProject.acf?.['caracteristiques'],
             // Gallery and video fields
             galerie: galleryImages,
             video_youtube: wpProject.acf?.video_youtube,
@@ -341,6 +346,17 @@ const ProjectDetail = () => {
                   <>
                     <WordPressContent content={project.description} />
                     
+                    {/* WordPress Caractéristiques section */}
+                    {project.wpData?.caracteristiques && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
+                        <div 
+                          className="wordpress-caracteristiques [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-2 [&_li]:mb-2"
+                          dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(project.wpData.caracteristiques) }} 
+                        />
+                      </>
+                    )}
+                    
                     {/* WordPress-specific content with bulleted list for Objectifs */}
                     {project.wpData?.objectifs && (
                       <>
@@ -431,6 +447,26 @@ const ProjectDetail = () => {
               <div className="space-y-6">
                 {project.isWordPress && project.wpData ? (
                   <>
+                    {/* Charging station specific technical details */}
+                    {project.wpData.type_borne && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Type de borne</h3>
+                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.type_borne)}</p>
+                      </div>
+                    )}
+                    {project.wpData.alimentation && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Alimentation</h3>
+                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.alimentation)}</p>
+                      </div>
+                    )}
+                    {project.wpData.connectivite && (
+                      <div>
+                        <h3 className="font-semibold mb-2">Connectivité</h3>
+                        <p className="text-gray-700">{decodeHtmlEntities(project.wpData.connectivite)}</p>
+                      </div>
+                    )}
+                    {/* General technical details */}
                     {project.wpData.technologie && (
                       <div>
                         <h3 className="font-semibold mb-2">Technologie</h3>
