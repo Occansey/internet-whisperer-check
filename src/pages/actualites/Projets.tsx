@@ -92,9 +92,9 @@ export const projects: ProjectProps[] = [
   {
     id: 8,
     title: "KIRA - Station de recharge solaire",
-    description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est.",
+    description: "Installation de la première station de recharge électrique alimentée par énergie solaire en Afrique de l'Est, au Burundi.",
     image: "/lovable-uploads/408e68a2-7b2b-41b8-9c23-27f4974b9c86.png",
-    progress: 30,
+    progress: 80,
     subsidiary: "gem",
     location: "Burundi"
   }
