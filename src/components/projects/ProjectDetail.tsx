@@ -98,6 +98,9 @@ const ProjectDetail = () => {
     if (id) {
       // If WordPress data is available, use it
       if (wpProject && !wpLoading) {
+        console.log('WordPress project data:', wpProject);
+        console.log('ACF data:', wpProject.acf);
+        
         // Extract gallery images from WordPress data
         const galleryImages = extractGalleryImages(wpProject);
         
@@ -141,9 +144,11 @@ const ProjectDetail = () => {
             video_linkedin: wpProject.acf?.video_linkedin
           }
         };
+        
+        console.log('Transformed project wpData:', transformedProject.wpData);
         setProject(transformedProject);
         setLoading(false);
-      } 
+      }
       // If WordPress fails or no data, try static projects by slug
       else if (wpError || (!wpLoading && !wpProject)) {
         // Try numeric ID first for backwards compatibility
