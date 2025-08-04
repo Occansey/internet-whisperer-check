@@ -66,14 +66,23 @@ const extractGalleryImages = (wpProject: any): string[] => {
   return [...new Set(images)].filter(Boolean);
 };
 
+// Slug mapping for WordPress projects
+const slugMapping: Record<string, string> = {
+  'kira-station-de-recharge-solaire': 'kira',
+  // Add more mappings as needed
+};
+
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [project, setProject] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Try to fetch from WordPress first
-  const { data: wpProject, isLoading: wpLoading, error: wpError } = useWordPressProject(id || '');
+  // Get the WordPress slug to try
+  const wpSlug = id ? (slugMapping[id] || id) : '';
+  
+  // Try to fetch from WordPress first using mapped slug
+  const { data: wpProject, isLoading: wpLoading, error: wpError } = useWordPressProject(wpSlug);
 
   const mapSubsidiaryFromWordPress = (filiale: string): string => {
     const filialeNormalized = filiale?.toLowerCase() || '';
