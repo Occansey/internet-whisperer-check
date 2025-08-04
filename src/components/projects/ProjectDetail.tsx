@@ -98,9 +98,6 @@ const ProjectDetail = () => {
     if (id) {
       // If WordPress data is available, use it
       if (wpProject && !wpLoading) {
-        console.log('WordPress project data:', wpProject);
-        console.log('ACF data:', wpProject.acf);
-        
         // Extract gallery images from WordPress data
         const galleryImages = extractGalleryImages(wpProject);
         
@@ -144,11 +141,9 @@ const ProjectDetail = () => {
             video_linkedin: wpProject.acf?.video_linkedin
           }
         };
-        
-        console.log('Transformed project wpData:', transformedProject.wpData);
         setProject(transformedProject);
         setLoading(false);
-      }
+      } 
       // If WordPress fails or no data, try static projects by slug
       else if (wpError || (!wpLoading && !wpProject)) {
         // Try numeric ID first for backwards compatibility
@@ -427,6 +422,19 @@ const ProjectDetail = () => {
                       </>
                     )}
                     
+                    {project.subsidiary === "gem" && (
+                      <>
+                        <h3 className="text-xl font-semibold mt-6 mb-3">Caractéristiques</h3>
+                        <ul className="list-disc pl-5 space-y-2 mb-6">
+                          <li>Alimentation 100% solaire</li>
+                          <li>Batterie de secours pour une disponibilité constante</li>
+                          <li>Interface utilisateur intuitive</li>
+                        </ul>
+                        
+                        <h3 className="text-xl font-semibold mb-3">Impact</h3>
+                        <p>Cette installation contribue directement à l'adoption de la mobilité électrique dans la région, en offrant une infrastructure de recharge fiable et durable.</p>
+                      </>
+                    )}
                   </>
                 )}
               </div>
@@ -485,9 +493,75 @@ const ProjectDetail = () => {
                     )}
                   </>
                 ) : (
-                  <div className="text-gray-500 text-sm">
-                    Données techniques non disponibles
-                  </div>
+                  <>
+                    {project.subsidiary === "growth-energy" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Technologie</h3>
+                          <p className="text-gray-700">Panneaux solaires haute efficacité avec suiveur solaire</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Capacité</h3>
+                          <p className="text-gray-700">600 kWc</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Stockage d'énergie</h3>
+                          <p className="text-gray-700">Système de batteries lithium-ion 600 kWh</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "asking" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Architecture</h3>
+                          <p className="text-gray-700">Système cloud avec API sécurisée</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Base de données</h3>
+                          <p className="text-gray-700">MongoDB avec réplication</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Sécurité</h3>
+                          <p className="text-gray-700">Authentification multi-facteurs et chiffrement des données</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "mfg-technologies" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Solution ERP</h3>
+                          <p className="text-gray-700">Divalto Infinity v12</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Modules déployés</h3>
+                          <p className="text-gray-700">Finance, Production, Logistique, CRM</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Intégrations</h3>
+                          <p className="text-gray-700">API vers les systèmes de production et la comptabilité</p>
+                        </div>
+                      </>
+                    )}
+                    
+                    {project.subsidiary === "gem" && (
+                      <>
+                        <div>
+                          <h3 className="font-semibold mb-2">Type de borne</h3>
+                          <p className="text-gray-700">Borne de recharge rapide DC 50kW</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Alimentation</h3>
+                          <p className="text-gray-700">Panneaux solaires 20kWc avec stockage 30kWh</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-2">Connectivité</h3>
+                          <p className="text-gray-700">4G avec système de gestion à distance</p>
+                        </div>
+                      </>
+                    )}
+                  </>
                 )}
                 
                 <div className="pt-4 border-t">
