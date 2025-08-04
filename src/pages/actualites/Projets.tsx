@@ -218,8 +218,8 @@ const Projets = () => {
     }));
   };
 
-  // Only use WordPress projects
-  const allProjects = transformWordPressProjects();
+  // Use WordPress projects as primary, fallback to static only if needed
+  const allProjects = wpProjects && wpProjects.length > 0 ? transformWordPressProjects() : projects;
 
   const filterProjects = (tab: string) => {
     let filtered = [...allProjects];
