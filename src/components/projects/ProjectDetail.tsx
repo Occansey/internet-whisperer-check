@@ -246,7 +246,7 @@ const ProjectDetail = () => {
   const projectStats = [
     {
       title: "Capacité installée",
-      value: project.wpData?.capacite ? `${project.wpData.capacite} kW` : (project.subsidiary === "growth-energy" ? "600 kWc" : null),
+      value: project.wpData?.capacite ? `${project.wpData.capacite} kWc` : (project.subsidiary === "growth-energy" ? "600 kWc" : null),
       icon: <Lightbulb className="h-6 w-6 text-yellow-500" />
     },
     {
