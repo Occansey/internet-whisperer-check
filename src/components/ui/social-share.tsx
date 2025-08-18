@@ -54,47 +54,111 @@ export function SocialShare({ title, className = "", compact = false, showPdfDow
         throw new Error("Contenu du projet non trouvé");
       }
 
-      // Calculate full content height
       const element = projectContent as HTMLElement;
-      const fullHeight = Math.max(
-        element.scrollHeight,
-        element.offsetHeight,
-        element.clientHeight
-      );
-      
-      // Create canvas from the project content with mobile-like styling
-      const canvas = await html2canvas(projectContent as HTMLElement, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        width: 375, // Mobile width
-        height: fullHeight,
-        windowWidth: 375,
-        windowHeight: fullHeight,
-        scrollX: 0,
-        scrollY: 0,
-        foreignObjectRendering: true,
-      });
 
-      // Calculate PDF dimensions (A4 proportions but optimized for content)
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      // Save original styles
+      const originalOverflow = document.body.style.overflow;
+      const originalWidth = element.style.width;
+      const originalMaxWidth = element.style.maxWidth;
+      const originalTransform = element.style.transform;
 
-      // Create PDF
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgData = canvas.toDataURL('image/png');
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      
-      // Download the PDF
-      const fileName = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_projet.pdf`;
-      pdf.save(fileName);
+      try {
+        // Prepare DOM for mobile view capture
+        document.body.style.overflow = 'visible';
+        element.style.width = '375px';
+        element.style.maxWidth = '375px';
+        element.style.transform = 'scale(1)';
 
-      toast({
-        title: "PDF téléchargé",
-        description: "Le PDF du projet a été téléchargé avec succès.",
-      });
+        // Force mobile responsive styles
+        document.documentElement.style.setProperty('--force-mobile', '375px');
+        
+        // Wait for layout to settle
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Calculate actual content dimensions
+        const rect = element.getBoundingClientRect();
+        const actualHeight = Math.max(
+          element.scrollHeight,
+          element.offsetHeight,
+          rect.height
+        );
+
+        // Create canvas with optimized settings for full page capture
+        const canvas = await html2canvas(element, {
+          scale: 1.5, // Lower scale for better performance
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          width: 375,
+          windowWidth: 375,
+          removeContainer: true,
+          imageTimeout: 15000,
+          logging: false,
+          onclone: (clonedDoc) => {
+            // Apply mobile styles to cloned document
+            const clonedElement = clonedDoc.querySelector('[data-project-content]') as HTMLElement;
+            if (clonedElement) {
+              clonedElement.style.width = '375px';
+              clonedElement.style.maxWidth = '375px';
+              clonedElement.style.overflow = 'visible';
+              
+              // Force all responsive elements to mobile view
+              const responsiveElements = clonedDoc.querySelectorAll('.sm\\:*, .md\\:*, .lg\\:*');
+              responsiveElements.forEach((el) => {
+                (el as HTMLElement).style.display = 'block';
+                (el as HTMLElement).style.width = '100%';
+              });
+            }
+          }
+        });
+
+        // Create PDF with proper dimensions
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        
+        const imgData = canvas.toDataURL('image/png', 0.95);
+        const imgProps = pdf.getImageProperties(imgData);
+        
+        // Calculate dimensions to fit mobile width properly
+        const pdfWidth = pageWidth - 20; // 10mm margin on each side
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        // Check if content fits on one page
+        if (pdfHeight <= pageHeight - 20) {
+          // Single page
+          pdf.addImage(imgData, 'PNG', 10, 10, pdfWidth, pdfHeight);
+        } else {
+          // Multiple pages
+          const pageContentHeight = pageHeight - 20; // Account for margins
+          const totalPages = Math.ceil(pdfHeight / pageContentHeight);
+          
+          for (let i = 0; i < totalPages; i++) {
+            if (i > 0) pdf.addPage();
+            
+            const yOffset = -(i * pageContentHeight);
+            pdf.addImage(imgData, 'PNG', 10, 10 + yOffset, pdfWidth, pdfHeight);
+          }
+        }
+        
+        // Download the PDF
+        const fileName = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_mobile.pdf`;
+        pdf.save(fileName);
+
+        toast({
+          title: "PDF téléchargé",
+          description: "Le PDF mobile du projet a été généré avec succès.",
+        });
+
+      } finally {
+        // Restore original styles
+        document.body.style.overflow = originalOverflow;
+        element.style.width = originalWidth;
+        element.style.maxWidth = originalMaxWidth;
+        element.style.transform = originalTransform;
+        document.documentElement.style.removeProperty('--force-mobile');
+      }
+
     } catch (error) {
       console.error('Erreur lors de la génération du PDF:', error);
       toast({
