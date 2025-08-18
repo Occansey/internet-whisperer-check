@@ -268,7 +268,9 @@ const ProjectDetail = () => {
 
   return (
     <Layout>
-      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
+      <div data-project-content>
+        {/* Hero Section */}
+        <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
         <div className="container py-12">
           <div className="flex justify-between items-center mb-8">
             <Button 
@@ -593,6 +595,7 @@ const ProjectDetail = () => {
             <SocialShare title={decodeHtmlEntities(project.title)} className="justify-center" />
           </div>
         </div>
+      </div>
       </div>
     </Layout>
   );
