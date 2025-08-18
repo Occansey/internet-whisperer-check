@@ -282,7 +282,7 @@ const ProjectDetail = () => {
             </Button>
             
             <div className="[&_button]:border-blue-500 [&_button]:text-blue-500 [&_button]:hover:bg-blue-500 [&_button]:hover:text-white">
-              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} showPdfDownload={true} />
+              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} />
             </div>
           </div>
           
