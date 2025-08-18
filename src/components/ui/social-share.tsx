@@ -54,15 +54,12 @@ export function SocialShare({ title, className = "", compact = false, showPdfDow
         throw new Error("Contenu du projet non trouvé");
       }
 
-      // Create canvas from the project content with mobile-like styling
+      // Create canvas from the project content
       const canvas = await html2canvas(projectContent as HTMLElement, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        width: 375, // Mobile width
-        windowWidth: 375,
-        windowHeight: projectContent.scrollHeight,
       });
 
       // Calculate PDF dimensions (A4 proportions but optimized for content)

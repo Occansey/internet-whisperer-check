@@ -328,7 +328,7 @@ const ProjectDetail = () => {
       </div>
       
       {/* Project Details Section */}
-      <div className="bg-gray-50 py-12" data-project-content>
+      <div className="bg-gray-50 py-12">
         <div className="container">
           {projectStats.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
