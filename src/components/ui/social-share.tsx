@@ -54,6 +54,14 @@ export function SocialShare({ title, className = "", compact = false, showPdfDow
         throw new Error("Contenu du projet non trouvé");
       }
 
+      // Calculate full content height
+      const element = projectContent as HTMLElement;
+      const fullHeight = Math.max(
+        element.scrollHeight,
+        element.offsetHeight,
+        element.clientHeight
+      );
+      
       // Create canvas from the project content with mobile-like styling
       const canvas = await html2canvas(projectContent as HTMLElement, {
         scale: 2,
@@ -61,8 +69,12 @@ export function SocialShare({ title, className = "", compact = false, showPdfDow
         allowTaint: true,
         backgroundColor: '#ffffff',
         width: 375, // Mobile width
+        height: fullHeight,
         windowWidth: 375,
-        windowHeight: projectContent.scrollHeight,
+        windowHeight: fullHeight,
+        scrollX: 0,
+        scrollY: 0,
+        foreignObjectRendering: true,
       });
 
       // Calculate PDF dimensions (A4 proportions but optimized for content)
