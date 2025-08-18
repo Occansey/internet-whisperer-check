@@ -280,7 +280,7 @@ const ProjectDetail = () => {
             </Button>
             
             <div className="[&_button]:border-blue-500 [&_button]:text-blue-500 [&_button]:hover:bg-blue-500 [&_button]:hover:text-white">
-              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} />
+              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} showPdfDownload={true} />
             </div>
           </div>
           
@@ -328,7 +328,7 @@ const ProjectDetail = () => {
       </div>
       
       {/* Project Details Section */}
-      <div className="bg-gray-50 py-12">
+      <div className="bg-gray-50 py-12" data-project-content>
         <div className="container">
           {projectStats.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

@@ -1,5 +1,5 @@
 
-import { Facebook, Twitter, Share2, Copy } from "lucide-react";
+import { Facebook, Twitter, Share2, Copy, Download } from "lucide-react";
 import { Button } from "./button";
 import { toast } from "./use-toast";
 import { 
@@ -8,14 +8,17 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "./dropdown-menu";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface SocialShareProps {
   title: string;
   className?: string;
   compact?: boolean;
+  showPdfDownload?: boolean;
 }
 
-export function SocialShare({ title, className = "", compact = false }: SocialShareProps) {
+export function SocialShare({ title, className = "", compact = false, showPdfDownload = false }: SocialShareProps) {
   const url = window.location.href;
   
   const shareOnWhatsApp = () => {
@@ -36,6 +39,58 @@ export function SocialShare({ title, className = "", compact = false }: SocialSh
       title: "Lien copié",
       description: "Le lien a été copié dans votre presse-papiers.",
     });
+  };
+
+  const downloadPDF = async () => {
+    try {
+      toast({
+        title: "Génération du PDF",
+        description: "Génération du PDF en cours...",
+      });
+
+      // Find the project content element (excluding header/navigation)
+      const projectContent = document.querySelector('[data-project-content]');
+      if (!projectContent) {
+        throw new Error("Contenu du projet non trouvé");
+      }
+
+      // Create canvas from the project content with mobile-like styling
+      const canvas = await html2canvas(projectContent as HTMLElement, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        width: 375, // Mobile width
+        windowWidth: 375,
+        windowHeight: projectContent.scrollHeight,
+      });
+
+      // Calculate PDF dimensions (A4 proportions but optimized for content)
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      // Create PDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      
+      // Download the PDF
+      const fileName = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_projet.pdf`;
+      pdf.save(fileName);
+
+      toast({
+        title: "PDF téléchargé",
+        description: "Le PDF du projet a été téléchargé avec succès.",
+      });
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de générer le PDF. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (compact) {
@@ -67,6 +122,12 @@ export function SocialShare({ title, className = "", compact = false }: SocialSh
               <Copy className="h-4 w-4 mr-2" />
               Copier le lien
             </DropdownMenuItem>
+            {showPdfDownload && (
+              <DropdownMenuItem onClick={downloadPDF} className="cursor-pointer">
+                <Download className="h-4 w-4 mr-2" />
+                Télécharger PDF
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -91,6 +152,11 @@ export function SocialShare({ title, className = "", compact = false }: SocialSh
         <Button variant="outline" size="icon" onClick={copyLink} title="Copier le lien">
           <Copy className="h-4 w-4" />
         </Button>
+        {showPdfDownload && (
+          <Button variant="outline" size="icon" onClick={downloadPDF} title="Télécharger PDF">
+            <Download className="h-4 w-4" />
+          </Button>
+        )}
       </div>
     </div>
   );
