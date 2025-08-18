@@ -102,12 +102,13 @@ export function SocialShare({ title, className = "", compact = false, showPdfDow
               clonedElement.style.maxWidth = '375px';
               clonedElement.style.overflow = 'visible';
               
-              // Force all responsive elements to mobile view
-              const responsiveElements = clonedDoc.querySelectorAll('.sm\\:*, .md\\:*, .lg\\:*');
-              responsiveElements.forEach((el) => {
-                (el as HTMLElement).style.display = 'block';
-                (el as HTMLElement).style.width = '100%';
-              });
+              // Apply mobile viewport meta tag to cloned document
+              const metaViewport = clonedDoc.createElement('meta');
+              metaViewport.name = 'viewport';
+              metaViewport.content = 'width=375, initial-scale=1';
+              if (clonedDoc.head) {
+                clonedDoc.head.appendChild(metaViewport);
+              }
             }
           }
         });
