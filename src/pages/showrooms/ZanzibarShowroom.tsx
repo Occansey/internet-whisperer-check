@@ -1,7 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import { Helmet } from "react-helmet-async";
-import { MapPin, Award, Zap, Battery } from "lucide-react";
+import { MapPin, Award, Zap, Battery, Mail } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
+import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
 
 const ZanzibarShowroom = () => {
   const { t } = useTranslation();
@@ -128,6 +129,58 @@ const ZanzibarShowroom = () => {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section className="py-16 bg-muted/30">
+          <div className="container max-w-4xl mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                {t('showrooms.visit.title')}
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                {t('showrooms.visit.description')}
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Contact Info */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">{t('showrooms.contact.title')}</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="font-medium">{t('showrooms.contact.primary_email')}</p>
+                        <p className="text-sm text-muted-foreground">maxwell.o@asking-group.com</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-primary" />
+                      <div>
+                        <p className="font-medium">{t('showrooms.contact.secondary_email')}</p>
+                        <p className="text-sm text-muted-foreground">john.o@growth-energy.fr</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">{t('showrooms.services.title')}</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>{t('showrooms.services.solar_demo')}</li>
+                    <li>{t('showrooms.services.storage_test')}</li>
+                    <li>{t('showrooms.services.ev_test')}</li>
+                    <li>{t('showrooms.services.consultation')}</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Contact Form */}
+              <ShowroomContactForm />
             </div>
           </div>
         </section>
