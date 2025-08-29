@@ -123,21 +123,18 @@ const ShowroomContactForm = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="showroom">{t('showrooms.contact_form.showroom')}</Label>
-              <Select onValueChange={value => handleSelectChange("showroom", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder={t('showrooms.contact_form.showroom_placeholder')} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="zanzibar-fumba">{t('showrooms.contact_form.showroom_fumba')}</SelectItem>
-                  <SelectItem value="zanzibar-jambiani">{t('showrooms.contact_form.showroom_jambiani')}</SelectItem>
-                  <SelectItem value="both">{t('showrooms.contact_form.showroom_both')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
+          <div className="space-y-2">
+            <Label htmlFor="showroom">{t('showrooms.contact_form.showroom')}</Label>
+            <Select onValueChange={value => handleSelectChange("showroom", value)}>
+              <SelectTrigger>
+                <SelectValue placeholder={t('showrooms.contact_form.showroom_placeholder')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="zanzibar-fumba">{t('showrooms.contact_form.showroom_fumba')}</SelectItem>
+                <SelectItem value="zanzibar-jambiani">{t('showrooms.contact_form.showroom_jambiani')}</SelectItem>
+                <SelectItem value="both">{t('showrooms.contact_form.showroom_both')}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">

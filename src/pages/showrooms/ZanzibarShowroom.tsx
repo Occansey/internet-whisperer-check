@@ -117,7 +117,7 @@ const ZanzibarShowroom = () => {
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-medium">{t('showrooms.contact.secondary_email')}</p>
-                        <p className="text-sm text-muted-foreground">john.o@growth-energy.fr</p>
+                        <p className="text-sm text-muted-foreground">contact@growth-energy.fr</p>
                       </div>
                     </div>
                   </div>
