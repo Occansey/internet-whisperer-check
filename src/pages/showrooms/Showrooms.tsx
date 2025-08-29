@@ -7,19 +7,22 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 const Showrooms = () => {
+  const { t } = useTranslation();
+
   return (
     <Layout>
       <Helmet>
-        <title>Showrooms - Growth Energy</title>
-        <meta name="description" content="Visitez nos showrooms Growth Energy pour découvrir nos solutions d'énergie propre et de mobilité électrique. Showrooms à Zanzibar avec des solutions complètes." />
-        <meta name="keywords" content="showroom, energy solutions, electric mobility, Zanzibar, clean energy, solar power, battery storage" />
+        <title>{t('showrooms.title')} - Growth Energy</title>
+        <meta name="description" content={t('showrooms.description')} />
+        <meta name="keywords" content={t('showrooms.keywords')} />
       </Helmet>
 
       <HeroBanner
-        title="Nos Showrooms"
-        subtitle="Découvrez nos espaces d'exposition dédiés aux solutions d'énergie propre et de mobilité électrique"
+        title={t('showrooms.hero.title')}
+        subtitle={t('showrooms.hero.subtitle')}
       />
 
       <main className="container mx-auto px-4 py-16 space-y-16">
@@ -27,10 +30,10 @@ const Showrooms = () => {
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Nos Espaces d'Exposition
+              {t('showrooms.spaces.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Visitez nos showrooms pour découvrir de près nos solutions innovantes d'énergie propre et de mobilité électrique
+              {t('showrooms.spaces.description')}
             </p>
           </div>
 
@@ -40,10 +43,10 @@ const Showrooms = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  Zanzibar, Tanzanie
+                  {t('showrooms.zanzibar.location')}
                 </CardTitle>
                 <CardDescription>
-                  Deux espaces d'exposition : Fumba Town et Jambiani/Paje
+                  {t('showrooms.zanzibar.locations_desc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -55,11 +58,11 @@ const Showrooms = () => {
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Solutions complètes d'énergie propre et de mobilité électrique dans l'éco-ville de Fumba Town et au Kijani Commercial Park.
+                  {t('showrooms.zanzibar.description')}
                 </p>
                 <div className="flex gap-2">
                   <Button asChild variant="default" size="sm">
-                    <Link to="/showrooms/zanzibar">Découvrir</Link>
+                    <Link to="/showrooms/zanzibar">{t('showrooms.zanzibar.discover')}</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -70,18 +73,18 @@ const Showrooms = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-muted-foreground">
                   <MapPin className="h-5 w-5" />
-                  Prochainement
+                  {t('showrooms.future.title')}
                 </CardTitle>
                 <CardDescription>
-                  D'autres showrooms en développement
+                  {t('showrooms.future.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="aspect-video rounded-lg bg-muted flex items-center justify-center">
-                  <p className="text-muted-foreground">Nouveau showroom bientôt</p>
+                  <p className="text-muted-foreground">{t('showrooms.future.coming_soon')}</p>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Nous développons de nouveaux espaces d'exposition dans d'autres régions stratégiques.
+                  {t('showrooms.future.development')}
                 </p>
               </CardContent>
             </Card>
@@ -93,10 +96,10 @@ const Showrooms = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                Planifiez Votre Visite
+                {t('showrooms.visit.title')}
               </h2>
               <p className="text-lg text-muted-foreground">
-                Contactez-nous pour organiser une visite personnalisée de nos showrooms
+                {t('showrooms.visit.description')}
               </p>
             </div>
 
@@ -104,19 +107,19 @@ const Showrooms = () => {
               {/* Contact Info */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Informations de Contact</h3>
+                  <h3 className="text-xl font-semibold mb-4">{t('showrooms.contact.title')}</h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
-                        <p className="font-medium">Email Principal</p>
+                        <p className="font-medium">{t('showrooms.contact.primary_email')}</p>
                         <p className="text-sm text-muted-foreground">maxwell.o@asking-group.com</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
-                        <p className="font-medium">Email Secondaire</p>
+                        <p className="font-medium">{t('showrooms.contact.secondary_email')}</p>
                         <p className="text-sm text-muted-foreground">john.o@growth-energy.fr</p>
                       </div>
                     </div>
@@ -124,12 +127,12 @@ const Showrooms = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Nos Services</h3>
+                  <h3 className="text-xl font-semibold mb-4">{t('showrooms.services.title')}</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Démonstrations de solutions solaires</li>
-                    <li>• Test de systèmes de stockage d'énergie</li>
-                    <li>• Essais de véhicules électriques</li>
-                    <li>• Consultations personnalisées</li>
+                    <li>{t('showrooms.services.solar_demo')}</li>
+                    <li>{t('showrooms.services.storage_test')}</li>
+                    <li>{t('showrooms.services.ev_test')}</li>
+                    <li>{t('showrooms.services.consultation')}</li>
                   </ul>
                 </div>
               </div>
