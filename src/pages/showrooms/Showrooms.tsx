@@ -8,22 +8,18 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
 import { useTranslation } from "@/contexts/TranslationContext";
-
 const Showrooms = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Layout>
+  const {
+    t
+  } = useTranslation();
+  return <Layout>
       <Helmet>
         <title>{t('showrooms.title')} - Growth Energy</title>
         <meta name="description" content={t('showrooms.description')} />
         <meta name="keywords" content={t('showrooms.keywords')} />
       </Helmet>
 
-      <HeroBanner
-        title={t('showrooms.hero.title')}
-        subtitle={t('showrooms.hero.subtitle')}
-      />
+      <HeroBanner title={t('showrooms.hero.title')} subtitle={t('showrooms.hero.subtitle')} />
 
       <main className="container mx-auto px-4 py-16 space-y-16">
         {/* Showrooms Grid */}
@@ -51,11 +47,7 @@ const Showrooms = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="aspect-video rounded-lg overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/2707389b-57ab-403a-93ec-d202304eb4bc.png" 
-                    alt="Showroom Zanzibar"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src="/lovable-uploads/2707389b-57ab-403a-93ec-d202304eb4bc.png" alt="Showroom Zanzibar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <p className="text-sm text-muted-foreground">
                   {t('showrooms.zanzibar.description')}
@@ -109,13 +101,7 @@ const Showrooms = () => {
                 <div>
                   <h3 className="text-xl font-semibold mb-4">{t('showrooms.contact.title')}</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <Mail className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="font-medium">{t('showrooms.contact.primary_email')}</p>
-                        <p className="text-sm text-muted-foreground">maxwell.o@asking-group.com</p>
-                      </div>
-                    </div>
+                    
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
@@ -143,8 +129,6 @@ const Showrooms = () => {
           </div>
         </section>
       </main>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Showrooms;
