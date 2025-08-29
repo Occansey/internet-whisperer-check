@@ -3,7 +3,7 @@ import HeroBanner from "@/components/common/HeroBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Building, Globe } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import WorldMap from "@/components/maps/WorldMap";
+
 import { useTranslation } from "@/contexts/TranslationContext";
 
 const Presence = () => {
