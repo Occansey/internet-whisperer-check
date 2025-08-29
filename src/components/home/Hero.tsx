@@ -175,6 +175,10 @@ const Hero = () => {
               <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
               <span className="text-gray-300">Présence internationale</span>
             </Link>
+            <Link to="/showrooms/zanzibar" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+              <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>
+              <span className="text-gray-300">Showrooms</span>
+            </Link>
           </div>
           
           {/* Discover button centered below features */}

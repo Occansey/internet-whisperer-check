@@ -33,6 +33,7 @@ import NotFound from "./pages/NotFound";
 import Media from "./pages/Media";
 import Presence from "./pages/Presence";
 import AllSubmissions from "./pages/AllSubmissions";
+import ZanzibarShowroom from "./pages/showrooms/ZanzibarShowroom";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,8 @@ const App = () => (
               <Route path="/filiales/asking" element={<AskingPage />} />
               <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
               <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
+              
+              <Route path="/showrooms/zanzibar" element={<ZanzibarShowroom />} />
               
               <Route path="/gouvernance/direction" element={<Direction />} />
               <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
