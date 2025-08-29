@@ -40,7 +40,7 @@ const ZanzibarShowroom = () => {
               {/* Content */}
               <div className="order-1 lg:order-2 space-y-6">
                 <div className="inline-flex items-center gap-3 bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-medium">
-                  <img src="/lovable-uploads/558cc446-a08f-4c54-ac71-aa16129d7cfe.png" alt="Growth Energy Logo" className="w-6 h-6" />
+                  <img src="/lovable-uploads/558cc446-a08f-4c54-ac71-aa16129d7cfe.png" alt="Growth Energy Logo" className="w-10 h-10" />
                   <MapPin className="w-4 h-4" />
                   {t('showrooms.zanzibar_showroom.location_badge')}
                 </div>
@@ -151,7 +151,7 @@ const ZanzibarShowroom = () => {
               {/* Fumba Town */}
               <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-xl shadow-lg">
                 <h3 className="text-xl font-bold text-blue-700 mb-4">{t('showrooms.zanzibar_showroom.fumba.title')}</h3>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <p className="flex items-start gap-2">
                     <MapPin className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-700">{t('showrooms.zanzibar_showroom.fumba.address')}</span>
@@ -159,13 +159,40 @@ const ZanzibarShowroom = () => {
                   <p className="text-gray-600">
                     {t('showrooms.zanzibar_showroom.fumba.description')}
                   </p>
+                  
+                  {/* Company Details */}
+                  <div className="bg-white/70 p-4 rounded-lg mt-4">
+                    <h4 className="font-semibold text-blue-800 mb-3">Installation Details</h4>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="font-medium">Rooms:</span> 
+                        <span className="ml-2 text-gray-700">12 units</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">AC Units:</span> 
+                        <span className="ml-2 text-gray-700">18 systems</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">Monthly Load:</span> 
+                        <span className="ml-2 text-gray-700">35 kW</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">Consumption:</span> 
+                        <span className="ml-2 text-gray-700">2,500 kWh/month</span>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-blue-200">
+                      <span className="font-medium text-blue-800">Power Backup:</span> 
+                      <span className="ml-2 text-gray-700">50kWh Battery Storage + Solar Grid</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Jambiani/Paje */}
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl shadow-lg">
                 <h3 className="text-xl font-bold text-green-700 mb-4">{t('showrooms.zanzibar_showroom.kijani.title')}</h3>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <p className="flex items-start gap-2">
                     <MapPin className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-700">{t('showrooms.zanzibar_showroom.kijani.address')}</span>
@@ -173,6 +200,33 @@ const ZanzibarShowroom = () => {
                   <p className="text-gray-600">
                     {t('showrooms.zanzibar_showroom.kijani.description')}
                   </p>
+                  
+                  {/* Company Details */}
+                  <div className="bg-white/70 p-4 rounded-lg mt-4">
+                    <h4 className="font-semibold text-green-800 mb-3">Installation Details</h4>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="font-medium">Rooms:</span> 
+                        <span className="ml-2 text-gray-700">8 units</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">AC Units:</span> 
+                        <span className="ml-2 text-gray-700">12 systems</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">Monthly Load:</span> 
+                        <span className="ml-2 text-gray-700">28 kW</span>
+                      </div>
+                      <div>
+                        <span className="font-medium">Consumption:</span> 
+                        <span className="ml-2 text-gray-700">2,100 kWh/month</span>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-green-200">
+                      <span className="font-medium text-green-800">Power Backup:</span> 
+                      <span className="ml-2 text-gray-700">40kWh Battery Storage + Solar Array</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

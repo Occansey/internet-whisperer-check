@@ -19,7 +19,12 @@ const ShowroomContactForm = () => {
     showroom: "",
     visitDate: "",
     message: "",
-    services: ""
+    services: "",
+    rooms: "",
+    acs: "",
+    monthlyLoadKw: "",
+    monthlyConsumptionKwh: "",
+    needsBackupSolution: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -70,7 +75,12 @@ const ShowroomContactForm = () => {
           showroom: "",
           visitDate: "",
           message: "",
-          services: ""
+          services: "",
+          rooms: "",
+          acs: "",
+          monthlyLoadKw: "",
+          monthlyConsumptionKwh: "",
+          needsBackupSolution: ""
         });
       } else {
         throw new Error('Erreur lors de l\'envoi');
@@ -144,6 +154,75 @@ const ShowroomContactForm = () => {
                 <SelectItem value="all">{t('showrooms.contact_form.services_all')}</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Company Details Section */}
+          <div className="border-t pt-4 mt-6">
+            <h3 className="text-lg font-semibold mb-4">Company Details</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="rooms">Number of Rooms</Label>
+                <Input
+                  id="rooms"
+                  name="rooms"
+                  type="number"
+                  value={formData.rooms}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 10"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="acs">Number of ACs</Label>
+                <Input
+                  id="acs"
+                  name="acs"
+                  type="number"
+                  value={formData.acs}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 8"
+                />
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="space-y-2">
+                <Label htmlFor="monthlyLoadKw">Average Monthly Load (kW)</Label>
+                <Input
+                  id="monthlyLoadKw"
+                  name="monthlyLoadKw"
+                  type="number"
+                  step="0.1"
+                  value={formData.monthlyLoadKw}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 25.5"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="monthlyConsumptionKwh">Monthly Energy Consumption (kWh)</Label>
+                <Input
+                  id="monthlyConsumptionKwh"
+                  name="monthlyConsumptionKwh"
+                  type="number"
+                  value={formData.monthlyConsumptionKwh}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 1500"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 mt-4">
+              <Label htmlFor="needsBackupSolution">Power Backup Solutions Needed</Label>
+              <Select onValueChange={value => handleSelectChange("needsBackupSolution", value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select backup solution needs" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="yes">Yes, interested in backup solutions</SelectItem>
+                  <SelectItem value="no">No backup needed</SelectItem>
+                  <SelectItem value="maybe">Need consultation</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="space-y-2">

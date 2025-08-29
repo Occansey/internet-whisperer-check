@@ -160,6 +160,41 @@ $headers = [
 // Send email
 $success = mail($to, $subject, $message, implode("\r\n", $headers));
 
+// Send confirmation email to user for showroom contact
+if ($success && $data['type'] === 'showroom-contact') {
+    $confirmation_subject = 'Confirmation de votre demande de visite - Growth Energy';
+    $confirmation_message = "
+Bonjour " . htmlspecialchars($data['name']) . ",
+
+Merci pour votre intérêt pour nos showrooms Growth Energy à Zanzibar !
+
+Nous avons bien reçu votre demande de visite avec les informations suivantes :
+- Showroom souhaité : " . htmlspecialchars($data['showroom'] ?? 'Non spécifié') . "
+- Services d'intérêt : " . htmlspecialchars($data['services'] ?? 'Non spécifiés') . "
+
+Notre équipe vous contactera sous 24-48h pour organiser votre visite et répondre à toutes vos questions sur nos solutions d'énergie propre.
+
+En attendant, n'hésitez pas à visiter notre site web pour découvrir davantage nos innovations en énergie solaire, stockage d'énergie et mobilité électrique.
+
+Cordialement,
+L'équipe Growth Energy
+
+---
+Growth Energy - Clean Energy Solutions
+Email: john.o@growth-energy.fr
+    ";
+    
+    $confirmation_headers = [
+        'From: ' . $from,
+        'Reply-To: john.o@growth-energy.fr',
+        'X-Mailer: PHP/' . phpversion(),
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8'
+    ];
+    
+    mail(htmlspecialchars($data['email']), $confirmation_subject, $confirmation_message, implode("\r\n", $confirmation_headers));
+}
+
 if ($success) {
     // Log successful send (optional)
     error_log("Email sent successfully to: $to");
