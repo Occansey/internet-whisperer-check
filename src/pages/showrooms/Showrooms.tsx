@@ -8,10 +8,15 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { useEffect } from "react";
+
 const Showrooms = () => {
-  const {
-    t
-  } = useTranslation();
+  const { t, setLanguage } = useTranslation();
+
+  // Set language to English by default for showrooms
+  useEffect(() => {
+    setLanguage('en');
+  }, [setLanguage]);
   return <Layout>
       <Helmet>
         <title>{t('showrooms.title')} - Growth Energy</title>

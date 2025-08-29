@@ -3,10 +3,15 @@ import { Helmet } from "react-helmet-async";
 import { MapPin, Award, Zap, Battery, Mail } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
+import { useEffect } from "react";
+
 const ZanzibarShowroom = () => {
-  const {
-    t
-  } = useTranslation();
+  const { t, setLanguage } = useTranslation();
+
+  // Set language to English by default for showrooms
+  useEffect(() => {
+    setLanguage('en');
+  }, [setLanguage]);
   return <Layout>
       <Helmet>
         <title>{t('showrooms.zanzibar_showroom.title')} | Growth Energy - Clean Energy Solutions</title>
