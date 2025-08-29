@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar } from 'lucide-react';
-import { SocialShare } from '@/components/ui/social-share';
+
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ImageGallery from '@/components/ui/image-gallery';
 import VideoEmbed from '@/components/ui/video-embed';
@@ -260,9 +260,6 @@ const ArticleDetail = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
-            <div className="w-full sm:w-auto">
-              <SocialShare title={article.title} compact={true} />
-            </div>
           </div>
           
           <div className="max-w-4xl mx-auto">
@@ -319,9 +316,6 @@ const ArticleDetail = () => {
               />
             </div>
             
-            <div className="mt-8 lg:mt-12 pt-6 border-t">
-              <SocialShare title={article.title} className="justify-center" />
-            </div>
           </div>
         </div>
         

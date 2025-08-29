@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, Clock, ExternalLink, CalendarPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EventProps } from '@/types/events';
-import { SocialShare } from '@/components/ui/social-share';
+
 import ColoredBadge from '@/components/ui/colored-badge';
 
 interface EventCalendarProps {
@@ -238,7 +238,6 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events, selectedDate, onE
                   <Badge variant="outline" className={getEventTypeColor(event.type)}>
                     {getEventTypeLabel(event.type)}
                   </Badge>
-                  <SocialShare title={event.title} compact={true} />
                 </div>
                 <CardTitle className="text-xl leading-tight text-gray-900 dark:text-gray-100">{event.title}</CardTitle>
               </CardHeader>

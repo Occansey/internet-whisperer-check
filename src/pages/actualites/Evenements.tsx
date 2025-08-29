@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import MiniCalendar from "@/components/events/MiniCalendar";
+
 import EventsList from "@/components/events/EventsList";
 import ViewModeToggle from "@/components/events/ViewModeToggle";
 import EventCalendar from "@/components/events/EventCalendar";
@@ -213,24 +213,12 @@ const Evenements = () => {
           
           <div className="animate-fade-in">
             {viewMode === "calendar" ? (
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="lg:col-span-1">
-                  <MiniCalendar 
-                    events={calendarFilteredEvents}
-                    onDateSelect={setSelectedDate}
-                    selectedDate={selectedDate}
-                    wpEvents={wordpressEvents || []}
-                  />
-                </div>
-                <div className="lg:col-span-3">
-                  <EventCalendar 
-                    events={calendarFilteredEvents} 
-                    selectedDate={selectedDate}
-                    onEventClick={handleEventClick}
-                    wpEvents={wordpressEvents || []}
-                  />
-                </div>
-              </div>
+              <EventCalendar 
+                events={calendarFilteredEvents} 
+                selectedDate={selectedDate}
+                onEventClick={handleEventClick}
+                wpEvents={wordpressEvents || []}
+              />
             ) : (
               <EventsList 
                 events={filteredEvents}

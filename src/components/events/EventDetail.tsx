@@ -4,7 +4,7 @@ import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, MapPin, ExternalLink, CalendarPlus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { SocialShare } from '@/components/ui/social-share';
+
 import ColoredBadge from '@/components/ui/colored-badge';
 import { events } from '@/data/events';
 import { EventProps } from '@/types/events';
@@ -283,7 +283,7 @@ const EventDetail = () => {
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
             
-            <SocialShare title={event.title} compact={true} />
+            
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -398,9 +398,6 @@ const EventDetail = () => {
             <p>{event.description}</p>
           </div>
           
-          <div className="mt-12 pt-6 border-t">
-            <SocialShare title={event.title} className="justify-center" />
-          </div>
         </div>
       </div>
     </Layout>

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SocialShare } from "@/components/ui/social-share";
+
 import { useWordPressProject } from '@/hooks/useWordPress';
 import WordPressContent from '@/components/wordpress/WordPressContent';
 import ScreenLoader from '@/components/ui/screen-loader';
@@ -280,10 +280,6 @@ const ProjectDetail = () => {
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Retour
             </Button>
-            
-            <div className="[&_button]:border-blue-500 [&_button]:text-blue-500 [&_button]:hover:bg-blue-500 [&_button]:hover:text-white">
-              <SocialShare title={decodeHtmlEntities(project.title)} compact={true} />
-            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
@@ -590,10 +586,6 @@ const ProjectDetail = () => {
             </div>
           </div>
           
-          {/* Social sharing section */}
-          <div className="mt-12 p-6 bg-white rounded-lg shadow">
-            <SocialShare title={decodeHtmlEntities(project.title)} className="justify-center" />
-          </div>
         </div>
       </div>
       </div>

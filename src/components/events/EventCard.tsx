@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SocialShare } from "@/components/ui/social-share";
+
 import ColoredBadge from "@/components/ui/colored-badge";
 import { EventProps } from "@/types/events";
 import { decodeHtmlEntities } from "@/utils/htmlUtils";
@@ -102,9 +102,6 @@ const EventCard = ({ event, compact = false, wpEvent }: EventCardProps) => {
           <Badge variant="outline" className={getEventTypeBadgeStyle(eventType)}>
             {getEventTypeLabel(eventType)}
           </Badge>
-          <div className="flex items-center space-x-2">
-            <SocialShare title={event.title} compact={true} />
-          </div>
         </div>
         <CardTitle className="mt-2 text-lg leading-tight text-gray-900 dark:text-white">{event.title}</CardTitle>
         <CardDescription className="flex flex-col gap-2 text-sm text-gray-600 dark:text-gray-300">
