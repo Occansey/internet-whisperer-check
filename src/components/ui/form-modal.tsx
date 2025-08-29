@@ -3,7 +3,6 @@ import React from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/forms/ContactForm";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface FormModalProps {
   children: React.ReactNode;
@@ -57,9 +56,9 @@ const FormModal = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-        <VisuallyHidden>
+        <div className="sr-only">
           <DialogTitle>{getTitle()}</DialogTitle>
-        </VisuallyHidden>
+        </div>
         <ContactForm 
           type={type} 
           jobTitle={jobTitle} 
