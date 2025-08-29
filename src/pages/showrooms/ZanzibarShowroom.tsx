@@ -1,10 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import { Helmet } from "react-helmet-async";
 import { MapPin, Award, Zap, Battery } from "lucide-react";
-
 const ZanzibarShowroom = () => {
-  return (
-    <Layout>
+  return <Layout>
       <Helmet>
         <title>Zanzibar Showroom | Growth Energy - Clean Energy Solutions</title>
         <meta name="description" content="Visit our Zanzibar showrooms in Fumba Town and Jambiani/Paje. Discover our integrated clean energy and electric mobility solutions in Tanzania." />
@@ -31,11 +29,7 @@ const ZanzibarShowroom = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Image */}
               <div className="order-2 lg:order-1">
-                <img 
-                  src="/lovable-uploads/2707389b-57ab-403a-93ec-d202304eb4bc.png"
-                  alt="Growth Energy Zanzibar Advertisement - Clean Energy Solutions"
-                  className="w-full rounded-xl shadow-2xl"
-                />
+                <img src="/lovable-uploads/2707389b-57ab-403a-93ec-d202304eb4bc.png" alt="Growth Energy Zanzibar Advertisement - Clean Energy Solutions" className="w-full rounded-xl shadow-2xl" />
               </div>
 
               {/* Content */}
@@ -45,9 +39,7 @@ const ZanzibarShowroom = () => {
                   Zanzibar, Tanzania
                 </div>
 
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  Our Showrooms in Zanzibar
-                </h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">Zanzibar</h2>
 
                 <div className="text-gray-700 leading-relaxed space-y-4">
                   <p>
@@ -149,8 +141,6 @@ const ZanzibarShowroom = () => {
           </div>
         </section>
       </main>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default ZanzibarShowroom;
