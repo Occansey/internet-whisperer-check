@@ -6,10 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslation } from "@/contexts/TranslationContext";
 
 const ShowroomContactForm = () => {
-  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -50,8 +48,8 @@ const ShowroomContactForm = () => {
 
       if (response.ok) {
         toast({
-          title: t('showrooms.contact_form.success_title'),
-          description: t('showrooms.contact_form.success_description'),
+          title: "Message envoyé",
+          description: "Votre demande a été envoyée avec succès. Nous vous recontacterons bientôt.",
           variant: "default",
         });
         // Reset form
@@ -70,8 +68,8 @@ const ShowroomContactForm = () => {
       }
     } catch (error) {
       toast({
-        title: t('showrooms.contact_form.error_title'),
-        description: t('showrooms.contact_form.error_description'),
+        title: "Erreur",
+        description: "Une erreur s'est produite lors de l'envoi. Veuillez réessayer.",
         variant: "destructive",
       });
     } finally {
@@ -82,24 +80,24 @@ const ShowroomContactForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('showrooms.contact_form.title')}</CardTitle>
+        <CardTitle>Demande de Visite</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">{t('showrooms.contact_form.full_name')} *</Label>
+              <Label htmlFor="name">Nom complet *</Label>
               <Input
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                placeholder={t('showrooms.contact_form.full_name_placeholder')}
+                placeholder="Votre nom complet"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">{t('showrooms.contact_form.email')} *</Label>
+              <Label htmlFor="email">Email *</Label>
               <Input
                 id="email"
                 name="email"
@@ -107,50 +105,50 @@ const ShowroomContactForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                placeholder={t('showrooms.contact_form.email_placeholder')}
+                placeholder="votre@email.com"
               />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="phone">{t('showrooms.contact_form.phone')}</Label>
+              <Label htmlFor="phone">Téléphone</Label>
               <Input
                 id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder={t('showrooms.contact_form.phone_placeholder')}
+                placeholder="Votre numéro de téléphone"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="company">{t('showrooms.contact_form.company')}</Label>
+              <Label htmlFor="company">Entreprise</Label>
               <Input
                 id="company"
                 name="company"
                 value={formData.company}
                 onChange={handleInputChange}
-                placeholder={t('showrooms.contact_form.company_placeholder')}
+                placeholder="Nom de votre entreprise"
               />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="showroom">{t('showrooms.contact_form.desired_showroom')}</Label>
+              <Label htmlFor="showroom">Showroom souhaité</Label>
               <Select onValueChange={(value) => handleSelectChange("showroom", value)}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t('showrooms.contact_form.showroom_placeholder')} />
+                  <SelectValue placeholder="Sélectionnez un showroom" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="zanzibar-fumba">{t('showrooms.contact_form.showroom_fumba')}</SelectItem>
-                  <SelectItem value="zanzibar-jambiani">{t('showrooms.contact_form.showroom_jambiani')}</SelectItem>
-                  <SelectItem value="both">{t('showrooms.contact_form.showroom_both')}</SelectItem>
+                  <SelectItem value="zanzibar-fumba">Zanzibar - Fumba Town</SelectItem>
+                  <SelectItem value="zanzibar-jambiani">Zanzibar - Jambiani/Paje</SelectItem>
+                  <SelectItem value="both">Les deux showrooms</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="visitDate">{t('showrooms.contact_form.desired_date')}</Label>
+              <Label htmlFor="visitDate">Date souhaitée</Label>
               <Input
                 id="visitDate"
                 name="visitDate"
@@ -162,35 +160,35 @@ const ShowroomContactForm = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="services">{t('showrooms.contact_form.services_interest')}</Label>
+            <Label htmlFor="services">Services d'intérêt</Label>
             <Select onValueChange={(value) => handleSelectChange("services", value)}>
               <SelectTrigger>
-                <SelectValue placeholder={t('showrooms.contact_form.services_placeholder')} />
+                <SelectValue placeholder="Quels services vous intéressent ?" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="solar">{t('showrooms.contact_form.service_solar')}</SelectItem>
-                <SelectItem value="battery">{t('showrooms.contact_form.service_battery')}</SelectItem>
-                <SelectItem value="electric-mobility">{t('showrooms.contact_form.service_electric_mobility')}</SelectItem>
-                <SelectItem value="energy-management">{t('showrooms.contact_form.service_energy_management')}</SelectItem>
-                <SelectItem value="all">{t('showrooms.contact_form.service_all')}</SelectItem>
+                <SelectItem value="solar">Solutions solaires</SelectItem>
+                <SelectItem value="battery">Stockage d'énergie</SelectItem>
+                <SelectItem value="electric-mobility">Mobilité électrique</SelectItem>
+                <SelectItem value="energy-management">Gestion d'énergie</SelectItem>
+                <SelectItem value="all">Toutes les solutions</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">{t('showrooms.contact_form.message')}</Label>
+            <Label htmlFor="message">Message</Label>
             <Textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleInputChange}
-              placeholder={t('showrooms.contact_form.message_placeholder')}
+              placeholder="Décrivez vos besoins ou questions spécifiques..."
               rows={4}
             />
           </div>
 
           <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? t('showrooms.contact_form.submit_sending') : t('showrooms.contact_form.submit_send')}
+            {isSubmitting ? "Envoi en cours..." : "Envoyer la demande"}
           </Button>
         </form>
       </CardContent>
