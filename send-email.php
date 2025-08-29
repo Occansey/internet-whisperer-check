@@ -157,8 +157,70 @@ $headers = [
     'Content-Type: text/plain; charset=UTF-8'
 ];
 
+// Function to log contact to CSV
+function logContactToCSV($data, $type) {
+    $csv_file = 'contacts.csv';
+    $file_exists = file_exists($csv_file);
+    
+    // Open file for writing (append mode)
+    $handle = fopen($csv_file, 'a');
+    
+    if ($handle === false) {
+        error_log("Failed to open CSV file for writing");
+        return false;
+    }
+    
+    // Write header if file is new
+    if (!$file_exists) {
+        $header = [
+            'Date',
+            'Type',
+            'Name',
+            'Email', 
+            'Phone',
+            'Company',
+            'Showroom',
+            'Services',
+            'Rooms',
+            'ACs',
+            'Monthly Load (kW)',
+            'Monthly Consumption (kWh)',
+            'Message'
+        ];
+        fputcsv($handle, $header);
+    }
+    
+    // Prepare data row
+    $row = [
+        date('Y-m-d H:i:s'),
+        $type,
+        $data['name'] ?? '',
+        $data['email'] ?? '',
+        $data['phone'] ?? '',
+        $data['company'] ?? '',
+        $data['showroom'] ?? '',
+        $data['services'] ?? '',
+        $data['rooms'] ?? '',
+        $data['acs'] ?? '',
+        $data['monthlyLoadKw'] ?? '',
+        $data['monthlyConsumptionKwh'] ?? '',
+        $data['message'] ?? ''
+    ];
+    
+    // Write data row
+    $result = fputcsv($handle, $row);
+    fclose($handle);
+    
+    return $result !== false;
+}
+
 // Send email
 $success = mail($to, $subject, $message, implode("\r\n", $headers));
+
+// Log to CSV for showroom contacts
+if ($success && $data['type'] === 'showroom-contact') {
+    logContactToCSV($data, 'showroom-contact');
+}
 
 // Send confirmation email to user for showroom contact
 if ($success && $data['type'] === 'showroom-contact') {
