@@ -3,12 +3,11 @@ import { Helmet } from "react-helmet-async";
 import { MapPin, Award, Zap, Battery, Mail } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import ShowroomContactForm from "@/components/forms/ShowroomContactForm";
-
 const ZanzibarShowroom = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Layout>
+  const {
+    t
+  } = useTranslation();
+  return <Layout>
       <Helmet>
         <title>{t('showrooms.zanzibar_showroom.title')} | Growth Energy - Clean Energy Solutions</title>
         <meta name="description" content={t('showrooms.zanzibar_showroom.description')} />
@@ -151,13 +150,7 @@ const ZanzibarShowroom = () => {
                 <div>
                   <h3 className="text-xl font-semibold mb-4">{t('showrooms.contact.title')}</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <Mail className="h-5 w-5 text-primary" />
-                      <div>
-                        <p className="font-medium">{t('showrooms.contact.primary_email')}</p>
-                        <p className="text-sm text-muted-foreground">maxwell.o@asking-group.com</p>
-                      </div>
-                    </div>
+                    
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
@@ -185,8 +178,6 @@ const ZanzibarShowroom = () => {
           </div>
         </section>
       </main>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default ZanzibarShowroom;
