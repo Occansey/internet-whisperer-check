@@ -217,9 +217,9 @@ function logContactToCSV($data, $type) {
 // Send email
 $success = mail($to, $subject, $message, implode("\r\n", $headers));
 
-// Log to CSV for showroom contacts
-if ($success && $data['type'] === 'showroom-contact') {
-    logContactToCSV($data, 'showroom-contact');
+// Log ALL contact types to CSV (not just showroom contacts)
+if ($success) {
+    logContactToCSV($data, $data['type'] ?? 'contact');
 }
 
 // Send confirmation email to user for showroom contact

@@ -106,7 +106,12 @@ const Showrooms = () => {
                       <Mail className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-medium">{t('showrooms.contact.secondary_email')}</p>
-                        <p className="text-sm text-muted-foreground">contact@growth-energy.fr</p>
+                        <a 
+                          href="mailto:contact@growth-energy.fr" 
+                          className="text-sm text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline"
+                        >
+                          contact@growth-energy.fr
+                        </a>
                       </div>
                     </div>
                   </div>
