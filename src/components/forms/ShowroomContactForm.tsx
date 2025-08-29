@@ -24,7 +24,6 @@ const ShowroomContactForm = () => {
     acs: "",
     monthlyLoadKw: "",
     monthlyConsumptionKwh: "",
-    needsBackupSolution: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -79,8 +78,7 @@ const ShowroomContactForm = () => {
           rooms: "",
           acs: "",
           monthlyLoadKw: "",
-          monthlyConsumptionKwh: "",
-          needsBackupSolution: ""
+          monthlyConsumptionKwh: ""
         });
       } else {
         throw new Error('Erreur lors de l\'envoi');
@@ -207,19 +205,6 @@ const ShowroomContactForm = () => {
               </div>
             </div>
 
-            <div className="space-y-2 mt-4">
-              <Label htmlFor="needsBackupSolution">Power Backup Solutions Needed</Label>
-              <Select onValueChange={value => handleSelectChange("needsBackupSolution", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select backup solution needs" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes, interested in backup solutions</SelectItem>
-                  <SelectItem value="no">No backup needed</SelectItem>
-                  <SelectItem value="maybe">Need consultation</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
           </div>
 
           <div className="space-y-2">
