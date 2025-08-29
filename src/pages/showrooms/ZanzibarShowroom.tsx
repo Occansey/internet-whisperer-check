@@ -17,7 +17,7 @@ const ZanzibarShowroom = () => {
 
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-600">
+        <section className="py-20" style={{ background: `linear-gradient(to right, #5f708f, #7a8ba3)` }}>
           <div className="container max-w-7xl mx-auto px-4 text-center text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               {t('showrooms.zanzibar_showroom.hero.title')}
@@ -39,7 +39,8 @@ const ZanzibarShowroom = () => {
 
               {/* Content */}
               <div className="order-1 lg:order-2 space-y-6">
-                <div className="inline-flex items-center gap-2 bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-medium">
+                <div className="inline-flex items-center gap-3 bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-medium">
+                  <img src="/lovable-uploads/558cc446-a08f-4c54-ac71-aa16129d7cfe.png" alt="Growth Energy Logo" className="w-6 h-6" />
                   <MapPin className="w-4 h-4" />
                   {t('showrooms.zanzibar_showroom.location_badge')}
                 </div>
