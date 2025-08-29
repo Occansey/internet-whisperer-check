@@ -169,33 +169,6 @@ const ZanzibarShowroom = () => {
                   <p className="text-gray-600">
                     {t('showrooms.zanzibar_showroom.fumba.description')}
                   </p>
-                  
-                  {/* Company Details */}
-                  <div className="bg-white/70 p-4 rounded-lg mt-4">
-                    <h4 className="font-semibold text-blue-800 mb-3">Installation Details</h4>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="font-medium">Rooms:</span> 
-                        <span className="ml-2 text-gray-700">12 units</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">AC Units:</span> 
-                        <span className="ml-2 text-gray-700">18 systems</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Monthly Load:</span> 
-                        <span className="ml-2 text-gray-700">35 kW</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Consumption:</span> 
-                        <span className="ml-2 text-gray-700">2,500 kWh/month</span>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-blue-200">
-                      <span className="font-medium text-blue-800">Power Backup:</span> 
-                      <span className="ml-2 text-gray-700">50kWh Battery Storage + Solar Grid</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -210,33 +183,6 @@ const ZanzibarShowroom = () => {
                   <p className="text-gray-600">
                     {t('showrooms.zanzibar_showroom.kijani.description')}
                   </p>
-                  
-                  {/* Company Details */}
-                  <div className="bg-white/70 p-4 rounded-lg mt-4">
-                    <h4 className="font-semibold text-green-800 mb-3">Installation Details</h4>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="font-medium">Rooms:</span> 
-                        <span className="ml-2 text-gray-700">8 units</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">AC Units:</span> 
-                        <span className="ml-2 text-gray-700">12 systems</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Monthly Load:</span> 
-                        <span className="ml-2 text-gray-700">28 kW</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Consumption:</span> 
-                        <span className="ml-2 text-gray-700">2,100 kWh/month</span>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-green-200">
-                      <span className="font-medium text-green-800">Power Backup:</span> 
-                      <span className="ml-2 text-gray-700">40kWh Battery Storage + Solar Array</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
