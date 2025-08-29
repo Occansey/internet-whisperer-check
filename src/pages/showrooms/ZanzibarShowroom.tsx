@@ -178,7 +178,7 @@ const ZanzibarShowroom = () => {
                 <div className="space-y-4">
                   <p className="flex items-start gap-2">
                     <MapPin className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{t('showrooms.zanzibar_showroom.kijani.address')}</span>
+                    <span className="text-gray-700">Kijani Commercial Park, Jambiani, Zanzibar</span>
                   </p>
                   <p className="text-gray-600">
                     {t('showrooms.zanzibar_showroom.kijani.description')}
