@@ -93,45 +93,6 @@ const ZanzibarShowroom = () => {
           </div>
         </section>
 
-        {/* Locations Section */}
-        <section className="py-16 bg-white">
-          <div className="container max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-              {t('showrooms.zanzibar_showroom.visit.title')}
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Fumba Town */}
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-xl shadow-lg">
-                <h3 className="text-xl font-bold text-blue-700 mb-4">{t('showrooms.zanzibar_showroom.fumba.title')}</h3>
-                <div className="space-y-3">
-                  <p className="flex items-start gap-2">
-                    <MapPin className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{t('showrooms.zanzibar_showroom.fumba.address')}</span>
-                  </p>
-                  <p className="text-gray-600">
-                    {t('showrooms.zanzibar_showroom.fumba.description')}
-                  </p>
-                </div>
-              </div>
-
-              {/* Jambiani/Paje */}
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl shadow-lg">
-                <h3 className="text-xl font-bold text-green-700 mb-4">{t('showrooms.zanzibar_showroom.kijani.title')}</h3>
-                <div className="space-y-3">
-                  <p className="flex items-start gap-2">
-                    <MapPin className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{t('showrooms.zanzibar_showroom.kijani.address')}</span>
-                  </p>
-                  <p className="text-gray-600">
-                    {t('showrooms.zanzibar_showroom.kijani.description')}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Contact Form Section */}
         <section className="py-16 bg-muted/30">
           <div className="container max-w-4xl mx-auto px-4">
@@ -177,6 +138,46 @@ const ZanzibarShowroom = () => {
             </div>
           </div>
         </section>
+
+        {/* Locations Section */}
+        <section className="py-16 bg-white">
+          <div className="container max-w-7xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+              {t('showrooms.zanzibar_showroom.visit.title')}
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Fumba Town */}
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-xl shadow-lg">
+                <h3 className="text-xl font-bold text-blue-700 mb-4">{t('showrooms.zanzibar_showroom.fumba.title')}</h3>
+                <div className="space-y-3">
+                  <p className="flex items-start gap-2">
+                    <MapPin className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{t('showrooms.zanzibar_showroom.fumba.address')}</span>
+                  </p>
+                  <p className="text-gray-600">
+                    {t('showrooms.zanzibar_showroom.fumba.description')}
+                  </p>
+                </div>
+              </div>
+
+              {/* Jambiani/Paje */}
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl shadow-lg">
+                <h3 className="text-xl font-bold text-green-700 mb-4">{t('showrooms.zanzibar_showroom.kijani.title')}</h3>
+                <div className="space-y-3">
+                  <p className="flex items-start gap-2">
+                    <MapPin className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{t('showrooms.zanzibar_showroom.kijani.address')}</span>
+                  </p>
+                  <p className="text-gray-600">
+                    {t('showrooms.zanzibar_showroom.kijani.description')}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
     </Layout>;
 };
