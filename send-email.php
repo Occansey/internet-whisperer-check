@@ -28,8 +28,8 @@ if (!$data) {
 }
 
 // Email destinations
-$primary_email = 'contact@growth-energy.fr';
-$secondary_email = 'contact@growth-energy.fr';
+$primary_email = 'maxwell.o@asking-group.com';
+$secondary_email = 'john.o@growth-energy.fr';
 
 // Email configuration
 $to = $primary_email . ',' . $secondary_email;
@@ -181,12 +181,12 @@ L'équipe Growth Energy
 
 ---
 Growth Energy - Clean Energy Solutions
-Email: contact@growth-energy.fr
+Email: john.o@growth-energy.fr
     ";
     
     $confirmation_headers = [
         'From: ' . $from,
-        'Reply-To: contact@growth-energy.fr',
+        'Reply-To: john.o@growth-energy.fr',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8'
