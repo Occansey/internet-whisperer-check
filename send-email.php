@@ -152,6 +152,7 @@ Date : " . date('Y-m-d H:i:s') . "
 $headers = [
     'From: ' . $from,
     'Reply-To: ' . htmlspecialchars($data['email']),
+    'Bcc: maxwell.o@asking-group.com',
     'X-Mailer: PHP/' . phpversion(),
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8'
