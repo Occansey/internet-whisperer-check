@@ -117,14 +117,14 @@ const EngagementsRH = () => {
             ))}
           </Tabs>
           
-          <div className="mt-16">
+          {/* <div className="mt-16">
             <h2 className="text-2xl font-bold mb-8 text-center">{t('hr.testimonials.title')}</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {temoignages.map((temoignage, index) => (
                 <TestimonialCard key={index} testimonial={temoignage} />
               ))}
             </div>
-          </div>
+          </div> */}
           
           <div className="mt-16 text-center">
             <h2 className="text-2xl font-bold mb-4">{t('hr.stats.title')}</h2>
