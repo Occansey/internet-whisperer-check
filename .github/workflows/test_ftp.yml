@@ -1,4 +1,4 @@
-name: Build and Deploy to OVH FTP
+name: Build and Deploy to S3
 
 on:
   push:
@@ -6,39 +6,43 @@ on:
       - main
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --prefer-offline
 
       - name: Build project
         run: npm run build
-
-      - name: Test FTP connection
         env:
-          FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
-          FTP_HOST: ftp.cluster100.hosting.ovh.net
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
-          lftp -c "set ftp:passive-mode true; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; ls; bye"
+          NODE_OPTIONS: '--max-old-space-size=6144'
 
-      - name: Deploy via FTP to OVH
+      - name: Sync build folder to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete --exact-timestamps
         env:
-          FTP_USERNAME: ${{ secrets.OVH_FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
-          FTP_HOST: ftp.cluster100.hosting.ovh.net
-          FTP_REMOTE_PATH: /www/api
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: 'dist'
+
+      - name: Invalidate CloudFront cache
         run: |
-          lftp -c "set ftp:passive-mode true; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -R ./dist/ $FTP_REMOTE_PATH --delete --verbose; bye"
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
