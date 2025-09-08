@@ -34,163 +34,230 @@ export const mockJobs: Job[] = [
   {
     id: '1',
     slug: 'finance-associate',
-    title: 'Environmental and Social Management System and Gender Equity Specialist',
-    company: 'Social Investment Managers and Advisors LLC (SIMA)',
-    website: 'www.simafunds.com',
+    title: 'Environmental and Social Management Specialist',
+    company: 'Solio Group',
     department: 'Finance',
-    location: 'Remote',
+    location: 'Kigali, Rwanda',
     jobType: 'Full-time',
-    salaryRange: 'Competitive Compensation',
+    salaryRange: '55,000 - 70,000 USD',
     postedDate: '2024-01-15',
-    shortDescription: 'Professional with background in environmental and social (E&S) due diligence, including Gender Equity (GE).',
-    companyDescription: 'Social Investment Managers and Advisors LLC (SIMA) — www.simafunds.com — seeks to hire a professional with a background in environmental and social (E&S) due diligence, including Gender Equity (GE). The Specialist will co-lead our multi-stakeholder technical assistance (TA) program in the energy access sector across Africa and Asia.',
-    programDescription: 'This TA program includes:\n\n• Capacity building for over 100 energy access SMEs in 15 African countries and 5+ renewable energy associations\n• Supporting companies in implementing environmental and social management systems (ESMS) and GE programs\n• Presenting webinars and training sessions to stakeholders and other groups\n\nThe role involves working closely with SMEs, associations, a stakeholder working group, and other partners. Deliverables also include developing tools and scorecards to help stakeholders strengthen their E&S practices.',
+    shortDescription: 'Join our team as an Environmental and Social Management Specialist to lead sustainability initiatives across our African operations.',
+    companyDescription: 'Solio Group is seeking a dedicated Environmental and Social Management Specialist to strengthen our sustainability practices across our energy and infrastructure projects in Africa. You will play a crucial role in ensuring our operations meet international environmental and social standards while driving positive impact in local communities.',
+    programDescription: 'As part of our sustainability team, you will lead initiatives including:\n\n• Developing and implementing environmental and social management systems across 15+ African projects\n• Building capacity within local communities and partner organizations\n• Conducting environmental and social impact assessments for new projects\n• Creating training programs and workshops for stakeholders\n\nThis role offers the opportunity to work directly with communities, government agencies, and international partners to ensure sustainable development across our portfolio.',
     dutiesAndResponsibilities: [
       {
-        title: 'Planning and Program Management',
+        title: 'Environmental Management',
         items: [
-          'Co-manage program execution, workplans, development of materials and scorecards for practitioners, coordination with stakeholders, etc.',
-          'Work with SIMA\'s team analysing E&S and GE practices of energy access SMEs, collect data, identify risks, best practices, constraints, etc.',
-          'Coordinate with SIMA team, practitioners, and stakeholders on development of a practical ESMS/GE scorecard aligned with local and international standards.',
-          'Knowledgeable on diverse national / international E&S regulations and standards.'
+          'Lead environmental impact assessments for new projects and operations',
+          'Develop and maintain environmental management systems aligned with international standards',
+          'Monitor compliance with environmental regulations and company policies',
+          'Coordinate with regulatory bodies and environmental agencies across African markets',
+          'Implement waste management and resource efficiency programs'
         ]
       },
       {
-        title: 'Monitoring and Reporting',
+        title: 'Social Impact and Community Engagement',
         items: [
-          'Lead the annual report preparation on ESMS/GE system including data and information gathering, and content development.',
-          'Prepare reports, presentations, and other materials for stakeholder discussions on ESMS/GE performance and tool.'
+          'Design and execute community engagement strategies for project development',
+          'Conduct social impact assessments and develop mitigation measures',
+          'Build partnerships with local organizations and community leaders',
+          'Manage grievance mechanisms and stakeholder feedback processes',
+          'Develop programs to enhance local capacity and employment opportunities'
         ]
       },
       {
-        title: 'Advocacy and capacity building',
+        title: 'Compliance and Reporting',
         items: [
-          'Collaborate with stakeholders to promote the adoption of the tool and support in implementation of the best practices.',
-          'Develop training materials, facilitate webinars and deliver training sessions with energy access companies and REAs on building environmental and social capacities, alongside improved gender equity performance.',
-          'Advocacy, promotion and awareness raising of environmental and social management system (ESMS) implementation issues – alongside awareness raising of gender equity issues – at energy access companies, as well as primary research amongst companies, REAs, investors and other stakeholders.'
+          'Prepare comprehensive environmental and social performance reports',
+          'Ensure compliance with IFC Performance Standards and local regulations',
+          'Coordinate with internal teams on ESG reporting and disclosure',
+          'Conduct regular audits and monitoring of environmental and social programs',
+          'Maintain documentation and records for regulatory compliance'
         ]
       }
     ],
     educationalQualification: [
-      'Master\'s degree in business, environmental or social sciences, economics, sustainability, development, or other relevant fields.'
+      'Master\'s degree in Environmental Science, Social Sciences, Development Studies, or related field',
+      'Professional certifications in environmental management or social impact assessment are preferred'
     ],
     expectedExperience: [
-      '6+ years experience in Africa environmental and social due diligence, implementation of E&S systems, training /capacity building, program management, reporting, etc. preferably in ESG/sustainability consulting, development finance or investment industry. Experience with energy access SMEs an advantage.'
+      '5+ years of experience in environmental and social management in Africa',
+      'Experience with impact assessment methodologies and stakeholder engagement',
+      'Background in sustainable development, ESG consulting, or similar fields',
+      'Experience working with multilateral development banks or international organizations',
+      'Proven track record in community engagement and capacity building programs'
     ],
     personalAndTechnicalSkills: [
-      'Excellent written and oral communication skills in English are essential for this position.',
-      'Highly motivated and result driven.',
-      'Demonstrate the ability to independently manage busy and diverse workload, and work collaboratively as team member.',
-      'Strong analytical, problem-solving skills with attention to detail',
-      'Good presentation and training skills for relevant stakeholders.',
-      'Familiarity with energy access sector companies\' policies and operations.',
-      'Experience in design and implementation of Environmental & Social Management System',
-      'Familiarity and working knowledge with sustainability guidelines and frameworks e.g. IFC Performance Standards, Global Reporting Initiative, IRIS+, safeguarding policies.',
-      'Familiarity with Environmental and Social Impact Assessment and Monitoring'
+      'Excellent written and oral communication skills in English and French',
+      'Strong analytical and problem-solving capabilities',
+      'Experience with environmental monitoring tools and social impact measurement',
+      'Knowledge of international environmental and social standards (IFC, World Bank)',
+      'Cultural sensitivity and ability to work effectively in diverse environments',
+      'Project management skills and ability to handle multiple priorities',
+      'Proficiency in GIS software and environmental monitoring tools',
+      'Strong presentation and training abilities for diverse audiences'
     ],
     fullDescription: '',
     requirements: [],
     qualifications: [],
     benefits: [],
-    additionalInfo: 'Competitive Compensation',
-    applicationEmail: 'careers@simafunds.com and annabelle@simafunds.com',
-    applicationInstructions: 'Please send your resume and salary expectation. The title of your email should be "ESMS and Gender Equity Expert".',
+    additionalInfo: 'This position offers competitive compensation, comprehensive benefits, and the opportunity to make a meaningful impact on sustainable development in Africa.',
+    applicationEmail: 'careers@solio-group.com',
+    applicationInstructions: 'Please submit your resume and cover letter detailing your experience in environmental and social management.',
     isActive: true,
-    tags: ['Environmental', 'Social', 'Gender Equity', 'Remote']
+    tags: ['Environmental', 'Social', 'Sustainability', 'Africa']
   },
   {
     id: '2',
     slug: 'marketing-manager',
-    title: 'Marketing Manager',
+    title: 'Marketing Manager - Africa',
+    company: 'Solio Group',
     department: 'Marketing',
-    location: 'Kigali, Rwanda',
+    location: 'Dakar, Sénégal',
     jobType: 'Full-time',
-    salaryRange: '35 000 - 45 000 USD',
+    salaryRange: '40,000 - 55,000 USD',
     postedDate: '2024-01-10',
-    shortDescription: 'Développez notre présence sur le marché africain et pilotez nos stratégies marketing digitales.',
-    fullDescription: `
-      <p>Nous cherchons un(e) responsable marketing expérimenté(e) pour développer notre présence sur le marché africain. Vous serez responsable de la stratégie marketing digitale et de la communication de nos solutions énergétiques et digitales.</p>
-      
-      <h3>Missions principales</h3>
-      <ul>
-        <li>Développer et exécuter la stratégie marketing pour l'Afrique</li>
-        <li>Gérer les campagnes digitales multi-canaux</li>
-        <li>Créer du contenu engageant pour nos audiences B2B</li>
-        <li>Analyser les performances et optimiser les campagnes</li>
-        <li>Collaborer avec les équipes commerciales pour générer des leads qualifiés</li>
-      </ul>
-    `,
-    requirements: [
-      'Formation en marketing, communication ou commerce',
-      '5+ ans d\'expérience en marketing digital B2B',
-      'Expertise des outils marketing digitaux (Google Ads, Facebook, LinkedIn)',
-      'Connaissance du marché africain',
-      'Maîtrise du français et de l\'anglais',
-      'Compétences analytiques et créatives'
+    shortDescription: 'Drive our market expansion across Africa and lead digital marketing strategies for sustainable energy solutions.',
+    companyDescription: 'Solio Group is seeking an experienced Marketing Manager to spearhead our expansion across African markets. You will be responsible for developing and executing comprehensive marketing strategies that promote our energy and digital solutions while building strong brand presence throughout the continent.',
+    programDescription: 'As our Marketing Manager for Africa, you will lead initiatives including:\n\n• Developing market entry strategies for 10+ African countries\n• Managing multi-channel digital marketing campaigns targeting B2B and B2C segments\n• Building partnerships with local distributors and government agencies\n• Creating culturally relevant content and marketing materials\n\nThis role offers the opportunity to shape our brand presence across Africa while driving sustainable business growth in emerging markets.',
+    dutiesAndResponsibilities: [
+      {
+        title: 'Strategic Marketing Leadership',
+        items: [
+          'Develop and execute comprehensive marketing strategies for African markets',
+          'Conduct market research and competitive analysis across target countries',
+          'Define go-to-market strategies for new products and services',
+          'Collaborate with senior management to align marketing with business objectives',
+          'Manage marketing budgets and ROI measurement across all channels'
+        ]
+      },
+      {
+        title: 'Digital Marketing and Brand Management',
+        items: [
+          'Lead digital marketing campaigns across social media, search, and display channels',
+          'Manage content creation and brand messaging for diverse African audiences',
+          'Oversee website management and optimization for local markets',
+          'Coordinate with design teams for marketing materials and brand assets',
+          'Monitor brand reputation and engage in community management'
+        ]
+      },
+      {
+        title: 'Partnership Development and Events',
+        items: [
+          'Build relationships with media partners, influencers, and industry associations',
+          'Organize and participate in trade shows, conferences, and networking events',
+          'Develop partnership marketing programs with distributors and resellers',
+          'Coordinate with sales teams to support lead generation and conversion',
+          'Manage relationships with external agencies and service providers'
+        ]
+      }
     ],
-    qualifications: [
-      'Master en marketing ou MBA',
-      'Certifications Google Ads et Facebook',
-      'Expérience dans le secteur énergétique ou technologique',
-      'Leadership et gestion d\'équipe'
+    educationalQualification: [
+      'Bachelor\'s degree in Marketing, Business Administration, Communications, or related field',
+      'MBA or advanced marketing certifications preferred (Google Ads, Facebook Blueprint, HubSpot)'
     ],
-    benefits: [
-      'Package salarial attractif',
-      'Couverture médicale internationale',
-      'Opportunités de voyage et de formation',
-      'Environnement multiculturel',
-      'Impact direct sur la croissance de l\'entreprise',
-      'Flexibilité et autonomie'
+    expectedExperience: [
+      '5+ years of experience in marketing management, preferably in African markets',
+      'Proven track record in digital marketing and brand management',
+      'Experience in B2B marketing within technology, energy, or infrastructure sectors',
+      'Background in market expansion and international marketing strategies',
+      'Experience managing marketing budgets of $500K+ annually'
     ],
+    personalAndTechnicalSkills: [
+      'Fluency in French and English; additional African languages are a plus',
+      'Strong analytical skills with proficiency in marketing analytics tools',
+      'Experience with CRM systems (Salesforce, HubSpot) and marketing automation',
+      'Creative thinking with strong project management capabilities',
+      'Cultural awareness and sensitivity to diverse African markets',
+      'Excellent communication and presentation skills',
+      'Leadership experience managing marketing teams and external agencies',
+      'Proficiency in Adobe Creative Suite and marketing design tools'
+    ],
+    fullDescription: '',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    additionalInfo: 'This position offers an attractive compensation package, comprehensive benefits, and significant growth opportunities in our expanding African operations.',
+    applicationEmail: 'careers@solio-group.com',
+    applicationInstructions: 'Please submit your resume along with a portfolio of successful marketing campaigns you have led.',
     isActive: true,
-    tags: ['Marketing', 'Digital', 'B2B', 'Afrique']
+    tags: ['Marketing', 'Digital', 'B2B', 'Africa']
   },
   {
     id: '3',
     slug: 'software-developer',
-    title: 'Développeur Full-Stack',
+    title: 'Senior Full-Stack Developer',
+    company: 'Solio Group',
     department: 'Technologie',
     location: 'Remote / Montréal',
     jobType: 'Full-time',
-    salaryRange: '70 000 - 90 000 CAD',
+    salaryRange: '75,000 - 95,000 CAD',
     postedDate: '2024-01-05',
-    shortDescription: 'Concevez et développez nos solutions digitales pour la transition énergétique.',
-    fullDescription: `
-      <p>Rejoignez notre équipe technique pour développer des solutions digitales innovantes qui accompagnent la transition énergétique. Vous travaillerez sur des projets variés allant des plateformes de gestion énergétique aux applications IoT.</p>
-      
-      <h3>Projets et responsabilités</h3>
-      <ul>
-        <li>Développer des applications web et mobile pour la gestion énergétique</li>
-        <li>Concevoir des APIs et services backend robustes</li>
-        <li>Intégrer des solutions IoT pour le monitoring énergétique</li>
-        <li>Collaborer avec les équipes produit et design</li>
-        <li>Participer à l\'architecture technique des nouvelles solutions</li>
-      </ul>
-    `,
-    requirements: [
-      'Formation en informatique ou génie logiciel',
-      '3+ ans d\'expérience en développement web',
-      'Maîtrise de JavaScript/TypeScript, React, Node.js',
-      'Expérience avec les bases de données (SQL et NoSQL)',
-      'Connaissance des technologies cloud (AWS, Azure)',
-      'Passion pour les technologies propres et durables'
+    shortDescription: 'Build innovative digital solutions that power sustainable energy transformation across Africa and beyond.',
+    companyDescription: 'Solio Group is looking for a Senior Full-Stack Developer to join our technology team and help build cutting-edge digital platforms that accelerate the energy transition. You will work on mission-critical applications that serve millions of users while contributing to sustainable development goals.',
+    programDescription: 'As a Senior Full-Stack Developer, you will contribute to exciting projects including:\n\n• Developing energy management platforms used by 100+ organizations across Africa\n• Building IoT solutions for smart grid and renewable energy monitoring\n• Creating mobile applications for energy access and financial inclusion\n• Architecting scalable cloud infrastructure for high-availability systems\n\nThis role provides the opportunity to work with cutting-edge technologies while making a meaningful impact on sustainable development.',
+    dutiesAndResponsibilities: [
+      {
+        title: 'Application Development',
+        items: [
+          'Design and develop scalable web applications using modern frameworks',
+          'Build responsive mobile applications for iOS and Android platforms',
+          'Create robust APIs and microservices architecture',
+          'Implement real-time data processing and analytics capabilities',
+          'Develop automated testing suites and deployment pipelines'
+        ]
+      },
+      {
+        title: 'Technical Architecture',
+        items: [
+          'Design system architecture for high-performance applications',
+          'Implement cloud-native solutions using AWS, Azure, or Google Cloud',
+          'Optimize database performance and design efficient data models',
+          'Ensure security best practices and compliance with international standards',
+          'Mentor junior developers and contribute to technical documentation'
+        ]
+      },
+      {
+        title: 'Innovation and Integration',
+        items: [
+          'Integrate IoT devices and sensors for energy monitoring systems',
+          'Develop machine learning models for predictive analytics',
+          'Implement blockchain solutions for energy trading and certification',
+          'Collaborate with product teams to define technical requirements',
+          'Research and evaluate new technologies for competitive advantage'
+        ]
+      }
     ],
-    qualifications: [
-      'Baccalauréat ou maîtrise en informatique',
-      'Expérience avec Docker et Kubernetes',
-      'Connaissance de l\'IoT et des protocoles industriels',
-      'Expérience en développement mobile (React Native, Flutter)'
+    educationalQualification: [
+      'Bachelor\'s degree in Computer Science, Software Engineering, or related technical field',
+      'Advanced certifications in cloud platforms (AWS, Azure, GCP) preferred'
     ],
-    benefits: [
-      'Salaire compétitif avec stock-options',
-      'Travail 100% remote ou hybride',
-      'Budget formation et conférences',
-      'Équipement tech haut de gamme',
-      'Projets à impact environnemental positif',
-      'Équipe technique passionnée'
+    expectedExperience: [
+      '5+ years of experience in full-stack web development',
+      'Experience with modern JavaScript frameworks (React, Vue.js, Angular)',
+      'Proficiency in backend technologies (Node.js, Python, Java, or .NET)',
+      'Experience with cloud platforms and containerization (Docker, Kubernetes)',
+      'Background in IoT development or energy/utility sector is a plus'
     ],
+    personalAndTechnicalSkills: [
+      'Expert-level proficiency in JavaScript/TypeScript and modern web frameworks',
+      'Strong experience with database technologies (PostgreSQL, MongoDB, Redis)',
+      'Knowledge of DevOps practices and CI/CD pipeline management',
+      'Experience with API design and microservices architecture',
+      'Understanding of cybersecurity principles and secure coding practices',
+      'Excellent problem-solving skills and attention to detail',
+      'Strong communication skills for cross-functional collaboration',
+      'Passion for clean code, testing, and technical excellence'
+    ],
+    fullDescription: '',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    additionalInfo: 'This role offers competitive compensation with equity participation, flexible remote work options, and the opportunity to work on technology that drives positive environmental impact.',
+    applicationEmail: 'careers@solio-group.com',
+    applicationInstructions: 'Please submit your resume along with links to your GitHub profile and portfolio of projects you have developed.',
     isActive: true,
-    tags: ['Développement', 'Full-Stack', 'Clean Tech', 'Remote']
+    tags: ['Development', 'Full-Stack', 'Clean Tech', 'Remote']
   }
 ];
 

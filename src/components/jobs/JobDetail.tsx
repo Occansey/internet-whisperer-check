@@ -9,6 +9,7 @@ import { useTranslation } from '@/contexts/TranslationContext';
 import SEOStructuredData from '@/components/seo/SEOStructuredData';
 import JobApplicationForm from '@/components/forms/JobApplicationForm';
 import { toast } from '@/components/ui/use-toast';
+import jobHeroImage from '@/assets/job-hero-africa.jpg';
 
 const JobDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -107,6 +108,26 @@ const JobDetail = () => {
     <Layout>
       <SEOStructuredData type="job" data={structuredData} />
       
+      {/* Hero Section with African Image and Job Title */}
+      <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: `url(${jobHeroImage})` }}>
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative container max-w-7xl h-full flex items-center">
+          <div className="text-white">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{job.title}</h1>
+            <div className="flex items-center gap-4 text-lg">
+              <div className="flex items-center gap-2">
+                <MapPin size={20} />
+                <span>{job.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Briefcase size={20} />
+                <span>{job.jobType}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="py-8 bg-background min-h-screen">
         <div className="container max-w-7xl">
           {/* Back Navigation */}
@@ -122,26 +143,25 @@ const JobDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-8 space-y-6">
-              {/* Job Header */}
-              <div className="space-y-4">
-                <h1 className="text-3xl font-bold text-foreground">{job.title}</h1>
-                
-                {job.company && (
+              {/* Company Description */}
+              {job.company && (
+                <div className="space-y-3">
                   <p className="text-lg text-muted-foreground">
-                    {job.company} {job.website && `— ${job.website}`} — {job.companyDescription}
+                    {job.companyDescription}
                   </p>
-                )}
+                </div>
+              )}
 
-                {job.programDescription && (
-                  <div className="space-y-3">
-                    {job.programDescription.split('\n\n').map((paragraph, index) => (
-                      <p key={index} className="text-foreground leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
+              {/* Program Description */}
+              {job.programDescription && (
+                <div className="space-y-3">
+                  {job.programDescription.split('\n\n').map((paragraph, index) => (
+                    <p key={index} className="text-foreground leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              )}
 
               {/* Duties and Responsibilities */}
               {job.dutiesAndResponsibilities && job.dutiesAndResponsibilities.length > 0 && (
