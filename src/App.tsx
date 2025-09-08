@@ -26,6 +26,7 @@ import Evenements from "./pages/actualites/Evenements";
 import Projets from "./pages/actualites/Projets";
 import EngagementsRH from "./pages/carrieres/EngagementsRH";
 import RejoignezNous from "./pages/carrieres/RejoignezNous";
+import JobDetail from "./components/jobs/JobDetail";
 import EventDetail from "./components/events/EventDetail";
 import ProjectDetail from "./components/projects/ProjectDetail";
 import ArticleDetail from "./components/articles/ArticleDetail";
@@ -81,6 +82,7 @@ const App = () => (
               
               <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
               <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
+              <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
               
               <Route path="/media" element={<Media />} />
               <Route path="/all-submissions" element={<AllSubmissions />} />
