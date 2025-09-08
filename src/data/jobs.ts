@@ -2,6 +2,8 @@ export interface Job {
   id: string;
   slug: string;
   title: string;
+  company?: string;
+  website?: string;
   department: string;
   location: string;
   jobType: 'Full-time' | 'Part-time' | 'Contract' | 'Internship';
@@ -9,9 +11,21 @@ export interface Job {
   postedDate: string;
   shortDescription: string;
   fullDescription: string;
+  companyDescription?: string;
+  programDescription?: string;
+  dutiesAndResponsibilities?: {
+    title: string;
+    items: string[];
+  }[];
+  educationalQualification?: string[];
+  expectedExperience?: string[];
+  personalAndTechnicalSkills?: string[];
   requirements: string[];
   qualifications: string[];
   benefits: string[];
+  additionalInfo?: string;
+  applicationEmail?: string;
+  applicationInstructions?: string;
   isActive: boolean;
   tags: string[];
 }
@@ -20,48 +34,69 @@ export const mockJobs: Job[] = [
   {
     id: '1',
     slug: 'finance-associate',
-    title: 'Finance Associate',
+    title: 'Environmental and Social Management System and Gender Equity Specialist',
+    company: 'Social Investment Managers and Advisors LLC (SIMA)',
+    website: 'www.simafunds.com',
     department: 'Finance',
-    location: 'Montréal, Canada',
+    location: 'Remote',
     jobType: 'Full-time',
-    salaryRange: '60 000 - 75 000 CAD',
+    salaryRange: 'Competitive Compensation',
     postedDate: '2024-01-15',
-    shortDescription: 'Rejoignez notre équipe finance pour soutenir la croissance de nos projets énergétiques et digitaux.',
-    fullDescription: `
-      <p>Nous recherchons un(e) associé(e) finance dynamique pour rejoindre notre équipe à Montréal. Dans ce rôle, vous participerez activement à la structuration financière de nos projets de transition énergétique et de transformation digitale.</p>
-      
-      <h3>Responsabilités principales</h3>
-      <ul>
-        <li>Analyser et modéliser la faisabilité financière des projets</li>
-        <li>Préparer les dossiers de financement et les présentations aux investisseurs</li>
-        <li>Effectuer le suivi budgétaire et les reportings financiers</li>
-        <li>Collaborer avec les équipes techniques pour optimiser les structures de coûts</li>
-      </ul>
-    `,
-    requirements: [
-      'Formation en finance, comptabilité ou domaine connexe',
-      '2-4 ans d\'expérience en analyse financière',
-      'Maîtrise des outils de modélisation financière (Excel, modèles DCF)',
-      'Connaissance du secteur énergétique ou technologique (atout)',
-      'Excellentes compétences analytiques et de présentation',
-      'Bilinguisme français-anglais requis'
+    shortDescription: 'Professional with background in environmental and social (E&S) due diligence, including Gender Equity (GE).',
+    companyDescription: 'Social Investment Managers and Advisors LLC (SIMA) — www.simafunds.com — seeks to hire a professional with a background in environmental and social (E&S) due diligence, including Gender Equity (GE). The Specialist will co-lead our multi-stakeholder technical assistance (TA) program in the energy access sector across Africa and Asia.',
+    programDescription: 'This TA program includes:\n\n• Capacity building for over 100 energy access SMEs in 15 African countries and 5+ renewable energy associations\n• Supporting companies in implementing environmental and social management systems (ESMS) and GE programs\n• Presenting webinars and training sessions to stakeholders and other groups\n\nThe role involves working closely with SMEs, associations, a stakeholder working group, and other partners. Deliverables also include developing tools and scorecards to help stakeholders strengthen their E&S practices.',
+    dutiesAndResponsibilities: [
+      {
+        title: 'Planning and Program Management',
+        items: [
+          'Co-manage program execution, workplans, development of materials and scorecards for practitioners, coordination with stakeholders, etc.',
+          'Work with SIMA\'s team analysing E&S and GE practices of energy access SMEs, collect data, identify risks, best practices, constraints, etc.',
+          'Coordinate with SIMA team, practitioners, and stakeholders on development of a practical ESMS/GE scorecard aligned with local and international standards.',
+          'Knowledgeable on diverse national / international E&S regulations and standards.'
+        ]
+      },
+      {
+        title: 'Monitoring and Reporting',
+        items: [
+          'Lead the annual report preparation on ESMS/GE system including data and information gathering, and content development.',
+          'Prepare reports, presentations, and other materials for stakeholder discussions on ESMS/GE performance and tool.'
+        ]
+      },
+      {
+        title: 'Advocacy and capacity building',
+        items: [
+          'Collaborate with stakeholders to promote the adoption of the tool and support in implementation of the best practices.',
+          'Develop training materials, facilitate webinars and deliver training sessions with energy access companies and REAs on building environmental and social capacities, alongside improved gender equity performance.',
+          'Advocacy, promotion and awareness raising of environmental and social management system (ESMS) implementation issues – alongside awareness raising of gender equity issues – at energy access companies, as well as primary research amongst companies, REAs, investors and other stakeholders.'
+        ]
+      }
     ],
-    qualifications: [
-      'Baccalauréat en finance, comptabilité ou MBA',
-      'Certification CFA ou en cours (atout)',
-      'Expérience dans le financement de projets',
-      'Connaissance des énergies renouvelables'
+    educationalQualification: [
+      'Master\'s degree in business, environmental or social sciences, economics, sustainability, development, or other relevant fields.'
     ],
-    benefits: [
-      'Salaire compétitif avec bonus de performance',
-      'Assurance santé complète',
-      'Plan d\'épargne retraite avec contribution employeur',
-      'Formation continue et développement professionnel',
-      'Flexibilité de travail hybride',
-      'Environnement de travail stimulant et innovant'
+    expectedExperience: [
+      '6+ years experience in Africa environmental and social due diligence, implementation of E&S systems, training /capacity building, program management, reporting, etc. preferably in ESG/sustainability consulting, development finance or investment industry. Experience with energy access SMEs an advantage.'
     ],
+    personalAndTechnicalSkills: [
+      'Excellent written and oral communication skills in English are essential for this position.',
+      'Highly motivated and result driven.',
+      'Demonstrate the ability to independently manage busy and diverse workload, and work collaboratively as team member.',
+      'Strong analytical, problem-solving skills with attention to detail',
+      'Good presentation and training skills for relevant stakeholders.',
+      'Familiarity with energy access sector companies\' policies and operations.',
+      'Experience in design and implementation of Environmental & Social Management System',
+      'Familiarity and working knowledge with sustainability guidelines and frameworks e.g. IFC Performance Standards, Global Reporting Initiative, IRIS+, safeguarding policies.',
+      'Familiarity with Environmental and Social Impact Assessment and Monitoring'
+    ],
+    fullDescription: '',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    additionalInfo: 'Competitive Compensation',
+    applicationEmail: 'careers@simafunds.com and annabelle@simafunds.com',
+    applicationInstructions: 'Please send your resume and salary expectation. The title of your email should be "ESMS and Gender Equity Expert".',
     isActive: true,
-    tags: ['Finance', 'Analyste', 'Énergies renouvelables']
+    tags: ['Environmental', 'Social', 'Gender Equity', 'Remote']
   },
   {
     id: '2',

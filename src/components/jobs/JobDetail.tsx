@@ -1,17 +1,14 @@
 import React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
-import HeroBanner from '@/components/common/HeroBanner';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { MapPin, Calendar, Briefcase, Clock, ArrowLeft, Share2 } from 'lucide-react';
+import { MapPin, Calendar, Briefcase, ArrowLeft, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import FormModal from '@/components/ui/form-modal';
 import { mockJobs } from '@/data/jobs';
 import { useTranslation } from '@/contexts/TranslationContext';
 import SEOStructuredData from '@/components/seo/SEOStructuredData';
+import JobApplicationForm from '@/components/forms/JobApplicationForm';
+import { toast } from '@/components/ui/use-toast';
 
 const JobDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -61,7 +58,7 @@ const JobDetail = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${job.title} - Solio Group`,
+          title: `${job.title} - ${job.company || 'Solio Group'}`,
           text: job.shortDescription,
           url: window.location.href,
         });
@@ -69,8 +66,11 @@ const JobDetail = () => {
         console.log('Error sharing:', err);
       }
     } else {
-      navigator.clipboard.writeText(window.location.href);
-      // You could add a toast notification here
+      await navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link Copied",
+        description: "Job link has been copied to clipboard.",
+      });
     }
   };
 
@@ -107,138 +107,156 @@ const JobDetail = () => {
     <Layout>
       <SEOStructuredData type="job" data={structuredData} />
       
-      {/* Hero Section */}
-      <HeroBanner 
-        title={job.title}
-        description={job.shortDescription}
-        glowColor="blue"
-      />
-
-      <div className="py-12 bg-background">
-        <div className="container max-w-4xl">
+      <div className="py-8 bg-background min-h-screen">
+        <div className="container max-w-7xl">
           {/* Back Navigation */}
           <div className="mb-6">
             <Button variant="ghost" asChild className="mb-4">
               <Link to="/carrieres/rejoignez-nous">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                {t('careers.jobs.backToJobs')}
+                Back to Jobs
               </Link>
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Job Overview */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl">{job.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div 
-                    className="prose dark:prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: job.fullDescription }}
-                  />
-                </CardContent>
-              </Card>
+            <div className="lg:col-span-8 space-y-6">
+              {/* Job Header */}
+              <div className="space-y-4">
+                <h1 className="text-3xl font-bold text-foreground">{job.title}</h1>
+                
+                {job.company && (
+                  <p className="text-lg text-muted-foreground">
+                    {job.company} {job.website && `— ${job.website}`} — {job.companyDescription}
+                  </p>
+                )}
 
-              {/* Requirements */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('careers.jobs.requirements')}</CardTitle>
-                </CardHeader>
-                <CardContent>
+                {job.programDescription && (
+                  <div className="space-y-3">
+                    {job.programDescription.split('\n\n').map((paragraph, index) => (
+                      <p key={index} className="text-foreground leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Duties and Responsibilities */}
+              {job.dutiesAndResponsibilities && job.dutiesAndResponsibilities.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-foreground">Duties and Responsibilities</h2>
+                  {job.dutiesAndResponsibilities.map((section, index) => (
+                    <div key={index} className="space-y-3">
+                      <h3 className="text-lg font-medium text-foreground">{section.title}</h3>
+                      <ul className="space-y-2 ml-4">
+                        {section.items.map((item, itemIndex) => (
+                          <li key={itemIndex} className="flex items-start">
+                            <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
+                            <span className="text-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Educational Qualification */}
+              {job.educationalQualification && job.educationalQualification.length > 0 && (
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-foreground">Educational Qualification</h2>
                   <ul className="space-y-2">
-                    {job.requirements.map((req, index) => (
+                    {job.educationalQualification.map((qualification, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span>{req}</span>
+                        <span className="text-foreground">{qualification}</span>
                       </li>
                     ))}
                   </ul>
-                </CardContent>
-              </Card>
+                </div>
+              )}
 
-              {/* Qualifications */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('careers.jobs.qualifications')}</CardTitle>
-                </CardHeader>
-                <CardContent>
+              {/* Expected Experience */}
+              {job.expectedExperience && job.expectedExperience.length > 0 && (
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-foreground">Expected Experience</h2>
                   <ul className="space-y-2">
-                    {job.qualifications.map((qual, index) => (
+                    {job.expectedExperience.map((experience, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span>{qual}</span>
+                        <span className="text-foreground">{experience}</span>
                       </li>
                     ))}
                   </ul>
-                </CardContent>
-              </Card>
+                </div>
+              )}
 
-              {/* Benefits */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('careers.jobs.benefits')}</CardTitle>
-                </CardHeader>
-                <CardContent>
+              {/* Personal and Technical Skills Requirements */}
+              {job.personalAndTechnicalSkills && job.personalAndTechnicalSkills.length > 0 && (
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-foreground">Personal and Technical Skills Requirements</h2>
                   <ul className="space-y-2">
-                    {job.benefits.map((benefit, index) => (
+                    {job.personalAndTechnicalSkills.map((skill, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span>{benefit}</span>
+                        <span className="text-foreground">{skill}</span>
                       </li>
                     ))}
                   </ul>
-                </CardContent>
-              </Card>
+                </div>
+              )}
+
+              {/* Additional Info */}
+              {job.additionalInfo && (
+                <div className="space-y-3">
+                  <p className="text-lg font-medium text-foreground">{job.additionalInfo}</p>
+                  {job.applicationEmail && (
+                    <p className="text-foreground">
+                      <strong>Apply:</strong> {job.applicationInstructions} {job.applicationEmail}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Job Details */}
+              <div className="space-y-3 pt-6 border-t border-border">
+                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Briefcase size={16} />
+                    <span><strong>Job Type:</strong> {job.jobType}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin size={16} />
+                    <span><strong>Job Location:</strong> {job.location}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Share Button */}
+              <div className="pt-4">
+                <Button 
+                  variant="outline" 
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-2"
+                >
+                  <Share2 size={16} />
+                  Share this offer
+                </Button>
+              </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Apply Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('careers.jobs.interestedTitle')}</CardTitle>
-                  <CardDescription>{t('careers.jobs.interestedDesc')}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <FormModal 
-                    type="postuler" 
-                    jobTitle={job.title}
-                    variant="default"
-                    className="w-full"
-                  >
-                    {t('careers.jobs.apply')}
-                  </FormModal>
-                  
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={handleShare}
-                  >
-                    <Share2 className="mr-2 h-4 w-4" />
-                    {t('careers.jobs.share')}
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Company Info */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>À propos de Solio Group</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Solio Group est un groupe multidisciplinaire spécialisé en transition énergétique et transformation digitale, opérant en Afrique et en Amérique du Nord.
-                  </p>
-                  <Button variant="outline" size="sm" asChild>
-                    <Link to="/presentation">
-                      {t('common.learnMore')}
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+            {/* Application Form Sidebar */}
+            <div className="lg:col-span-4">
+              <div className="sticky top-8">
+                <JobApplicationForm 
+                  jobTitle={job.title}
+                  onSubmit={(data) => {
+                    console.log('Application submitted:', data);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
