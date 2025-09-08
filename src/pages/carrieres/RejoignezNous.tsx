@@ -140,11 +140,11 @@ const RejoignezNous = () => {
                 />
 
                 {filteredJobs.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredJobs.map((job) => (
-                      <JobCard key={job.id} job={job} />
-                    ))}
-                  </div>
+          <div className="bg-card border border-border rounded-lg">
+            {filteredJobs.map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </div>
                 ) : (
                   <div className="bg-card p-10 rounded-lg shadow text-center">
                     <h3 className="text-xl font-medium mb-4">{t('careers.jobs.noResults')}</h3>

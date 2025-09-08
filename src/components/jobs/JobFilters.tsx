@@ -39,7 +39,7 @@ const JobFilters: React.FC<JobFiltersProps> = ({
 }) => {
   const { t } = useTranslation();
   
-  const hasActiveFilters = selectedDepartment !== 'all' || selectedJobType !== 'all' || selectedLocation !== 'all' || searchTerm;
+  const hasActiveFilters = selectedLocation !== 'all' || searchTerm;
 
   return (
     <div className="space-y-6">
@@ -56,42 +56,6 @@ const JobFilters: React.FC<JobFiltersProps> = ({
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1">
-          <Select value={selectedDepartment} onValueChange={onDepartmentChange}>
-            <SelectTrigger>
-              <SelectValue placeholder={t('careers.jobs.filters.department')} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">
-                {t('careers.jobs.filters.allDepartments')} ({jobCounts.total})
-              </SelectItem>
-              {jobDepartments.map((dept) => (
-                <SelectItem key={dept} value={dept}>
-                  {dept} ({jobCounts.byDepartment[dept] || 0})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="flex-1">
-          <Select value={selectedJobType} onValueChange={onJobTypeChange}>
-            <SelectTrigger>
-              <SelectValue placeholder={t('careers.jobs.filters.jobType')} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">
-                {t('careers.jobs.filters.allTypes')} ({jobCounts.total})
-              </SelectItem>
-              {jobTypes.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type} ({jobCounts.byJobType[type] || 0})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
         <div className="flex-1">
           <Select value={selectedLocation} onValueChange={onLocationChange}>
             <SelectTrigger>
@@ -134,26 +98,6 @@ const JobFilters: React.FC<JobFiltersProps> = ({
               <X 
                 className="h-3 w-3 cursor-pointer" 
                 onClick={() => onSearchChange('')}
-              />
-            </Badge>
-          )}
-          
-          {selectedDepartment !== 'all' && (
-            <Badge variant="secondary" className="gap-1">
-              {selectedDepartment}
-              <X 
-                className="h-3 w-3 cursor-pointer" 
-                onClick={() => onDepartmentChange('all')}
-              />
-            </Badge>
-          )}
-          
-          {selectedJobType !== 'all' && (
-            <Badge variant="secondary" className="gap-1">
-              {selectedJobType}
-              <X 
-                className="h-3 w-3 cursor-pointer" 
-                onClick={() => onJobTypeChange('all')}
               />
             </Badge>
           )}

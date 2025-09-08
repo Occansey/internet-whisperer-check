@@ -132,41 +132,7 @@ const JobDetail = () => {
               {/* Job Overview */}
               <Card>
                 <CardHeader>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge 
-                      variant="outline" 
-                      className={getJobTypeBadgeStyle(job.jobType)}
-                    >
-                      {job.jobType}
-                    </Badge>
-                    <Badge 
-                      variant="secondary"
-                      style={{ backgroundColor: `${getDepartmentColor(job.department)}15`, color: getDepartmentColor(job.department) }}
-                    >
-                      {job.department}
-                    </Badge>
-                    {job.tags.map((tag, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  
                   <CardTitle className="text-2xl">{job.title}</CardTitle>
-                  <CardDescription className="flex flex-col gap-2 text-base">
-                    <div className="flex items-center">
-                      <MapPin className="mr-2 h-5 w-5" />
-                      <span>{job.location}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Briefcase className="mr-2 h-5 w-5" />
-                      <span>{job.salaryRange}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Calendar className="mr-2 h-5 w-5" />
-                      <span>Publié le {formatDate(job.postedDate)}</span>
-                    </div>
-                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div 
