@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { Job } from "@/data/jobs";
 import { useTranslation } from "@/contexts/TranslationContext";
 
@@ -12,15 +12,17 @@ const JobCard = ({ job }: JobCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="p-4 border-b border-border last:border-b-0 hover:bg-muted/50 transition-colors">
-      <div className="space-y-2">
-        <h3 className="font-semibold text-foreground">{job.title}</h3>
+    <div className="bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-border">
+      <div className="space-y-4">
+        <h3 className="font-semibold text-foreground text-lg">{job.title}</h3>
         <p className="text-sm text-muted-foreground">{job.location}</p>
-        <Button variant="outline" size="sm" asChild>
-          <Link to={`/carrieres/offres/${job.slug}`}>
-            More Details
-          </Link>
-        </Button>
+        <Link 
+          to={`/carrieres/offres/${job.slug}`}
+          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium"
+        >
+          More Details
+          <ChevronRight size={16} />
+        </Link>
       </div>
     </div>
   );
