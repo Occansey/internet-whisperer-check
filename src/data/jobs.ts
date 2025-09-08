@@ -37,7 +37,7 @@ export const mockJobs: Job[] = [
     title: 'Environmental and Social Management Specialist',
     company: 'Solio Group',
     department: 'Finance',
-    location: 'Kigali, Rwanda',
+    location: 'Paris, France',
     jobType: 'Full-time',
     salaryRange: '55,000 - 70,000 USD',
     postedDate: '2024-01-15',
@@ -113,7 +113,7 @@ export const mockJobs: Job[] = [
     title: 'Marketing Manager - Africa',
     company: 'Solio Group',
     department: 'Marketing',
-    location: 'Dakar, Sénégal',
+    location: 'Gitega, Burundi',
     jobType: 'Full-time',
     salaryRange: '40,000 - 55,000 USD',
     postedDate: '2024-01-10',
@@ -279,8 +279,8 @@ export const jobTypes = [
 
 export const jobLocations = [
   'Montréal, Canada',
-  'Kigali, Rwanda',
-  'Dakar, Sénégal',
+  'Paris, France',
+  'Gitega, Burundi',
   'Remote',
   'Hybride'
 ];
