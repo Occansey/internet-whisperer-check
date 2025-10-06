@@ -66,13 +66,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Get JSON input
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
+// Get input - handle both JSON and multipart/form-data
+if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false) {
+    // Handle file upload (multipart/form-data)
+    $data = $_POST;
+} else {
+    // Handle JSON input
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
+}
 
 if (!$data) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid JSON data']);
+    echo json_encode(['error' => 'Invalid data']);
     exit();
 }
 
@@ -247,13 +253,8 @@ Date : " . date('Y-m-d H:i:s') . "
         
     case 'postuler':
         $subject = 'Nouvelle candidature pour le poste : ' . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié');
-        $headers = [
-            'From: ' . $from,
-            'Reply-To: ' . htmlspecialchars($data['email']),
-            'X-Mailer: PHP/' . phpversion(),
-            'MIME-Version: 1.0',
-            'Content-Type: text/plain; charset=UTF-8'
-        ];
+        
+        // For job applications with file attachments, we'll set headers later
         $message = "
 Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié') . "
 
@@ -264,9 +265,6 @@ Informations du candidat :
 
 Lettre de motivation :
 " . htmlspecialchars($data['coverLetter'] ?? 'Non fournie') . "
-
-CV : " . (isset($data['cvFileName']) && !empty($data['cvFileName']) ? htmlspecialchars($data['cvFileName']) : 'Non fourni') . "
-Autres documents : " . (isset($data['otherDocumentsFileName']) && !empty($data['otherDocumentsFileName']) ? htmlspecialchars($data['otherDocumentsFileName']) : 'Aucun') . "
 
 ---
 Email envoyé depuis le site Solio Group
@@ -383,8 +381,55 @@ function logContactToCSV($data, $type) {
     return $result !== false;
 }
 
-// Send email
-$success = mail($to, $subject, $message, implode("\r\n", $headers));
+// Send email with attachments if applicable
+$success = false;
+
+// Check if this is a job application with file attachments
+if ($data['type'] === 'postuler' && !empty($_FILES)) {
+    // Use multipart MIME for attachments
+    $boundary = md5(time());
+    
+    $headers = [
+        'From: ' . $from,
+        'Reply-To: ' . htmlspecialchars($data['email']),
+        'X-Mailer: PHP/' . phpversion(),
+        'MIME-Version: 1.0',
+        'Content-Type: multipart/mixed; boundary="' . $boundary . '"'
+    ];
+    
+    // Build multipart message
+    $email_message = "--" . $boundary . "\r\n";
+    $email_message .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $email_message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+    $email_message .= $message . "\r\n\r\n";
+    
+    // Attach CV if exists
+    if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+        $file_content = chunk_split(base64_encode(file_get_contents($_FILES['cv']['tmp_name'])));
+        $email_message .= "--" . $boundary . "\r\n";
+        $email_message .= "Content-Type: " . $_FILES['cv']['type'] . "; name=\"" . $_FILES['cv']['name'] . "\"\r\n";
+        $email_message .= "Content-Transfer-Encoding: base64\r\n";
+        $email_message .= "Content-Disposition: attachment; filename=\"" . $_FILES['cv']['name'] . "\"\r\n\r\n";
+        $email_message .= $file_content . "\r\n";
+    }
+    
+    // Attach other documents if exists
+    if (isset($_FILES['otherDocuments']) && $_FILES['otherDocuments']['error'] === UPLOAD_ERR_OK) {
+        $file_content = chunk_split(base64_encode(file_get_contents($_FILES['otherDocuments']['tmp_name'])));
+        $email_message .= "--" . $boundary . "\r\n";
+        $email_message .= "Content-Type: " . $_FILES['otherDocuments']['type'] . "; name=\"" . $_FILES['otherDocuments']['name'] . "\"\r\n";
+        $email_message .= "Content-Transfer-Encoding: base64\r\n";
+        $email_message .= "Content-Disposition: attachment; filename=\"" . $_FILES['otherDocuments']['name'] . "\"\r\n\r\n";
+        $email_message .= $file_content . "\r\n";
+    }
+    
+    $email_message .= "--" . $boundary . "--";
+    
+    $success = mail($to, $subject, $email_message, implode("\r\n", $headers));
+} else {
+    // Regular email without attachments
+    $success = mail($to, $subject, $message, implode("\r\n", $headers));
+}
 
 // Log ALL contact types to CSV (not just showroom contacts)
 if ($success) {

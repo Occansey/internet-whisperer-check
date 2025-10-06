@@ -149,25 +149,40 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     formRateLimiter.recordAttempt(identifier);
     
     try {
+      // Prepare FormData for file upload
+      const formDataToSend = new FormData();
+      formDataToSend.append('type', 'postuler');
+      formDataToSend.append('fullName', formData.fullName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('coverLetter', formData.coverLetter);
+      formDataToSend.append('jobTitle', jobTitle);
+      formDataToSend.append('website', formData.website);
+      formDataToSend.append('language', language);
+      
+      // Append files if they exist
+      if (formData.cv) {
+        formDataToSend.append('cv', formData.cv);
+      }
+      if (formData.otherDocuments) {
+        formDataToSend.append('otherDocuments', formData.otherDocuments);
+      }
+
+      // Save to localStorage (without files)
       const submissionData = {
         type: 'postuler',
         ...validation.data,
         timestamp: new Date().toISOString(),
         csrfToken: CSRFTokenManager.getToken(),
       };
-      
-      // Save to localStorage
       const existingApplications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
       existingApplications.push(submissionData);
       localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
-      // Send to PHP endpoint
+      // Send to PHP endpoint with FormData
       const response = await fetch('/send-email.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
+        body: formDataToSend, // Send FormData instead of JSON
       });
       
       if (!response.ok) {
@@ -176,6 +191,11 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       
       // Call onSubmit if provided
       if (onSubmit) {
+        const submissionData = {
+          type: 'postuler',
+          ...validation.data,
+          timestamp: new Date().toISOString(),
+        };
         onSubmit(submissionData);
       }
       
