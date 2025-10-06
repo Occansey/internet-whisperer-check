@@ -180,7 +180,7 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
       // Send to PHP endpoint with FormData
-      const response = await fetch('/send-email.php', {
+      const response = await fetch('https://growth-energy.com/send-email.php', {
         method: 'POST',
         body: formDataToSend, // Send FormData instead of JSON
       });
