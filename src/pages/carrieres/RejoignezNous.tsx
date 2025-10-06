@@ -19,6 +19,7 @@ const RejoignezNous = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('all');
   const [selectedJobType, setSelectedJobType] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState('all');
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -42,8 +43,9 @@ const RejoignezNous = () => {
     const matchesDepartment = selectedDepartment === 'all' || job.department === selectedDepartment;
     const matchesJobType = selectedJobType === 'all' || job.jobType === selectedJobType;
     const matchesLocation = selectedLocation === 'all' || job.location === selectedLocation;
+    const matchesSubsidiary = selectedSubsidiary === 'all' || job.subsidiary === selectedSubsidiary;
     
-    return job.isActive && matchesSearch && matchesDepartment && matchesJobType && matchesLocation;
+    return job.isActive && matchesSearch && matchesDepartment && matchesJobType && matchesLocation && matchesSubsidiary;
   });
 
   // Calculate job counts for filters
@@ -66,6 +68,12 @@ const RejoignezNous = () => {
         acc[job.location] = (acc[job.location] || 0) + 1;
       }
       return acc;
+    }, {} as Record<string, number>),
+    bySubsidiary: mockJobs.reduce((acc, job) => {
+      if (job.isActive) {
+        acc[job.subsidiary] = (acc[job.subsidiary] || 0) + 1;
+      }
+      return acc;
     }, {} as Record<string, number>)
   };
 
@@ -74,6 +82,7 @@ const RejoignezNous = () => {
     setSelectedDepartment('all');
     setSelectedJobType('all');
     setSelectedLocation('all');
+    setSelectedSubsidiary('all');
   };
 
   const valuePropositions = [
@@ -135,6 +144,8 @@ const RejoignezNous = () => {
                   onJobTypeChange={setSelectedJobType}
                   selectedLocation={selectedLocation}
                   onLocationChange={setSelectedLocation}
+                  selectedSubsidiary={selectedSubsidiary}
+                  onSubsidiaryChange={setSelectedSubsidiary}
                   jobCounts={jobCounts}
                   onClearFilters={clearFilters}
                 />

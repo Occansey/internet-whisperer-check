@@ -144,17 +144,61 @@ const JobDetail = () => {
             {/* Main Content */}
             <div className="lg:col-span-8 space-y-6">
               {/* Company Description */}
-              {job.company && (
-                <div className="space-y-3">
-                  <p className="text-lg text-muted-foreground">
+              {job.companyDescription && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-foreground">✨ Qui sommes-nous ?</h2>
+                  <p className="text-foreground leading-relaxed">
                     {job.companyDescription}
                   </p>
+                  <p className="text-foreground leading-relaxed">
+                    Solio Group est un acteur engagé dans :
+                  </p>
+                  <ul className="space-y-2 ml-4">
+                    <li className="flex items-start">
+                      <span className="mr-2">🌞</span>
+                      <span className="text-foreground"><strong>L'énergie renouvelable</strong> : développement et financement de centrales solaires C&I et de solutions d'efficacité énergétique.</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">🚗</span>
+                      <span className="text-foreground"><strong>La mobilité électrique</strong> : infrastructures de recharge, solutions de mobilité durable, accompagnement des flottes professionnelles.</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">💻</span>
+                      <span className="text-foreground"><strong>La transformation digitale</strong> : solutions technologiques et services numériques pour accompagner la modernisation des entreprises.</span>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              {/* Mission */}
+              {job.missionDescription && (
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-foreground">Notre mission</h3>
+                  <p className="text-foreground leading-relaxed">
+                    {job.missionDescription}
+                  </p>
+                </div>
+              )}
+
+              {/* Values */}
+              {job.valuesDescription && job.valuesDescription.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-foreground">Nos valeurs</h3>
+                  <ul className="space-y-2">
+                    {job.valuesDescription.map((value, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
+                        <span className="text-foreground">{value}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 
               {/* Program Description */}
               {job.programDescription && (
                 <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-foreground">🎯 Pourquoi ce poste ?</h2>
                   {job.programDescription.split('\n\n').map((paragraph, index) => (
                     <p key={index} className="text-foreground leading-relaxed">
                       {paragraph}
@@ -166,7 +210,7 @@ const JobDetail = () => {
               {/* Duties and Responsibilities */}
               {job.dutiesAndResponsibilities && job.dutiesAndResponsibilities.length > 0 && (
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-foreground">Duties and Responsibilities</h2>
+                  <h2 className="text-2xl font-semibold text-foreground">🛠 Vos missions principales</h2>
                   {job.dutiesAndResponsibilities.map((section, index) => (
                     <div key={index} className="space-y-3">
                       <h3 className="text-lg font-medium text-foreground">{section.title}</h3>
@@ -183,62 +227,88 @@ const JobDetail = () => {
                 </div>
               )}
 
-              {/* Educational Qualification */}
-              {job.educationalQualification && job.educationalQualification.length > 0 && (
+              {/* Profile Section */}
+              <div className="space-y-6">
+                <h2 className="text-2xl font-semibold text-foreground">👤 Profil recherché</h2>
+                
+                {/* Educational Qualification */}
+                {job.educationalQualification && job.educationalQualification.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-medium text-foreground">Formation</h3>
+                    <ul className="space-y-2">
+                      {job.educationalQualification.map((qualification, index) => (
+                        <li key={index} className="flex items-start">
+                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
+                          <span className="text-foreground">{qualification}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Expected Experience */}
+                {job.expectedExperience && job.expectedExperience.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-medium text-foreground">Expérience</h3>
+                    <ul className="space-y-2">
+                      {job.expectedExperience.map((experience, index) => (
+                        <li key={index} className="flex items-start">
+                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
+                          <span className="text-foreground">{experience}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Personal and Technical Skills Requirements */}
+                {job.personalAndTechnicalSkills && job.personalAndTechnicalSkills.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-medium text-foreground">Compétences clés</h3>
+                    <ul className="space-y-2">
+                      {job.personalAndTechnicalSkills.map((skill, index) => (
+                        <li key={index} className="flex items-start">
+                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
+                          <span className="text-foreground">{skill}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* What We Offer */}
+              {job.whatWeOffer && job.whatWeOffer.length > 0 && (
                 <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">Educational Qualification</h2>
+                  <h2 className="text-2xl font-semibold text-foreground">🎁 Ce que nous offrons</h2>
                   <ul className="space-y-2">
-                    {job.educationalQualification.map((qualification, index) => (
+                    {job.whatWeOffer.map((offer, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span className="text-foreground">{qualification}</span>
+                        <span className="text-foreground">{offer}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Expected Experience */}
-              {job.expectedExperience && job.expectedExperience.length > 0 && (
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">Expected Experience</h2>
-                  <ul className="space-y-2">
-                    {job.expectedExperience.map((experience, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span className="text-foreground">{experience}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Personal and Technical Skills Requirements */}
-              {job.personalAndTechnicalSkills && job.personalAndTechnicalSkills.length > 0 && (
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">Personal and Technical Skills Requirements</h2>
-                  <ul className="space-y-2">
-                    {job.personalAndTechnicalSkills.map((skill, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span className="text-foreground">{skill}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Additional Info */}
-              {job.additionalInfo && (
-                <div className="space-y-3">
-                  <p className="text-lg font-medium text-foreground">{job.additionalInfo}</p>
-                  {job.applicationEmail && (
+              {/* Application Instructions */}
+              <div className="space-y-3">
+                <h2 className="text-2xl font-semibold text-foreground">📩 Comment postuler ?</h2>
+                {job.applicationEmail && (
+                  <div className="space-y-2">
                     <p className="text-foreground">
-                      <strong>Apply:</strong> {job.applicationInstructions} {job.applicationEmail}
+                      {job.applicationInstructions}
                     </p>
-                  )}
-                </div>
-              )}
+                    <p className="text-foreground">
+                      👉 <strong>{job.applicationEmail}</strong>
+                    </p>
+                  </div>
+                )}
+                {job.additionalInfo && (
+                  <p className="text-sm text-muted-foreground italic">{job.additionalInfo}</p>
+                )}
+              </div>
 
               {/* Job Details */}
               <div className="space-y-3 pt-6 border-t border-border">

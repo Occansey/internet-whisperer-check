@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Filter, X } from 'lucide-react';
-import { jobDepartments, jobTypes, jobLocations } from '@/data/jobs';
+import { jobDepartments, jobTypes, jobLocations, jobSubsidiaries } from '@/data/jobs';
 import { useTranslation } from '@/contexts/TranslationContext';
 
 interface JobFiltersProps {
@@ -16,11 +16,14 @@ interface JobFiltersProps {
   onJobTypeChange: (value: string) => void;
   selectedLocation: string;
   onLocationChange: (value: string) => void;
+  selectedSubsidiary: string;
+  onSubsidiaryChange: (value: string) => void;
   jobCounts: {
     total: number;
     byDepartment: Record<string, number>;
     byJobType: Record<string, number>;
     byLocation: Record<string, number>;
+    bySubsidiary: Record<string, number>;
   };
   onClearFilters: () => void;
 }
@@ -34,12 +37,14 @@ const JobFilters: React.FC<JobFiltersProps> = ({
   onJobTypeChange,
   selectedLocation,
   onLocationChange,
+  selectedSubsidiary,
+  onSubsidiaryChange,
   jobCounts,
   onClearFilters
 }) => {
   const { t } = useTranslation();
   
-  const hasActiveFilters = selectedLocation !== 'all' || searchTerm;
+  const hasActiveFilters = selectedLocation !== 'all' || selectedSubsidiary !== 'all' || searchTerm;
 
   return (
     <div className="space-y-6">
@@ -56,6 +61,24 @@ const JobFilters: React.FC<JobFiltersProps> = ({
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex-1">
+          <Select value={selectedSubsidiary} onValueChange={onSubsidiaryChange}>
+            <SelectTrigger>
+              <SelectValue placeholder="Filiale" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">
+                Toutes les filiales ({jobCounts.total})
+              </SelectItem>
+              {jobSubsidiaries.map((subsidiary) => (
+                <SelectItem key={subsidiary} value={subsidiary}>
+                  {subsidiary} ({jobCounts.bySubsidiary[subsidiary] || 0})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
         <div className="flex-1">
           <Select value={selectedLocation} onValueChange={onLocationChange}>
             <SelectTrigger>
@@ -98,6 +121,16 @@ const JobFilters: React.FC<JobFiltersProps> = ({
               <X 
                 className="h-3 w-3 cursor-pointer" 
                 onClick={() => onSearchChange('')}
+              />
+            </Badge>
+          )}
+          
+          {selectedSubsidiary !== 'all' && (
+            <Badge variant="secondary" className="gap-1">
+              {selectedSubsidiary}
+              <X 
+                className="h-3 w-3 cursor-pointer" 
+                onClick={() => onSubsidiaryChange('all')}
               />
             </Badge>
           )}
