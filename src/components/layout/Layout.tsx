@@ -2,7 +2,6 @@ import { ReactNode, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
-import { CookieConsent } from "@/components/legal/CookieConsent";
 
 // Add global CSS styles for specific buttons and animations
 const globalStyles = `
@@ -70,7 +69,6 @@ const Layout = ({ children }: LayoutProps) => {
         {children}
       </main>
       <Footer />
-      <CookieConsent />
     </div>
   );
 };

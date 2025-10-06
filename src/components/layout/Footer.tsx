@@ -70,7 +70,7 @@ const Footer = () => {
                   <li><Link to="/legal/terms-of-service" className="text-gray-400 hover:text-white transition-colors">{language === 'fr' ? 'Conditions d\'utilisation' : 'Terms of Service'}</Link></li>
                   <li><button onClick={() => {
                     localStorage.removeItem('solio_cookie_consent');
-                    window.dispatchEvent(new CustomEvent('openCookieSettings'));
+                    window.location.reload();
                   }} className="text-gray-400 hover:text-white transition-colors">{language === 'fr' ? 'Paramètres des cookies' : 'Cookie Settings'}</button></li>
                 </ul>
               </nav>
