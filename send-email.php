@@ -1,57 +1,96 @@
 <?php
-// Security headers
+// Security headers - must be first, no output before this
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // In production, replace * with specific domain
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
 
-// Rate limiting using session
-session_start();
-
-// Initialize rate limiting
-if (!isset($_SESSION['rate_limit'])) {
-    $_SESSION['rate_limit'] = [
-        'count' => 0,
-        'first_attempt' => time(),
-        'blocked_until' => 0
-    ];
+// IP-based rate limiting (no sessions needed for cross-origin)
+function checkRateLimit($ip) {
+    $rate_limit_file = 'rate_limits.json';
+    $max_attempts = 5;
+    $window_seconds = 900; // 15 minutes
+    $block_duration = 3600; // 1 hour
+    
+    // Initialize or load rate limits
+    $rate_limits = [];
+    if (file_exists($rate_limit_file)) {
+        $content = file_get_contents($rate_limit_file);
+        $rate_limits = json_decode($content, true) ?: [];
+    }
+    
+    $current_time = time();
+    
+    // Clean up old entries (older than 2 hours)
+    foreach ($rate_limits as $stored_ip => $data) {
+        if ($current_time - $data['first_attempt'] > 7200) {
+            unset($rate_limits[$stored_ip]);
+        }
+    }
+    
+    // Check if IP exists
+    if (!isset($rate_limits[$ip])) {
+        $rate_limits[$ip] = [
+            'count' => 1,
+            'first_attempt' => $current_time,
+            'blocked_until' => 0
+        ];
+    } else {
+        $ip_data = $rate_limits[$ip];
+        
+        // Check if blocked
+        if ($ip_data['blocked_until'] > $current_time) {
+            $retry_after = $ip_data['blocked_until'] - $current_time;
+            file_put_contents($rate_limit_file, json_encode($rate_limits));
+            http_response_code(429);
+            echo json_encode([
+                'error' => 'Too many requests',
+                'retry_after' => $retry_after
+            ]);
+            exit();
+        }
+        
+        // Reset if window expired
+        if ($current_time - $ip_data['first_attempt'] > $window_seconds) {
+            $rate_limits[$ip] = [
+                'count' => 1,
+                'first_attempt' => $current_time,
+                'blocked_until' => 0
+            ];
+        } else {
+            // Increment count
+            $rate_limits[$ip]['count']++;
+            
+            // Block if too many attempts
+            if ($rate_limits[$ip]['count'] > $max_attempts) {
+                $rate_limits[$ip]['blocked_until'] = $current_time + $block_duration;
+                file_put_contents($rate_limit_file, json_encode($rate_limits));
+                http_response_code(429);
+                echo json_encode([
+                    'error' => 'Too many requests. Please try again later.',
+                    'retry_after' => $block_duration
+                ]);
+                exit();
+            }
+        }
+    }
+    
+    // Save updated rate limits
+    file_put_contents($rate_limit_file, json_encode($rate_limits));
+    return true;
 }
 
-// Check if blocked
-if ($_SESSION['rate_limit']['blocked_until'] > time()) {
-    http_response_code(429);
-    echo json_encode([
-        'error' => 'Too many requests',
-        'retry_after' => $_SESSION['rate_limit']['blocked_until'] - time()
-    ]);
-    exit();
+// Get client IP address
+$client_ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $client_ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
 }
 
-// Reset if window expired (15 minutes)
-if (time() - $_SESSION['rate_limit']['first_attempt'] > 900) {
-    $_SESSION['rate_limit'] = [
-        'count' => 0,
-        'first_attempt' => time(),
-        'blocked_until' => 0
-    ];
-}
-
-// Increment request count
-$_SESSION['rate_limit']['count']++;
-
-// Block if too many attempts (5 per 15 minutes)
-if ($_SESSION['rate_limit']['count'] > 5) {
-    $_SESSION['rate_limit']['blocked_until'] = time() + 3600; // Block for 1 hour
-    http_response_code(429);
-    echo json_encode([
-        'error' => 'Too many requests. Please try again later.',
-        'retry_after' => 3600
-    ]);
-    exit();
-}
+// Check rate limit
+checkRateLimit($client_ip);
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
