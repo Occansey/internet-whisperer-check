@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 interface JobApplicationFormProps {
   jobTitle: string;
@@ -13,6 +14,7 @@ interface JobApplicationFormProps {
 }
 
 const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => {
+  const { language } = useTranslation();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -36,33 +38,62 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.agreement) {
+      toast({
+        title: language === 'fr' ? "Accord requis" : "Agreement Required",
+        description: language === 'fr' 
+          ? "Veuillez accepter les conditions générales."
+          : "Please agree to the terms and conditions.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
-      const submission = {
-        ...formData,
+      const submissionData = {
+        type: 'postuler',
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        coverLetter: formData.coverLetter,
         jobTitle,
-        timestamp: new Date().toISOString(),
         cvFileName: formData.cv?.name,
         otherDocumentsFileName: formData.otherDocuments?.name,
+        language: language,
+        timestamp: new Date().toISOString(),
       };
       
       // Save to localStorage
-      const existingSubmissions = JSON.parse(localStorage.getItem('jobApplications') || '[]');
-      existingSubmissions.push(submission);
-      localStorage.setItem('jobApplications', JSON.stringify(existingSubmissions));
+      const existingApplications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+      existingApplications.push(submissionData);
+      localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
-      // Call onSubmit callback if provided
-      if (onSubmit) {
-        onSubmit(submission);
+      // Send to PHP endpoint
+      const response = await fetch('/send-email.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send email');
       }
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call onSubmit if provided
+      if (onSubmit) {
+        onSubmit(submissionData);
+      }
       
       toast({
-        title: "Application Submitted",
-        description: "Your job application has been submitted successfully. We will contact you soon.",
+        title: language === 'fr' ? "Candidature envoyée" : "Application Submitted",
+        description: language === 'fr'
+          ? "Votre candidature a été envoyée avec succès. Nous vous recontacterons bientôt !"
+          : "Your application has been submitted successfully. We'll get back to you soon!",
       });
       
       // Reset form
@@ -76,11 +107,19 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         agreement: false,
       });
       
+      // Reset file inputs
+      const cvInput = document.getElementById('cv') as HTMLInputElement;
+      const otherDocsInput = document.getElementById('otherDocuments') as HTMLInputElement;
+      if (cvInput) cvInput.value = '';
+      if (otherDocsInput) otherDocsInput.value = '';
+      
     } catch (error) {
-      console.error("Error submitting application:", error);
+      console.error('Error submitting application:', error);
       toast({
-        title: "Error",
-        description: "An error occurred while submitting your application. Please try again.",
+        title: language === 'fr' ? "Erreur" : "Error",
+        description: language === 'fr'
+          ? "Une erreur s'est produite lors de l'envoi de votre candidature. Veuillez réessayer."
+          : "There was an error submitting your application. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -91,18 +130,22 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-lg">Apply for this position</CardTitle>
+        <CardTitle className="text-lg">
+          {language === 'fr' ? 'Postuler pour ce poste' : 'Apply for this position'}
+        </CardTitle>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name *</Label>
+            <Label htmlFor="fullName">
+              {language === 'fr' ? 'Nom complet *' : 'Full Name *'}
+            </Label>
             <Input 
               id="fullName" 
               value={formData.fullName} 
               onChange={(e) => handleInputChange('fullName', e.target.value)} 
               required 
-              placeholder="Enter your full name"
+              placeholder={language === 'fr' ? 'Entrez votre nom complet' : 'Enter your full name'}
             />
           </div>
           
@@ -114,34 +157,43 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               value={formData.email} 
               onChange={(e) => handleInputChange('email', e.target.value)} 
               required 
-              placeholder="your.email@example.com"
+              placeholder="votre.email@exemple.com"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone *</Label>
+            <Label htmlFor="phone">
+              {language === 'fr' ? 'Téléphone *' : 'Phone *'}
+            </Label>
             <Input 
               id="phone" 
               value={formData.phone} 
               onChange={(e) => handleInputChange('phone', e.target.value)} 
               required
-              placeholder="+1 (555) 123-4567"
+              placeholder="+254 712 345 678"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="coverLetter">Cover Letter</Label>
+            <Label htmlFor="coverLetter">
+              {language === 'fr' ? 'Lettre de motivation' : 'Cover Letter'}
+            </Label>
             <Textarea 
               id="coverLetter" 
               value={formData.coverLetter} 
               onChange={(e) => handleInputChange('coverLetter', e.target.value)} 
-              placeholder="Write your cover letter here (optional)..."
+              placeholder={language === 'fr' 
+                ? 'Écrivez votre lettre de motivation ici (optionnel)...'
+                : 'Write your cover letter here (optional)...'
+              }
               rows={4}
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="cv">Upload CV/Resume *</Label>
+            <Label htmlFor="cv">
+              {language === 'fr' ? 'Télécharger CV *' : 'Upload CV/Resume *'}
+            </Label>
             <Input 
               id="cv" 
               type="file" 
@@ -150,15 +202,23 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               required 
             />
             <p className="text-xs text-muted-foreground">
-              {formData.cv ? `Selected: ${formData.cv.name}` : "No file chosen"}
+              {formData.cv 
+                ? `${language === 'fr' ? 'Sélectionné' : 'Selected'}: ${formData.cv.name}` 
+                : (language === 'fr' ? 'Aucun fichier choisi' : 'No file chosen')
+              }
             </p>
             <p className="text-xs text-muted-foreground">
-              Allowed Type(s): .pdf, .doc, .docx
+              {language === 'fr' 
+                ? 'Types autorisés : .pdf, .doc, .docx'
+                : 'Allowed Type(s): .pdf, .doc, .docx'
+              }
             </p>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="otherDocuments">Other Documents</Label>
+            <Label htmlFor="otherDocuments">
+              {language === 'fr' ? 'Autres documents' : 'Other Documents'}
+            </Label>
             <Input 
               id="otherDocuments" 
               type="file" 
@@ -170,10 +230,16 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               }}
             />
             <p className="text-xs text-muted-foreground">
-              {formData.otherDocuments ? `Selected: ${formData.otherDocuments.name}` : "No file chosen"}
+              {formData.otherDocuments 
+                ? `${language === 'fr' ? 'Sélectionné' : 'Selected'}: ${formData.otherDocuments.name}` 
+                : (language === 'fr' ? 'Aucun fichier choisi' : 'No file chosen')
+              }
             </p>
             <p className="text-xs text-muted-foreground">
-              Upload additional documents (optional) - .pdf, .doc, .docx
+              {language === 'fr' 
+                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx'
+                : 'Upload additional documents (optional) - .pdf, .doc, .docx'
+              }
             </p>
           </div>
           
@@ -187,7 +253,10 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               required
             />
             <Label htmlFor="agreement" className="text-sm leading-relaxed cursor-pointer">
-              By using this form you agree with the storage and handling of your data by this website. *
+              {language === 'fr'
+                ? 'En utilisant ce formulaire, vous acceptez le stockage et le traitement de vos données par ce site web. *'
+                : 'By using this form you agree with the storage and handling of your data by this website. *'
+              }
             </Label>
           </div>
           
@@ -196,7 +265,10 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             disabled={isSubmitting || !formData.agreement}
             className="w-full mt-6"
           >
-            {isSubmitting ? "Submitting Application..." : "Submit Application"}
+            {isSubmitting 
+              ? (language === 'fr' ? 'Envoi en cours...' : 'Submitting Application...')
+              : (language === 'fr' ? 'Soumettre la candidature' : 'Submit Application')
+            }
           </Button>
         </CardContent>
       </form>

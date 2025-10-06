@@ -28,8 +28,8 @@ if (!$data) {
 }
 
 // Email destinations
-$primary_email = 'contact@growth-energy.fr';
-$secondary_email = 'contact@growth-energy.fr';
+$primary_email = 'rh@solio-group.com';
+$secondary_email = 'rh@solio-group.com';
 
 // Email configuration
 $to = $primary_email . ',' . $secondary_email;
@@ -92,17 +92,18 @@ Date : " . date('Y-m-d H:i:s') . "
 Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle']) . "
 
 Informations du candidat :
-- Nom : " . htmlspecialchars($data['name']) . "
+- Nom complet : " . htmlspecialchars($data['fullName']) . "
 - Email : " . htmlspecialchars($data['email']) . "
 - Téléphone : " . htmlspecialchars($data['phone'] ?? 'Non renseigné') . "
 
-Message :
-" . htmlspecialchars($data['message'] ?? 'Aucun message') . "
+Lettre de motivation :
+" . htmlspecialchars($data['coverLetter'] ?? 'Non fournie') . "
 
-CV attaché : " . ($data['cv'] ? 'Oui' : 'Non') . "
+CV : " . htmlspecialchars($data['cvFileName'] ?? 'Non fourni') . "
+Autres documents : " . htmlspecialchars($data['otherDocumentsFileName'] ?? 'Aucun') . "
 
 ---
-Email envoyé depuis le site Growth Energy
+Email envoyé depuis le site Solio Group
 Date : " . date('Y-m-d H:i:s') . "
         ";
         break;
@@ -250,6 +251,63 @@ Email: contact@growth-energy.fr
     $confirmation_headers = [
         'From: ' . $from,
         'Reply-To: contact@growth-energy.fr',
+        'X-Mailer: PHP/' . phpversion(),
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8'
+    ];
+    
+    mail(htmlspecialchars($data['email']), $confirmation_subject, $confirmation_message, implode("\r\n", $confirmation_headers));
+}
+
+// Send confirmation email to user for job applications
+if ($success && $data['type'] === 'postuler') {
+    $language = $data['language'] ?? 'fr';
+    
+    if ($language === 'en') {
+        $confirmation_subject = 'Application Confirmation - Solio Group';
+        $confirmation_message = "
+Dear " . htmlspecialchars($data['fullName']) . ",
+
+Thank you for your interest in joining Solio Group!
+
+We have successfully received your application for the position: " . htmlspecialchars($data['jobTitle']) . "
+
+Our HR team will carefully review your application and contact you within 2-3 weeks if your profile matches our requirements.
+
+In the meantime, feel free to explore more about our mission and values on our website.
+
+Best regards,
+The Solio Group HR Team
+
+---
+Solio Group
+Email: rh@solio-group.com
+        ";
+    } else {
+        $confirmation_subject = 'Confirmation de candidature - Solio Group';
+        $confirmation_message = "
+Bonjour " . htmlspecialchars($data['fullName']) . ",
+
+Merci pour votre intérêt à rejoindre le Solio Group !
+
+Nous avons bien reçu votre candidature pour le poste : " . htmlspecialchars($data['jobTitle']) . "
+
+Notre équipe RH examinera attentivement votre dossier et vous contactera sous 2-3 semaines si votre profil correspond à nos besoins.
+
+En attendant, n'hésitez pas à découvrir davantage notre mission et nos valeurs sur notre site web.
+
+Cordialement,
+L'équipe RH du Solio Group
+
+---
+Solio Group
+Email: rh@solio-group.com
+        ";
+    }
+    
+    $confirmation_headers = [
+        'From: ' . $from,
+        'Reply-To: rh@solio-group.com',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8'
