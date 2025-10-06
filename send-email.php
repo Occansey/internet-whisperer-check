@@ -254,7 +254,10 @@ Date : " . date('Y-m-d H:i:s') . "
     case 'postuler':
         $subject = 'Nouvelle candidature pour le poste : ' . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié');
         
-        // For job applications with file attachments, we'll set headers later
+        // Check if files were uploaded
+        $cvAttached = isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK;
+        $otherDocsAttached = isset($_FILES['otherDocuments']) && $_FILES['otherDocuments']['error'] === UPLOAD_ERR_OK;
+        
         $message = "
 Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié') . "
 
@@ -265,6 +268,10 @@ Informations du candidat :
 
 Lettre de motivation :
 " . htmlspecialchars($data['coverLetter'] ?? 'Non fournie') . "
+
+Fichiers joints :
+- CV : " . ($cvAttached ? $_FILES['cv']['name'] : 'Non fourni') . "
+- Autres documents : " . ($otherDocsAttached ? $_FILES['otherDocuments']['name'] : 'Non fourni') . "
 
 ---
 Email envoyé depuis le site Solio Group
