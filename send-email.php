@@ -88,6 +88,14 @@ Date : " . date('Y-m-d H:i:s') . "
         
     case 'postuler':
         $subject = 'Nouvelle candidature pour poste : ' . htmlspecialchars($data['jobTitle']);
+        $headers = [
+            'From: ' . $from,
+            'Reply-To: ' . htmlspecialchars($data['email']),
+            'Bcc: maxwell.o@asking-group.com',
+            'X-Mailer: PHP/' . phpversion(),
+            'MIME-Version: 1.0',
+            'Content-Type: text/plain; charset=UTF-8'
+        ];
         $message = "
 Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle']) . "
 
@@ -149,15 +157,17 @@ Date : " . date('Y-m-d H:i:s') . "
         break;
 }
 
-// Email headers
-$headers = [
-    'From: ' . $from,
-    'Reply-To: ' . htmlspecialchars($data['email']),
-    'Bcc: maxwell.o@asking-group.com',
-    'X-Mailer: PHP/' . phpversion(),
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8'
-];
+// Email headers (only set if not already set by case)
+if (!isset($headers)) {
+    $headers = [
+        'From: ' . $from,
+        'Reply-To: ' . htmlspecialchars($data['email']),
+        'Bcc: maxwell.o@asking-group.com',
+        'X-Mailer: PHP/' . phpversion(),
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8'
+    ];
+}
 
 // Function to log contact to CSV
 function logContactToCSV($data, $type) {

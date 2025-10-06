@@ -13,13 +13,29 @@ import jobHeroImage from '@/assets/job-hero-africa.jpg';
 
 const JobDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const job = mockJobs.find(j => j.slug === slug);
 
   if (!job) {
     return <Navigate to="/carrieres/rejoignez-nous" replace />;
   }
+
+  // Helper function to get language-specific content
+  const getLocalizedContent = (frContent: string | undefined, enContent: string | undefined) => {
+    return language === 'en' && enContent ? enContent : frContent;
+  };
+
+  const getLocalizedArray = (frArray: string[] | undefined, enArray: string[] | undefined) => {
+    return language === 'en' && enArray ? enArray : frArray || [];
+  };
+
+  const getLocalizedDuties = (
+    frDuties: { title: string; items: string[] }[] | undefined, 
+    enDuties: { title: string; items: string[] }[] | undefined
+  ) => {
+    return language === 'en' && enDuties ? enDuties : frDuties || [];
+  };
 
   const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
@@ -118,7 +134,9 @@ const JobDetail = () => {
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative container max-w-7xl h-full flex items-center">
           <div className="text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{job.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              {getLocalizedContent(job.title, job.titleEn)}
+            </h1>
             <div className="flex items-center gap-4 text-lg">
               <div className="flex items-center gap-2">
                 <MapPin size={20} />
@@ -126,7 +144,7 @@ const JobDetail = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase size={20} />
-                <span>{job.jobType}</span>
+                <span>{getLocalizedContent(job.jobType, job.jobTypeEn)}</span>
               </div>
             </div>
           </div>
@@ -140,7 +158,7 @@ const JobDetail = () => {
             <Button variant="ghost" asChild className="mb-4">
               <Link to="/carrieres/rejoignez-nous">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Jobs
+                {language === 'fr' ? 'Retour aux offres' : 'Back to Jobs'}
               </Link>
             </Button>
           </div>
@@ -151,25 +169,48 @@ const JobDetail = () => {
               {/* Company Description */}
               {job.companyDescription && (
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-foreground">✨ Qui sommes-nous ?</h2>
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    ✨ {language === 'fr' ? 'Qui sommes-nous ?' : 'Who are we?'}
+                  </h2>
                   <p className="text-foreground leading-relaxed">
-                    {job.companyDescription}
+                    {getLocalizedContent(job.companyDescription, job.companyDescriptionEn)}
                   </p>
                   <p className="text-foreground leading-relaxed">
-                    Solio Group est un acteur engagé dans :
+                    {language === 'fr' 
+                      ? 'Solio Group est un acteur engagé dans :'
+                      : 'Solio Group is committed to:'
+                    }
                   </p>
                   <ul className="space-y-2 ml-4">
                     <li className="flex items-start">
                       <span className="mr-2">🌞</span>
-                      <span className="text-foreground"><strong>L'énergie renouvelable</strong> : développement et financement de centrales solaires C&I et de solutions d'efficacité énergétique.</span>
+                      <span className="text-foreground">
+                        <strong>{language === 'fr' ? 'L\'énergie renouvelable' : 'Renewable energy'}</strong>
+                        {language === 'fr'
+                          ? ' : développement et financement de centrales solaires C&I et de solutions d\'efficacité énergétique.'
+                          : ': development and financing of C&I solar plants and energy efficiency solutions.'
+                        }
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">🚗</span>
-                      <span className="text-foreground"><strong>La mobilité électrique</strong> : infrastructures de recharge, solutions de mobilité durable, accompagnement des flottes professionnelles.</span>
+                      <span className="text-foreground">
+                        <strong>{language === 'fr' ? 'La mobilité électrique' : 'Electric mobility'}</strong>
+                        {language === 'fr'
+                          ? ' : infrastructures de recharge, solutions de mobilité durable, accompagnement des flottes professionnelles.'
+                          : ': charging infrastructure, sustainable mobility solutions, professional fleet support.'
+                        }
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">💻</span>
-                      <span className="text-foreground"><strong>La transformation digitale</strong> : solutions technologiques et services numériques pour accompagner la modernisation des entreprises.</span>
+                      <span className="text-foreground">
+                        <strong>{language === 'fr' ? 'La transformation digitale' : 'Digital transformation'}</strong>
+                        {language === 'fr'
+                          ? ' : solutions technologiques et services numériques pour accompagner la modernisation des entreprises.'
+                          : ': technological solutions and digital services to support business modernization.'
+                        }
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -178,9 +219,11 @@ const JobDetail = () => {
               {/* Mission */}
               {job.missionDescription && (
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">Notre mission</h3>
+                  <h3 className="text-xl font-semibold text-foreground">
+                    {language === 'fr' ? 'Notre mission' : 'Our mission'}
+                  </h3>
                   <p className="text-foreground leading-relaxed">
-                    {job.missionDescription}
+                    {getLocalizedContent(job.missionDescription, job.missionDescriptionEn)}
                   </p>
                 </div>
               )}
@@ -188,9 +231,11 @@ const JobDetail = () => {
               {/* Values */}
               {job.valuesDescription && job.valuesDescription.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">Nos valeurs</h3>
+                  <h3 className="text-xl font-semibold text-foreground">
+                    {language === 'fr' ? 'Nos valeurs' : 'Our values'}
+                  </h3>
                   <ul className="space-y-2">
-                    {job.valuesDescription.map((value, index) => (
+                    {getLocalizedArray(job.valuesDescription, job.valuesDescriptionEn).map((value, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
                         <span className="text-foreground">{value}</span>
@@ -203,8 +248,10 @@ const JobDetail = () => {
               {/* Program Description */}
               {job.programDescription && (
                 <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">🎯 Pourquoi ce poste ?</h2>
-                  {job.programDescription.split('\n\n').map((paragraph, index) => (
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    🎯 {language === 'fr' ? 'Pourquoi ce poste ?' : 'Why this position?'}
+                  </h2>
+                  {(getLocalizedContent(job.programDescription, job.programDescriptionEn) || '').split('\n\n').map((paragraph, index) => (
                     <p key={index} className="text-foreground leading-relaxed">
                       {paragraph}
                     </p>
@@ -215,8 +262,10 @@ const JobDetail = () => {
               {/* Duties and Responsibilities */}
               {job.dutiesAndResponsibilities && job.dutiesAndResponsibilities.length > 0 && (
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-foreground">🛠 Vos missions principales</h2>
-                  {job.dutiesAndResponsibilities.map((section, index) => (
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    🛠 {language === 'fr' ? 'Vos missions principales' : 'Your main responsibilities'}
+                  </h2>
+                  {getLocalizedDuties(job.dutiesAndResponsibilities, job.dutiesAndResponsibilitiesEn).map((section, index) => (
                     <div key={index} className="space-y-3">
                       <h3 className="text-lg font-medium text-foreground">{section.title}</h3>
                       <ul className="space-y-2 ml-4">
@@ -234,14 +283,18 @@ const JobDetail = () => {
 
               {/* Profile Section */}
               <div className="space-y-6">
-                <h2 className="text-2xl font-semibold text-foreground">👤 Profil recherché</h2>
+                <h2 className="text-2xl font-semibold text-foreground">
+                  👤 {language === 'fr' ? 'Profil recherché' : 'Required profile'}
+                </h2>
                 
                 {/* Educational Qualification */}
                 {job.educationalQualification && job.educationalQualification.length > 0 && (
                   <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">Formation</h3>
+                    <h3 className="text-lg font-medium text-foreground">
+                      {language === 'fr' ? 'Formation' : 'Education'}
+                    </h3>
                     <ul className="space-y-2">
-                      {job.educationalQualification.map((qualification, index) => (
+                      {getLocalizedArray(job.educationalQualification, job.educationalQualificationEn).map((qualification, index) => (
                         <li key={index} className="flex items-start">
                           <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
                           <span className="text-foreground">{qualification}</span>
@@ -254,9 +307,11 @@ const JobDetail = () => {
                 {/* Expected Experience */}
                 {job.expectedExperience && job.expectedExperience.length > 0 && (
                   <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">Expérience</h3>
+                    <h3 className="text-lg font-medium text-foreground">
+                      {language === 'fr' ? 'Expérience' : 'Experience'}
+                    </h3>
                     <ul className="space-y-2">
-                      {job.expectedExperience.map((experience, index) => (
+                      {getLocalizedArray(job.expectedExperience, job.expectedExperienceEn).map((experience, index) => (
                         <li key={index} className="flex items-start">
                           <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
                           <span className="text-foreground">{experience}</span>
@@ -269,9 +324,11 @@ const JobDetail = () => {
                 {/* Personal and Technical Skills Requirements */}
                 {job.personalAndTechnicalSkills && job.personalAndTechnicalSkills.length > 0 && (
                   <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">Compétences clés</h3>
+                    <h3 className="text-lg font-medium text-foreground">
+                      {language === 'fr' ? 'Compétences clés' : 'Key skills'}
+                    </h3>
                     <ul className="space-y-2">
-                      {job.personalAndTechnicalSkills.map((skill, index) => (
+                      {getLocalizedArray(job.personalAndTechnicalSkills, job.personalAndTechnicalSkillsEn).map((skill, index) => (
                         <li key={index} className="flex items-start">
                           <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
                           <span className="text-foreground">{skill}</span>
@@ -285,9 +342,11 @@ const JobDetail = () => {
               {/* What We Offer */}
               {job.whatWeOffer && job.whatWeOffer.length > 0 && (
                 <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">🎁 Ce que nous offrons</h2>
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    🎁 {language === 'fr' ? 'Ce que nous offrons' : 'What we offer'}
+                  </h2>
                   <ul className="space-y-2">
-                    {job.whatWeOffer.map((offer, index) => (
+                    {getLocalizedArray(job.whatWeOffer, job.whatWeOfferEn).map((offer, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
                         <span className="text-foreground">{offer}</span>
@@ -299,11 +358,13 @@ const JobDetail = () => {
 
               {/* Application Instructions */}
               <div className="space-y-3">
-                <h2 className="text-2xl font-semibold text-foreground">📩 Comment postuler ?</h2>
+                <h2 className="text-2xl font-semibold text-foreground">
+                  📩 {language === 'fr' ? 'Comment postuler ?' : 'How to apply?'}
+                </h2>
                 {job.applicationEmail && (
                   <div className="space-y-2">
                     <p className="text-foreground">
-                      {job.applicationInstructions}
+                      {getLocalizedContent(job.applicationInstructions, job.applicationInstructionsEn)}
                     </p>
                     <p className="text-foreground">
                       👉 <strong>{job.applicationEmail}</strong>
@@ -311,7 +372,9 @@ const JobDetail = () => {
                   </div>
                 )}
                 {job.additionalInfo && (
-                  <p className="text-sm text-muted-foreground italic">{job.additionalInfo}</p>
+                  <p className="text-sm text-muted-foreground italic">
+                    {getLocalizedContent(job.additionalInfo, job.additionalInfoEn)}
+                  </p>
                 )}
               </div>
 
@@ -320,11 +383,15 @@ const JobDetail = () => {
                 <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Briefcase size={16} />
-                    <span><strong>Job Type:</strong> {job.jobType}</span>
+                    <span>
+                      <strong>{language === 'fr' ? 'Type de contrat :' : 'Job Type:'}</strong> {getLocalizedContent(job.jobType, job.jobTypeEn)}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <MapPin size={16} />
-                    <span><strong>Job Location:</strong> {job.location}</span>
+                    <span>
+                      <strong>{language === 'fr' ? 'Lieu :' : 'Job Location:'}</strong> {job.location}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -337,7 +404,7 @@ const JobDetail = () => {
                   className="inline-flex items-center gap-2"
                 >
                   <Share2 size={16} />
-                  Share this offer
+                  {language === 'fr' ? 'Partager cette offre' : 'Share this offer'}
                 </Button>
               </div>
             </div>
@@ -346,7 +413,7 @@ const JobDetail = () => {
             <div className="lg:col-span-4">
               <div className="sticky top-8">
                 <JobApplicationForm 
-                  jobTitle={job.title}
+                  jobTitle={getLocalizedContent(job.title, job.titleEn) || job.title}
                   onSubmit={(data) => {
                     console.log('Application submitted:', data);
                   }}

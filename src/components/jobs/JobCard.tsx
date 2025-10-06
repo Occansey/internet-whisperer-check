@@ -10,7 +10,7 @@ interface JobCardProps {
 }
 
 const JobCard = ({ job }: JobCardProps) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   return (
     <div className="bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-border">
@@ -22,13 +22,15 @@ const JobCard = ({ job }: JobCardProps) => {
             </Badge>
           ))}
         </div>
-        <h3 className="font-semibold text-foreground text-lg">{job.title}</h3>
+        <h3 className="font-semibold text-foreground text-lg">
+          {language === 'en' && job.titleEn ? job.titleEn : job.title}
+        </h3>
         <p className="text-sm text-muted-foreground">{job.location}</p>
         <Link 
           to={`/carrieres/offres/${job.slug}`}
           className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium"
         >
-          More Details
+          {language === 'fr' ? 'Plus de détails' : 'More Details'}
           <ChevronRight size={16} />
         </Link>
       </div>
