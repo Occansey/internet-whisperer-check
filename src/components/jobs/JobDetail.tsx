@@ -56,17 +56,22 @@ const JobDetail = () => {
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
+    try {
+      if (navigator.share) {
         await navigator.share({
           title: `${job.title} - ${job.company || 'Solio Group'}`,
           text: job.shortDescription,
           url: window.location.href,
         });
-      } catch (err) {
-        console.log('Error sharing:', err);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        toast({
+          title: "Link Copied",
+          description: "Job link has been copied to clipboard.",
+        });
       }
-    } else {
+    } catch (err) {
+      // If share fails or is cancelled, fallback to clipboard
       await navigator.clipboard.writeText(window.location.href);
       toast({
         title: "Link Copied",

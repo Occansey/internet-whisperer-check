@@ -19,6 +19,7 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     phone: "",
     coverLetter: "",
     cv: null as File | null,
+    otherDocuments: null as File | null,
     agreement: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +44,7 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         jobTitle,
         timestamp: new Date().toISOString(),
         cvFileName: formData.cv?.name,
+        otherDocumentsFileName: formData.otherDocuments?.name,
       };
       
       // Save to localStorage
@@ -70,6 +72,7 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         phone: "",
         coverLetter: "",
         cv: null,
+        otherDocuments: null,
         agreement: false,
       });
       
@@ -127,13 +130,12 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="coverLetter">Cover Letter *</Label>
+            <Label htmlFor="coverLetter">Cover Letter</Label>
             <Textarea 
               id="coverLetter" 
               value={formData.coverLetter} 
               onChange={(e) => handleInputChange('coverLetter', e.target.value)} 
-              required 
-              placeholder="Write your cover letter here..."
+              placeholder="Write your cover letter here (optional)..."
               rows={4}
             />
           </div>
@@ -152,6 +154,26 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             </p>
             <p className="text-xs text-muted-foreground">
               Allowed Type(s): .pdf, .doc, .docx
+            </p>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="otherDocuments">Other Documents</Label>
+            <Input 
+              id="otherDocuments" 
+              type="file" 
+              accept=".pdf,.doc,.docx" 
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setFormData(prev => ({ ...prev, otherDocuments: e.target.files![0] }));
+                }
+              }}
+            />
+            <p className="text-xs text-muted-foreground">
+              {formData.otherDocuments ? `Selected: ${formData.otherDocuments.name}` : "No file chosen"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Upload additional documents (optional) - .pdf, .doc, .docx
             </p>
           </div>
           
