@@ -119,6 +119,32 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       }
     }
     
+    // Validate other documents file
+    if (formData.otherDocuments) {
+      if (formData.otherDocuments.size > 10 * 1024 * 1024) {
+        toast({
+          title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
+          description: language === 'fr' 
+            ? "Les documents supplémentaires ne doivent pas dépasser 10MB"
+            : "Additional documents must not exceed 10MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(formData.otherDocuments.type)) {
+        toast({
+          title: language === 'fr' ? "Type de fichier invalide" : "Invalid File Type",
+          description: language === 'fr'
+            ? "Veuillez utiliser un fichier PDF, DOC ou DOCX"
+            : "Please use a PDF, DOC, or DOCX file",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+    
     setIsSubmitting(true);
     formRateLimiter.recordAttempt(identifier);
     
@@ -307,8 +333,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Types autorisés : .pdf, .doc, .docx'
-                : 'Allowed Type(s): .pdf, .doc, .docx'
+                ? 'Types autorisés : .pdf, .doc, .docx (max 10MB)'
+                : 'Allowed Type(s): .pdf, .doc, .docx (max 10MB)'
               }
             </p>
           </div>
@@ -335,8 +361,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx'
-                : 'Upload additional documents (optional) - .pdf, .doc, .docx'
+                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 10MB)'
+                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 10MB)'
               }
             </p>
           </div>
