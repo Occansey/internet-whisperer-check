@@ -130,7 +130,7 @@ const RejoignezNous = () => {
             </div>
           </div>
           
-          <div>
+          <div id="offres">
             <h2 className="text-2xl font-bold mb-6">{t('careers.jobs.title')}</h2>
             
             {mockJobs.filter(job => job.isActive).length > 0 ? (

@@ -87,7 +87,7 @@ const App = () => (
                 <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
                 <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
                 <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
-                <Route path="/job" element={<Navigate to="/carrieres/rejoignez-nous#Nos offres d'emploi" replace />} />
+                <Route path="/job" element={<Navigate to="/carrieres/rejoignez-nous#offres" replace />} />
                 
                 <Route path="/media" element={<Media />} />
                 <Route path="/all-submissions" element={<AllSubmissions />} />
