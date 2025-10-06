@@ -186,8 +186,13 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       });
       
       if (!response.ok) {
-        throw new Error('Failed to send email');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Server error:', errorData);
+        throw new Error(errorData.message || 'Failed to send email');
       }
+      
+      const result = await response.json();
+      console.log('Application submitted successfully:', result);
       
       // Call onSubmit if provided
       if (onSubmit) {

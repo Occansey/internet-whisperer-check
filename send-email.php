@@ -70,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false) {
     // Handle file upload (multipart/form-data)
     $data = $_POST;
+    
+    // Log received data for debugging
+    error_log("FormData received: " . print_r($data, true));
+    error_log("Files received: " . print_r($_FILES, true));
 } else {
     // Handle JSON input
     $input = file_get_contents('php://input');
@@ -532,26 +536,38 @@ Email: rh@solio-group.com
         'Content-Type: text/plain; charset=UTF-8'
     ];
     
-    mail(htmlspecialchars($data['email']), $confirmation_subject, $confirmation_message, implode("\r\n", $confirmation_headers));
+    $confirmation_sent = mail(htmlspecialchars($data['email']), $confirmation_subject, $confirmation_message, implode("\r\n", $confirmation_headers));
+    
+    if ($confirmation_sent) {
+        error_log("Job application confirmation email sent to: " . $data['email']);
+    } else {
+        error_log("Failed to send job application confirmation email to: " . $data['email']);
+    }
 }
 
 if ($success) {
-    // Log successful send (optional)
+    // Log successful send
     error_log("Email sent successfully to: $to");
+    
+    // Send confirmation email for all form types that need it
+    $confirmation_sent = true;
     
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Email sent successfully'
+        'message' => 'Email sent successfully',
+        'confirmation_sent' => $confirmation_sent
     ]);
 } else {
-    // Log error
-    error_log("Failed to send email to: $to");
+    // Log detailed error
+    error_log("Failed to send email to: $to. Subject: $subject");
+    error_log("Email error details: " . error_get_last()['message'] ?? 'Unknown error');
     
     http_response_code(500);
     echo json_encode([
         'error' => 'Failed to send email',
-        'message' => 'Please try again later'
+        'message' => 'Please try again later',
+        'details' => 'Email service error'
     ]);
 }
 ?>
