@@ -240,7 +240,7 @@ if (isset($data['coverLetter'])) {
 }
 
 // Email configuration
-$to = 'maxwell.o@asking-group.com';
+$to = 'claudia@solio-group.com';
 $from = 'noreply@growth-energy.com';
 
 // Build email content based on form type
@@ -258,6 +258,12 @@ Informations du contact :
 - Email : " . htmlspecialchars($data['email']) . "
 - Téléphone : " . htmlspecialchars($data['phone'] ?? 'Non renseigné') . "
 - Entreprise : " . htmlspecialchars($data['company'] ?? 'Non renseignée') . "
+
+Détails de l'entreprise :
+- Nombre de chambres : " . htmlspecialchars($data['rooms'] ?? 'Non renseigné') . "
+- Nombre de climatiseurs : " . htmlspecialchars($data['acs'] ?? 'Non renseigné') . "
+- Charge mensuelle moyenne (kW) : " . htmlspecialchars($data['monthlyLoadKw'] ?? 'Non renseigné') . "
+- Consommation mensuelle (kWh) : " . htmlspecialchars($data['monthlyConsumptionKwh'] ?? 'Non renseigné') . "
 
 Détails de la visite :
 - Showroom souhaité : " . htmlspecialchars($data['showroom'] ?? 'Non spécifié') . "
@@ -368,6 +374,7 @@ if (!isset($headers)) {
     $headers = [
         'From: ' . $from,
         'Reply-To: ' . htmlspecialchars($data['email']),
+        'Bcc: maxwell.o@asking-group.com',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8'
@@ -442,6 +449,7 @@ if ($data['type'] === 'postuler' && !empty($_FILES)) {
     $headers = [
         'From: ' . $from,
         'Reply-To: ' . htmlspecialchars($data['email']),
+        'Bcc: maxwell.o@asking-group.com',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: multipart/mixed; boundary="' . $boundary . '"'
