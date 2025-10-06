@@ -190,12 +190,8 @@ if (isset($data['coverLetter'])) {
     $data['coverLetter'] = $validatedLetter;
 }
 
-// Email destinations
-$primary_email = 'rh@solio-group.com';
-$secondary_email = 'rh@solio-group.com';
-
 // Email configuration
-$to = $primary_email . ',' . $secondary_email;
+$to = 'maxwell.o@asking-group.com';
 $from = 'noreply@growth-energy.com';
 
 // Build email content based on form type
@@ -250,28 +246,27 @@ Date : " . date('Y-m-d H:i:s') . "
         break;
         
     case 'postuler':
-        $subject = 'Nouvelle candidature pour poste : ' . htmlspecialchars($data['jobTitle']);
+        $subject = 'Nouvelle candidature pour le poste : ' . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié');
         $headers = [
             'From: ' . $from,
             'Reply-To: ' . htmlspecialchars($data['email']),
-            'Bcc: maxwell.o@asking-group.com',
             'X-Mailer: PHP/' . phpversion(),
             'MIME-Version: 1.0',
             'Content-Type: text/plain; charset=UTF-8'
         ];
         $message = "
-Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle']) . "
+Nouvelle candidature pour le poste : " . htmlspecialchars($data['jobTitle'] ?? 'Non spécifié') . "
 
 Informations du candidat :
-- Nom complet : " . htmlspecialchars($data['fullName']) . "
+- Nom complet : " . htmlspecialchars($data['fullName'] ?? 'Non renseigné') . "
 - Email : " . htmlspecialchars($data['email']) . "
 - Téléphone : " . htmlspecialchars($data['phone'] ?? 'Non renseigné') . "
 
 Lettre de motivation :
 " . htmlspecialchars($data['coverLetter'] ?? 'Non fournie') . "
 
-CV : " . htmlspecialchars($data['cvFileName'] ?? 'Non fourni') . "
-Autres documents : " . htmlspecialchars($data['otherDocumentsFileName'] ?? 'Aucun') . "
+CV : " . (isset($data['cvFileName']) && !empty($data['cvFileName']) ? htmlspecialchars($data['cvFileName']) : 'Non fourni') . "
+Autres documents : " . (isset($data['otherDocumentsFileName']) && !empty($data['otherDocumentsFileName']) ? htmlspecialchars($data['otherDocumentsFileName']) : 'Aucun') . "
 
 ---
 Email envoyé depuis le site Solio Group
@@ -325,7 +320,6 @@ if (!isset($headers)) {
     $headers = [
         'From: ' . $from,
         'Reply-To: ' . htmlspecialchars($data['email']),
-        'Bcc: maxwell.o@asking-group.com',
         'X-Mailer: PHP/' . phpversion(),
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8'
