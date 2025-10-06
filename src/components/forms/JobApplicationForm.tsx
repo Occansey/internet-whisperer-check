@@ -7,6 +7,9 @@ import { toast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslation } from "@/contexts/TranslationContext";
+import { jobApplicationSchema, validateAndSanitize, encodeForUrl } from "@/utils/validation";
+import { formRateLimiter } from "@/utils/rateLimiter";
+import { isHoneypotTriggered, CSRFTokenManager } from "@/utils/securityHeaders";
 
 interface JobApplicationFormProps {
   jobTitle: string;
@@ -23,8 +26,10 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     cv: null as File | null,
     otherDocuments: null as File | null,
     agreement: false,
+    website: "", // Honeypot field
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -38,32 +43,91 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setValidationErrors({});
     
-    if (!formData.agreement) {
+    // Check honeypot
+    if (isHoneypotTriggered(formData)) {
+      console.warn('Bot detected via honeypot');
+      return;
+    }
+    
+    // Check rate limiting
+    const identifier = formData.email.toLowerCase();
+    if (formRateLimiter.isRateLimited(identifier)) {
+      const timeLeft = formRateLimiter.getTimeUntilUnblock(identifier);
+      const minutes = timeLeft ? Math.ceil(timeLeft / 60000) : 60;
+      
       toast({
-        title: language === 'fr' ? "Accord requis" : "Agreement Required",
-        description: language === 'fr' 
-          ? "Veuillez accepter les conditions générales."
-          : "Please agree to the terms and conditions.",
+        title: language === 'fr' ? "Trop de tentatives" : "Too Many Attempts",
+        description: language === 'fr'
+          ? `Veuillez réessayer dans ${minutes} minutes.`
+          : `Please try again in ${minutes} minutes.`,
         variant: "destructive",
       });
       return;
     }
     
+    // Validate form data
+    const dataToValidate = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      coverLetter: formData.coverLetter,
+      jobTitle,
+      cvFileName: formData.cv?.name,
+      otherDocumentsFileName: formData.otherDocuments?.name,
+      agreement: formData.agreement,
+      language: language,
+    };
+    
+    const validation = validateAndSanitize(jobApplicationSchema, dataToValidate);
+    
+    if (validation.success === false) {
+      setValidationErrors(validation.errors);
+      const firstError = Object.values(validation.errors)[0];
+      toast({
+        title: language === 'fr' ? "Erreur de validation" : "Validation Error",
+        description: String(firstError) || (language === 'fr' ? "Veuillez vérifier les données du formulaire" : "Please check the form data"),
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate CV file
+    if (formData.cv) {
+      if (formData.cv.size > 10 * 1024 * 1024) {
+        toast({
+          title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
+          description: language === 'fr' 
+            ? "Le CV ne doit pas dépasser 10MB"
+            : "CV must not exceed 10MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(formData.cv.type)) {
+        toast({
+          title: language === 'fr' ? "Type de fichier invalide" : "Invalid File Type",
+          description: language === 'fr'
+            ? "Veuillez utiliser un fichier PDF, DOC ou DOCX"
+            : "Please use a PDF, DOC, or DOCX file",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+    
     setIsSubmitting(true);
+    formRateLimiter.recordAttempt(identifier);
     
     try {
       const submissionData = {
         type: 'postuler',
-        fullName: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        coverLetter: formData.coverLetter,
-        jobTitle,
-        cvFileName: formData.cv?.name,
-        otherDocumentsFileName: formData.otherDocuments?.name,
-        language: language,
+        ...validation.data,
         timestamp: new Date().toISOString(),
+        csrfToken: CSRFTokenManager.getToken(),
       };
       
       // Save to localStorage
@@ -105,7 +169,9 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         cv: null,
         otherDocuments: null,
         agreement: false,
+        website: "",
       });
+      setValidationErrors({});
       
       // Reset file inputs
       const cvInput = document.getElementById('cv') as HTMLInputElement;
@@ -145,7 +211,24 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               value={formData.fullName} 
               onChange={(e) => handleInputChange('fullName', e.target.value)} 
               required 
+              maxLength={100}
               placeholder={language === 'fr' ? 'Entrez votre nom complet' : 'Enter your full name'}
+              className={validationErrors.fullName ? 'border-red-500' : ''}
+            />
+            {validationErrors.fullName && (
+              <p className="text-xs text-red-500">{validationErrors.fullName}</p>
+            )}
+            {/* Honeypot field - hidden from users */}
+            <input 
+              type="text" 
+              name="website" 
+              id="website" 
+              value={formData.website}
+              onChange={(e) => handleInputChange('website', e.target.value)}
+              autoComplete="off" 
+              tabIndex={-1}
+              style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+              aria-hidden="true"
             />
           </div>
           
@@ -157,8 +240,13 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               value={formData.email} 
               onChange={(e) => handleInputChange('email', e.target.value)} 
               required 
+              maxLength={255}
               placeholder="votre.email@exemple.com"
+              className={validationErrors.email ? 'border-red-500' : ''}
             />
+            {validationErrors.email && (
+              <p className="text-xs text-red-500">{validationErrors.email}</p>
+            )}
           </div>
           
           <div className="space-y-2">
@@ -170,8 +258,13 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               value={formData.phone} 
               onChange={(e) => handleInputChange('phone', e.target.value)} 
               required
+              maxLength={20}
               placeholder="+254 712 345 678"
+              className={validationErrors.phone ? 'border-red-500' : ''}
             />
+            {validationErrors.phone && (
+              <p className="text-xs text-red-500">{validationErrors.phone}</p>
+            )}
           </div>
           
           <div className="space-y-2">
@@ -182,12 +275,17 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
               id="coverLetter" 
               value={formData.coverLetter} 
               onChange={(e) => handleInputChange('coverLetter', e.target.value)} 
+              maxLength={1000}
               placeholder={language === 'fr' 
                 ? 'Écrivez votre lettre de motivation ici (optionnel)...'
                 : 'Write your cover letter here (optional)...'
               }
               rows={4}
+              className={validationErrors.coverLetter ? 'border-red-500' : ''}
             />
+            {validationErrors.coverLetter && (
+              <p className="text-xs text-red-500">{validationErrors.coverLetter}</p>
+            )}
           </div>
           
           <div className="space-y-2">

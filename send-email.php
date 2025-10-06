@@ -1,8 +1,57 @@
 <?php
+// Security headers
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: *'); // In production, replace * with specific domain
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+
+// Rate limiting using session
+session_start();
+
+// Initialize rate limiting
+if (!isset($_SESSION['rate_limit'])) {
+    $_SESSION['rate_limit'] = [
+        'count' => 0,
+        'first_attempt' => time(),
+        'blocked_until' => 0
+    ];
+}
+
+// Check if blocked
+if ($_SESSION['rate_limit']['blocked_until'] > time()) {
+    http_response_code(429);
+    echo json_encode([
+        'error' => 'Too many requests',
+        'retry_after' => $_SESSION['rate_limit']['blocked_until'] - time()
+    ]);
+    exit();
+}
+
+// Reset if window expired (15 minutes)
+if (time() - $_SESSION['rate_limit']['first_attempt'] > 900) {
+    $_SESSION['rate_limit'] = [
+        'count' => 0,
+        'first_attempt' => time(),
+        'blocked_until' => 0
+    ];
+}
+
+// Increment request count
+$_SESSION['rate_limit']['count']++;
+
+// Block if too many attempts (5 per 15 minutes)
+if ($_SESSION['rate_limit']['count'] > 5) {
+    $_SESSION['rate_limit']['blocked_until'] = time() + 3600; // Block for 1 hour
+    http_response_code(429);
+    echo json_encode([
+        'error' => 'Too many requests. Please try again later.',
+        'retry_after' => 3600
+    ]);
+    exit();
+}
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -25,6 +74,120 @@ if (!$data) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid JSON data']);
     exit();
+}
+
+// Check honeypot field
+if (isset($data['website']) && !empty($data['website'])) {
+    // Bot detected - silent rejection
+    http_response_code(200);
+    echo json_encode(['success' => true, 'message' => 'Thank you']);
+    exit();
+}
+
+// Input validation and sanitization
+function validateEmail($email) {
+    $email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
+    if (!$email || strlen($email) > 255) {
+        return false;
+    }
+    return strtolower($email);
+}
+
+function validateName($name) {
+    $name = trim($name);
+    if (strlen($name) < 1 || strlen($name) > 100) {
+        return false;
+    }
+    // Allow only letters, spaces, hyphens, apostrophes, and accented characters
+    if (!preg_match("/^[a-zA-ZÀ-ÿ\\s\\-']+$/u", $name)) {
+        return false;
+    }
+    return htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+}
+
+function validatePhone($phone) {
+    $phone = trim($phone);
+    if (empty($phone)) return '';
+    if (strlen($phone) < 8 || strlen($phone) > 20) {
+        return false;
+    }
+    // Allow only digits, spaces, hyphens, plus, and parentheses
+    if (!preg_match("/^[\\d\\s\\-\\+\\(\\)]+$/", $phone)) {
+        return false;
+    }
+    return htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+}
+
+function validateText($text, $maxLength = 5000) {
+    $text = trim($text);
+    if (strlen($text) > $maxLength) {
+        return false;
+    }
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+
+// Validate required fields based on type
+if (!isset($data['type']) || !in_array($data['type'], ['showroom-contact', 'candidature', 'postuler', 'inscription', 'contact'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid form type']);
+    exit();
+}
+
+// Validate email
+if (!isset($data['email']) || !($validatedEmail = validateEmail($data['email']))) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid email address']);
+    exit();
+}
+$data['email'] = $validatedEmail;
+
+// Validate name
+if ($data['type'] === 'postuler') {
+    if (!isset($data['fullName']) || !($validatedName = validateName($data['fullName']))) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid name']);
+        exit();
+    }
+    $data['fullName'] = $validatedName;
+} else {
+    if (!isset($data['name']) || !($validatedName = validateName($data['name']))) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid name']);
+        exit();
+    }
+    $data['name'] = $validatedName;
+}
+
+// Validate phone if provided
+if (isset($data['phone'])) {
+    $validatedPhone = validatePhone($data['phone']);
+    if ($validatedPhone === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid phone number']);
+        exit();
+    }
+    $data['phone'] = $validatedPhone;
+}
+
+// Validate message/coverLetter
+if (isset($data['message'])) {
+    $validatedMessage = validateText($data['message'], 5000);
+    if ($validatedMessage === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Message too long']);
+        exit();
+    }
+    $data['message'] = $validatedMessage;
+}
+
+if (isset($data['coverLetter'])) {
+    $validatedLetter = validateText($data['coverLetter'], 1000);
+    if ($validatedLetter === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Cover letter too long']);
+        exit();
+    }
+    $data['coverLetter'] = $validatedLetter;
 }
 
 // Email destinations
