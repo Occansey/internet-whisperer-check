@@ -43,6 +43,15 @@ export function CookieConsent() {
         setPreferences(JSON.parse(savedPrefs));
       }
     }
+
+    // Listen for cookie settings event from Footer
+    const handleOpenSettings = () => {
+      setShowBanner(true);
+      setShowSettings(true);
+    };
+
+    window.addEventListener('openCookieSettings', handleOpenSettings);
+    return () => window.removeEventListener('openCookieSettings', handleOpenSettings);
   }, []);
 
   const saveConsent = (prefs: CookiePreferences) => {
