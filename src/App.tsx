@@ -40,6 +40,7 @@ import ZanzibarShowroom from "./pages/showrooms/Showrooms";
 import Showrooms from "./pages/showrooms/Showrooms";
 import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
 import TermsOfService from "./pages/legal/TermsOfService";
+import ScrollToHashRedirect from "./components/common/ScrollToHashRedirect";
 
 const queryClient = new QueryClient();
 
@@ -87,7 +88,7 @@ const App = () => (
                 <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
                 <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
                 <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
-                <Route path="/job" element={<Navigate to="/carrieres/rejoignez-nous#offres" replace />} />
+                <Route path="/job" element={<ScrollToHashRedirect to="/carrieres/rejoignez-nous#offres" />} />
                 
                 <Route path="/media" element={<Media />} />
                 <Route path="/all-submissions" element={<AllSubmissions />} />
