@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { TranslationProvider } from "./contexts/TranslationContext";
@@ -87,6 +87,7 @@ const App = () => (
                 <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
                 <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
                 <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
+                <Route path="/job" element={<Navigate to="/carrieres/rejoignez-nous#Nos offres d'emploi" replace />} />
                 
                 <Route path="/media" element={<Media />} />
                 <Route path="/all-submissions" element={<AllSubmissions />} />
