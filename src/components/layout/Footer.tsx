@@ -1,10 +1,9 @@
-
 import { Link } from "react-router-dom";
 import { Linkedin } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8" role="contentinfo">
@@ -52,16 +51,29 @@ const Footer = () => {
           
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('footer.followUs.title')}</h3>
-            <div className="flex space-x-3">
-              <a 
-                href="https://www.linkedin.com/company/solio-group/?originalSubdomain=fr" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="bg-blue-700 p-2 rounded-full hover:bg-blue-600 transition-colors"
-                aria-label={t('footer.followUs.linkedin')}
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+            <div className="flex flex-col space-y-4">
+              <div className="flex space-x-3">
+                <a 
+                  href="https://www.linkedin.com/company/solio-group/?originalSubdomain=fr" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-blue-700 p-2 rounded-full hover:bg-blue-600 transition-colors"
+                  aria-label={t('footer.followUs.linkedin')}
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+              </div>
+              <nav aria-label="Liens légaux" className="mt-4">
+                <h4 className="text-sm font-semibold mb-2">{language === 'fr' ? 'Informations légales' : 'Legal'}</h4>
+                <ul className="space-y-1 text-sm">
+                  <li><Link to="/legal/privacy-policy" className="text-gray-400 hover:text-white transition-colors">{language === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy'}</Link></li>
+                  <li><Link to="/legal/terms-of-service" className="text-gray-400 hover:text-white transition-colors">{language === 'fr' ? 'Conditions d\'utilisation' : 'Terms of Service'}</Link></li>
+                  <li><button onClick={() => {
+                    localStorage.removeItem('solio_cookie_consent');
+                    window.location.reload();
+                  }} className="text-gray-400 hover:text-white transition-colors">{language === 'fr' ? 'Paramètres des cookies' : 'Cookie Settings'}</button></li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

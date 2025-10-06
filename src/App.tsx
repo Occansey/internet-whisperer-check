@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { TranslationProvider } from "./contexts/TranslationContext";
+import CookieConsent from "./components/legal/CookieConsent";
 import Index from "./pages/Index";
 import Contact from "./pages/Contact";
 import Presentation from "./pages/Presentation";
@@ -34,8 +36,10 @@ import NotFound from "./pages/NotFound";
 import Media from "./pages/Media";
 import Presence from "./pages/Presence";
 import AllSubmissions from "./pages/AllSubmissions";
-import ZanzibarShowroom from "./pages/showrooms/ZanzibarShowroom";
+import ZanzibarShowroom from "./pages/showrooms/Showrooms";
 import Showrooms from "./pages/showrooms/Showrooms";
+import PrivacyPolicy from "./pages/legal/PrivacyPolicy";
+import TermsOfService from "./pages/legal/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -43,54 +47,58 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/presentation" element={<Presentation />} />
-              <Route path="/mission-vision" element={<MissionVision />} />
-              <Route path="/certifications" element={<Certifications />} />
-              <Route path="/culture" element={<Culture />} />
-              <Route path="/activites" element={<Activites />} />
-              <Route path="/presence" element={<Presence />} />
-              
-              <Route path="/filiales" element={<Filiales />} />
-              <Route path="/nos-filiales" element={<NosFiliales />} />
-              <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
-              <Route path="/filiales/asking" element={<AskingPage />} />
-              <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
-              <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
-              
-              <Route path="/showrooms" element={<Showrooms />} />
-              <Route path="/showrooms/zanzibar" element={<ZanzibarShowroom />} />
-              
-              <Route path="/gouvernance/direction" element={<Direction />} />
-              <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
-              
-              <Route path="/actualites/communiques" element={<Communiques />} />
-              <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
-              <Route path="/actualites/evenements" element={<Evenements />} />
-              {/* Support both numeric IDs and slugs for events */}
-              <Route path="/actualites/evenements/:id" element={<EventDetail />} />
-              <Route path="/actualites/projets" element={<Projets />} />
-              {/* Support both numeric IDs and slugs for projects */}
-              <Route path="/actualites/projets/:id" element={<ProjectDetail />} />
-              <Route path="/actualites/articles/:id" element={<ArticleDetail />} />
-              
-              <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
-              <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
-              <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
-              
-              <Route path="/media" element={<Media />} />
-              <Route path="/all-submissions" element={<AllSubmissions />} />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <TranslationProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <CookieConsent />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/presentation" element={<Presentation />} />
+                <Route path="/mission-vision" element={<MissionVision />} />
+                <Route path="/certifications" element={<Certifications />} />
+                <Route path="/culture" element={<Culture />} />
+                <Route path="/activites" element={<Activites />} />
+                <Route path="/presence" element={<Presence />} />
+                
+                <Route path="/filiales" element={<Filiales />} />
+                <Route path="/nos-filiales" element={<NosFiliales />} />
+                <Route path="/filiales/growth-energy" element={<GrowthEnergyPage />} />
+                <Route path="/filiales/asking" element={<AskingPage />} />
+                <Route path="/filiales/mfg-technologies" element={<MfgPage />} />
+                <Route path="/filiales/gem-e-mobility" element={<GemPage />} />
+                
+                <Route path="/showrooms" element={<Showrooms />} />
+                <Route path="/showrooms/zanzibar" element={<ZanzibarShowroom />} />
+                
+                <Route path="/gouvernance/direction" element={<Direction />} />
+                <Route path="/gouvernance/comite-executif" element={<ComiteExecutif />} />
+                
+                <Route path="/actualites/communiques" element={<Communiques />} />
+                <Route path="/actualites/communiques/:id" element={<ArticleDetail />} />
+                <Route path="/actualites/evenements" element={<Evenements />} />
+                <Route path="/actualites/evenements/:id" element={<EventDetail />} />
+                <Route path="/actualites/projets" element={<Projets />} />
+                <Route path="/actualites/projets/:id" element={<ProjectDetail />} />
+                <Route path="/actualites/articles/:id" element={<ArticleDetail />} />
+                
+                <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
+                <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
+                <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
+                
+                <Route path="/media" element={<Media />} />
+                <Route path="/all-submissions" element={<AllSubmissions />} />
+                
+                <Route path="/legal/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/legal/terms-of-service" element={<TermsOfService />} />
+                
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </TranslationProvider>
       </ThemeProvider>
     </HelmetProvider>
   </QueryClientProvider>
