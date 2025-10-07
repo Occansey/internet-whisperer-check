@@ -40,26 +40,30 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for email submission
-      const formData = {
-        name: `${prenom} ${nom}`, // Combine first and last name
+      // Prepare data for email submission (basic PHP endpoint)
+      const payload = {
+        prenom,
+        nom,
         email,
-        phone: telephone,
-        message: `${t('contact.form.subject')}: ${sujet}\n\n${t('contact.form.message')}: ${message}`, // Include subject in message
-        formType: "contact",
-        recipient: "contact@solio-group.com",
-        hasCv: false,
+        telephone,
+        sujet,
+        message,
       };
-      
-      // Save to localStorage
-      saveSubmission(formData);
-      
-      // In a real implementation, this would send to your backend API
-      console.log("Form data to be sent to contact@solio-group.com:", formData);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
+      // Save to localStorage (optional)
+      saveSubmission(payload);
+
+      const res = await fetch('/contact-basic.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(err.error || 'Failed to send');
+      }
+
       toast({
         title: t('contact.form.success.title'),
         description: t('contact.form.success.description')
