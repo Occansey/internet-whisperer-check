@@ -151,13 +151,18 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     try {
       // Prepare FormData for file upload
       const formDataToSend = new FormData();
-      formDataToSend.append('type', 'postuler');
-      formDataToSend.append('fullName', formData.fullName);
+      
+      // Split fullName into prenom and nom
+      const nameParts = formData.fullName.trim().split(' ');
+      const prenom = nameParts[0] || '';
+      const nom = nameParts.slice(1).join(' ') || nameParts[0] || '';
+      
+      formDataToSend.append('prenom', prenom);
+      formDataToSend.append('nom', nom);
       formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('coverLetter', formData.coverLetter);
+      formDataToSend.append('telephone', formData.phone);
+      formDataToSend.append('message', formData.coverLetter);
       formDataToSend.append('jobTitle', jobTitle);
-      formDataToSend.append('website', formData.website);
       formDataToSend.append('language', language);
       
       // Append files if they exist
@@ -165,7 +170,7 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         formDataToSend.append('cv', formData.cv);
       }
       if (formData.otherDocuments) {
-        formDataToSend.append('otherDocuments', formData.otherDocuments);
+        formDataToSend.append('autreDocument', formData.otherDocuments);
       }
 
       // Save to localStorage (without files)
@@ -180,9 +185,9 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
       // Send to PHP endpoint with FormData
-      const response = await fetch('https://growth-energy.com/send-email.php', {
+      const response = await fetch('/job-application-basic.php', {
         method: 'POST',
-        body: formDataToSend, // Send FormData instead of JSON
+        body: formDataToSend,
       });
       
       if (!response.ok) {
