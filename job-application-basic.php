@@ -1,5 +1,21 @@
 <?php
 // Basic job application email handler with PDF attachments
+
+// Error handling to always return JSON
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
+// Catch any PHP errors and return as JSON
+register_shutdown_function(function() {
+  $error = error_get_last();
+  if ($error !== null && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+    header('Content-Type: application/json; charset=UTF-8');
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'Server error: ' . $error['message']]);
+    exit;
+  }
+});
+
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
