@@ -190,13 +190,32 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         body: formDataToSend,
       });
       
+      // Check response status first
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Server error response:', response.status, errorData);
+        const responseText = await response.text();
+        console.error('Server error response:', response.status, responseText);
+        
+        // Try to parse as JSON, fallback to text
+        let errorData: any = {};
+        try {
+          errorData = JSON.parse(responseText);
+        } catch {
+          // If not JSON, show first 200 chars of HTML/text
+          throw new Error(`Server error (${response.status}): ${responseText.substring(0, 200)}`);
+        }
         throw new Error(errorData.error || errorData.message || 'Failed to send email');
       }
       
-      const result = await response.json();
+      // Parse successful response
+      const responseText = await response.text();
+      let result: any;
+      try {
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse response as JSON:', responseText);
+        throw new Error('Invalid server response: Expected JSON but received HTML or other format. This usually means the PHP endpoint is not accessible.');
+      }
+      
       console.log('Application submitted successfully:', result);
       
       if (!result.success) {
