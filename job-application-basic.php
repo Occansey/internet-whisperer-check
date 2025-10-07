@@ -102,11 +102,12 @@ if (isset($_FILES['autreDocument']) && $_FILES['autreDocument']['error'] === UPL
 $message_body .= "--{$boundary}--";
 
 // Send email
-$sent = @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message_body, implode("\r\n", $headers));
+$sent = mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message_body, implode("\r\n", $headers));
 
 if ($sent) {
   echo json_encode(['success' => true]);
 } else {
+  error_log('Mail function failed for job application: ' . $jobTitle);
   http_response_code(500);
-  echo json_encode(['success' => false, 'error' => 'Failed to send email']);
+  echo json_encode(['success' => false, 'error' => 'Failed to send email. Please contact support.']);
 }

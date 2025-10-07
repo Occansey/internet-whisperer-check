@@ -192,12 +192,16 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('Server error:', errorData);
-        throw new Error(errorData.message || 'Failed to send email');
+        console.error('Server error response:', response.status, errorData);
+        throw new Error(errorData.error || errorData.message || 'Failed to send email');
       }
       
       const result = await response.json();
       console.log('Application submitted successfully:', result);
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Unknown error occurred');
+      }
       
       // Call onSubmit if provided
       if (onSubmit) {
@@ -237,11 +241,12 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       
     } catch (error) {
       console.error('Error submitting application:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       toast({
         title: language === 'fr' ? "Erreur" : "Error",
         description: language === 'fr'
-          ? "Une erreur s'est produite lors de l'envoi de votre candidature. Veuillez réessayer."
-          : "There was an error submitting your application. Please try again.",
+          ? `Une erreur s'est produite: ${errorMessage}. Veuillez réessayer.`
+          : `An error occurred: ${errorMessage}. Please try again.`,
         variant: "destructive",
       });
     } finally {
