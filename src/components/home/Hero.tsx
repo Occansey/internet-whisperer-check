@@ -1,102 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useTranslation } from "@/contexts/TranslationContext";
 
 const Hero = () => {
-  const playerRef = useRef<HTMLDivElement>(null);
-  const playerInstanceRef = useRef<any>(null);
-  const isMobile = useIsMobile();
-  const [hasRefreshed, setHasRefreshed] = useState(false);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    // Check if this is the first visit to homepage
-    const hasVisitedHomepage = localStorage.getItem('visited-homepage');
-    const isFirstVisit = !hasVisitedHomepage;
-
-    // Load YouTube IFrame API
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    }
-
-    // Define the callback function
-    window.onYouTubeIframeAPIReady = () => {
-      if (playerRef.current && window.YT && !playerInstanceRef.current) {
-        playerInstanceRef.current = new window.YT.Player(playerRef.current, {
-          videoId: 'qsLOG7ipHZg',
-          playerVars: {
-            autoplay: 1,
-            mute: 1,
-            controls: 0,
-            rel: 0,
-            modestbranding: 1,
-            playsinline: 1,
-            start: 1,
-            loop: 1,
-            playlist: 'qsLOG7ipHZg'
-          },
-          events: {
-            onReady: function (event: any) {
-              // Multiple attempts to ensure autoplay on mobile
-              const attemptPlay = () => {
-                event.target.mute();
-                event.target.playVideo();
-              };
-              
-              attemptPlay();
-              
-              // Additional play attempts for mobile
-              if (isMobile) {
-                setTimeout(attemptPlay, 100);
-                setTimeout(attemptPlay, 500);
-                
-                // Refresh video once on mobile and first visit
-                if (isFirstVisit && !hasRefreshed) {
-                  setTimeout(() => {
-                    event.target.seekTo(2);
-                    event.target.playVideo();
-                    setHasRefreshed(true);
-                  }, 1000);
-                }
-              }
-            },
-            onStateChange: function (event: any) {
-              // Remove the loop handling code since we're using YouTube's native loop
-              // Force play on mobile if video gets paused
-              if (isMobile && event.data === window.YT?.PlayerState.PAUSED) {
-                setTimeout(() => {
-                  event.target.playVideo();
-                }, 100);
-              }
-            }
-          }
-        });
-      }
-    };
-
-    // Mark homepage as visited
-    if (isFirstVisit) {
-      localStorage.setItem('visited-homepage', 'true');
-    }
-
-    // If API is already loaded, initialize immediately
-    if (window.YT && window.YT.Player) {
-      window.onYouTubeIframeAPIReady();
-    }
-
-    return () => {
-      // Cleanup
-      if (playerInstanceRef.current && playerInstanceRef.current.destroy) {
-        playerInstanceRef.current.destroy();
-        playerInstanceRef.current = null;
-      }
-    };
-  }, [isMobile, hasRefreshed]);
 
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-solio-blue to-blue-900 text-white overflow-hidden">
@@ -144,14 +51,18 @@ const Hero = () => {
       <div className="w-full h-96 md:h-[500px] overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10"></div>
         
-        <div 
-          ref={playerRef}
+        <iframe
           className="w-full h-full"
+          src="https://www.youtube.com/embed/qsLOG7ipHZg?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&start=1&loop=1&playlist=qsLOG7ipHZg"
+          title="Solio Group Video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           style={{
             width: '100%',
             height: '100%',
+            pointerEvents: 'none'
           }}
-        ></div>
+        />
       </div>
       
       {/* Content below video */}
