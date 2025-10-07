@@ -95,12 +95,12 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     
     // Validate CV file
     if (formData.cv) {
-      if (formData.cv.size > 10 * 1024 * 1024) {
+      if (formData.cv.size > 7 * 1024 * 1024) {
         toast({
           title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
           description: language === 'fr' 
-            ? "Le CV ne doit pas dépasser 10MB"
-            : "CV must not exceed 10MB",
+            ? "Le CV ne doit pas dépasser 7MB"
+            : "CV must not exceed 7MB",
           variant: "destructive",
         });
         return;
@@ -121,12 +121,12 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     
     // Validate other documents file
     if (formData.otherDocuments) {
-      if (formData.otherDocuments.size > 10 * 1024 * 1024) {
+      if (formData.otherDocuments.size > 7 * 1024 * 1024) {
         toast({
           title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
           description: language === 'fr' 
-            ? "Les documents supplémentaires ne doivent pas dépasser 10MB"
-            : "Additional documents must not exceed 10MB",
+            ? "Les documents supplémentaires ne doivent pas dépasser 7MB"
+            : "Additional documents must not exceed 7MB",
           variant: "destructive",
         });
         return;
@@ -144,7 +144,19 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         return;
       }
     }
-    
+    // Validate combined size (keep under ~18MB raw to avoid email limits after base64)
+    const combinedSize = (formData.cv?.size || 0) + (formData.otherDocuments?.size || 0);
+    if (combinedSize > 18 * 1024 * 1024) {
+      toast({
+        title: language === 'fr' ? 'Pièces jointes trop volumineuses' : 'Attachments too large',
+        description: language === 'fr'
+          ? 'La taille totale des fichiers ne doit pas dépasser ~18MB'
+          : 'Total file size must not exceed ~18MB',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     formRateLimiter.recordAttempt(identifier);
     
@@ -387,8 +399,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Types autorisés : .pdf, .doc, .docx (max 10MB)'
-                : 'Allowed Type(s): .pdf, .doc, .docx (max 10MB)'
+                ? 'Types autorisés : .pdf, .doc, .docx (max 7MB)'
+                : 'Allowed Type(s): .pdf, .doc, .docx (max 7MB)'
               }
             </p>
           </div>
@@ -415,8 +427,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 10MB)'
-                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 10MB)'
+                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 7MB)'
+                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 7MB)'
               }
             </p>
           </div>
