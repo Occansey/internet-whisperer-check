@@ -197,8 +197,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
       // Send to PHP endpoint with FormData
-      // Use relative path so it works when the app is hosted under a subpath
-      const response = await fetch('job-application-basic.php', {
+      // Use absolute root path so PHP can live outside the built dist folder
+      const response = await fetch('/job-application-basic.php', {
         method: 'POST',
         body: formDataToSend,
       });
