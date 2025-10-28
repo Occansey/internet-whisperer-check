@@ -142,7 +142,7 @@ if ($total_size > $MAX_TOTAL_SIZE) {
   exit;
 }
 
-$to = 'claudia@solio-group.com';
+$to = 'rh@solio-group.com';
 $from = 'noreply@solio-group.com';
 $subject = 'Nouvelle candidature: ' . $jobTitle;
 
