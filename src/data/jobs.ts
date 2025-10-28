@@ -346,6 +346,185 @@ export const mockJobs: Job[] = [
     applicationInstructionsEn: 'Send your CV and cover letter with subject: Application – Finance & Admin Manager Kenya',
     isActive: true,
     tags: ['Growth Energy', 'Finance', 'Administration', 'Africa', 'Kenya']
+  },
+  {
+    id: '3',
+    slug: 'accountant-operations-officer-burundi',
+    title: 'Accountant & Operations Officer',
+    titleEn: 'Accountant & Operations Officer',
+    company: 'GEM E-Mobility S.P.R.L.',
+    companyEn: 'GEM E-Mobility S.P.R.L.',
+    subsidiary: 'GEM E-Mobility',
+    department: 'Finance',
+    departmentEn: 'Finance',
+    location: 'Bujumbura, Burundi',
+    jobType: 'CDI / Temps plein',
+    jobTypeEn: 'Permanent / Full-time',
+    salaryRange: 'Selon profil',
+    salaryRangeEn: 'According to profile',
+    postedDate: '2025-01-28',
+    shortDescription: 'Gérer la comptabilité, l\'administration et les opérations quotidiennes du bureau de GEM E-Mobility à Bujumbura, sous la supervision de GEFI SEZ Solutions Limited.',
+    shortDescriptionEn: 'Manage accounting, administration, and daily operations of GEM E-Mobility\'s office in Bujumbura, under the supervision of GEFI SEZ Solutions Limited.',
+    companyDescription: 'Solio Group est un groupe international français opérant dans les secteurs de l\'énergie, de la mobilité électrique et du digital. À travers ses filiales en Europe, en Afrique et au Canada, le Groupe conçoit, finance et déploie des projets structurants favorisant la transition énergétique et la croissance durable sur le continent africain.',
+    companyDescriptionEn: 'Solio Group is an international French group operating in the energy, electric mobility, and digital sectors. Through its subsidiaries in Europe, Africa, and Canada, the Group designs, finances, and deploys structural projects promoting energy transition and sustainable growth on the African continent.',
+    missionDescription: 'GEM E-Mobility S.P.R.L., filiale de Solio Group, opère sous la supervision directe de GEFI SEZ Solutions Limited. Sa mission est de déployer les solutions d\'ingénierie, d\'approvisionnement et de construction (EPC) du Groupe pour les projets solaires et énergétiques, ainsi que d\'assurer la distribution et l\'exploitation des stations solaires et infrastructures de recharge électrique au Burundi.',
+    missionDescriptionEn: 'GEM E-Mobility S.P.R.L., a subsidiary of Solio Group, operates under the direct supervision of GEFI SEZ Solutions Limited. Its mission is to deploy the Group\'s engineering, procurement, and construction (EPC) solutions for solar and energy projects, as well as ensure the distribution and operation of solar stations and electric charging infrastructure in Burundi.',
+    valuesDescription: [
+      'Production locale d\'énergie solaire',
+      'Distribution d\'énergie propre',
+      'Promotion de la mobilité électrique et des solutions de stockage d\'énergie',
+      'Valorisation des compétences locales par la formation et la gestion d\'équipes techniques et administratives'
+    ],
+    valuesDescriptionEn: [
+      'Local solar energy production',
+      'Clean energy distribution',
+      'Promotion of electric mobility and energy storage solutions',
+      'Development of local skills through training and management of technical and administrative teams'
+    ],
+    programDescription: 'Dans le cadre du renforcement de son dispositif administratif et financier au Burundi, GEM E-Mobility recrute un(e) Accountant & Operations Officer, chargé(e) de la gestion comptable, administrative et opérationnelle du bureau de Bujumbura, sous la supervision fonctionnelle de GEFI SEZ Solutions Limited (Nairobi) et de Solio Group (Paris).',
+    programDescriptionEn: 'As part of strengthening its administrative and financial operations in Burundi, GEM E-Mobility is recruiting an Accountant & Operations Officer, responsible for accounting, administrative, and operational management of the Bujumbura office, under the functional supervision of GEFI SEZ Solutions Limited (Nairobi) and Solio Group (Paris).',
+    dutiesAndResponsibilities: [
+      {
+        title: 'Comptabilité & Finance',
+        items: [
+          'Tenir la comptabilité quotidienne : saisie, rapprochements, journaux, grand livre, balances, etc.',
+          'Gérer les paiements, les encaissements et le suivi de la trésorerie.',
+          'Préparer les états financiers mensuels et annuels en coordination avec la direction régionale.',
+          'Établir les déclarations fiscales et sociales (TVA, INSS, impôts, etc.) conformément aux exigences de l\'OBR (Office Burundais des Recettes).',
+          'Participer à la préparation des audits internes et externes.',
+          'Garantir la conformité des opérations comptables et fiscales avec la législation locale et les standards du Groupe.'
+        ]
+      },
+      {
+        title: 'Administration & Opérations de bureau',
+        items: [
+          'Gérer les activités quotidiennes du bureau : logistique, fournitures, maintenance, sécurité et communication.',
+          'Gérer la correspondance officielle et les relations institutionnelles.',
+          'Assurer la gestion administrative du personnel (contrats, congés, paie, déclarations sociales).',
+          'Superviser les prestataires et partenaires locaux (banques, fournisseurs, transporteurs, etc.).',
+          'Organiser les réunions, déplacements et visites de la direction régionale ou du siège.',
+          'Maintenir un environnement de travail conforme aux standards de Solio Group.'
+        ]
+      },
+      {
+        title: 'Fiscalité & Reporting',
+        items: [
+          'Assurer les relations avec l\'OBR pour toutes les obligations fiscales et administratives.',
+          'Préparer et déposer les déclarations fiscales et sociales dans les délais requis.',
+          'Produire les rapports financiers mensuels et trimestriels destinés à la direction régionale.'
+        ]
+      },
+      {
+        title: 'Coordination inter-entreprises (GEM – GEFI – Solio Group)',
+        items: [
+          'Coordonner la transmission des rapports comptables et administratifs avec GEFI SEZ Solutions Limited.',
+          'Soutenir la consolidation régionale des comptes et le suivi des indicateurs de performance.',
+          'Participer à la mise en œuvre des procédures du Groupe (financières, RH, achats, conformité).',
+          'Servir d\'interface entre les parties prenantes locales (banques, OBR, fournisseurs) et la direction régionale.'
+        ]
+      }
+    ],
+    dutiesAndResponsibilitiesEn: [
+      {
+        title: 'Accounting & Finance',
+        items: [
+          'Maintain daily accounting: entry, reconciliations, journals, general ledger, trial balances, etc.',
+          'Manage payments, collections, and cash flow monitoring.',
+          'Prepare monthly and annual financial statements in coordination with regional management.',
+          'Prepare tax and social declarations (VAT, INSS, taxes, etc.) in accordance with OBR (Office Burundais des Recettes) requirements.',
+          'Participate in the preparation of internal and external audits.',
+          'Ensure compliance of accounting and tax operations with local legislation and Group standards.'
+        ]
+      },
+      {
+        title: 'Administration & Office Operations',
+        items: [
+          'Manage daily office activities: logistics, supplies, maintenance, security, and communication.',
+          'Manage official correspondence and institutional relations.',
+          'Ensure administrative management of personnel (contracts, leave, payroll, social declarations).',
+          'Supervise local service providers and partners (banks, suppliers, transporters, etc.).',
+          'Organize meetings, travel, and visits from regional management or headquarters.',
+          'Maintain a work environment in accordance with Solio Group standards.'
+        ]
+      },
+      {
+        title: 'Tax & Reporting',
+        items: [
+          'Ensure relations with OBR for all tax and administrative obligations.',
+          'Prepare and file tax and social declarations within required deadlines.',
+          'Produce monthly and quarterly financial reports for regional management.'
+        ]
+      },
+      {
+        title: 'Inter-company Coordination (GEM – GEFI – Solio Group)',
+        items: [
+          'Coordinate the transmission of accounting and administrative reports with GEFI SEZ Solutions Limited.',
+          'Support regional account consolidation and performance indicator monitoring.',
+          'Participate in the implementation of Group procedures (financial, HR, purchasing, compliance).',
+          'Serve as an interface between local stakeholders (banks, OBR, suppliers) and regional management.'
+        ]
+      }
+    ],
+    educationalQualification: [
+      'Diplôme universitaire de niveau Bac +3 minimum en comptabilité, finance, gestion ou équivalent.'
+    ],
+    educationalQualificationEn: [
+      'University degree (Bachelor\'s degree minimum) in accounting, finance, management, or equivalent.'
+    ],
+    expectedExperience: [
+      'Minimum 3 à 5 ans d\'expérience dans un poste similaire.',
+      'Expérience dans un environnement industriel, international ou multisite fortement appréciée.'
+    ],
+    expectedExperienceEn: [
+      'Minimum 3 to 5 years of experience in a similar position.',
+      'Experience in an industrial, international, or multi-site environment strongly appreciated.'
+    ],
+    personalAndTechnicalSkills: [
+      'Bonne maîtrise des principes comptables et fiscaux du Burundi.',
+      'Excellente connaissance des outils bureautiques (Excel, Word, Outlook).',
+      'Connaissance d\'un logiciel de comptabilité ou ERP (Odoo, Sage, QuickBooks, etc.).',
+      'Rigueur, autonomie et sens de l\'organisation.',
+      'Capacité à travailler dans un environnement multiculturel et dynamique.',
+      'Français : courant (écrit et oral)',
+      'Anglais : professionnel (communication avec la direction régionale)',
+      'Kirundi : exigé (langue de travail locale)'
+    ],
+    personalAndTechnicalSkillsEn: [
+      'Good understanding of Burundian accounting and tax principles.',
+      'Excellent knowledge of office tools (Excel, Word, Outlook).',
+      'Knowledge of accounting software or ERP (Odoo, Sage, QuickBooks, etc.).',
+      'Rigor, autonomy, and organizational skills.',
+      'Ability to work in a multicultural and dynamic environment.',
+      'French: fluent (written and oral)',
+      'English: professional (communication with regional management)',
+      'Kirundi: required (local working language)'
+    ],
+    fullDescription: '',
+    fullDescriptionEn: '',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    whatWeOffer: [
+      'Type de contrat : CDI (avec période d\'essai de 3 à 6 mois)',
+      'Rémunération : selon profil et expérience',
+      'Couverture santé',
+      'Environnement de travail international',
+      'Perspectives d\'évolution au sein de Solio Group'
+    ],
+    whatWeOfferEn: [
+      'Contract type: Permanent (with probation period of 3 to 6 months)',
+      'Compensation: according to profile and experience',
+      'Health coverage',
+      'International work environment',
+      'Career development opportunities within Solio Group'
+    ],
+    additionalInfo: 'Disponibilité : immédiate ou à convenir. Seules les candidatures présélectionnées seront contactées.',
+    additionalInfoEn: 'Availability: immediate or to be agreed. Only shortlisted candidates will be contacted.',
+    applicationEmail: 'rh@solio-group.com',
+    applicationInstructions: 'Envoyez votre CV et une lettre de motivation (en français et en anglais) avec pour objet : « Candidature – Accountant & Operations Officer – GEM E-Mobility (Burundi) »',
+    applicationInstructionsEn: 'Send your CV and cover letter (in French and English) with subject: "Application – Accountant & Operations Officer – GEM E-Mobility (Burundi)"',
+    isActive: true,
+    tags: ['GEM E-Mobility', 'Finance', 'Administration', 'Comptabilité', 'Burundi']
   }
 ];
 
@@ -360,8 +539,10 @@ export const jobTypes = [
 
 export const jobLocations = [
   'Nairobi, Kenya',
+  'Bujumbura, Burundi',
 ];
 
 export const jobSubsidiaries = [
   'Growth Energy',
+  'GEM E-Mobility',
 ];
