@@ -243,7 +243,7 @@ const Contact = () => {
                       </h3>
                       <div className="flex space-x-4">
                         <a
-                          href="#"
+                          href="https://www.linkedin.com/company/solio-group/?originalSubdomain=fr"
                           className="text-gray-700 dark:text-gray-200 hover:text-solio-blue flex items-center"
                         >
                           <Linkedin className="w-5 h-5 mr-1" />
