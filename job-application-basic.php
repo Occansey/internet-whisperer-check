@@ -209,6 +209,37 @@ $additional_params = '-f' . $from;
 $sent = mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message_body, implode("\r\n", $headers), $additional_params);
 
 if ($sent) {
+  // Send acknowledgment email to applicant
+  $ack_subject = $language === 'fr' 
+    ? 'Confirmation de réception de votre candidature - Solio Group'
+    : 'Application Received - Solio Group';
+  
+  $ack_body = $language === 'fr'
+    ? "Bonjour {$prenom} {$nom},\n\n" .
+      "Nous avons bien reçu votre candidature pour le poste de {$jobTitle}.\n\n" .
+      "Notre équipe RH va examiner votre dossier et vous contactera si votre profil correspond à nos besoins.\n\n" .
+      "Nous vous remercions de l'intérêt que vous portez à Solio Group.\n\n" .
+      "Cordialement,\n" .
+      "L'équipe Ressources Humaines\n" .
+      "Solio Group"
+    : "Hello {$prenom} {$nom},\n\n" .
+      "We have successfully received your application for the position of {$jobTitle}.\n\n" .
+      "Our HR team will review your application and contact you if your profile matches our requirements.\n\n" .
+      "Thank you for your interest in Solio Group.\n\n" .
+      "Best regards,\n" .
+      "Human Resources Team\n" .
+      "Solio Group";
+  
+  $ack_headers = [
+    'From: ' . $from,
+    'Reply-To: rh@solio-group.com',
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: 8bit'
+  ];
+  
+  mail($email, '=?UTF-8?B?' . base64_encode($ack_subject) . '?=', $ack_body, implode("\r\n", $ack_headers), $additional_params);
+  
   echo json_encode(['success' => true]);
 } else {
   error_log('Mail function failed for job application: ' . $jobTitle . ' | sizes(bytes): CV=' . ($_FILES['cv']['size'] ?? 0) . ', Other=' . ($other_size ?? 0));
