@@ -10,12 +10,96 @@ import FormModal from "@/components/ui/form-modal";
 import { useQuery } from "@tanstack/react-query";
 import ScreenLoader from "@/components/ui/screen-loader";
 
+interface ATSJob {
+  id: number;
+  title: string;
+  description: string;
+  description_fr: string;
+  type_contrat: string;
+  ville: string;
+  pays: string;
+  filiale: string;
+  budget: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ATSResponse {
+  jobs: ATSJob[];
+}
+
+const transformATSJob = (atsJob: ATSJob): Job => {
+  // Create a simple slug from the title
+  const slug = atsJob.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  return {
+    id: String(atsJob.id),
+    slug,
+    title: atsJob.title,
+    titleEn: atsJob.title,
+    company: 'Solio Group',
+    companyEn: 'Solio Group',
+    subsidiary: atsJob.filiale || 'Solio Group',
+    department: 'Non spécifié',
+    departmentEn: 'Not specified',
+    location: `${atsJob.ville}, ${atsJob.pays}`,
+    jobType: atsJob.type_contrat || 'CDI',
+    jobTypeEn: atsJob.type_contrat || 'Permanent',
+    salaryRange: atsJob.budget > 0 ? `${atsJob.budget} €` : 'Selon profil',
+    salaryRangeEn: atsJob.budget > 0 ? `${atsJob.budget} €` : 'According to profile',
+    postedDate: atsJob.created_at.split(' ')[0],
+    shortDescription: atsJob.description_fr?.substring(0, 200) + '...' || atsJob.description?.substring(0, 200) + '...',
+    shortDescriptionEn: atsJob.description?.substring(0, 200) + '...' || atsJob.description_fr?.substring(0, 200) + '...',
+    companyDescription: 'Solio Group est un groupe international français opérant dans les secteurs de l\'énergie, de la mobilité électrique et du digital.',
+    companyDescriptionEn: 'Solio Group is a French international group operating in the energy, electric mobility, and digital sectors.',
+    missionDescription: atsJob.description_fr || atsJob.description,
+    missionDescriptionEn: atsJob.description || atsJob.description_fr,
+    valuesDescription: [],
+    valuesDescriptionEn: [],
+    programDescription: '',
+    programDescriptionEn: '',
+    dutiesAndResponsibilities: [],
+    dutiesAndResponsibilitiesEn: [],
+    educationalQualification: [],
+    educationalQualificationEn: [],
+    expectedExperience: [],
+    expectedExperienceEn: [],
+    personalAndTechnicalSkills: [],
+    personalAndTechnicalSkillsEn: [],
+    fullDescription: atsJob.description_fr || atsJob.description,
+    fullDescriptionEn: atsJob.description || atsJob.description_fr,
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    whatWeOffer: [],
+    whatWeOfferEn: [],
+    additionalInfo: '',
+    additionalInfoEn: '',
+    applicationEmail: 'rh@solio-group.com',
+    applicationInstructions: 'Envoyez votre CV et une lettre de motivation',
+    applicationInstructionsEn: 'Send your CV and cover letter',
+    isActive: true,
+    tags: [atsJob.filiale, atsJob.type_contrat, atsJob.pays].filter(Boolean)
+  };
+};
+
 const fetchJobs = async (): Promise<Job[]> => {
-  const response = await fetch('https://ats.solio-group.com/debug-json');
+  const response = await fetch('https://ats.solio-group.com/debug-json', {
+    mode: 'cors',
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+  
   if (!response.ok) {
     throw new Error('Failed to fetch jobs');
   }
-  return response.json();
+  
+  const data: ATSResponse = await response.json();
+  return data.jobs.map(transformATSJob);
 };
 
 const RejoignezNousBis = () => {
