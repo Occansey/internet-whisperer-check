@@ -28,6 +28,7 @@ import Evenements from "./pages/actualites/Evenements";
 import Projets from "./pages/actualites/Projets";
 import EngagementsRH from "./pages/carrieres/EngagementsRH";
 import RejoignezNous from "./pages/carrieres/RejoignezNous";
+import RejoignezNousBis from "./pages/carrieres/RejoignezNousBis";
 import JobDetail from "./components/jobs/JobDetail";
 import EventDetail from "./components/events/EventDetail";
 import ProjectDetail from "./components/projects/ProjectDetail";
@@ -87,6 +88,7 @@ const App = () => (
                 
                 <Route path="/carrieres/engagements-rh" element={<EngagementsRH />} />
                 <Route path="/carrieres/rejoignez-nous" element={<RejoignezNous />} />
+                <Route path="/carrieres/rejoignez-nous-bis" element={<RejoignezNousBis />} />
                 <Route path="/carrieres/offres/:slug" element={<JobDetail />} />
                 <Route path="/job" element={<ScrollToHashRedirect to="/carrieres/rejoignez-nous#offres" />} />
                 
