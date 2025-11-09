@@ -4,21 +4,127 @@ import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { MapPin, Calendar, Briefcase, ArrowLeft, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { mockJobs } from '@/data/jobs';
+import { mockJobs, Job } from '@/data/jobs';
 import { useTranslation } from '@/contexts/TranslationContext';
 import SEOStructuredData from '@/components/seo/SEOStructuredData';
 import JobApplicationForm from '@/components/forms/JobApplicationForm';
 import { toast } from '@/components/ui/use-toast';
 import jobHeroImage from '@/assets/job-hero-africa.jpg';
+import { useQuery } from '@tanstack/react-query';
+import ScreenLoader from '@/components/ui/screen-loader';
+
+interface ATSJob {
+  id: number;
+  title: string;
+  description: string;
+  description_fr: string;
+  type_contrat: string;
+  ville: string;
+  pays: string;
+  filiale: string;
+  budget: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ATSResponse {
+  jobs: ATSJob[];
+}
+
+const transformATSJob = (atsJob: ATSJob): Job => {
+  const slug = atsJob.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  return {
+    id: String(atsJob.id),
+    slug,
+    title: atsJob.title,
+    titleEn: atsJob.title,
+    company: 'Solio Group',
+    companyEn: 'Solio Group',
+    subsidiary: atsJob.filiale || 'Solio Group',
+    department: 'Non spécifié',
+    departmentEn: 'Not specified',
+    location: `${atsJob.ville}, ${atsJob.pays}`,
+    jobType: atsJob.type_contrat || 'CDI',
+    jobTypeEn: atsJob.type_contrat || 'Permanent',
+    salaryRange: atsJob.budget > 0 ? `${atsJob.budget} €` : 'Selon profil',
+    salaryRangeEn: atsJob.budget > 0 ? `${atsJob.budget} €` : 'According to profile',
+    postedDate: atsJob.created_at.split(' ')[0],
+    shortDescription: (atsJob.description_fr || atsJob.description || 'Pas de description disponible').substring(0, 200) + '...',
+    shortDescriptionEn: (atsJob.description || atsJob.description_fr || 'No description available').substring(0, 200) + '...',
+    companyDescription: 'Solio Group est un groupe international français opérant dans les secteurs de l\'énergie, de la mobilité électrique et du digital.',
+    companyDescriptionEn: 'Solio Group is a French international group operating in the energy, electric mobility, and digital sectors.',
+    missionDescription: atsJob.description_fr || atsJob.description || 'Description à venir',
+    missionDescriptionEn: atsJob.description || atsJob.description_fr || 'Description coming soon',
+    valuesDescription: [],
+    valuesDescriptionEn: [],
+    programDescription: '',
+    programDescriptionEn: '',
+    dutiesAndResponsibilities: [],
+    dutiesAndResponsibilitiesEn: [],
+    educationalQualification: [],
+    educationalQualificationEn: [],
+    expectedExperience: [],
+    expectedExperienceEn: [],
+    personalAndTechnicalSkills: [],
+    personalAndTechnicalSkillsEn: [],
+    fullDescription: atsJob.description_fr || atsJob.description || 'Description complète à venir',
+    fullDescriptionEn: atsJob.description || atsJob.description_fr || 'Full description coming soon',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    whatWeOffer: [],
+    whatWeOfferEn: [],
+    additionalInfo: '',
+    additionalInfoEn: '',
+    applicationEmail: 'rh@solio-group.com',
+    applicationInstructions: 'Envoyez votre CV et une lettre de motivation',
+    applicationInstructionsEn: 'Send your CV and cover letter',
+    isActive: true,
+    tags: [atsJob.filiale, atsJob.type_contrat, atsJob.pays].filter(Boolean)
+  };
+};
+
+const fetchJobs = async (): Promise<Job[]> => {
+  const response = await fetch('https://ats.solio-group.com/api/debug-json', {
+    mode: 'cors',
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch jobs');
+  }
+  
+  const data: ATSResponse = await response.json();
+  return data.jobs.map(transformATSJob);
+};
 
 const JobDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t, language } = useTranslation();
 
-  const job = mockJobs.find(j => j.slug === slug);
+  // Fetch ATS jobs
+  const { data: atsJobs = [], isLoading } = useQuery({
+    queryKey: ['ats-jobs'],
+    queryFn: fetchJobs,
+    refetchInterval: 5 * 60 * 1000,
+    staleTime: 4 * 60 * 1000,
+  });
+
+  // Try to find job in both mockJobs and ATS jobs
+  const job = mockJobs.find(j => j.slug === slug) || atsJobs.find(j => j.slug === slug);
+
+  if (isLoading) {
+    return <ScreenLoader message={t('common.loading') || "Chargement..."} />;
+  }
 
   if (!job) {
-    return <Navigate to="/carrieres/rejoignez-nous" replace />;
+    return <Navigate to="/carrieres/rejoignez-nous-bis" replace />;
   }
 
   // Helper function to get language-specific content
@@ -156,7 +262,7 @@ const JobDetail = () => {
           {/* Back Navigation */}
           <div className="mb-6">
             <Button variant="ghost" asChild className="mb-4">
-              <Link to="/carrieres/rejoignez-nous">
+              <Link to="/carrieres/rejoignez-nous-bis">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 {language === 'fr' ? 'Retour aux offres' : 'Back to Jobs'}
               </Link>
