@@ -87,7 +87,7 @@ const transformATSJob = (atsJob: ATSJob): Job => {
 };
 
 const fetchJobs = async (): Promise<Job[]> => {
-  const response = await fetch('https://ats.solio-group.com/debug-json', {
+  const response = await fetch('https://ats.solio-group.com/api/debug-json', {
     mode: 'cors',
     headers: {
       'Accept': 'application/json',
