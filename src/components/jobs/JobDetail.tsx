@@ -249,8 +249,24 @@ const JobDetail = () => {
             {/* Main Content */}
             <div className="lg:col-span-8">
               {/* Job Description - Display full API content with markdown support */}
-              <div className="prose prose-lg max-w-none dark:prose-invert leading-relaxed">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <div className="prose prose-lg max-w-none dark:prose-invert leading-relaxed prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:mb-4 prose-ul:my-4 prose-li:my-2 prose-hr:my-8 prose-hr:border-border">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-foreground" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-8 mb-4 text-foreground" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-xl font-semibold mt-6 mb-3 text-foreground" {...props} />,
+                    h4: ({node, ...props}) => <h4 className="text-lg font-semibold mt-4 mb-2 text-foreground" {...props} />,
+                    p: ({node, ...props}) => <p className="mb-4 text-foreground leading-relaxed" {...props} />,
+                    ul: ({node, ...props}) => <ul className="list-disc pl-6 my-4 space-y-2" {...props} />,
+                    ol: ({node, ...props}) => <ol className="list-decimal pl-6 my-4 space-y-2" {...props} />,
+                    li: ({node, ...props}) => <li className="text-foreground" {...props} />,
+                    hr: ({node, ...props}) => <hr className="my-8 border-border" {...props} />,
+                    strong: ({node, ...props}) => <strong className="font-semibold text-foreground" {...props} />,
+                    em: ({node, ...props}) => <em className="italic" {...props} />,
+                    blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary pl-4 italic my-4" {...props} />,
+                  }}
+                >
                   {formattedDescription}
                 </ReactMarkdown>
               </div>
