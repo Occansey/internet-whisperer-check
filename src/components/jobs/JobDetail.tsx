@@ -125,7 +125,7 @@ const JobDetail = () => {
   // Prioritize ATS jobs over mock jobs
   const job = useMemo(() => 
     atsJobs.find(j => j.slug === slug) || mockJobs.find(j => j.slug === slug),
-    [slug, atsJobs]
+    [slug, atsJobs, mockJobs]
   );
 
   if (isLoading) {
