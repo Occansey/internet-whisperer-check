@@ -25,8 +25,11 @@ const JobCard = ({ job }: JobCardProps) => {
         <h3 className="font-semibold text-foreground text-lg">
           {language === 'en' && job.titleEn ? job.titleEn : job.title}
         </h3>
-        <p className="text-sm text-muted-foreground">{job.location}</p>
-        <Link 
+        <p className="text-sm text-muted-foreground mb-2">{job.location}</p>
+        <p className="text-sm text-muted-foreground line-clamp-3">
+          {language === 'en' && job.shortDescriptionEn ? job.shortDescriptionEn : job.shortDescription}
+        </p>
+        <Link
           to={`/carrieres/offres/${job.slug}`}
           className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium"
         >

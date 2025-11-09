@@ -87,19 +87,26 @@ const transformATSJob = (atsJob: ATSJob): Job => {
 };
 
 const fetchJobs = async (): Promise<Job[]> => {
-  const response = await fetch('https://ats.solio-group.com/api/debug-json', {
-    mode: 'cors',
-    headers: {
-      'Accept': 'application/json',
+  try {
+    const response = await fetch('https://ats.solio-group.com/api/debug-json', {
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+      }
+    });
+    
+    if (!response.ok) {
+      console.error('API Response Error:', response.status, response.statusText);
+      throw new Error(`Failed to fetch jobs: ${response.status}`);
     }
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch jobs');
+    
+    const data: ATSResponse = await response.json();
+    console.log('Fetched jobs:', data.jobs.length);
+    return data.jobs.map(transformATSJob);
+  } catch (error) {
+    console.error('Fetch error details:', error);
+    throw error;
   }
-  
-  const data: ATSResponse = await response.json();
-  return data.jobs.map(transformATSJob);
 };
 
 const RejoignezNous = () => {
