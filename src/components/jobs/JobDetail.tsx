@@ -122,8 +122,9 @@ const JobDetail = () => {
   });
 
   // Memoize job lookup to avoid re-searching on every render
+  // Prioritize ATS jobs over mock jobs
   const job = useMemo(() => 
-    mockJobs.find(j => j.slug === slug) || atsJobs.find(j => j.slug === slug),
+    atsJobs.find(j => j.slug === slug) || mockJobs.find(j => j.slug === slug),
     [slug, atsJobs]
   );
 
