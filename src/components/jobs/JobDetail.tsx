@@ -1,4 +1,4 @@
-import React, { useMemo, lazy, Suspense } from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-const JobApplicationForm = lazy(() => import('@/components/forms/JobApplicationForm'));
+import JobApplicationForm from '@/components/forms/JobApplicationForm';
 
 interface ATSJob {
   id: number;
@@ -287,18 +286,16 @@ const JobDetail = () => {
               </div>
             </div>
 
-            {/* Application Form Sidebar - Lazy loaded */}
+            {/* Application Form Sidebar */}
             <div className="lg:col-span-4">
               <div className="sticky top-8">
-                <Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
-                  <JobApplicationForm 
-                    jobTitle={localizedTitle}
-                    jobId={job.id}
-                    onSubmit={(data) => {
-                      console.log('Application submitted:', data);
-                    }}
-                  />
-                </Suspense>
+                <JobApplicationForm 
+                  jobTitle={localizedTitle}
+                  jobId={job.id}
+                  onSubmit={(data) => {
+                    console.log('Application submitted:', data);
+                  }}
+                />
               </div>
             </div>
           </div>
