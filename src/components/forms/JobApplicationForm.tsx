@@ -28,7 +28,9 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
     source: "Website",
     coverLetter: "",
     cv: null as File | null,
+    coverLetterFile: null as File | null,
     otherDocuments: null as File | null,
+    extraDocLink: "",
     agreement: false,
     website: "", // Honeypot field
   });
@@ -179,8 +181,11 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       // Append CV file (required)
       formDataToSend.append('file_cv', formData.cv);
       
-      // Convert cover letter text to a file if provided (optional)
-      if (formData.coverLetter.trim()) {
+      // Append cover letter file if provided (optional)
+      if (formData.coverLetterFile) {
+        formDataToSend.append('file_cover_letter', formData.coverLetterFile);
+      } else if (formData.coverLetter.trim()) {
+        // Fallback: convert text to file if no file uploaded
         const coverLetterBlob = new Blob([formData.coverLetter], { type: 'text/plain' });
         const coverLetterFile = new File([coverLetterBlob], 'cover_letter.txt', { type: 'text/plain' });
         formDataToSend.append('file_cover_letter', coverLetterFile);
@@ -189,6 +194,11 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       // Append extra document file if provided (optional)
       if (formData.otherDocuments) {
         formDataToSend.append('extra_doc_file', formData.otherDocuments);
+      }
+      
+      // Append extra document link if provided (optional)
+      if (formData.extraDocLink.trim()) {
+        formDataToSend.append('extra_doc_link', formData.extraDocLink);
       }
 
       // Save to localStorage (without files)
@@ -263,7 +273,9 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
         source: "Website",
         coverLetter: "",
         cv: null,
+        coverLetterFile: null,
         otherDocuments: null,
+        extraDocLink: "",
         agreement: false,
         website: "",
       });
@@ -271,8 +283,10 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       
       // Reset file inputs
       const cvInput = document.getElementById('cv') as HTMLInputElement;
+      const coverLetterInput = document.getElementById('coverLetterFile') as HTMLInputElement;
       const otherDocsInput = document.getElementById('otherDocuments') as HTMLInputElement;
       if (cvInput) cvInput.value = '';
+      if (coverLetterInput) coverLetterInput.value = '';
       if (otherDocsInput) otherDocsInput.value = '';
       
     } catch (error) {
@@ -393,8 +407,21 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
           </div>
           
           <div className="space-y-2">
+            <Label htmlFor="source">
+              {language === 'fr' ? 'Comment avez-vous entendu parler de nous ?' : 'How did you hear about us?'}
+            </Label>
+            <Input 
+              id="source" 
+              value={formData.source} 
+              onChange={(e) => handleInputChange('source', e.target.value)} 
+              maxLength={100}
+              placeholder={language === 'fr' ? 'LinkedIn, Site web, etc.' : 'LinkedIn, Website, etc.'}
+            />
+          </div>
+          
+          <div className="space-y-2">
             <Label htmlFor="coverLetter">
-              {language === 'fr' ? 'Lettre de motivation' : 'Cover Letter'}
+              {language === 'fr' ? 'Lettre de motivation (texte)' : 'Cover Letter (text)'}
             </Label>
             <Textarea 
               id="coverLetter" 
@@ -411,6 +438,45 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
             {validationErrors.coverLetter && (
               <p className="text-xs text-red-500">{validationErrors.coverLetter}</p>
             )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="coverLetterFile">
+              {language === 'fr' ? 'Lettre de motivation (fichier)' : 'Cover Letter (file)'}
+            </Label>
+            <Input 
+              id="coverLetterFile" 
+              type="file" 
+              accept=".pdf,.doc,.docx" 
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  const file = e.target.files[0];
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast({
+                      title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
+                      description: language === 'fr' 
+                        ? "La lettre de motivation ne doit pas dépasser 5MB"
+                        : "Cover letter must not exceed 5MB",
+                      variant: "destructive",
+                    });
+                    return;
+                  }
+                  setFormData(prev => ({ ...prev, coverLetterFile: file }));
+                }
+              }}
+            />
+            <p className="text-xs text-muted-foreground">
+              {formData.coverLetterFile 
+                ? `${language === 'fr' ? 'Sélectionné' : 'Selected'}: ${formData.coverLetterFile.name}` 
+                : (language === 'fr' ? 'Aucun fichier choisi' : 'No file chosen')
+              }
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {language === 'fr' 
+                ? 'Optionnel - .pdf, .doc, .docx (max 5MB)'
+                : 'Optional - .pdf, .doc, .docx (max 5MB)'
+              }
+            </p>
           </div>
           
           <div className="space-y-2">
@@ -440,7 +506,7 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
           
           <div className="space-y-2">
             <Label htmlFor="otherDocuments">
-              {language === 'fr' ? 'Autres documents' : 'Other Documents'}
+              {language === 'fr' ? 'Documents supplémentaires (fichier)' : 'Additional Documents (file)'}
             </Label>
             <Input 
               id="otherDocuments" 
@@ -448,7 +514,18 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
               accept=".pdf,.doc,.docx" 
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
-                  setFormData(prev => ({ ...prev, otherDocuments: e.target.files![0] }));
+                  const file = e.target.files[0];
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast({
+                      title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
+                      description: language === 'fr' 
+                        ? "Le document ne doit pas dépasser 5MB"
+                        : "Document must not exceed 5MB",
+                      variant: "destructive",
+                    });
+                    return;
+                  }
+                  setFormData(prev => ({ ...prev, otherDocuments: file }));
                 }
               }}
             />
@@ -460,8 +537,28 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 5MB)'
-                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 5MB)'
+                ? 'Optionnel - .pdf, .doc, .docx (max 5MB)'
+                : 'Optional - .pdf, .doc, .docx (max 5MB)'
+              }
+            </p>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="extraDocLink">
+              {language === 'fr' ? 'Lien vers documents supplémentaires' : 'Link to Additional Documents'}
+            </Label>
+            <Input 
+              id="extraDocLink" 
+              type="url"
+              value={formData.extraDocLink} 
+              onChange={(e) => handleInputChange('extraDocLink', e.target.value)} 
+              maxLength={500}
+              placeholder={language === 'fr' ? 'https://...' : 'https://...'}
+            />
+            <p className="text-xs text-muted-foreground">
+              {language === 'fr' 
+                ? 'Optionnel - Lien vers portfolio, LinkedIn, etc. (max 500 caractères)'
+                : 'Optional - Link to portfolio, LinkedIn, etc. (max 500 characters)'
               }
             </p>
           </div>
