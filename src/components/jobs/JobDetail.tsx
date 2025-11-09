@@ -137,9 +137,100 @@ const JobDetail = () => {
 
   // Memoize content formatting to avoid recalculations
   const formattedDescription = useMemo(() => {
-    const content = language === 'en' && job.fullDescriptionEn ? job.fullDescriptionEn : job.fullDescription;
-    return content ? content.replace(/\\n/g, '\n') : '';
-  }, [job.fullDescription, job.fullDescriptionEn, language]);
+    const isEnglish = language === 'en';
+    const fullDesc = isEnglish && job.fullDescriptionEn ? job.fullDescriptionEn : job.fullDescription;
+    
+    // If fullDescription exists, use it
+    if (fullDesc && fullDesc.trim()) {
+      return fullDesc.replace(/\\n/g, '\n');
+    }
+    
+    // Otherwise, build description from structured data
+    let description = '';
+    
+    // Company description
+    if (job.companyDescription || job.companyDescriptionEn) {
+      description += `## ${isEnglish ? 'About the Company' : 'À propos de l\'entreprise'}\n\n`;
+      description += isEnglish && job.companyDescriptionEn ? job.companyDescriptionEn : job.companyDescription;
+      description += '\n\n';
+    }
+    
+    // Mission
+    if (job.missionDescription || job.missionDescriptionEn) {
+      description += `## ${isEnglish ? 'Mission' : 'Mission'}\n\n`;
+      description += isEnglish && job.missionDescriptionEn ? job.missionDescriptionEn : job.missionDescription;
+      description += '\n\n';
+    }
+    
+    // Program/Role description
+    if (job.programDescription || job.programDescriptionEn) {
+      description += `## ${isEnglish ? 'The Role' : 'Le Poste'}\n\n`;
+      description += isEnglish && job.programDescriptionEn ? job.programDescriptionEn : job.programDescription;
+      description += '\n\n';
+    }
+    
+    // Duties and responsibilities
+    const duties = isEnglish && job.dutiesAndResponsibilitiesEn?.length ? job.dutiesAndResponsibilitiesEn : job.dutiesAndResponsibilities;
+    if (duties && duties.length > 0) {
+      description += `## ${isEnglish ? 'Key Responsibilities' : 'Responsabilités principales'}\n\n`;
+      duties.forEach(section => {
+        description += `### ${section.title}\n\n`;
+        section.items.forEach(item => {
+          description += `- ${item}\n`;
+        });
+        description += '\n';
+      });
+    }
+    
+    // Qualifications
+    const education = isEnglish && job.educationalQualificationEn?.length ? job.educationalQualificationEn : job.educationalQualification;
+    if (education && education.length > 0) {
+      description += `## ${isEnglish ? 'Educational Qualifications' : 'Qualifications requises'}\n\n`;
+      education.forEach(item => {
+        description += `- ${item}\n`;
+      });
+      description += '\n';
+    }
+    
+    // Experience
+    const experience = isEnglish && job.expectedExperienceEn?.length ? job.expectedExperienceEn : job.expectedExperience;
+    if (experience && experience.length > 0) {
+      description += `## ${isEnglish ? 'Experience Required' : 'Expérience requise'}\n\n`;
+      experience.forEach(item => {
+        description += `- ${item}\n`;
+      });
+      description += '\n';
+    }
+    
+    // Skills
+    const skills = isEnglish && job.personalAndTechnicalSkillsEn?.length ? job.personalAndTechnicalSkillsEn : job.personalAndTechnicalSkills;
+    if (skills && skills.length > 0) {
+      description += `## ${isEnglish ? 'Skills Required' : 'Compétences requises'}\n\n`;
+      skills.forEach(item => {
+        description += `- ${item}\n`;
+      });
+      description += '\n';
+    }
+    
+    // What we offer
+    const offer = isEnglish && job.whatWeOfferEn?.length ? job.whatWeOfferEn : job.whatWeOffer;
+    if (offer && offer.length > 0) {
+      description += `## ${isEnglish ? 'What We Offer' : 'Ce que nous offrons'}\n\n`;
+      offer.forEach(item => {
+        description += `- ${item}\n`;
+      });
+      description += '\n';
+    }
+    
+    // Application instructions
+    if (job.applicationInstructions || job.applicationInstructionsEn) {
+      description += `## ${isEnglish ? 'How to Apply' : 'Comment postuler'}\n\n`;
+      description += isEnglish && job.applicationInstructionsEn ? job.applicationInstructionsEn : job.applicationInstructions;
+      description += '\n\n';
+    }
+    
+    return description;
+  }, [job, language]);
 
   const localizedJobType = useMemo(() => 
     language === 'en' && job.jobTypeEn ? job.jobTypeEn : job.jobType,
