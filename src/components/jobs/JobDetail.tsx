@@ -12,6 +12,8 @@ import { toast } from '@/components/ui/use-toast';
 import jobHeroImage from '@/assets/job-hero-africa.jpg';
 import { useQuery } from '@tanstack/react-query';
 import ScreenLoader from '@/components/ui/screen-loader';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ATSJob {
   id: number;
@@ -270,11 +272,11 @@ const JobDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-8">
-              {/* Job Description - Display full API content */}
-              <div className="prose prose-lg max-w-none text-foreground">
-                <div className="whitespace-pre-line leading-relaxed">
+              {/* Job Description - Display full API content with markdown support */}
+              <div className="prose prose-lg max-w-none dark:prose-invert leading-relaxed">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {formatDescription(getLocalizedContent(job.fullDescription, job.fullDescriptionEn))}
-                </div>
+                </ReactMarkdown>
               </div>
 
               {/* Job Details */}
