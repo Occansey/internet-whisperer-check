@@ -1,16 +1,106 @@
-
 import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/common/HeroBanner";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Calendar, Briefcase, Clock } from "lucide-react";
-import FormModal from "@/components/ui/form-modal";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilters from "@/components/jobs/JobFilters";
-import { mockJobs, Job } from "@/data/jobs";
+import { Job } from "@/data/jobs";
+import FormModal from "@/components/ui/form-modal";
+import { useQuery } from "@tanstack/react-query";
+import ScreenLoader from "@/components/ui/screen-loader";
+
+interface ATSJob {
+  id: number;
+  title: string;
+  description: string;
+  description_fr: string;
+  type_contrat: string;
+  ville: string;
+  pays: string;
+  filiale: string;
+  budget: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ATSResponse {
+  jobs: ATSJob[];
+}
+
+const transformATSJob = (atsJob: ATSJob): Job => {
+  // Create a simple slug from the title
+  const slug = atsJob.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  return {
+    id: String(atsJob.id),
+    slug,
+    title: atsJob.title,
+    titleEn: atsJob.title,
+    company: 'Solio Group',
+    companyEn: 'Solio Group',
+    subsidiary: atsJob.filiale || 'Solio Group',
+    department: 'Non spécifié',
+    departmentEn: 'Not specified',
+    location: `${atsJob.ville}, ${atsJob.pays}`,
+    jobType: atsJob.type_contrat || 'CDI',
+    jobTypeEn: atsJob.type_contrat || 'Permanent',
+    salaryRange: atsJob.budget > 0 ? `${atsJob.budget} €` : 'Selon profil',
+    salaryRangeEn: atsJob.budget > 0 ? `${atsJob.budget} €` : 'According to profile',
+    postedDate: atsJob.created_at.split(' ')[0],
+    shortDescription: (atsJob.description_fr || atsJob.description || 'Pas de description disponible').substring(0, 200) + '...',
+    shortDescriptionEn: (atsJob.description || atsJob.description_fr || 'No description available').substring(0, 200) + '...',
+    companyDescription: 'Solio Group est un groupe international français opérant dans les secteurs de l\'énergie, de la mobilité électrique et du digital.',
+    companyDescriptionEn: 'Solio Group is a French international group operating in the energy, electric mobility, and digital sectors.',
+    missionDescription: atsJob.description_fr || atsJob.description || 'Description à venir',
+    missionDescriptionEn: atsJob.description || atsJob.description_fr || 'Description coming soon',
+    valuesDescription: [],
+    valuesDescriptionEn: [],
+    programDescription: '',
+    programDescriptionEn: '',
+    dutiesAndResponsibilities: [],
+    dutiesAndResponsibilitiesEn: [],
+    educationalQualification: [],
+    educationalQualificationEn: [],
+    expectedExperience: [],
+    expectedExperienceEn: [],
+    personalAndTechnicalSkills: [],
+    personalAndTechnicalSkillsEn: [],
+    fullDescription: atsJob.description_fr || atsJob.description || 'Description complète à venir',
+    fullDescriptionEn: atsJob.description || atsJob.description_fr || 'Full description coming soon',
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    whatWeOffer: [],
+    whatWeOfferEn: [],
+    additionalInfo: '',
+    additionalInfoEn: '',
+    applicationEmail: 'rh@solio-group.com',
+    applicationInstructions: 'Envoyez votre CV et une lettre de motivation',
+    applicationInstructionsEn: 'Send your CV and cover letter',
+    isActive: true,
+    tags: [atsJob.filiale, atsJob.type_contrat, atsJob.pays].filter(Boolean)
+  };
+};
+
+const fetchJobs = async (): Promise<Job[]> => {
+  const response = await fetch('https://ats.solio-group.com/api/debug-json', {
+    mode: 'cors',
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch jobs');
+  }
+  
+  const data: ATSResponse = await response.json();
+  return data.jobs.map(transformATSJob);
+};
 
 const RejoignezNous = () => {
   const { t } = useTranslation();
@@ -20,6 +110,14 @@ const RejoignezNous = () => {
   const [selectedJobType, setSelectedJobType] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedSubsidiary, setSelectedSubsidiary] = useState('all');
+
+  // Fetch jobs with 5-minute polling
+  const { data: jobs = [], isLoading, error } = useQuery({
+    queryKey: ['ats-jobs'],
+    queryFn: fetchJobs,
+    refetchInterval: 5 * 60 * 1000, // 5 minutes in milliseconds
+    staleTime: 4 * 60 * 1000, // Consider data stale after 4 minutes
+  });
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -33,7 +131,7 @@ const RejoignezNous = () => {
   }, []);
 
   // Filter jobs based on search and filter criteria
-  const filteredJobs = mockJobs.filter(job => {
+  const filteredJobs = jobs.filter(job => {
     const matchesSearch = searchTerm === '' || 
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -51,25 +149,25 @@ const RejoignezNous = () => {
   // Calculate job counts for filters
   const jobCounts = {
     total: filteredJobs.length,
-    byDepartment: mockJobs.reduce((acc, job) => {
+    byDepartment: jobs.reduce((acc, job) => {
       if (job.isActive) {
         acc[job.department] = (acc[job.department] || 0) + 1;
       }
       return acc;
     }, {} as Record<string, number>),
-    byJobType: mockJobs.reduce((acc, job) => {
+    byJobType: jobs.reduce((acc, job) => {
       if (job.isActive) {
         acc[job.jobType] = (acc[job.jobType] || 0) + 1;
       }
       return acc;
     }, {} as Record<string, number>),
-    byLocation: mockJobs.reduce((acc, job) => {
+    byLocation: jobs.reduce((acc, job) => {
       if (job.isActive) {
         acc[job.location] = (acc[job.location] || 0) + 1;
       }
       return acc;
     }, {} as Record<string, number>),
-    bySubsidiary: mockJobs.reduce((acc, job) => {
+    bySubsidiary: jobs.reduce((acc, job) => {
       if (job.isActive) {
         acc[job.subsidiary] = (acc[job.subsidiary] || 0) + 1;
       }
@@ -104,6 +202,32 @@ const RejoignezNous = () => {
     }
   ];
 
+  if (isLoading) {
+    return <ScreenLoader message={t('common.loading') || "Chargement des offres..."} />;
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <HeroBanner 
+          title={t('careers.joinUs.title')}
+          description={t('careers.joinUs.description')}
+          glowColor="rose"
+        />
+        <div className="py-12 bg-gray-50">
+          <div className="container">
+            <div className="bg-card p-10 rounded-lg shadow text-center">
+              <h3 className="text-xl font-medium mb-4">Erreur de chargement</h3>
+              <p className="text-muted-foreground mb-6">
+                Impossible de charger les offres d'emploi. Veuillez réessayer plus tard.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <HeroBanner 
@@ -133,7 +257,7 @@ const RejoignezNous = () => {
           <div id="offres">
             <h2 className="text-2xl font-bold mb-6">{t('careers.jobs.title')}</h2>
             
-            {mockJobs.filter(job => job.isActive).length > 0 ? (
+            {jobs.filter(job => job.isActive).length > 0 ? (
               <div className="space-y-8">
                 <JobFilters 
                   searchTerm={searchTerm}
