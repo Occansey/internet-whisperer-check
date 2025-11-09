@@ -138,7 +138,8 @@ const JobDetail = () => {
   // Memoize content formatting to avoid recalculations
   const formattedDescription = useMemo(() => {
     const content = language === 'en' && job.fullDescriptionEn ? job.fullDescriptionEn : job.fullDescription;
-    return content ? content.replace(/\\n/g, '\n') : '';
+    // Handle both literal \n strings and escaped \\n from API
+    return content ? content.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n') : '';
   }, [job.fullDescription, job.fullDescriptionEn, language]);
 
   const localizedJobType = useMemo(() => 
