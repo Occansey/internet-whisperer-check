@@ -55,10 +55,14 @@ const transformATSJob = (atsJob: ATSJob): Job => {
     postedDate: atsJob.created_at.split(' ')[0],
     shortDescription: (atsJob.description_fr || atsJob.description || 'Pas de description disponible').substring(0, 200) + '...',
     shortDescriptionEn: (atsJob.description || atsJob.description_fr || 'No description available').substring(0, 200) + '...',
-    companyDescription: 'Solio Group est un groupe international français opérant dans les secteurs de l\'énergie, de la mobilité électrique et du digital.',
-    companyDescriptionEn: 'Solio Group is a French international group operating in the energy, electric mobility, and digital sectors.',
-    missionDescription: atsJob.description_fr || atsJob.description || 'Description à venir',
-    missionDescriptionEn: atsJob.description || atsJob.description_fr || 'Description coming soon',
+    // Store full descriptions from API
+    fullDescription: atsJob.description_fr || atsJob.description || 'Description complète à venir',
+    fullDescriptionEn: atsJob.description || atsJob.description_fr || 'Full description coming soon',
+    // Empty arrays for fields not in API
+    companyDescription: '',
+    companyDescriptionEn: '',
+    missionDescription: '',
+    missionDescriptionEn: '',
     valuesDescription: [],
     valuesDescriptionEn: [],
     programDescription: '',
@@ -71,8 +75,6 @@ const transformATSJob = (atsJob: ATSJob): Job => {
     expectedExperienceEn: [],
     personalAndTechnicalSkills: [],
     personalAndTechnicalSkillsEn: [],
-    fullDescription: atsJob.description_fr || atsJob.description || 'Description complète à venir',
-    fullDescriptionEn: atsJob.description || atsJob.description_fr || 'Full description coming soon',
     requirements: [],
     qualifications: [],
     benefits: [],
@@ -132,15 +134,11 @@ const JobDetail = () => {
     return language === 'en' && enContent ? enContent : frContent;
   };
 
-  const getLocalizedArray = (frArray: string[] | undefined, enArray: string[] | undefined) => {
-    return language === 'en' && enArray ? enArray : frArray || [];
-  };
-
-  const getLocalizedDuties = (
-    frDuties: { title: string; items: string[] }[] | undefined, 
-    enDuties: { title: string; items: string[] }[] | undefined
-  ) => {
-    return language === 'en' && enDuties ? enDuties : frDuties || [];
+  // Helper to format description with proper line breaks
+  const formatDescription = (text: string | undefined): string => {
+    if (!text) return '';
+    // Replace literal \n with actual line breaks
+    return text.replace(/\\n/g, '\n');
   };
 
   const formatDate = (dateStr: string): string => {
@@ -271,217 +269,12 @@ const JobDetail = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Main Content */}
-            <div className="lg:col-span-8 space-y-6">
-              {/* Company Description */}
-              {job.companyDescription && (
-                <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-foreground">
-                    ✨ {language === 'fr' ? 'Qui sommes-nous ?' : 'Who are we?'}
-                  </h2>
-                  <p className="text-foreground leading-relaxed">
-                    {getLocalizedContent(job.companyDescription, job.companyDescriptionEn)}
-                  </p>
-                  <p className="text-foreground leading-relaxed">
-                    {language === 'fr' 
-                      ? 'Solio Group est un acteur engagé dans :'
-                      : 'Solio Group is committed to:'
-                    }
-                  </p>
-                  <ul className="space-y-2 ml-4">
-                    <li className="flex items-start">
-                      <span className="mr-2">🌞</span>
-                      <span className="text-foreground">
-                        <strong>{language === 'fr' ? 'L\'énergie renouvelable' : 'Renewable energy'}</strong>
-                        {language === 'fr'
-                          ? ' : développement et financement de centrales solaires C&I et de solutions d\'efficacité énergétique.'
-                          : ': development and financing of C&I solar plants and energy efficiency solutions.'
-                        }
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">🚗</span>
-                      <span className="text-foreground">
-                        <strong>{language === 'fr' ? 'La mobilité électrique' : 'Electric mobility'}</strong>
-                        {language === 'fr'
-                          ? ' : infrastructures de recharge, solutions de mobilité durable, accompagnement des flottes professionnelles.'
-                          : ': charging infrastructure, sustainable mobility solutions, professional fleet support.'
-                        }
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2">💻</span>
-                      <span className="text-foreground">
-                        <strong>{language === 'fr' ? 'La transformation digitale' : 'Digital transformation'}</strong>
-                        {language === 'fr'
-                          ? ' : solutions technologiques et services numériques pour accompagner la modernisation des entreprises.'
-                          : ': technological solutions and digital services to support business modernization.'
-                        }
-                      </span>
-                    </li>
-                  </ul>
+            <div className="lg:col-span-8">
+              {/* Job Description - Display full API content */}
+              <div className="prose prose-lg max-w-none text-foreground">
+                <div className="whitespace-pre-line leading-relaxed">
+                  {formatDescription(getLocalizedContent(job.fullDescription, job.fullDescriptionEn))}
                 </div>
-              )}
-
-              {/* Mission */}
-              {job.missionDescription && (
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {language === 'fr' ? 'Notre mission' : 'Our mission'}
-                  </h3>
-                  <p className="text-foreground leading-relaxed">
-                    {getLocalizedContent(job.missionDescription, job.missionDescriptionEn)}
-                  </p>
-                </div>
-              )}
-
-              {/* Values */}
-              {job.valuesDescription && job.valuesDescription.length > 0 && (
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {language === 'fr' ? 'Nos valeurs' : 'Our values'}
-                  </h3>
-                  <ul className="space-y-2">
-                    {getLocalizedArray(job.valuesDescription, job.valuesDescriptionEn).map((value, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span className="text-foreground">{value}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Program Description */}
-              {job.programDescription && (
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">
-                    🎯 {language === 'fr' ? 'Pourquoi ce poste ?' : 'Why this position?'}
-                  </h2>
-                  {(getLocalizedContent(job.programDescription, job.programDescriptionEn) || '').split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="text-foreground leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              )}
-
-              {/* Duties and Responsibilities */}
-              {job.dutiesAndResponsibilities && job.dutiesAndResponsibilities.length > 0 && (
-                <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-foreground">
-                    🛠 {language === 'fr' ? 'Vos missions principales' : 'Your main responsibilities'}
-                  </h2>
-                  {getLocalizedDuties(job.dutiesAndResponsibilities, job.dutiesAndResponsibilitiesEn).map((section, index) => (
-                    <div key={index} className="space-y-3">
-                      <h3 className="text-lg font-medium text-foreground">{section.title}</h3>
-                      <ul className="space-y-2 ml-4">
-                        {section.items.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start">
-                            <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                            <span className="text-foreground">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Profile Section */}
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold text-foreground">
-                  👤 {language === 'fr' ? 'Profil recherché' : 'Required profile'}
-                </h2>
-                
-                {/* Educational Qualification */}
-                {job.educationalQualification && job.educationalQualification.length > 0 && (
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">
-                      {language === 'fr' ? 'Formation' : 'Education'}
-                    </h3>
-                    <ul className="space-y-2">
-                      {getLocalizedArray(job.educationalQualification, job.educationalQualificationEn).map((qualification, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                          <span className="text-foreground">{qualification}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Expected Experience */}
-                {job.expectedExperience && job.expectedExperience.length > 0 && (
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">
-                      {language === 'fr' ? 'Expérience' : 'Experience'}
-                    </h3>
-                    <ul className="space-y-2">
-                      {getLocalizedArray(job.expectedExperience, job.expectedExperienceEn).map((experience, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                          <span className="text-foreground">{experience}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Personal and Technical Skills Requirements */}
-                {job.personalAndTechnicalSkills && job.personalAndTechnicalSkills.length > 0 && (
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-medium text-foreground">
-                      {language === 'fr' ? 'Compétences clés' : 'Key skills'}
-                    </h3>
-                    <ul className="space-y-2">
-                      {getLocalizedArray(job.personalAndTechnicalSkills, job.personalAndTechnicalSkillsEn).map((skill, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                          <span className="text-foreground">{skill}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* What We Offer */}
-              {job.whatWeOffer && job.whatWeOffer.length > 0 && (
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-foreground">
-                    🎁 {language === 'fr' ? 'Ce que nous offrons' : 'What we offer'}
-                  </h2>
-                  <ul className="space-y-2">
-                    {getLocalizedArray(job.whatWeOffer, job.whatWeOfferEn).map((offer, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="w-2 h-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0" />
-                        <span className="text-foreground">{offer}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Application Instructions */}
-              <div className="space-y-3">
-                <h2 className="text-2xl font-semibold text-foreground">
-                  📩 {language === 'fr' ? 'Comment postuler ?' : 'How to apply?'}
-                </h2>
-                {job.applicationEmail && (
-                  <div className="space-y-2">
-                    <p className="text-foreground">
-                      {getLocalizedContent(job.applicationInstructions, job.applicationInstructionsEn)}
-                    </p>
-                    <p className="text-foreground">
-                      👉 <strong>{job.applicationEmail}</strong>
-                    </p>
-                  </div>
-                )}
-                {job.additionalInfo && (
-                  <p className="text-sm text-muted-foreground italic">
-                    {getLocalizedContent(job.additionalInfo, job.additionalInfoEn)}
-                  </p>
-                )}
               </div>
 
               {/* Job Details */}
