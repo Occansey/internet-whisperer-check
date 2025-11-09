@@ -26,7 +26,6 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
     city: "",
     country: "",
     source: "Website",
-    coverLetter: "",
     cv: null as File | null,
     coverLetterFile: null as File | null,
     otherDocuments: null as File | null,
@@ -78,7 +77,6 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       fullName: formData.fullName,
       email: formData.email,
       phone: formData.phone,
-      coverLetter: formData.coverLetter,
       jobTitle,
       cvFileName: formData.cv?.name,
       otherDocumentsFileName: formData.otherDocuments?.name,
@@ -184,11 +182,6 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       // Append cover letter file if provided (optional)
       if (formData.coverLetterFile) {
         formDataToSend.append('file_cover_letter', formData.coverLetterFile);
-      } else if (formData.coverLetter.trim()) {
-        // Fallback: convert text to file if no file uploaded
-        const coverLetterBlob = new Blob([formData.coverLetter], { type: 'text/plain' });
-        const coverLetterFile = new File([coverLetterBlob], 'cover_letter.txt', { type: 'text/plain' });
-        formDataToSend.append('file_cover_letter', coverLetterFile);
       }
       
       // Append extra document file if provided (optional)
@@ -271,7 +264,6 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
         city: "",
         country: "",
         source: "Website",
-        coverLetter: "",
         cv: null,
         coverLetterFile: null,
         otherDocuments: null,
@@ -420,29 +412,8 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="coverLetter">
-              {language === 'fr' ? 'Lettre de motivation (texte)' : 'Cover Letter (text)'}
-            </Label>
-            <Textarea 
-              id="coverLetter" 
-              value={formData.coverLetter} 
-              onChange={(e) => handleInputChange('coverLetter', e.target.value)} 
-              maxLength={1000}
-              placeholder={language === 'fr' 
-                ? 'Écrivez votre lettre de motivation ici (optionnel)...'
-                : 'Write your cover letter here (optional)...'
-              }
-              rows={4}
-              className={validationErrors.coverLetter ? 'border-red-500' : ''}
-            />
-            {validationErrors.coverLetter && (
-              <p className="text-xs text-red-500">{validationErrors.coverLetter}</p>
-            )}
-          </div>
-          
-          <div className="space-y-2">
             <Label htmlFor="coverLetterFile">
-              {language === 'fr' ? 'Lettre de motivation (fichier)' : 'Cover Letter (file)'}
+              {language === 'fr' ? 'Lettre de motivation' : 'Cover Letter'}
             </Label>
             <Input 
               id="coverLetterFile" 
