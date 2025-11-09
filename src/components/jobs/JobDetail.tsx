@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useMemo, lazy, Suspense } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { MapPin, Calendar, Briefcase, ArrowLeft, Share2 } from 'lucide-react';
+import { MapPin, Briefcase, ArrowLeft, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { mockJobs, Job } from '@/data/jobs';
 import { useTranslation } from '@/contexts/TranslationContext';
 import SEOStructuredData from '@/components/seo/SEOStructuredData';
-import JobApplicationForm from '@/components/forms/JobApplicationForm';
 import { toast } from '@/components/ui/use-toast';
 import jobHeroImage from '@/assets/job-hero-africa.jpg';
 import { useQuery } from '@tanstack/react-query';
 import ScreenLoader from '@/components/ui/screen-loader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
+const JobApplicationForm = lazy(() => import('@/components/forms/JobApplicationForm'));
 
 interface ATSJob {
   id: number;
@@ -112,16 +113,19 @@ const JobDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t, language } = useTranslation();
 
-  // Fetch ATS jobs
+  // Fetch ATS jobs with optimized settings
   const { data: atsJobs = [], isLoading } = useQuery({
     queryKey: ['ats-jobs'],
     queryFn: fetchJobs,
-    refetchInterval: 5 * 60 * 1000,
-    staleTime: 4 * 60 * 1000,
+    staleTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 15 * 60 * 1000, // 15 minutes cache
   });
 
-  // Try to find job in both mockJobs and ATS jobs
-  const job = mockJobs.find(j => j.slug === slug) || atsJobs.find(j => j.slug === slug);
+  // Memoize job lookup to avoid re-searching on every render
+  const job = useMemo(() => 
+    mockJobs.find(j => j.slug === slug) || atsJobs.find(j => j.slug === slug),
+    [slug, atsJobs]
+  );
 
   if (isLoading) {
     return <ScreenLoader message={t('common.loading') || "Chargement..."} />;
@@ -131,51 +135,21 @@ const JobDetail = () => {
     return <Navigate to="/carrieres/rejoignez-nous-bis" replace />;
   }
 
-  // Helper function to get language-specific content
-  const getLocalizedContent = (frContent: string | undefined, enContent: string | undefined) => {
-    return language === 'en' && enContent ? enContent : frContent;
-  };
+  // Memoize content formatting to avoid recalculations
+  const formattedDescription = useMemo(() => {
+    const content = language === 'en' && job.fullDescriptionEn ? job.fullDescriptionEn : job.fullDescription;
+    return content ? content.replace(/\\n/g, '\n') : '';
+  }, [job.fullDescription, job.fullDescriptionEn, language]);
 
-  // Helper to format description with proper line breaks
-  const formatDescription = (text: string | undefined): string => {
-    if (!text) return '';
-    // Replace literal \n with actual line breaks
-    return text.replace(/\\n/g, '\n');
-  };
+  const localizedJobType = useMemo(() => 
+    language === 'en' && job.jobTypeEn ? job.jobTypeEn : job.jobType,
+    [job.jobType, job.jobTypeEn, language]
+  );
 
-  const formatDate = (dateStr: string): string => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const getJobTypeBadgeStyle = (type: string) => {
-    switch (type) {
-      case "Full-time":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "Part-time":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-      case "Contract":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "Internship":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
-    }
-  };
-
-  const getDepartmentColor = (department: string) => {
-    switch (department.toLowerCase()) {
-      case 'finance': return 'hsl(142, 76%, 36%)';
-      case 'marketing': return 'hsl(262, 83%, 58%)';
-      case 'technologie': return 'hsl(221, 83%, 53%)';
-      case 'opérations': return 'hsl(25, 95%, 53%)';
-      default: return 'hsl(215, 28%, 17%)';
-    }
-  };
+  const localizedTitle = useMemo(() =>
+    language === 'en' && job.titleEn ? job.titleEn : job.title,
+    [job.title, job.titleEn, language]
+  );
 
   const handleShare = async () => {
     try {
@@ -202,7 +176,8 @@ const JobDetail = () => {
     }
   };
 
-  const structuredData = {
+  // Memoize structured data to avoid recreation
+  const structuredData = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "JobPosting",
     "title": job.title,
@@ -229,7 +204,7 @@ const JobDetail = () => {
         "value": job.salaryRange
       }
     }
-  };
+  }), [job]);
 
   return (
     <Layout>
@@ -241,7 +216,7 @@ const JobDetail = () => {
         <div className="relative container max-w-7xl h-full flex items-center">
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {getLocalizedContent(job.title, job.titleEn)}
+              {localizedTitle}
             </h1>
             <div className="flex items-center gap-4 text-lg">
               <div className="flex items-center gap-2">
@@ -250,7 +225,7 @@ const JobDetail = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase size={20} />
-                <span>{getLocalizedContent(job.jobType, job.jobTypeEn)}</span>
+                <span>{localizedJobType}</span>
               </div>
             </div>
           </div>
@@ -275,7 +250,7 @@ const JobDetail = () => {
               {/* Job Description - Display full API content with markdown support */}
               <div className="prose prose-lg max-w-none dark:prose-invert leading-relaxed">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {formatDescription(getLocalizedContent(job.fullDescription, job.fullDescriptionEn))}
+                  {formattedDescription}
                 </ReactMarkdown>
               </div>
 
@@ -285,7 +260,7 @@ const JobDetail = () => {
                   <div className="flex items-center gap-1">
                     <Briefcase size={16} />
                     <span>
-                      <strong>{language === 'fr' ? 'Type de contrat :' : 'Job Type:'}</strong> {getLocalizedContent(job.jobType, job.jobTypeEn)}
+                      <strong>{language === 'fr' ? 'Type de contrat :' : 'Job Type:'}</strong> {localizedJobType}
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
@@ -310,16 +285,18 @@ const JobDetail = () => {
               </div>
             </div>
 
-            {/* Application Form Sidebar */}
+            {/* Application Form Sidebar - Lazy loaded */}
             <div className="lg:col-span-4">
               <div className="sticky top-8">
-                <JobApplicationForm 
-                  jobTitle={getLocalizedContent(job.title, job.titleEn) || job.title}
-                  jobId={job.id}
-                  onSubmit={(data) => {
-                    console.log('Application submitted:', data);
-                  }}
-                />
+                <Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-lg" />}>
+                  <JobApplicationForm 
+                    jobTitle={localizedTitle}
+                    jobId={job.id}
+                    onSubmit={(data) => {
+                      console.log('Application submitted:', data);
+                    }}
+                  />
+                </Suspense>
               </div>
             </div>
           </div>
