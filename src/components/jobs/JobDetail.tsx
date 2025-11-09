@@ -414,6 +414,7 @@ const JobDetail = () => {
               <div className="sticky top-8">
                 <JobApplicationForm 
                   jobTitle={getLocalizedContent(job.title, job.titleEn) || job.title}
+                  jobId={job.id}
                   onSubmit={(data) => {
                     console.log('Application submitted:', data);
                   }}

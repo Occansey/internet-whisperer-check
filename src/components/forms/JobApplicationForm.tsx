@@ -13,15 +13,19 @@ import { isHoneypotTriggered, CSRFTokenManager } from "@/utils/securityHeaders";
 
 interface JobApplicationFormProps {
   jobTitle: string;
+  jobId?: string | number;
   onSubmit?: (data: any) => void;
 }
 
-const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => {
+const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormProps) => {
   const { language } = useTranslation();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
+    city: "",
+    country: "",
+    source: "Website",
     coverLetter: "",
     cv: null as File | null,
     otherDocuments: null as File | null,
@@ -161,28 +165,34 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
     formRateLimiter.recordAttempt(identifier);
     
     try {
-      // Prepare FormData for file upload
+    // Prepare FormData for ATS API
       const formDataToSend = new FormData();
       
-      // Split fullName into prenom and nom
-      const nameParts = formData.fullName.trim().split(' ');
-      const prenom = nameParts[0] || '';
-      const nom = nameParts.slice(1).join(' ') || nameParts[0] || '';
-      
-      formDataToSend.append('prenom', prenom);
-      formDataToSend.append('nom', nom);
+      formDataToSend.append('full_name', formData.fullName);
       formDataToSend.append('email', formData.email);
-      formDataToSend.append('telephone', formData.phone);
-      formDataToSend.append('message', formData.coverLetter);
-      formDataToSend.append('jobTitle', jobTitle);
-      formDataToSend.append('language', language);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('city', formData.city);
+      formDataToSend.append('country', formData.country);
+      formDataToSend.append('source', formData.source);
       
-      // Append files if they exist
-      if (formData.cv) {
-        formDataToSend.append('cv', formData.cv);
+      // Add job_id if provided
+      if (jobId) {
+        formDataToSend.append('job_id', String(jobId));
       }
-      if (formData.otherDocuments) {
-        formDataToSend.append('autreDocument', formData.otherDocuments);
+      
+      // Append CV file (required)
+      if (formData.cv) {
+        formDataToSend.append('file_cv', formData.cv);
+      }
+      
+      // Convert cover letter text to a file if provided
+      if (formData.coverLetter.trim()) {
+        const coverLetterBlob = new Blob([formData.coverLetter], { type: 'text/plain' });
+        const coverLetterFile = new File([coverLetterBlob], 'cover_letter.txt', { type: 'text/plain' });
+        formDataToSend.append('file_cover_letter', coverLetterFile);
+      } else if (formData.otherDocuments) {
+        // Use other documents as cover letter if no text provided
+        formDataToSend.append('file_cover_letter', formData.otherDocuments);
       }
 
       // Save to localStorage (without files)
@@ -196,9 +206,8 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
       existingApplications.push(submissionData);
       localStorage.setItem('jobApplications', JSON.stringify(existingApplications));
       
-      // Send to PHP endpoint with FormData
-      // Use absolute root path so PHP can live outside the built dist folder
-      const response = await fetch('/job-application-basic.php', {
+      // Send to ATS API
+      const response = await fetch('https://ats.solio-group.com/api/candidates', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -257,6 +266,9 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
         fullName: "",
         email: "",
         phone: "",
+        city: "",
+        country: "",
+        source: "Website",
         coverLetter: "",
         cv: null,
         otherDocuments: null,
@@ -358,6 +370,34 @@ const JobApplicationForm = ({ jobTitle, onSubmit }: JobApplicationFormProps) => 
             {validationErrors.phone && (
               <p className="text-xs text-red-500">{validationErrors.phone}</p>
             )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="city">
+              {language === 'fr' ? 'Ville *' : 'City *'}
+            </Label>
+            <Input 
+              id="city" 
+              value={formData.city} 
+              onChange={(e) => handleInputChange('city', e.target.value)} 
+              required
+              maxLength={100}
+              placeholder={language === 'fr' ? 'Paris' : 'Paris'}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="country">
+              {language === 'fr' ? 'Pays *' : 'Country *'}
+            </Label>
+            <Input 
+              id="country" 
+              value={formData.country} 
+              onChange={(e) => handleInputChange('country', e.target.value)} 
+              required
+              maxLength={100}
+              placeholder={language === 'fr' ? 'France' : 'France'}
+            />
           </div>
           
           <div className="space-y-2">
