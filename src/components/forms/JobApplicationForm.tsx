@@ -97,46 +97,54 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       return;
     }
     
-    // Validate CV file
-    if (formData.cv) {
-      if (formData.cv.size > 7 * 1024 * 1024) {
-        toast({
-          title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
-          description: language === 'fr' 
-            ? "Le CV ne doit pas dépasser 7MB"
-            : "CV must not exceed 7MB",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!allowedTypes.includes(formData.cv.type)) {
-        toast({
-          title: language === 'fr' ? "Type de fichier invalide" : "Invalid File Type",
-          description: language === 'fr'
-            ? "Veuillez utiliser un fichier PDF, DOC ou DOCX"
-            : "Please use a PDF, DOC, or DOCX file",
-          variant: "destructive",
-        });
-        return;
-      }
+    // Validate CV file (required)
+    if (!formData.cv) {
+      toast({
+        title: language === 'fr' ? "CV requis" : "CV Required",
+        description: language === 'fr' 
+          ? "Veuillez télécharger votre CV"
+          : "Please upload your CV",
+        variant: "destructive",
+      });
+      return;
     }
     
-    // Validate other documents file
+    if (formData.cv.size > 5 * 1024 * 1024) {
+      toast({
+        title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
+        description: language === 'fr' 
+          ? "Le CV ne doit pas dépasser 5MB"
+          : "CV must not exceed 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!allowedTypes.includes(formData.cv.type)) {
+      toast({
+        title: language === 'fr' ? "Type de fichier invalide" : "Invalid File Type",
+        description: language === 'fr'
+          ? "Veuillez utiliser un fichier PDF, DOC ou DOCX"
+          : "Please use a PDF, DOC, or DOCX file",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate other documents file (optional)
     if (formData.otherDocuments) {
-      if (formData.otherDocuments.size > 7 * 1024 * 1024) {
+      if (formData.otherDocuments.size > 5 * 1024 * 1024) {
         toast({
           title: language === 'fr' ? "Fichier trop volumineux" : "File Too Large",
           description: language === 'fr' 
-            ? "Les documents supplémentaires ne doivent pas dépasser 7MB"
-            : "Additional documents must not exceed 7MB",
+            ? "Les documents supplémentaires ne doivent pas dépasser 5MB"
+            : "Additional documents must not exceed 5MB",
           variant: "destructive",
         });
         return;
       }
       
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!allowedTypes.includes(formData.otherDocuments.type)) {
         toast({
           title: language === 'fr' ? "Type de fichier invalide" : "Invalid File Type",
@@ -147,18 +155,6 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
         });
         return;
       }
-    }
-    // Validate combined size (keep under ~18MB raw to avoid email limits after base64)
-    const combinedSize = (formData.cv?.size || 0) + (formData.otherDocuments?.size || 0);
-    if (combinedSize > 18 * 1024 * 1024) {
-      toast({
-        title: language === 'fr' ? 'Pièces jointes trop volumineuses' : 'Attachments too large',
-        description: language === 'fr'
-          ? 'La taille totale des fichiers ne doit pas dépasser ~18MB'
-          : 'Total file size must not exceed ~18MB',
-        variant: 'destructive',
-      });
-      return;
     }
 
     setIsSubmitting(true);
@@ -181,18 +177,18 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
       }
       
       // Append CV file (required)
-      if (formData.cv) {
-        formDataToSend.append('file_cv', formData.cv);
-      }
+      formDataToSend.append('file_cv', formData.cv);
       
-      // Convert cover letter text to a file if provided
+      // Convert cover letter text to a file if provided (optional)
       if (formData.coverLetter.trim()) {
         const coverLetterBlob = new Blob([formData.coverLetter], { type: 'text/plain' });
         const coverLetterFile = new File([coverLetterBlob], 'cover_letter.txt', { type: 'text/plain' });
         formDataToSend.append('file_cover_letter', coverLetterFile);
-      } else if (formData.otherDocuments) {
-        // Use other documents as cover letter if no text provided
-        formDataToSend.append('file_cover_letter', formData.otherDocuments);
+      }
+      
+      // Append extra document file if provided (optional)
+      if (formData.otherDocuments) {
+        formDataToSend.append('extra_doc_file', formData.otherDocuments);
       }
 
       // Save to localStorage (without files)
@@ -440,8 +436,8 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Types autorisés : .pdf, .doc, .docx (max 7MB)'
-                : 'Allowed Type(s): .pdf, .doc, .docx (max 7MB)'
+                ? 'Types autorisés : .pdf, .doc, .docx (max 5MB)'
+                : 'Allowed Type(s): .pdf, .doc, .docx (max 5MB)'
               }
             </p>
           </div>
@@ -468,8 +464,8 @@ const JobApplicationForm = ({ jobTitle, jobId, onSubmit }: JobApplicationFormPro
             </p>
             <p className="text-xs text-muted-foreground">
               {language === 'fr' 
-                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 7MB)'
-                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 7MB)'
+                ? 'Télécharger des documents supplémentaires (optionnel) - .pdf, .doc, .docx (max 5MB)'
+                : 'Upload additional documents (optional) - .pdf, .doc, .docx (max 5MB)'
               }
             </p>
           </div>
