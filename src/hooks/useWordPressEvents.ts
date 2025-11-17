@@ -116,7 +116,7 @@ const fetchWordPressEvents = async (): Promise<TransformedEvent[]> => {
       image: event._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
       en_savoir_plus: event.acf?.en_savoir_plus || '',
       'heure-fin': event.acf?.['heure-fin'] || '',
-      tags: event.acf?.tags?.map(tag => tag.name) || [],
+      tags: Array.isArray(event.acf?.tags) ? event.acf.tags.map(tag => tag.name) : [],
       gallery,
       video_youtube: event.acf?.video_youtube,
       video_linkedin: event.acf?.video_linkedin,
